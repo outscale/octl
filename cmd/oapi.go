@@ -1,0 +1,99 @@
+/*
+SPDX-FileCopyrightText: 2026 Outscale SAS <opensource@outscale.com>
+
+SPDX-License-Identifier: BSD-3-Clause
+*/
+package cmd
+
+import (
+	"context"
+	"encoding/json"
+	"os"
+	"reflect"
+	"strings"
+
+	"github.com/outscale/gli/pkg/debug"
+	"github.com/outscale/gli/pkg/errors"
+	"github.com/outscale/gli/pkg/flags"
+	"github.com/outscale/gli/pkg/sdk"
+	"github.com/outscale/osc-sdk-go/v3/pkg/middleware"
+	"github.com/outscale/osc-sdk-go/v3/pkg/osc"
+	"github.com/outscale/osc-sdk-go/v3/pkg/profile"
+	"github.com/outscale/osc-sdk-go/v3/pkg/utils"
+	"github.com/spf13/cobra"
+)
+
+// oapiCmd represents the oapi command
+var oapiCmd = &cobra.Command{
+	Use:   "oapi",
+	Short: "OAPI calls",
+	Long:  `Send commands to the Outscale API.`,
+}
+
+func init() {
+	rootCmd.AddCommand(oapiCmd)
+
+	c := reflect.TypeOf(&osc.Client{})
+	debug.Println(c.PkgPath(), c.Name())
+	for i := range c.NumMethod() {
+		m := c.Method(i)
+		if m.Type.NumIn() != 4 || m.Type.NumOut() != 2 || strings.HasSuffix(m.Name, "Raw") {
+			continue
+		}
+		cmd := &cobra.Command{
+			Use: m.Name,
+			Run: func(cmd *cobra.Command, args []string) {
+				oapi(cmd)
+			},
+		}
+		arg := m.Type.In(2)
+		flags.FromStruct(cmd.Flags(), arg, "")
+		oapiCmd.AddCommand(cmd)
+	}
+}
+
+func oapi(cmd *cobra.Command) {
+	debug.Println(cmd.Name() + " called")
+
+	p, err := profile.New()
+	if err != nil {
+		errors.ExitErr(err)
+	}
+	var opt middleware.MiddlewareChainOption
+	if verbose, _ := cmd.Flags().GetBool("verbose"); verbose {
+		opt = utils.WithLogging(sdk.VerboseLogger{})
+	} else {
+		opt = utils.WithoutLogging()
+	}
+	cl, err := osc.NewClient(p, opt)
+	if err != nil {
+		errors.ExitErr(err)
+	}
+	clt := reflect.TypeOf(cl)
+	m, _ := clt.MethodByName(cmd.Name())
+	argType := m.Type.In(2)
+	arg := reflect.New(argType)
+	err = flags.ToStruct(cmd.Flags(), arg, "")
+	if err != nil {
+		errors.ExitErr(err)
+	}
+	ctx := context.Background()
+	res := reflect.ValueOf(cl).MethodByName(cmd.Name()).Call([]reflect.Value{
+		reflect.ValueOf(ctx),
+		arg.Elem(),
+	})
+	debug.Println(len(res), "results")
+	if !res[1].IsNil() {
+		err = res[1].Interface().(error)
+		if oerr := osc.AsErrorResponse(err); oerr != nil {
+			enc := json.NewEncoder(os.Stderr)
+			enc.SetIndent("", "  ")
+			_ = enc.Encode(oerr)
+			os.Exit(1)
+		}
+		errors.ExitErr(err)
+	}
+	enc := json.NewEncoder(os.Stdout)
+	enc.SetIndent("", "  ")
+	_ = enc.Encode(res[0].Interface())
+}

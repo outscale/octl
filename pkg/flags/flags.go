@@ -1,0 +1,223 @@
+/*
+SPDX-FileCopyrightText: 2026 Outscale SAS <opensource@outscale.com>
+
+SPDX-License-Identifier: BSD-3-Clause
+*/
+package flags
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+	"reflect"
+	"strconv"
+	"strings"
+
+	"github.com/outscale/gli/pkg/debug"
+	"github.com/spf13/pflag"
+)
+
+var numEntriesInSlices = 1
+
+func init() {
+	num := os.Getenv("NUM_ENTRIES")
+	if num != "" {
+		numEntriesInSlices, _ = strconv.Atoi(num)
+	}
+}
+
+func FromStruct(fs *pflag.FlagSet, arg reflect.Type, prefix string) {
+	for i := range arg.NumField() {
+		f := arg.Field(i)
+		t := f.Type
+		ot := t
+		if t.Kind() == reflect.Ptr {
+			t = t.Elem()
+		}
+		switch t.Kind() {
+		case reflect.Bool:
+			fs.Bool(prefix+f.Name, false, "")
+		case reflect.String:
+			fs.String(prefix+f.Name, "", "")
+		case reflect.Int:
+			fs.Int(prefix+f.Name, 0, "")
+		case reflect.Slice:
+			switch t.Elem().Kind() {
+			case reflect.Bool:
+				fs.BoolSlice(prefix+f.Name, nil, "")
+			case reflect.String:
+				fs.StringSlice(prefix+f.Name, nil, "")
+			case reflect.Int:
+				fs.IntSlice(prefix+f.Name, nil, "")
+			case reflect.Struct:
+				for i := range numEntriesInSlices {
+					FromStruct(fs, t.Elem(), prefix+f.Name+"."+strconv.Itoa(i)+".")
+				}
+			}
+		case reflect.Struct:
+			if _, ok := ot.MethodByName("MarshalJSON"); ok {
+				fs.String(prefix+f.Name, "", "")
+			} else {
+				FromStruct(fs, t, prefix+f.Name+".")
+			}
+		}
+	}
+}
+
+func ToStruct(fs *pflag.FlagSet, arg reflect.Value, prefix string) error {
+	debug.Println(reflect.Indirect(arg).Type().Name())
+	var err error
+	fs.VisitAll(func(f *pflag.Flag) {
+		if f.Changed { // skipping default values
+			debug.Println(f.Name, "=>", f.Value)
+			if serr := set(arg, fs, f.Name, f.Name); serr != nil {
+				err = serr
+			}
+		}
+	})
+	return err
+}
+
+func set(arg reflect.Value, fs *pflag.FlagSet, flag, path string) error {
+	if arg.Kind() == reflect.Ptr && arg.IsNil() {
+		debug.Println("allocating")
+		arg.Set(reflect.New(arg.Type().Elem()))
+	}
+	arg = reflect.Indirect(arg)
+	if path == "" {
+		return setValue(arg, fs, flag)
+	}
+	debug.Println("set", path, "on", arg.Type().Name())
+	before, after, _ := strings.Cut(path, ".")
+	switch arg.Kind() {
+	case reflect.Struct:
+		return set(arg.FieldByName(before), fs, flag, after)
+	case reflect.Slice:
+		idx, err := strconv.Atoi(before)
+		if err != nil {
+			return fmt.Errorf("invalid array index %s in %s", before, path)
+		}
+		for arg.Len() < idx+1 {
+			arg.Set(reflect.Append(arg, reflect.New(arg.Type().Elem()).Elem()))
+		}
+		return set(arg.Index(idx), fs, flag, after)
+	default:
+		return fmt.Errorf("invalid kind %v for %s in %s", arg.Kind(), before, flag)
+	}
+}
+
+func setValue(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	debug.Println("setValue " + flag + " " + arg.Kind().String())
+	switch arg.Kind() {
+	case reflect.Slice:
+		switch arg.Type().Elem().Kind() {
+		case reflect.Bool:
+			return setValueBoolSlice(arg, fs, flag)
+		case reflect.Int:
+			return setValueIntSlice(arg, fs, flag)
+		case reflect.String:
+			return setValueStringSlice(arg, fs, flag)
+		default:
+			debug.Println("invalid slice kind", arg.Elem().Kind())
+		}
+	case reflect.Struct:
+		return setValueStruct(arg, fs, flag)
+	case reflect.Bool:
+		return setValueBool(arg, fs, flag)
+	case reflect.Int:
+		return setValueInt(arg, fs, flag)
+	case reflect.String:
+		return setValueString(arg, fs, flag)
+	}
+	return nil
+}
+
+func setValueBool(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetBool(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueBool", flag, ss)
+	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
+	return nil
+}
+
+func setValueBoolSlice(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetBoolSlice(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueBoolSlice", flag, ss)
+	narg := reflect.MakeSlice(arg.Type(), len(ss), len(ss))
+	for i, s := range ss {
+		narg.Index(i).Set(reflect.ValueOf(s).Convert(arg.Type().Elem()))
+	}
+	arg.Set(narg)
+	return nil
+}
+
+func setValueInt(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetInt(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueInt", flag, ss)
+	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
+	return nil
+}
+
+func setValueIntSlice(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetIntSlice(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueIntSlice", flag, ss)
+	narg := reflect.MakeSlice(arg.Type(), len(ss), len(ss))
+	for i, s := range ss {
+		narg.Index(i).Set(reflect.ValueOf(s).Convert(arg.Type().Elem()))
+	}
+	arg.Set(narg)
+	return nil
+}
+
+func setValueString(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetString(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueString", flag, ss)
+	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
+	return nil
+}
+
+func setValueStringSlice(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetStringSlice(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueStringSlice", flag, ss)
+	narg := reflect.MakeSlice(arg.Type(), len(ss), len(ss))
+	for i, s := range ss {
+		narg.Index(i).Set(reflect.ValueOf(s).Convert(arg.Type().Elem()))
+	}
+	arg.Set(narg)
+	return nil
+}
+
+func setValueStruct(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	if _, ok := arg.Addr().Type().MethodByName("UnmarshalJSON"); !ok {
+		return nil
+	}
+	ss, err := fs.GetString(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueStruct/JSON", flag, ss)
+	v := reflect.New(arg.Type()).Interface()
+	err = json.Unmarshal([]byte(`"`+ss+`"`), v)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	arg.Set(reflect.ValueOf(v).Elem())
+	return nil
+}
