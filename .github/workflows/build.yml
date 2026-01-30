@@ -1,0 +1,48 @@
+name: Build
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "**.go"
+      - "Makefile"
+      - "go.*"
+      - ".github/workflows/build.yml"
+    
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+    - name: ⬇️ Install Go
+      uses: actions/setup-go@7a3fe6cf4cb3a834922a1244abfce67bcef6a0c5 # v6
+      with:
+        go-version-file: 'go.mod'
+    - name: 🔎 golangci-lint
+      uses: golangci/golangci-lint-action@1e7e51e771db61008b38414a730f564565cf7c20 # v9
+      with:
+        version: v2.7.1
+        args: --timeout=300s
+        only-new-issues: true
+    - name: 📦 Build
+      run: go build -o gli main.go
+  unit:
+    runs-on: [self-hosted, linux, eu-west-2]
+    steps:
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6
+    - name: ⬇️ Install Go
+      uses: actions/setup-go@7a3fe6cf4cb3a834922a1244abfce67bcef6a0c5 # v6
+      with:
+        go-version-file: 'go.mod'
+    - name: 🧪 Test
+      run: go test ./...
+      env:
+        OSC_ACCESS_KEY: ${{ secrets.OSC_ACCESS_KEY }}
+        OSC_SECRET_KEY: ${{ secrets.OSC_SECRET_KEY }}
+        OSC_REGION: "eu-west-2"
