@@ -8,19 +8,19 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/outscale/osc-sdk-go/v3/pkg/utils"
+	"github.com/outscale/gli/pkg/version"
+	sdkversion "github.com/outscale/osc-sdk-go/v3/pkg/version"
 	"github.com/spf13/cobra"
 )
-
-const Version = "v0.0.0-dev"
 
 // versionCmd represents the version command
 var versionCmd = &cobra.Command{
 	Use:   "version",
 	Short: "Display GLI version",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Printf("gli version %s\n", Version)
-		fmt.Printf("based on Go SDK %s\n", utils.SdkVersion())
+		fmt.Printf("gli version %s\n", version.Version)
+		fmt.Printf("based on Go SDK %s\n", sdkversion.SDKVersion)
+		fmt.Printf("based on Outscale API %s\n", sdkversion.APIVersion)
 	},
 }
 

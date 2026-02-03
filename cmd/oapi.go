@@ -17,10 +17,11 @@ import (
 	"github.com/outscale/gli/pkg/flags"
 	"github.com/outscale/gli/pkg/output"
 	"github.com/outscale/gli/pkg/sdk"
+	"github.com/outscale/gli/pkg/version"
 	"github.com/outscale/osc-sdk-go/v3/pkg/middleware"
 	"github.com/outscale/osc-sdk-go/v3/pkg/osc"
 	"github.com/outscale/osc-sdk-go/v3/pkg/profile"
-	"github.com/outscale/osc-sdk-go/v3/pkg/utils"
+	options "github.com/outscale/osc-sdk-go/v3/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -35,7 +36,6 @@ func init() {
 	rootCmd.AddCommand(oapiCmd)
 
 	c := reflect.TypeOf(&osc.Client{})
-	debug.Println(c.PkgPath(), c.Name())
 	for i := range c.NumMethod() {
 		m := c.Method(i)
 		if m.Type.NumIn() != 4 || m.Type.NumOut() != 2 || strings.HasSuffix(m.Name, "Raw") {
@@ -60,13 +60,14 @@ func oapi(cmd *cobra.Command) {
 	if err != nil {
 		errors.ExitErr(err)
 	}
-	var opt middleware.MiddlewareChainOption
+	ua := "gli/" + version.Version
+	opts := []middleware.MiddlewareChainOption{options.WithUseragent(ua)}
 	if verbose, _ := cmd.Flags().GetBool("verbose"); verbose {
-		opt = utils.WithLogging(sdk.VerboseLogger{})
+		opts = append(opts, options.WithLogging(sdk.VerboseLogger{}))
 	} else {
-		opt = utils.WithoutLogging()
+		opts = append(opts, options.WithoutLogging())
 	}
-	cl, err := osc.NewClient(p, opt)
+	cl, err := osc.NewClient(p, opts...)
 	if err != nil {
 		errors.ExitErr(err)
 	}
