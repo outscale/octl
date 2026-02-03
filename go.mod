@@ -8,17 +8,18 @@ require (
 	github.com/itchyny/gojq v0.12.18
 	github.com/mattn/go-isatty v0.0.20
 	github.com/minio/selfupdate v0.6.0
-	github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.3
+	github.com/outscale/osc-sdk-go/v3 v3.0.0-beta.4.0.20260202162932-afa7fb68c203
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/pflag v1.0.10
 	github.com/stretchr/testify v1.11.1
 	github.com/tidwall/pretty v1.2.1
+	golang.org/x/mod v0.32.0
 )
 
 require (
 	aead.dev/minisign v0.2.0 // indirect
 	dario.cat/mergo v1.0.2 // indirect
-	github.com/aws/smithy-go/aws-http-auth v1.0.0 // indirect
+	github.com/aws/smithy-go/aws-http-auth v1.1.1 // indirect
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/google/go-querystring v1.2.0 // indirect
