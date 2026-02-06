@@ -13,11 +13,12 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/outscale/gli/pkg/builder"
 	"github.com/outscale/gli/pkg/debug"
 	"github.com/outscale/gli/pkg/errors"
-	"github.com/outscale/gli/pkg/flags"
 	"github.com/outscale/gli/pkg/openapi"
 	"github.com/outscale/gli/pkg/output"
+	"github.com/outscale/gli/pkg/runner"
 	"github.com/outscale/gli/pkg/sdk"
 	"github.com/outscale/gli/pkg/version"
 	"github.com/outscale/osc-sdk-go/v3/pkg/middleware"
@@ -36,13 +37,12 @@ var oapiCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(oapiCmd)
-
 	ospec, err := osc.GetSwagger()
 	if err != nil {
 		errors.Warn(fmt.Sprintf("⚠️ unable to load OpenAPI spec: %v", err))
 	}
 	spec := openapi.NewSpec(ospec)
-	b := flags.NewBuilder(spec)
+	b := builder.NewBuilder(spec)
 
 	c := reflect.TypeOf(&osc.Client{})
 	for i := range c.NumMethod() {
@@ -91,7 +91,7 @@ func oapi(cmd *cobra.Command) {
 	m, _ := clt.MethodByName(cmd.Name())
 	argType := m.Type.In(2)
 	arg := reflect.New(argType)
-	err = flags.ToStruct(cmd, arg, "")
+	err = runner.ToStruct(cmd, arg, "")
 	if err != nil {
 		errors.ExitErr(err)
 	}

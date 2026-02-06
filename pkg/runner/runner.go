@@ -3,95 +3,70 @@ SPDX-FileCopyrightText: 2026 Outscale SAS <opensource@outscale.com>
 
 SPDX-License-Identifier: BSD-3-Clause
 */
-package flags
+package runner
 
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"reflect"
+	"slices"
 	"strconv"
 	"strings"
+	"text/template"
 
+	"github.com/mattn/go-isatty"
 	"github.com/outscale/gli/pkg/debug"
-	"github.com/outscale/gli/pkg/openapi"
-	"github.com/samber/lo"
+	"github.com/outscale/gli/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
 
-var numEntriesInSlices = 1
+var Input []byte
 
-func init() {
-	num := os.Getenv("NUM_ENTRIES")
-	if num != "" {
-		numEntriesInSlices, _ = strconv.Atoi(num)
+func Prefilter() error {
+	if isatty.IsTerminal(os.Stdin.Fd()) {
+		debug.Println("terminal, skipping stdin")
+		return nil
 	}
-}
-
-type Builder struct {
-	spec *openapi.Spec
-}
-
-func NewBuilder(spec *openapi.Spec) *Builder {
-	return &Builder{spec: spec}
-}
-
-func (b *Builder) FromStruct(cmd *cobra.Command, arg reflect.Type, prefix string) {
-	typeName := arg.Name()
-	fs := cmd.Flags()
-	for i := range arg.NumField() {
-		f := arg.Field(i)
-		t := f.Type
-		ot := t
-		if t.Kind() == reflect.Ptr {
-			t = t.Elem()
-		}
-		help := b.spec.SummaryForAttribute(typeName, f.Name)
-		switch t.Kind() {
-		case reflect.Bool:
-			fs.Bool(prefix+f.Name, false, help)
-		case reflect.String:
-			fs.String(prefix+f.Name, "", help)
-			if t.Implements(reflect.TypeFor[enum]()) {
-				values := reflect.New(t).Interface().(enum).Values()
-				_ = cmd.RegisterFlagCompletionFunc(prefix+f.Name, func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
-					return lo.Map(values, func(v string, _ int) cobra.Completion { return cobra.Completion(v) }), cobra.ShellCompDirectiveDefault
-				})
-			}
-		case reflect.Int:
-			fs.Int(prefix+f.Name, 0, help)
-		case reflect.Slice:
-			switch t.Elem().Kind() {
-			case reflect.Bool:
-				fs.BoolSlice(prefix+f.Name, nil, help)
-			case reflect.String:
-				fs.StringSlice(prefix+f.Name, nil, help)
-				if t.Elem().Implements(reflect.TypeFor[enum]()) {
-					values := reflect.New(t.Elem()).Interface().(enum).Values()
-					_ = cmd.RegisterFlagCompletionFunc(prefix+f.Name, func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
-						return lo.Map(values, func(v string, _ int) cobra.Completion { return cobra.Completion(v) }), cobra.ShellCompDirectiveDefault
-					})
-				}
-			case reflect.Int:
-				fs.IntSlice(prefix+f.Name, nil, help)
-			case reflect.Struct:
-				if t.Elem().Implements(reflect.TypeFor[json.Marshaler]()) {
-					fs.StringSlice(prefix+f.Name, nil, help)
-				} else {
-					for i := range numEntriesInSlices {
-						b.FromStruct(cmd, t.Elem(), prefix+f.Name+"."+strconv.Itoa(i)+".")
-					}
-				}
-			}
-		case reflect.Struct:
-			if ot.Implements(reflect.TypeFor[json.Marshaler]()) {
-				fs.String(prefix+f.Name, "", help)
-			} else {
-				b.FromStruct(cmd, t, prefix+f.Name+".")
-			}
-		}
+	debug.Println("reading stdin")
+	var err error
+	Input, err = io.ReadAll(os.Stdin)
+	if err != nil {
+		return fmt.Errorf("unable to read stdin: %w", err)
 	}
+	if !slices.ContainsFunc(os.Args, func(arg string) bool {
+		return strings.HasPrefix(arg, "{{")
+	}) {
+		return nil
+	}
+	debug.Println("templating args")
+	var input map[string]any
+	err = json.Unmarshal(Input, &input)
+	if err != nil {
+		return fmt.Errorf("input is not a JSON object: %w", err)
+	}
+	for i, arg := range os.Args {
+		if !strings.HasPrefix(arg, "{{") {
+			continue
+		}
+		tmpl, err := template.New("tpl").Parse(arg)
+		if err != nil {
+			errors.Warn("unable to parse argument", arg)
+			continue
+		}
+		w := &strings.Builder{}
+		err = tmpl.Execute(w, input)
+		if err != nil {
+			errors.Warn("unable to get value for argument", arg)
+			continue
+		}
+		debug.Println("replacing", arg, "with", w.String())
+		os.Args[i] = w.String()
+	}
+	debug.Println("new args", os.Args)
+	return nil
 }
 
 func ToStruct(cmd *cobra.Command, arg reflect.Value, prefix string) error {

@@ -138,22 +138,38 @@ gli <command> <api call>
 
 ## 💡 Examples
 
-### ReadVms
+### Querying oapi
 
 List all VMs in the `running` state:
-```bash
+```shell
 gli oapi ReadVms --Filters.VmStateNames running
+```
+
+The flag syntax is:
+* list of values are comma-separated: `--Filters.VmStateNames running,stopped`
+* boolean flags can be set to false by setting: `--TmpEnabled=false`
+
+### Multiple values
+
+Lists of embedded objects (e.g. `Nics` or `BlockDeviceMappings` in `CreateVms`) can be configured using indexes: `--BlockDeviceMappings.0.Bsu.VolumeType`.
+
+### Chaining
+
+Commands may be chained, and attributes returned by a command can be reinjected in a subsequent command, using Go template syntax:
+
+```shell
+gli oapi CreateNic --SubnetId subnet-foo | gli oapi LinkNic -v --NicId {{.Nic.NicId}} --VmId i-foo --DeviceNumber 7
 ```
 
 ### Using jq filters
 
-```bash
+```shell
 gli oapi ReadVms --Filters.VmStateNames running --jq ".Vms[].VmId"
 ```
 
 ### Self updating
 
-```bash
+```shell
 gli update
 ```
 
