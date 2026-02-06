@@ -5,8 +5,16 @@ SPDX-License-Identifier: BSD-3-Clause
 */
 package main
 
-import "github.com/outscale/gli/cmd"
+import (
+	"github.com/outscale/gli/cmd"
+	"github.com/outscale/gli/pkg/errors"
+	"github.com/outscale/gli/pkg/runner"
+)
 
 func main() {
+	err := runner.Prefilter()
+	if err != nil {
+		errors.ExitErr(err)
+	}
 	cmd.Execute()
 }

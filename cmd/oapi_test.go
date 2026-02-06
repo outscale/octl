@@ -6,12 +6,9 @@ SPDX-License-Identifier: BSD-3-Clause
 package cmd_test
 
 import (
-	"encoding/json"
 	"os"
-	"path/filepath"
 	"testing"
 
-	"github.com/outscale/gli/cmd"
 	"github.com/outscale/osc-sdk-go/v3/pkg/osc"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -19,29 +16,22 @@ import (
 
 func TestOAPI(t *testing.T) {
 	t.Run("ReadVms works", func(t *testing.T) {
-		os.Args = []string{"gli", "oapi", "ReadVms", "-v", "--Filters.VmStateNames", "running"}
-		stdout := os.Stdout
-		defer func() {
-			os.Stdout = stdout
-		}()
-		dir := t.TempDir()
-		var err error
-		os.Stdout, err = os.Create(filepath.Join(dir, "stdout")) //nolint
-		require.NoError(t, err)
-		cmd.Execute()
-
-		err = os.Stdout.Close()
-		require.NoError(t, err)
-		content, err := os.ReadFile(os.Stdout.Name())
-		require.NoError(t, err)
 		resp := osc.ReadVmsResponse{}
-		err = json.Unmarshal(content, &resp)
-		require.NoError(t, err)
+		runJSON(t, []string{"oapi", "ReadVms", "-v", "--Filters.VmStateNames", "running"}, nil, &resp)
+		require.NotNil(t, resp.Vms)
 		assert.NotEmpty(t, *resp.Vms)
 		for _, vm := range *resp.Vms {
 			assert.Equal(t, osc.VmStateRunning, vm.State)
 		}
 		require.NotNil(t, resp.ResponseContext)
 		assert.NotEmpty(t, resp.ResponseContext.RequestId)
+	})
+	t.Run("Chaining works", func(t *testing.T) {
+		region := os.Getenv("OSC_REGION")
+		out := run(t, []string{"oapi", "CreateNet", "--IpRange", "10.0.0.0/16"}, nil)
+		resp := osc.CreateSubnetResponse{}
+		runJSON(t, []string{"oapi", "CreateSubnet", "--NetId", "{{.Net.NetId}}", "--IpRange", "10.0.1.0/24", "--SubregionName", region + "a"}, out, &resp)
+		require.NotNil(t, resp.Subnet)
+		assert.NotEmpty(t, resp.Subnet.SubnetId)
 	})
 }
