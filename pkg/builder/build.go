@@ -13,6 +13,7 @@ import (
 
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/outscale/gli/pkg/config"
+	"github.com/outscale/gli/pkg/debug"
 	"github.com/outscale/gli/pkg/flags"
 	"github.com/outscale/osc-sdk-go/v3/pkg/iso8601"
 	"github.com/samber/lo"
@@ -111,12 +112,12 @@ func (b *Builder[T]) BuildAPI(rootCmd *cobra.Command, methodFilter func(m reflec
 			Run:     run,
 		}
 		arg := m.Type.In(2)
-		b.BuildFlags(cmd, arg, "")
+		b.BuildFlags(cmd, arg, "", true)
 		apiCmd.AddCommand(cmd)
 	}
 }
 
-func (b *Builder[T]) BuildFlags(cmd *cobra.Command, arg reflect.Type, prefix string) {
+func (b *Builder[T]) BuildFlags(cmd *cobra.Command, arg reflect.Type, prefix string, allowRequired bool) {
 	typeName := arg.Name()
 	fs := cmd.Flags()
 	for i := range arg.NumField() {
@@ -126,56 +127,61 @@ func (b *Builder[T]) BuildFlags(cmd *cobra.Command, arg reflect.Type, prefix str
 		if t.Kind() == reflect.Ptr {
 			t = t.Elem()
 		}
-		help := b.spec.SummaryForAttribute(typeName, f.Name)
+		help, required := b.spec.SummaryForAttribute(typeName, f.Name)
+		flagName := prefix + f.Name
 		switch t.Kind() {
 		case reflect.Bool:
-			fs.Bool(prefix+f.Name, false, help)
+			fs.Bool(flagName, false, help)
 		case reflect.String:
-			fs.String(prefix+f.Name, "", help)
+			fs.String(flagName, "", help)
 			if t.Implements(reflect.TypeFor[enum]()) {
 				values := reflect.New(t).Interface().(enum).Values()
-				_ = cmd.RegisterFlagCompletionFunc(prefix+f.Name, func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
+				_ = cmd.RegisterFlagCompletionFunc(flagName, func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
 					return lo.Map(values, func(v string, _ int) cobra.Completion { return cobra.Completion(v) }), cobra.ShellCompDirectiveDefault
 				})
 			}
 		case reflect.Int:
-			fs.Int(prefix+f.Name, 0, help)
+			fs.Int(flagName, 0, help)
 		case reflect.Slice:
 			switch t.Elem().Kind() {
 			case reflect.Bool:
-				fs.BoolSlice(prefix+f.Name, nil, help)
+				fs.BoolSlice(flagName, nil, help)
 			case reflect.String:
-				fs.StringSlice(prefix+f.Name, nil, help)
+				fs.StringSlice(flagName, nil, help)
 				if t.Elem().Implements(reflect.TypeFor[enum]()) {
 					values := reflect.New(t.Elem()).Interface().(enum).Values()
-					_ = cmd.RegisterFlagCompletionFunc(prefix+f.Name, func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
+					_ = cmd.RegisterFlagCompletionFunc(flagName, func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
 						return lo.Map(values, func(v string, _ int) cobra.Completion { return cobra.Completion(v) }), cobra.ShellCompDirectiveDefault
 					})
 				}
 			case reflect.Int:
-				fs.IntSlice(prefix+f.Name, nil, help)
+				fs.IntSlice(flagName, nil, help)
 			case reflect.Struct:
 				switch {
 				case ot == reflect.TypeFor[iso8601.Time]() || ot == reflect.TypeFor[time.Time]():
 					// TODO: add slice
-					fs.Var(flags.NewTimeValue(), prefix+f.Name, help)
+					fs.Var(flags.NewTimeValue(), flagName, help)
 				case t.Elem().Implements(reflect.TypeFor[json.Marshaler]()):
-					fs.StringSlice(prefix+f.Name, nil, help)
+					fs.StringSlice(flagName, nil, help)
 				default:
 					for i := range NumEntriesInSlices {
-						b.BuildFlags(cmd, t.Elem(), prefix+f.Name+"."+strconv.Itoa(i)+".")
+						b.BuildFlags(cmd, t.Elem(), flagName+"."+strconv.Itoa(i)+".", required && allowRequired)
 					}
 				}
 			}
 		case reflect.Struct:
 			switch {
 			case t == reflect.TypeFor[iso8601.Time]() || t == reflect.TypeFor[time.Time]():
-				fs.Var(flags.NewTimeValue(), prefix+f.Name, help)
+				fs.Var(flags.NewTimeValue(), flagName, help)
 			case ot.Implements(reflect.TypeFor[json.Marshaler]()):
-				fs.String(prefix+f.Name, "", help)
+				fs.String(flagName, "", help)
 			default:
-				b.BuildFlags(cmd, t, prefix+f.Name+".")
+				b.BuildFlags(cmd, t, flagName+".", required && allowRequired)
 			}
+		}
+		if required && allowRequired {
+			debug.Println(flagName, "is required")
+			_ = cmd.MarkFlagRequired(flagName)
 		}
 	}
 }
