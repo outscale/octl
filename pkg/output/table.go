@@ -18,7 +18,7 @@ import (
 
 type Table struct {
 	Content string
-	Columns []config.Column
+	Columns config.Columns
 }
 
 func (t Table) Output(ctx context.Context, v any) error {
@@ -29,10 +29,18 @@ func (t Table) Output(ctx context.Context, v any) error {
 	vv := reflect.ValueOf(v)
 	if vv.Kind() == reflect.Slice {
 		for i := range vv.Len() {
-			rows = append(rows, GetRow(vv.Index(i), t.Columns))
+			row, err := GetRow(vv.Index(i).Interface(), t.Columns)
+			if err != nil {
+				return err
+			}
+			rows = append(rows, row)
 		}
 	} else {
-		rows = append(rows, GetRow(vv, t.Columns))
+		row, err := GetRow(v, t.Columns)
+		if err != nil {
+			return err
+		}
+		rows = append(rows, row)
 	}
 	cellStyle := lipgloss.NewStyle().Padding(0, 1)
 	headerStyle := lipgloss.NewStyle().Bold(true).Align(lipgloss.Center)

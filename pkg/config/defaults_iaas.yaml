@@ -237,6 +237,8 @@ entities:
     columns:
     - title: ID
       content: ClientGatewayId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
     - title: PublicIp
@@ -267,6 +269,8 @@ entities:
     columns:
     - title: ID
       content: FlexibleGpuId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
     - title: SubregionName
@@ -285,6 +289,8 @@ entities:
     columns:
     - title: ID
       content: InternetServiceId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
     - title: NetId
@@ -319,6 +325,8 @@ entities:
     columns:
     - title: ID
       content: NatServiceId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
     - title: NetId
@@ -329,6 +337,8 @@ entities:
     columns:
     - title: ID
       content: NetId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
     - title: IpRange
@@ -337,6 +347,8 @@ entities:
     columns:
     - title: ID
       content: NetAccessPointId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
     - title: NetId
@@ -345,12 +357,16 @@ entities:
     columns:
     - title: ID
       content: NetPeeringId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
   nic:
     columns:
     - title: ID
       content: NicId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
     - title: NetId
@@ -367,6 +383,8 @@ entities:
     columns:
     - title: ID
       content: PublicIpId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: PublicIp
       content: PublicIp
     - title: PrivateIp
@@ -375,6 +393,8 @@ entities:
     columns:
     - title: ID
       content: RouteTableId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: NetId
       content: NetId
   securitygroup:
@@ -389,12 +409,16 @@ entities:
     columns:
     - title: ID
       content: SnapshotId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
   subnet:
     columns:
     - title: ID
       content: SubnetId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
     - title: NetId
@@ -423,12 +447,16 @@ entities:
     columns:
     - title: ID
       content: VirtualGatewayId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
   vm:
     columns:
     - title: ID
       content: VmId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: Type
       content: VmType
     - title: State
@@ -465,6 +493,8 @@ entities:
     columns:
     - title: ID
       content: VolumeId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: Type
       content: VolumeType
     - title: State
@@ -479,6 +509,8 @@ entities:
     columns:
     - title: ID
       content: VpnConnectionId
+    - title: Name
+      content: "find(Tags, #?.Key == \"Name\")?.Value"
     - title: State
       content: State
 aliases:

@@ -142,6 +142,11 @@ func main() {
 				Title:   "Name",
 				Content: f.Name,
 			})
+		} else if _, found := tObj.FieldByName("Tags"); found {
+			e.Columns = append(e.Columns, config.Column{
+				Title:   "Name",
+				Content: `find(Tags, #?.Key == "Name")?.Value`,
+			})
 		}
 		if f, found := tObj.FieldByName(typeName + "Type"); found {
 			e.Columns = append(e.Columns, config.Column{
