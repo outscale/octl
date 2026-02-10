@@ -6,16 +6,40 @@ SPDX-License-Identifier: BSD-3-Clause
 package config
 
 import (
+	"fmt"
 	"strings"
+
+	"github.com/expr-lang/expr"
+	"github.com/expr-lang/expr/vm"
 )
 
 type Column struct {
-	Title   string `yaml:"title"`
-	Content string `yaml:"content"`
+	Title    string `yaml:"title"`
+	Content  string `yaml:"content"`
+	compiled *vm.Program
 }
 
 func (c Column) String() string {
 	return c.Title + ":" + c.Content
+}
+
+func (c *Column) compile(s any) error {
+	var err error
+	c.compiled, err = expr.Compile(c.Content, expr.Env(s))
+	if err != nil {
+		return fmt.Errorf("invalid expression %q: %w", c.Content, err)
+	}
+	return nil
+}
+
+func (c *Column) Get(v any) (any, error) {
+	if c.compiled == nil {
+		err := c.compile(v)
+		if err != nil {
+			return nil, err
+		}
+	}
+	return expr.Run(c.compiled, v)
 }
 
 type Columns []Column

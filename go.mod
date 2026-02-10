@@ -4,6 +4,7 @@ go 1.25.3
 
 require (
 	github.com/charmbracelet/lipgloss v1.1.0
+	github.com/expr-lang/expr v1.17.7
 	github.com/fatih/color v1.18.0
 	github.com/getkin/kin-openapi v0.132.0
 	github.com/goccy/go-yaml v1.19.2

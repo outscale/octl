@@ -54,8 +54,7 @@ func Run[Client any, Error error](cmd *cobra.Command, cl *Client, cfg config.Con
 		}
 		return res[1].Interface().(error)
 	}
-	_ = out.Output(ctx, res[0].Interface())
-	return nil
+	return out.Output(ctx, res[0].Interface())
 }
 
 func ToStruct(cmd *cobra.Command, arg reflect.Value, prefix string) error {
