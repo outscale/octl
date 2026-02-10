@@ -32,6 +32,9 @@ func NewFromFlags(fs *pflag.FlagSet, c config.Call, e config.Entity) (Output, er
 		} else {
 			cols = slices.Clone(e.Columns)
 		}
+		if len(cols) == 0 {
+			return content{content: c.Content, output: YAML{}, single: param == "single"}, nil
+		}
 		return content{content: c.Content, output: Table{Columns: cols}}, nil
 	default:
 		return Default{}, nil

@@ -8,6 +8,7 @@ package builder
 import (
 	"bufio"
 	"regexp"
+	"slices"
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
@@ -48,19 +49,20 @@ func (s *Spec) SummaryForOperation(name string) (short, help, group string, depr
 	return "", "", "", false
 }
 
-func (s *Spec) SummaryForAttribute(typeName, attribute string) string {
+func (s *Spec) SummaryForAttribute(typeName, attribute string) (description string, required bool) {
 	if s.spec == nil {
-		return ""
+		return "", false
 	}
-	def := s.spec.Components.Schemas[typeName]
-	if def == nil || def.Value == nil {
-		return ""
+	typeDef := s.spec.Components.Schemas[typeName]
+	if typeDef == nil || typeDef.Value == nil {
+		return "", false
 	}
-	propDef := def.Value.Properties[attribute]
+
+	propDef := typeDef.Value.Properties[attribute]
 	if propDef == nil || propDef.Value == nil {
-		return ""
+		return "", false
 	}
-	return clean(propDef.Value.Description)
+	return clean(propDef.Value.Description), slices.Contains(typeDef.Value.Required, attribute)
 }
 
 var reEOL = regexp.MustCompile("[\r\n]{2,}")

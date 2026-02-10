@@ -54,6 +54,8 @@ var rootCmd = &cobra.Command{
 		}
 		_ = cmd.Help()
 	},
+	SilenceErrors: true, // do not display errors when an error occured, we do it
+	SilenceUsage:  true, // do not display usage when an error occured, the user will need to call -h
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
