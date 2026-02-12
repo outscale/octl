@@ -98,7 +98,7 @@ func (b *Builder[T]) BuildAPI(
 		ID:    "api",
 		Title: "api",
 	})
-	var apiCmd = &cobra.Command{
+	apiCmd := &cobra.Command{
 		Use:     "api",
 		GroupID: "api",
 		Short:   rootCmd.Use + " api calls",
@@ -138,13 +138,18 @@ func (b *Builder[T]) BuildFlags(
 ) {
 	switch arg.Kind() {
 	case reflect.Struct:
-		
+
 		b.buildFlagsFromStruct(cmd, arg, "", true)
 	case reflect.Pointer:
-		b.BuildFlags(cmd, arg.Elem())
+		arg = arg.Elem()
+		switch arg.Kind() {
+		case reflect.Struct:
+			b.buildFlagsFromStruct(cmd, arg, "", true)
+		default:
+			debug.Println("unsupported type for command flags: *%v", arg.Kind())
+		}
 	case reflect.String:
-		// projectId, ClusterId
-		cmd.Flags().String("Id", "", "Id of the object")
+		cmd.Use += " id"
 	default:
 		debug.Println("unsupported type for command flags: %v", arg.Kind())
 	}

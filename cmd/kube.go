@@ -40,13 +40,11 @@ func init() {
 	b.BuildAPI(oksCmd, func(m reflect.Method) bool {
 		return m.Type.NumIn() >= 3 && m.Type.NumOut() == 2 && !strings.HasSuffix(m.Name, "Raw") &&
 			!strings.HasSuffix(m.Name, "WithBody")
-	}, func(cmd *cobra.Command, _ []string) {
-		kube(cmd)
-	})
+	}, kube)
 	b.Build(oksCmd)
 }
 
-func kube(cmd *cobra.Command) {
+func kube(cmd *cobra.Command, args []string) {
 	debug.Println(cmd.Name() + " called")
 	path, _ := cmd.Flags().GetString("config")
 	prof, _ := cmd.Flags().GetString("profile")
@@ -63,7 +61,7 @@ func kube(cmd *cobra.Command) {
 	}
 	cl, err := oks.NewClient(p, opts...)
 	if err == nil {
-		err = runner.Run[oks.Client, *oks.ErrorResponse](cmd, cl, config.For("kube"))
+		err = runner.Run[oks.Client, *oks.ErrorResponse](cmd, args, cl, config.For("kube"))
 	}
 	if err != nil {
 		errors.ExitErr(err)
