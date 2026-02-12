@@ -20,6 +20,7 @@ import (
 	"github.com/outscale/octl/pkg/debug"
 	"github.com/outscale/octl/pkg/flags"
 	"github.com/outscale/octl/pkg/output"
+	"github.com/outscale/octl/pkg/style"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
@@ -52,7 +53,7 @@ func Run[Client any, Error error](cmd *cobra.Command, args []string, cl *Client,
 		}
 
 		callArgs = append(callArgs, reflect.ValueOf(args[argsIndex]))
-		argsIndex += 1
+		argsIndex++
 	}
 
 	if len(args) > argsIndex {
@@ -70,12 +71,13 @@ func Run[Client any, Error error](cmd *cobra.Command, args []string, cl *Client,
 	if !res[1].IsNil() {
 		var appErr Error
 		if errors.As(res[1].Interface().(error), &appErr) {
-			_ = out.Output(ctx, appErr)
+			_, _ = fmt.Fprintln(os.Stderr, style.Error.Render("The server returned an error"))
+			_ = out.Error(ctx, appErr)
 			os.Exit(1)
 		}
 		return res[1].Interface().(error)
 	}
-	return out.Output(ctx, res[0].Interface())
+	return out.Content(ctx, res[0].Interface())
 }
 
 func ToStruct(cmd *cobra.Command, arg reflect.Value, prefix string) error {

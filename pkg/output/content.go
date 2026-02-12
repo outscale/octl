@@ -14,15 +14,15 @@ import (
 )
 
 type content struct {
-	content string
-	output  Output
-	single  bool
+	contentField string
+	output       Output
+	single       bool
 }
 
-func (sr content) Output(ctx context.Context, v any) error {
+func (sr content) Content(ctx context.Context, v any) error {
 	vv := reflect.Indirect(reflect.ValueOf(v))
-	if sr.content != "" {
-		vv = reflect.Indirect(vv.FieldByName(sr.content))
+	if sr.contentField != "" {
+		vv = reflect.Indirect(vv.FieldByName(sr.contentField))
 	}
 	if sr.single && vv.Kind() == reflect.Slice {
 		switch vv.Len() {
@@ -35,6 +35,10 @@ func (sr content) Output(ctx context.Context, v any) error {
 			vv = reflect.Indirect(vv.Index(0))
 		}
 	}
-	debug.Println("content", sr.content, "type", vv.Type().Name(), "kind", vv.Kind())
-	return sr.output.Output(ctx, vv.Interface())
+	debug.Println("content", sr.contentField, "type", vv.Type().Name(), "kind", vv.Kind())
+	return sr.output.Content(ctx, vv.Interface())
+}
+
+func (sr content) Error(ctx context.Context, v any) error {
+	return sr.output.Error(ctx, v)
 }

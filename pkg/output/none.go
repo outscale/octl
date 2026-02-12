@@ -11,6 +11,10 @@ import (
 type None struct {
 }
 
-func (t None) Output(ctx context.Context, v any) error {
+func (t None) Content(ctx context.Context, v any) error {
+	return nil
+}
+
+func (t None) Error(ctx context.Context, v any) error {
 	return nil
 }

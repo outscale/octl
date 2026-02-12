@@ -16,7 +16,7 @@ import (
 
 type JSON struct{}
 
-func (JSON) Output(ctx context.Context, v any) error {
+func (JSON) Content(ctx context.Context, v any) error {
 	buf, err := json.MarshalIndent(v, "", "  ")
 	if err != nil {
 		return fmt.Errorf("marshal json: %w", err)
@@ -26,4 +26,8 @@ func (JSON) Output(ctx context.Context, v any) error {
 	}
 	_, err = fmt.Fprintln(os.Stdout, string(buf))
 	return err
+}
+
+func (j JSON) Error(ctx context.Context, v any) error {
+	return j.Content(ctx, v)
 }
