@@ -24,38 +24,42 @@ import (
 	"github.com/spf13/pflag"
 )
 
-func Run[Client any, Error error](cmd *cobra.Command, cl *Client, cfg config.Config) error {
+func Run[Client any, Error error](cmd *cobra.Command, args []string, cl *Client, cfg config.Config) error {
 	clt := reflect.TypeOf(cl)
 	m, _ := clt.MethodByName(cmd.Name())
 
 	ctx := context.Background()
-	args := []reflect.Value{
+	callArgs := []reflect.Value{
 		reflect.ValueOf(ctx),
 	}
 
+	argsIndex := 0
 	for j := 2; j < m.Type.NumIn()-1; j++ {
 		argType := m.Type.In(j)
-		if argType.Kind() == reflect.String {
-			// Id
-			arg, err := cmd.Flags().GetString("Id")
+		if argType.Kind() == reflect.Struct || argType.Kind() == reflect.Pointer {
+			arg := reflect.New(argType)
+			err := ToStruct(cmd, arg, "")
 			if err != nil {
 				return err
 			}
 
-			args = append(args, reflect.ValueOf(arg))
+			callArgs = append(callArgs, arg.Elem())
 			continue
 		}
 
-		arg := reflect.New(argType)
-		err := ToStruct(cmd, arg, "")
-		if err != nil {
-			return err
+		if argsIndex >= len(args) {
+			return fmt.Errorf("not enough arguments for %s", cmd.Name())
 		}
 
-		args = append(args, arg.Elem())
+		callArgs = append(callArgs, reflect.ValueOf(args[argsIndex]))
+		argsIndex += 1
 	}
 
-	res := reflect.ValueOf(cl).MethodByName(cmd.Name()).Call(args)
+	if len(args) > argsIndex {
+		return fmt.Errorf("too many arguments for %s", cmd.Name())
+	}
+
+	res := reflect.ValueOf(cl).MethodByName(cmd.Name()).Call(callArgs)
 	c := cfg.Calls[cmd.Name()]
 	e := cfg.Entities[c.Entity]
 	out, err := output.NewFromFlags(cmd.Flags(), c, e)
