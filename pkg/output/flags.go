@@ -23,9 +23,9 @@ func NewFromFlags(fs *pflag.FlagSet, c config.Call, e config.Entity) (Output, er
 	case "none":
 		return None{}, nil
 	case "json":
-		return content{content: c.Content, output: JSON{}, single: param == "single"}, nil
+		return content{contentField: c.Content, output: JSON{}, single: param == "single"}, nil
 	case "yaml":
-		return content{content: c.Content, output: YAML{}, single: param == "single"}, nil
+		return content{contentField: c.Content, output: YAML{}, single: param == "single"}, nil
 	case "table":
 		var cols config.Columns
 		fcols, _ := fs.GetString("columns")
@@ -35,9 +35,9 @@ func NewFromFlags(fs *pflag.FlagSet, c config.Call, e config.Entity) (Output, er
 			cols = slices.Clone(e.Columns)
 		}
 		if len(cols) == 0 {
-			return content{content: c.Content, output: YAML{}, single: param == "single"}, nil
+			return content{contentField: c.Content, output: YAML{}, single: param == "single"}, nil
 		}
-		return content{content: c.Content, output: Table{Columns: cols}, single: param == "single"}, nil
+		return content{contentField: c.Content, output: Table{Columns: cols}, single: param == "single"}, nil
 	default:
 		return Default{}, nil
 	}

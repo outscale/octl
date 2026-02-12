@@ -24,7 +24,7 @@ func NewJQ(s string) (*JQ, error) {
 	return &JQ{query: query}, nil
 }
 
-func (j *JQ) Output(ctx context.Context, v any) error {
+func (j JQ) Content(ctx context.Context, v any) error {
 	buf, err := json.Marshal(v)
 	if err != nil {
 		return fmt.Errorf("to JSON: %w", err)
@@ -47,9 +47,13 @@ func (j *JQ) Output(ctx context.Context, v any) error {
 			}
 			return fmt.Errorf("jq error: %w", err)
 		}
-		if err := out.Output(ctx, v); err != nil {
+		if err := out.Content(ctx, v); err != nil {
 			return fmt.Errorf("output: %w", err)
 		}
 	}
 	return nil
+}
+
+func (JQ) Error(ctx context.Context, v any) error {
+	return YAML{}.Error(ctx, v)
 }

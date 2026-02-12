@@ -7,5 +7,6 @@ package output
 import "context"
 
 type Output interface {
-	Output(ctx context.Context, v any) error
+	Content(ctx context.Context, v any) error
+	Error(ctx context.Context, v any) error
 }

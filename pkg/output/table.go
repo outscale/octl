@@ -50,11 +50,10 @@ var (
 )
 
 type Table struct {
-	Content string
 	Columns config.Columns
 }
 
-func (t Table) Output(ctx context.Context, v any) error {
+func (t Table) Content(ctx context.Context, v any) error {
 	headers := lo.Map(t.Columns, func(c config.Column, _ int) string {
 		return c.Title
 	})
@@ -101,4 +100,8 @@ func (t Table) Output(ctx context.Context, v any) error {
 
 	_, err := fmt.Fprintln(os.Stdout, ot)
 	return err
+}
+
+func (Table) Error(ctx context.Context, v any) error {
+	return YAML{}.Error(ctx, v)
 }
