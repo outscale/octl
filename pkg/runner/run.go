@@ -63,7 +63,7 @@ func Run[Client any, Error error](cmd *cobra.Command, args []string, cl *Client,
 	res := reflect.ValueOf(cl).MethodByName(cmd.Name()).Call(callArgs)
 	c := cfg.Calls[cmd.Name()]
 	e := cfg.Entities[c.Entity]
-	out, err := output.NewFromFlags(cmd.Flags(), c, e)
+	out, err := output.NewFromFlags(cmd.Flags(), "", c.Content, e.Columns)
 	if err != nil {
 		return err
 	}
