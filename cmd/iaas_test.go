@@ -6,6 +6,8 @@ SPDX-License-Identifier: BSD-3-Clause
 package cmd_test
 
 import (
+	"bufio"
+	"bytes"
 	"context"
 	"crypto/sha1"
 	"encoding/hex"
@@ -13,6 +15,8 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
+	"strings"
 	"testing"
 	"time"
 
@@ -248,4 +252,38 @@ func TestFile(t *testing.T) {
 	var resp osc.Policy
 	runJSON(t, []string{"iaas", "policy", "create", "--document", policyFile, "--name", name, "-o", "json"}, nil, &resp)
 	_ = run(t, []string{"iaas", "policy", "delete", "-y", *resp.Orn}, nil)
+}
+
+func TestHelp(t *testing.T) {
+	clean := func(str string) string {
+		return strings.TrimSpace(regexp.MustCompile("[ ]{2,}").ReplaceAllString(str, " "))
+	}
+	t.Run("Testing command short help", func(t *testing.T) {
+		buf := run(t, []string{"iaas", "api", "-h"}, nil)
+		scanner := bufio.NewScanner(bytes.NewReader(buf))
+		found := false
+		for scanner.Scan() {
+			line := clean(scanner.Text())
+			if strings.Contains(line, "DeleteVmGroup") {
+				found = true
+				assert.Equal(t, "DeleteVmGroup Deletes a specified VM group.", line)
+			}
+		}
+		require.NoError(t, scanner.Err())
+		assert.True(t, found)
+	})
+	t.Run("Testing flag short help", func(t *testing.T) {
+		buf := run(t, []string{"iaas", "api", "CreateVms", "-h"}, nil)
+		scanner := bufio.NewScanner(bytes.NewReader(buf))
+		found := false
+		for scanner.Scan() {
+			line := clean(scanner.Text())
+			if strings.Contains(line, "--ImageId") {
+				found = true
+				assert.Equal(t, "--ImageId string The ID of the OMI used to create the VM.", line)
+			}
+		}
+		require.NoError(t, scanner.Err())
+		assert.True(t, found)
+	})
 }

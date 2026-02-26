@@ -32,7 +32,7 @@ func (s *Spec) SummaryForOperation(name string) (short, help, group string, depr
 				help = op.Description
 				help += "\n\n> Online help: " + s.helpURL + "#" + strings.ToLower(op.OperationID)
 				var found bool
-				short, _, found = strings.Cut(help, ". ")
+				short, _, found = strings.Cut(cleanOneLine(help), ". ")
 				if found {
 					short += "."
 				}
@@ -78,5 +78,10 @@ func cleanOneLine(str string) string {
 		"\r", " ",
 		"\n", " ",
 	)
-	return strings.TrimSpace(reSpaces.ReplaceAllString(r.Replace(str), " "))
+	str = strings.TrimSpace(reSpaces.ReplaceAllString(r.Replace(str), " "))
+	first, remainder, _ := strings.Cut(str, ". ")
+	if strings.Contains(first, "[WARNING]") {
+		str = remainder
+	}
+	return str
 }
