@@ -30,7 +30,7 @@ func TestIAASAPI(t *testing.T) {
 	}
 	subregion := region + "a"
 	volResp := osc.Volume{}
-	runJSON(t, []string{"iaas", "vol", "create", "--subregion-name", subregion, "--size", "4", "--type", "standard", "-o", "json"}, nil, &volResp)
+	runJSON(t, []string{"iaas", "vol", "create", "--subregion", subregion, "--size", "4", "--type", "standard", "-o", "json"}, nil, &volResp)
 	t.Run("ReadVolumes returns a raw output", func(t *testing.T) {
 		resp := osc.ReadVolumesResponse{}
 		runJSON(t, []string{"iaas", "api", "ReadVolumes", "--Filters.VolumeTypes", "standard"}, nil, &resp)
@@ -157,7 +157,7 @@ func TestIAASAliases(t *testing.T) {
 func TestIAASCRUD(t *testing.T) {
 	t.Run("Create/Update/Delete works", func(t *testing.T) {
 		var resp osc.Volume
-		runJSON(t, []string{"iaas", "vol", "create", "--subregion-name", "eu-west-2a", "--size", "4", "-o", "json"}, nil, &resp)
+		runJSON(t, []string{"iaas", "vol", "create", "--subregion", "eu-west-2a", "--size", "4", "-o", "json"}, nil, &resp)
 		require.NotEmpty(t, resp.VolumeId)
 
 		volID := resp.VolumeId
@@ -192,9 +192,9 @@ func TestIAASCRUD(t *testing.T) {
 	})
 	t.Run("Multiple IDs can be specified", func(t *testing.T) {
 		var respA, respB osc.Volume
-		runJSON(t, []string{"iaas", "vol", "create", "--subregion-name", "eu-west-2a", "--size", "4", "-o", "json"}, nil, &respA)
+		runJSON(t, []string{"iaas", "vol", "create", "--subregion", "eu-west-2a", "--size", "4", "-o", "json"}, nil, &respA)
 		require.NotEmpty(t, respA.VolumeId)
-		runJSON(t, []string{"iaas", "vol", "create", "--subregion-name", "eu-west-2a", "--size", "4", "-o", "json"}, nil, &respB)
+		runJSON(t, []string{"iaas", "vol", "create", "--subregion", "eu-west-2a", "--size", "4", "-o", "json"}, nil, &respB)
 		require.NotEmpty(t, respB.VolumeId)
 		_ = run(t, []string{"iaas", "vol", "update", respA.VolumeId, respB.VolumeId, "--size", "8"}, nil)
 		ctx, cancel := context.WithTimeout(t.Context(), time.Minute)

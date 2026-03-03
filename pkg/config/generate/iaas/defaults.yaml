@@ -275,7 +275,7 @@ aliases:
   - --output
   - success
   flags:
-  - name: vm_id
+  - name: vm-id
     alias_to: VmId
     required: true
 - entity: flexiblegpu
@@ -303,12 +303,12 @@ aliases:
   - --output
   - success
   flags:
-  - name: net_id
+  - name: net-id
     alias_to: NetId
     required: true
 - entity: internetservice
   group: internetservice
-  use: unlink service_id net_id
+  use: unlink service_id
   alias_to: UnlinkInternetService
   short: alias for api UnlinkInternetService --InternetServiceId service_id
   command:
@@ -319,7 +319,7 @@ aliases:
   - --output
   - success
   flags:
-  - name: net_id
+  - name: net-id
     alias_to: NetId
     required: true
 - entity: nic
@@ -335,10 +335,10 @@ aliases:
   - --output
   - yaml
   flags:
-  - name: vm_id
+  - name: vm-id
     alias_to: VmId
     required: true
-  - name: device_number
+  - name: device-number
     alias_to: DeviceNumber
     required: true
 - entity: netaccesspoint
@@ -469,12 +469,12 @@ aliases:
   - --output
   - success
   flags:
-  - name: user_name
+  - name: user-name
     alias_to: UserName
     required: true
 - entity: policy
   group: policy
-  use: unlink policy_orn user_name
+  use: unlink policy_orn
   short: alias for api UnlinkPolicy --PolicyOrn policy_orn
   alias_to: UnlinkPolicy
   command:
@@ -485,7 +485,7 @@ aliases:
   - --output
   - success
   flags:
-  - name: user_name
+  - name: user-name
     alias_to: UserName
     required: true
 - entity: policyversion
@@ -600,7 +600,7 @@ aliases:
   - --output
   - success
   flags:
-  - name: vm_id
+  - name: vm-id
     alias_to: VmId
     required: true
   - name: device_name
