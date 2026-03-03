@@ -1454,7 +1454,7 @@ aliases:
   - --output
   - success
   flags:
-  - name: vm_id
+  - name: vm-id
     alias_to: VmId
     required: true
 - entity: flexiblegpu
@@ -1480,11 +1480,11 @@ aliases:
   - --output
   - success
   flags:
-  - name: net_id
+  - name: net-id
     alias_to: NetId
     required: true
 - entity: internetservice
-  use: unlink service_id net_id
+  use: unlink service_id
   alias_to: UnlinkInternetService
   short: alias for api UnlinkInternetService --InternetServiceId service_id
   command:
@@ -1495,7 +1495,7 @@ aliases:
   - --output
   - success
   flags:
-  - name: net_id
+  - name: net-id
     alias_to: NetId
     required: true
 - entity: nic
@@ -1510,10 +1510,10 @@ aliases:
   - --output
   - yaml
   flags:
-  - name: vm_id
+  - name: vm-id
     alias_to: VmId
     required: true
-  - name: device_number
+  - name: device-number
     alias_to: DeviceNumber
     required: true
 - entity: netaccesspoint
@@ -1636,11 +1636,11 @@ aliases:
   - --output
   - success
   flags:
-  - name: user_name
+  - name: user-name
     alias_to: UserName
     required: true
 - entity: policy
-  use: unlink policy_orn user_name
+  use: unlink policy_orn
   alias_to: UnlinkPolicy
   short: alias for api UnlinkPolicy --PolicyOrn policy_orn
   command:
@@ -1651,7 +1651,7 @@ aliases:
   - --output
   - success
   flags:
-  - name: user_name
+  - name: user-name
     alias_to: UserName
     required: true
 - entity: policyversion
@@ -1760,7 +1760,7 @@ aliases:
   - --output
   - success
   flags:
-  - name: vm_id
+  - name: vm-id
     alias_to: VmId
     required: true
   - name: device_name
@@ -2156,7 +2156,7 @@ aliases:
     alias_to: Filters.DedicatedGroupIds
   - name: name
     alias_to: Filters.Names
-  - name: subregion-name
+  - name: subregion
     alias_to: Filters.SubregionNames
 - entity: dedicatedgroup
   use: describe dedicated_group_id [dedicated_group_id]...
@@ -2307,7 +2307,7 @@ aliases:
     alias_to: Filters.ModelNames
   - name: state
     alias_to: Filters.States
-  - name: subregion-name
+  - name: subregion
     alias_to: Filters.SubregionNames
   - name: tag-key
     alias_to: Filters.Tags.0.Key
@@ -2856,7 +2856,7 @@ aliases:
     alias_to: Filters.States
   - name: subnet-id
     alias_to: Filters.SubnetIds
-  - name: subregion-name
+  - name: subregion
     alias_to: Filters.SubregionNames
   - name: tag-key
     alias_to: Filters.TagKeys
@@ -3255,7 +3255,7 @@ aliases:
     alias_to: Filters.States
   - name: id
     alias_to: Filters.SubnetIds
-  - name: subregion-name
+  - name: subregion
     alias_to: Filters.SubregionNames
   - name: tag-key
     alias_to: Filters.TagKeys
@@ -3291,7 +3291,7 @@ aliases:
     alias_to: Filters.RegionNames
   - name: state
     alias_to: Filters.States
-  - name: name
+  - name: subregion
     alias_to: Filters.SubregionNames
 - entity: subregion
   use: describe subregion_name [subregion_name]...
@@ -3750,7 +3750,7 @@ aliases:
     alias_to: Filters.NicStates
   - name: nic-subnet-id
     alias_to: Filters.NicSubnetIds
-  - name: nic-subregion-name
+  - name: nic-subregion
     alias_to: Filters.NicSubregionNames
   - name: platform
     alias_to: Filters.Platforms
@@ -3778,7 +3778,7 @@ aliases:
     alias_to: Filters.StateReasons
   - name: subnet-id
     alias_to: Filters.SubnetIds
-  - name: subregion-name
+  - name: subregion
     alias_to: Filters.SubregionNames
   - name: tag-key
     alias_to: Filters.TagKeys
@@ -3853,7 +3853,7 @@ aliases:
     alias_to: Filters.MaintenanceEventsNotAfter
   - name: maintenance-event-not-before
     alias_to: Filters.MaintenanceEventsNotBefore
-  - name: subregion-name
+  - name: subregion
     alias_to: Filters.SubregionNames
   - name: vm-id
     alias_to: Filters.VmIds
@@ -3913,7 +3913,7 @@ aliases:
     alias_to: Filters.LinkVolumeVmIds
   - name: snapshot-id
     alias_to: Filters.SnapshotIds
-  - name: subregion-name
+  - name: subregion
     alias_to: Filters.SubregionNames
   - name: tag-key
     alias_to: Filters.TagKeys
@@ -4129,7 +4129,7 @@ aliases:
   - name: name
     alias_to: Name
     required: true
-  - name: subregion-name
+  - name: subregion
     alias_to: SubregionName
     required: true
 - entity: dhcpoption
@@ -4225,7 +4225,7 @@ aliases:
   - name: model-name
     alias_to: ModelName
     required: true
-  - name: subregion-name
+  - name: subregion
     alias_to: SubregionName
     required: true
 - entity: image
@@ -4402,7 +4402,7 @@ aliases:
     alias_to: SecurityGroups
   - name: subnet
     alias_to: Subnets
-  - name: subregion-name
+  - name: subregion
     alias_to: SubregionNames
   - name: tag-key
     alias_to: Tags.0.Key
@@ -4811,7 +4811,7 @@ aliases:
   - name: net-id
     alias_to: NetId
     required: true
-  - name: subregion-name
+  - name: subregion
     alias_to: SubregionName
 - entity: tag
   use: create
@@ -5024,7 +5024,7 @@ aliases:
     alias_to: Nics.0.SubnetId
   - name: performance
     alias_to: Performance
-  - name: placement-subregion-name
+  - name: placement-subregion
     alias_to: Placement.SubregionName
   - name: placement-tenancy
     alias_to: Placement.Tenancy
@@ -5066,7 +5066,7 @@ aliases:
     alias_to: Size
   - name: snapshot-id
     alias_to: SnapshotId
-  - name: subregion-name
+  - name: subregion
     alias_to: SubregionName
     required: true
   - name: type

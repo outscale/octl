@@ -80,6 +80,7 @@ func main() {
 		FlagReplaces: []string{
 			"block-device-mapping-bsu", "volume",
 			"block-device-mapping", "volume",
+			"subregion-name", "subregion",
 		},
 		RequiredFromFieldPointer: true,
 	}
