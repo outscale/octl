@@ -132,13 +132,13 @@ func TestIAASAliases(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, vmId, vm.VmId)
 	})
-	t.Run("High level api can output JSON", func(t *testing.T) {
+	t.Run("describe can output JSON object without having to specify --single", func(t *testing.T) {
 		resp := osc.ReadVmsResponse{}
 		runJSON(t, []string{"iaas", "api", "ReadVms"}, nil, &resp)
 		require.NotNil(t, resp.Vms)
 		require.NotEmpty(t, *resp.Vms)
 		vmId := (*resp.Vms)[0].VmId
-		data := run(t, []string{"iaas", "vm", "describe", vmId, "-o", "json,single"}, nil)
+		data := run(t, []string{"iaas", "vm", "describe", vmId, "-o", "json"}, nil)
 		var vm osc.Vm
 		err := json.Unmarshal(data, &vm)
 		require.NoError(t, err)
@@ -172,10 +172,9 @@ func TestIAASCRUD(t *testing.T) {
 				t.Error("timeout")
 				t.FailNow()
 			default:
-				var resp []osc.Volume
+				var resp osc.Volume
 				runJSON(t, []string{"iaas", "vol", "desc", volID, "-o", "json"}, nil, &resp)
-				require.Len(t, resp, 1)
-				if resp[0].Size == 8 {
+				if resp.Size == 8 {
 					break LOOPWAIT
 				}
 				time.Sleep(10 * time.Second)
@@ -184,11 +183,9 @@ func TestIAASCRUD(t *testing.T) {
 
 		_ = run(t, []string{"iaas", "vol", "delete", volID, "-y"}, nil)
 
-		var dresp []osc.Volume
-		runJSON(t, []string{"iaas", "vol", "desc", volID, "-o", "json"}, nil, &dresp)
-		for _, vol := range dresp {
-			assert.Equal(t, osc.VolumeStateDeleting, vol.State)
-		}
+		var vresp osc.Volume
+		runJSON(t, []string{"iaas", "vol", "desc", volID, "-o", "json"}, nil, &vresp)
+		assert.Equal(t, osc.VolumeStateDeleting, vresp.State)
 	})
 	t.Run("Multiple IDs can be specified", func(t *testing.T) {
 		var respA, respB osc.Volume
