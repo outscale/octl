@@ -9,6 +9,7 @@ import (
 type ReaderValue struct {
 	path string
 	r    io.ReadCloser
+	open bool
 }
 
 func NewReaderValue() *ReaderValue {
@@ -23,6 +24,7 @@ func (v *ReaderValue) Set(s string) error {
 	}
 	v.path = s
 	v.r = r
+	v.open = true
 	return nil
 }
 
@@ -40,5 +42,9 @@ func (v *ReaderValue) Value() (io.Reader, bool) {
 }
 
 func (v *ReaderValue) Close() error {
-	return v.r.Close()
+	if v.open {
+		return v.r.Close()
+	}
+	v.open = false
+	return nil
 }

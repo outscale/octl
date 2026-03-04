@@ -6,13 +6,14 @@ package format
 
 import (
 	"context"
+	"io"
 
 	"github.com/outscale/octl/pkg/messages"
 )
 
 type Success struct{}
 
-func (Success) Format(ctx context.Context, v any) error {
+func (Success) Format(ctx context.Context, w io.Writer, v any) error {
 	messages.Success("The operation completed successfully")
 	return nil
 }

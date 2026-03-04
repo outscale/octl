@@ -7,6 +7,7 @@ package format
 import (
 	"context"
 	"fmt"
+	"io"
 	"os"
 
 	"github.com/goccy/go-yaml"
@@ -14,8 +15,8 @@ import (
 
 type YAML struct{}
 
-func (YAML) Format(ctx context.Context, v any) error {
-	enc := yaml.NewEncoder(os.Stdout, yaml.OmitZero(), yaml.UseSingleQuote(true), yaml.Indent(2))
+func (YAML) Format(ctx context.Context, w io.Writer, v any) error {
+	enc := yaml.NewEncoder(w, yaml.OmitZero(), yaml.UseSingleQuote(true), yaml.Indent(2))
 	err := enc.Encode(v)
 	if err != nil {
 		return fmt.Errorf("marshal yaml: %w", err)
@@ -24,7 +25,7 @@ func (YAML) Format(ctx context.Context, v any) error {
 }
 
 func (y YAML) Error(ctx context.Context, v any) error {
-	return y.Format(ctx, v)
+	return y.Format(ctx, os.Stderr, v)
 }
 
 var _ Interface = YAML{}

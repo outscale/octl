@@ -6,11 +6,12 @@ package format
 
 import (
 	"context"
+	"io"
 )
 
 type None struct{}
 
-func (None) Format(ctx context.Context, v any) error {
+func (None) Format(ctx context.Context, _ io.Writer, _ any) error {
 	return nil
 }
 

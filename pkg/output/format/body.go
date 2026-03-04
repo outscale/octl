@@ -5,13 +5,14 @@ SPDX-License-Identifier: BSD-3-Clause
 package format
 
 import (
+	"bytes"
 	"context"
+	"fmt"
 	"io"
 	"os"
 	"reflect"
 
 	"github.com/gabriel-vasile/mimetype"
-	"github.com/mattn/go-isatty"
 	"github.com/outscale/octl/pkg/debug"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/structs"
@@ -19,14 +20,14 @@ import (
 
 type Body struct{}
 
-func (Body) Format(ctx context.Context, v any) (err error) {
+func (Body) Format(ctx context.Context, w io.Writer, v any) (err error) {
 	vv, found := structs.FindFieldByType[io.ReadCloser](reflect.ValueOf(v))
 	if !found {
-		return YAML{}.Format(ctx, v)
+		return YAML{}.Format(ctx, w, v)
 	}
 	r, ok := vv.Interface().(io.ReadCloser)
 	if !ok {
-		return YAML{}.Format(ctx, v)
+		return YAML{}.Format(ctx, w, v)
 	}
 	defer func() {
 		cerr := r.Close()
@@ -34,22 +35,23 @@ func (Body) Format(ctx context.Context, v any) (err error) {
 			err = cerr
 		}
 	}()
-	// fetch the first 100 bytes to detect mime type
-	buf := make([]byte, 100)
-	_, err = r.Read(buf)
+	// fetch the first 100ish bytes to detect mime type
+	wbuf := &bytes.Buffer{}
+	_, err = io.Copy(wbuf, io.LimitReader(r, 100))
 	if err != nil {
-		return err
+		return fmt.Errorf("read body: %w", err)
 	}
+	buf := wbuf.Bytes()
 	debug.Println("detected mime type", mimetype.Detect(buf).String(), "from", string(buf))
-	if !mimetype.Detect(buf).Is("text/plain") && isatty.IsTerminal(os.Stdout.Fd()) {
+	if !mimetype.Detect(buf).Is("text/plain") && IsTerminal(w) {
 		messages.Warn("not displaying binary data to terminal, you need to redirect output to a file")
 		os.Exit(1)
 	}
-	// output first 10 bytes
-	_, err = os.Stdout.Write(buf)
+	// output first 100ish bytes
+	_, err = io.Copy(w, wbuf)
 	if err == nil {
 		// output remainder of body
-		_, err = io.Copy(os.Stdout, r)
+		_, err = io.Copy(w, r)
 	}
 	return err
 }

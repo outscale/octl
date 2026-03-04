@@ -17,7 +17,7 @@ func CloseAll(fs *pflag.FlagSet) error {
 		if closer, ok := v.(Closer); ok {
 			cerr := closer.Close()
 			if cerr != nil {
-				err = fmt.Errorf("closing %s: %v", f.Name, cerr)
+				err = fmt.Errorf("closing %s: %w", f.Name, cerr)
 			}
 		}
 	})

@@ -22,6 +22,7 @@ type PreviewReader struct {
 // Note: this only works if the reader has not been consumed.
 func (o PreviewReader) MarshalText() ([]byte, error) {
 	defer o.Close() //nolint
+	debug.Println("read preview")
 	// ensure we have enough for contentPreviewSize UTF-8 chars
 	buf, err := io.ReadAll(io.LimitReader(o, contentPreviewSize*4))
 	if err != nil {
@@ -32,7 +33,7 @@ func (o PreviewReader) MarshalText() ([]byte, error) {
 		str := string(buf)
 		str = str[:min(contentPreviewSize, len(str))]
 		// the content could still be binary data
-		if utf8.ValidString(str) {
+		if utf8.ValidString(str) && len(str) == contentPreviewSize {
 			return []byte(str + " ..."), nil
 		}
 	}
