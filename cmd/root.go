@@ -70,6 +70,9 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.AddGroup(&cobra.Group{ID: "services", Title: "OUTSCALE Services Commands"})
+	rootCmd.AddGroup(&cobra.Group{ID: "config", Title: "Configuration Commands"})
+
 	rootCmd.Flags().Bool("version", false, "Display version")
 	rootCmd.PersistentFlags().BoolP("verbose", "v", false, "Verbose output")
 	path, _ := profile.DefaultConfigPath()

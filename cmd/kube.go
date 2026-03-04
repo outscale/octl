@@ -20,6 +20,7 @@ import (
 
 // oksCmd represents the kubecommand
 var oksCmd = &cobra.Command{
+	GroupID: "services",
 	Use:     "kube",
 	Short:   "OUTSCALE Kubernetes as a Service (OKS) management",
 	Aliases: []string{"oks"},
