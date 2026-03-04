@@ -25,6 +25,7 @@ import (
 
 // storageCmd represents the kubecommand
 var storageCmd = &cobra.Command{
+	GroupID: "services",
 	Use:     "storage",
 	Short:   "OUTSCALE Object Storage (OOS) management",
 	Aliases: []string{"oos"},

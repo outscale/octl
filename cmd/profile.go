@@ -23,9 +23,10 @@ import (
 
 // profileCmd represents the profile command
 var profileCmd = &cobra.Command{
-	Use:   "profile",
-	Short: "Profile file management",
-	Long:  `Creates, updates profile from a config file`,
+	GroupID: "config",
+	Use:     "profile",
+	Short:   "Profile file management",
+	Long:    `Creates, updates profile from a config file`,
 }
 
 var profileListCmd = &cobra.Command{

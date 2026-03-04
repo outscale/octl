@@ -20,8 +20,9 @@ import (
 
 // iaasCmd represents the iaascommand
 var iaasCmd = &cobra.Command{
-	Use:   "iaas",
-	Short: "OUTSCALE IaaS management",
+	GroupID: "services",
+	Use:     "iaas",
+	Short:   "OUTSCALE IaaS management",
 }
 
 func init() {
