@@ -8,7 +8,7 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"os"
+	"io"
 	"reflect"
 
 	"github.com/outscale/octl/pkg/debug"
@@ -17,19 +17,19 @@ import (
 
 type Base64 struct{}
 
-func (b Base64) Format(ctx context.Context, v any) error {
+func (b Base64) Format(ctx context.Context, w io.Writer, v any) error {
 	debug.Println("base64 decode", reflect.TypeOf(v).Name(), "kind", reflect.ValueOf(v).Kind())
 	switch v := v.(type) {
 	case []any:
 		for _, s := range v {
-			err := b.Format(ctx, s)
+			err := b.Format(ctx, w, s)
 			if err != nil {
 				messages.Info("Unable to decode base64 array, switching to YAML...")
 			}
 		}
 	case []string:
 		for _, s := range v {
-			err := b.Format(ctx, s)
+			err := b.Format(ctx, w, s)
 			if err != nil {
 				messages.Info("Unable to decode base64 array, switching to YAML...")
 			}
@@ -39,16 +39,16 @@ func (b Base64) Format(ctx context.Context, v any) error {
 		if err != nil {
 			return fmt.Errorf("base64: %w", err)
 		}
-		_, _ = fmt.Fprintln(os.Stdout, string(buf))
+		_, _ = fmt.Fprintln(w, string(buf))
 	default:
 		messages.Info("Unable to decode base64, switching to YAML...")
-		return YAML{}.Format(ctx, v)
+		return YAML{}.Format(ctx, w, v)
 	}
 	return nil
 }
 
 func (Base64) Error(ctx context.Context, v any) error {
-	return YAML{}.Format(ctx, v)
+	return YAML{}.Error(ctx, v)
 }
 
 var _ Interface = Base64{}

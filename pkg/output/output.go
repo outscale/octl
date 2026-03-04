@@ -7,8 +7,11 @@ package output
 
 import (
 	"context"
+	"fmt"
+	"os"
 	"slices"
 
+	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/output/filter"
 	"github.com/outscale/octl/pkg/output/format"
 	"github.com/outscale/octl/pkg/output/read"
@@ -20,9 +23,25 @@ type Paginated struct {
 	Read    read.Interface
 	Format  format.Interface
 	Filters []filter.Interface
+	WriteTo string
 }
 
-func (p *Paginated) Output(ctx context.Context, fetch read.FetchPage) error {
+func (p *Paginated) Output(ctx context.Context, fetch read.FetchPage) (err error) {
+	writeTo := os.Stdout
+	if p.WriteTo != "" {
+		fd, err := os.Create(p.WriteTo)
+		if err != nil {
+			return fmt.Errorf("unable to write to %q: %w", p.WriteTo, err)
+		}
+		messages.Info("Writing output to %s", p.WriteTo)
+		writeTo = fd
+		defer func() {
+			cerr := writeTo.Close()
+			if cerr != nil && err == nil {
+				err = fmt.Errorf("output error: %w", cerr)
+			}
+		}()
+	}
 	seq := p.Read.Read(ctx, fetch)
 	for _, f := range p.Filters {
 		seq = f.Filter(ctx, seq)
@@ -35,9 +54,9 @@ func (p *Paginated) Output(ctx context.Context, fetch read.FetchPage) error {
 		return errRes.Error
 	}
 	if len(res) == 1 && res[0].SingleEntry {
-		return p.Format.Format(ctx, res[0].Ok)
+		return p.Format.Format(ctx, writeTo, res[0].Ok)
 	}
-	return p.Format.Format(ctx, lo.Map(res, func(r result.Result, _ int) any { return r.Ok }))
+	return p.Format.Format(ctx, writeTo, lo.Map(res, func(r result.Result, _ int) any { return r.Ok }))
 }
 
 func (p *Paginated) Error(ctx context.Context, v any) error {

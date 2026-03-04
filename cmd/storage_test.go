@@ -10,6 +10,7 @@ import (
 	"encoding/hex"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/service/s3"
@@ -27,9 +28,15 @@ func TestStorageCRUD(t *testing.T) {
 	require.NoError(t, err)
 	t.Run("Create/Update/Delete works", func(t *testing.T) {
 		_ = run(t, []string{"storage", "bucket", "create", "--bucket", bucket}, nil)
+		defer func() {
+			_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
+		}()
 
 		var res s3.PutObjectOutput
 		runJSON(t, []string{"storage", "object", "put", object, "--bucket", bucket, "--body", path, "--output", "json"}, nil, &res)
+		defer func() {
+			_ = run(t, []string{"storage", "object", "del", object, "--bucket", bucket, "-y"}, nil)
+		}()
 		assert.NotNil(t, res.ETag)
 
 		var lres s3.ListObjectsV2Output
@@ -37,8 +44,55 @@ func TestStorageCRUD(t *testing.T) {
 		require.Len(t, lres.Contents, 1)
 		require.NotNil(t, object, lres.Contents[0].Key)
 		assert.Equal(t, object, *lres.Contents[0].Key)
+	})
+}
 
-		_ = run(t, []string{"storage", "object", "del", object, "--bucket", bucket, "-y"}, nil)
+const hello = "Hello world !"
+
+func TestObjectDownload(t *testing.T) {
+	sum := sha1.Sum([]byte(t.TempDir()))
+	bucket := hex.EncodeToString(sum[:])
+
+	_ = run(t, []string{"storage", "bucket", "create", "--bucket", bucket}, nil)
+	defer func() {
 		_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
+	}()
+
+	t.Run("An small object can be downloaded", func(t *testing.T) {
+		payload := hello
+		small := "small.txt"
+		smallPath := filepath.Join(t.TempDir(), small)
+		err := os.WriteFile(smallPath, []byte(hello), 0600)
+		require.NoError(t, err)
+		_ = run(t, []string{"storage", "object", "put", small, "--bucket", bucket, "--body", smallPath, "--output", "json"}, nil)
+		defer func() {
+			_ = run(t, []string{"storage", "object", "del", small, "--bucket", bucket, "-y"}, nil)
+		}()
+
+		content := run(t, []string{"storage", "object", "download", small, "--bucket", bucket}, nil)
+		assert.Equal(t, payload, string(content))
+		_ = run(t, []string{"storage", "object", "download", small, "--bucket", bucket, "-O", smallPath}, nil)
+		content, err = os.ReadFile(smallPath)
+		require.NoError(t, err)
+		assert.Equal(t, payload, string(content))
+	})
+	t.Run("An large object can be downloaded", func(t *testing.T) {
+		payload := strings.Repeat(hello, 100)
+		large := "large.txt"
+		largePath := filepath.Join(t.TempDir(), large)
+		err := os.WriteFile(largePath, []byte(payload), 0600)
+		require.NoError(t, err)
+
+		_ = run(t, []string{"storage", "object", "put", large, "--bucket", bucket, "--body", largePath, "--output", "json"}, nil)
+		defer func() {
+			_ = run(t, []string{"storage", "object", "del", large, "--bucket", bucket, "-y"}, nil)
+		}()
+
+		content := run(t, []string{"storage", "object", "download", large, "--bucket", bucket}, nil)
+		assert.Equal(t, payload, string(content))
+		_ = run(t, []string{"storage", "object", "download", large, "--bucket", bucket, "-O", largePath}, nil)
+		content, err = os.ReadFile(largePath)
+		require.NoError(t, err)
+		assert.Equal(t, payload, string(content))
 	})
 }

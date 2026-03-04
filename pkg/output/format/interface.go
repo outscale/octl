@@ -6,9 +6,10 @@ package format
 
 import (
 	"context"
+	"io"
 )
 
 type Interface interface {
-	Format(ctx context.Context, v any) error
+	Format(ctx context.Context, w io.Writer, v any) error
 	Error(ctx context.Context, v any) error
 }

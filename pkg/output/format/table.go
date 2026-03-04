@@ -8,6 +8,7 @@ import (
 	"cmp"
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"reflect"
 	"slices"
@@ -81,10 +82,10 @@ func validForTable(v any) bool {
 	return vv.Kind() == reflect.Struct || vv.Kind() == reflect.Map
 }
 
-func (t Table) Format(ctx context.Context, v any) error {
+func (t Table) Format(ctx context.Context, w io.Writer, v any) error {
 	if !validForTable(v) {
 		messages.Info("Unable to format as a table, switching to YAML...")
-		return YAML{}.Format(ctx, v)
+		return YAML{}.Format(ctx, w, v)
 	}
 	headers := lo.Map(t.Columns, func(c config.Column, _ int) string {
 		return c.Title
@@ -166,16 +167,18 @@ func (t Table) Format(ctx context.Context, v any) error {
 			debug.Println("col", i, "max", max[i], "len", len(max[i])+3)
 			return len(max[i]) + 3
 		}))
-	// resize if width greater than term width
-	termWidth, _, _ := term.GetSize(os.Stdout.Fd())
-	if termWidth > 40 && width > termWidth-1 {
-		debug.Println("reducing width from", width, "to", termWidth)
-		ot.Width(termWidth)
+	if fd, ok := w.(*os.File); ok && IsTerminal(w) {
+		// resize if width greater than term width
+		termWidth, _, _ := term.GetSize(fd.Fd())
+		if termWidth > 40 && width > termWidth-1 {
+			debug.Println("reducing width from", width, "to", termWidth)
+			ot.Width(termWidth)
+		}
 	}
 	// render !
 	ot.Rows(rows...)
 
-	_, err := fmt.Fprintln(os.Stdout, ot)
+	_, err := fmt.Fprintln(w, ot)
 	return err
 }
 
