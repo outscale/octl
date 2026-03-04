@@ -22,10 +22,9 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	if fout != "" {
 		out = fout
 	}
-	if out == "raw" || out == "" {
-		out = "json,raw"
+	if out == "" {
+		out = "raw"
 	}
-	out, param, _ := strings.Cut(out, ",")
 
 	var filters []filter.Interface
 	filts, _ := fs.GetStringSlice("filter")
@@ -50,7 +49,7 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	switch strings.ToLower(out) {
 	case "none":
 		fmter = format.None{}
-	case "json":
+	case "json", "raw":
 		fmter = format.JSON{}
 	case "yaml":
 		fmter = format.YAML{}
@@ -84,16 +83,13 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	}
 
 	writeTo, _ := fs.GetString("out-file")
-
-	if param == "single" {
-		fmter = format.Single{ForFormat: fmter}
-	}
-	switch param {
-	case "raw":
+	single, _ := fs.GetBool("single")
+	switch {
+	case out == "raw":
 		return fmter, &Paginated{Read: read.NewRaw(), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
-	case "", "single":
-		return fmter, &Paginated{Read: read.NewPaginated(contentField), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
+	case single:
+		return fmter, &Paginated{Read: read.NewPaginated(contentField), Format: format.Single{ForFormat: fmter}, Filters: filters, WriteTo: writeTo}, nil
 	default:
-		return nil, nil, fmt.Errorf("unknown format option %q", param)
+		return fmter, &Paginated{Read: read.NewPaginated(contentField), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
 	}
 }

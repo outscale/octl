@@ -305,7 +305,8 @@ func (b *MethodBuilder) buildReadAliases() error {
 				"api",
 				b.m.Name,
 				"--" + fids.AliasTo, "%*",
-				"--output", "yaml,single",
+				"--output", "yaml",
+				"--single",
 			},
 		})
 	}

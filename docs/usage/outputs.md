@@ -9,6 +9,7 @@
 | `--template` | | | JSON template for query body |
 | `--output` | | `raw`, `json`, `yaml`, `table`, `base64`, `none` | output format |
 | `--columns` | | | columns to display in a table |
+| `--single` | | | convert single entry lists to a single object |
 
 ## Output formats
 

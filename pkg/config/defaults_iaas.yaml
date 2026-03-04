@@ -1846,7 +1846,8 @@ aliases:
   - --Filters.AccessKeyIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: account
   use: list
   alias_to: ReadAccounts
@@ -1917,7 +1918,8 @@ aliases:
   - --Filters.ApiAccessRuleIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: apilog
   use: list
   alias_to: ReadApiLogs
@@ -2029,7 +2031,8 @@ aliases:
   - --Filters.CaIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: catalog
   use: list
   alias_to: ReadCatalog
@@ -2098,7 +2101,8 @@ aliases:
   - --Filters.ClientGatewayIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: consoleoutput
   use: list
   alias_to: ReadConsoleOutput
@@ -2169,7 +2173,8 @@ aliases:
   - --Filters.DedicatedGroupIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: dhcpoption
   use: list
   alias_to: ReadDhcpOptions
@@ -2211,7 +2216,8 @@ aliases:
   - --Filters.DhcpOptionsSetIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: directlinkinterface
   use: list
   alias_to: ReadDirectLinkInterfaces
@@ -2239,7 +2245,8 @@ aliases:
   - --Filters.DirectLinkInterfaceIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: directlink
   use: list
   alias_to: ReadDirectLinks
@@ -2265,7 +2272,8 @@ aliases:
   - --Filters.DirectLinkIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: entitieslinkedtopolicy
   use: list
   alias_to: ReadEntitiesLinkedToPolicy
@@ -2330,7 +2338,8 @@ aliases:
   - --Filters.FlexibleGpuIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: imageexporttask
   use: list
   alias_to: ReadImageExportTasks
@@ -2356,7 +2365,8 @@ aliases:
   - --Filters.TaskIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: image
   use: list
   alias_to: ReadImages
@@ -2434,7 +2444,8 @@ aliases:
   - --Filters.ImageIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: internetservice
   use: list
   alias_to: ReadInternetServices
@@ -2470,7 +2481,8 @@ aliases:
   - --Filters.InternetServiceIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: keypair
   use: list
   alias_to: ReadKeypairs
@@ -2508,7 +2520,8 @@ aliases:
   - --Filters.KeypairIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: linkedpolicy
   use: list
   alias_to: ReadLinkedPolicies
@@ -2553,7 +2566,8 @@ aliases:
   - --Filters.ListenerRuleNames
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: loadbalancertag
   use: list
   alias_to: ReadLoadBalancerTags
@@ -2593,7 +2607,8 @@ aliases:
   - --Filters.LoadBalancerNames
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: location
   use: list
   alias_to: ReadLocations
@@ -2665,7 +2680,8 @@ aliases:
   - --Filters.NatServiceIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: netaccesspoint
   use: list
   alias_to: ReadNetAccessPoints
@@ -2703,7 +2719,8 @@ aliases:
   - --Filters.NetAccessPointIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: netpeering
   use: list
   alias_to: ReadNetPeerings
@@ -2753,7 +2770,8 @@ aliases:
   - --Filters.NetPeeringIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: net
   use: list
   alias_to: ReadNets
@@ -2793,7 +2811,8 @@ aliases:
   - --Filters.NetIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: nic
   use: list
   alias_to: ReadNics
@@ -2875,7 +2894,8 @@ aliases:
   - --Filters.NicIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: producttype
   use: list
   alias_to: ReadProductTypes
@@ -2901,7 +2921,8 @@ aliases:
   - --Filters.ProductTypeIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: publiccatalog
   use: list
   alias_to: ReadPublicCatalog
@@ -2969,7 +2990,8 @@ aliases:
   - --Filters.PublicIpIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: quota
   use: list
   alias_to: ReadQuotas
@@ -3001,7 +3023,8 @@ aliases:
   - --Filters.QuotaNames
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: region
   use: list
   alias_to: ReadRegions
@@ -3070,7 +3093,8 @@ aliases:
   - --Filters.RouteTableIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: securitygroup
   use: list
   alias_to: ReadSecurityGroups
@@ -3136,7 +3160,8 @@ aliases:
   - --Filters.SecurityGroupIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: servercertificate
   use: list
   alias_to: ReadServerCertificates
@@ -3176,7 +3201,8 @@ aliases:
   - --Filters.TaskIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: snapshot
   use: list
   alias_to: ReadSnapshots
@@ -3232,7 +3258,8 @@ aliases:
   - --Filters.SnapshotIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: subnet
   use: list
   alias_to: ReadSubnets
@@ -3274,7 +3301,8 @@ aliases:
   - --Filters.SubnetIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: subregion
   use: list
   alias_to: ReadSubregions
@@ -3304,7 +3332,8 @@ aliases:
   - --Filters.SubregionNames
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: tag
   use: list
   alias_to: ReadTags
@@ -3525,7 +3554,8 @@ aliases:
   - --Filters.VirtualGatewayIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: vmgroup
   use: list
   alias_to: ReadVmGroups
@@ -3569,7 +3599,8 @@ aliases:
   - --Filters.VmGroupIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: vmtemplate
   use: list
   alias_to: ReadVmTemplates
@@ -3617,7 +3648,8 @@ aliases:
   - --Filters.VmTemplateIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: vmtype
   use: list
   alias_to: ReadVmTypes
@@ -3657,7 +3689,8 @@ aliases:
   - --Filters.VmTypeNames
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: vm
   use: list
   alias_to: ReadVms
@@ -3813,7 +3846,8 @@ aliases:
   - --Filters.VmIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: vmshealth
   use: list
   alias_to: ReadVmsHealth
@@ -3884,7 +3918,8 @@ aliases:
   - --Filters.TaskIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: volume
   use: list
   alias_to: ReadVolumes
@@ -3940,7 +3975,8 @@ aliases:
   - --Filters.VolumeIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: vpnconnection
   use: list
   alias_to: ReadVpnConnections
@@ -3986,7 +4022,8 @@ aliases:
   - --Filters.VpnConnectionIds
   - '%*'
   - --output
-  - yaml,single
+  - yaml
+  - --single
 - entity: accesskey
   use: create
   alias_to: CreateAccessKey
@@ -5138,6 +5175,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: apiaccessrule
   use: delete api_access_rule_id [api_access_rule_id]...
   alias_to: DeleteApiAccessRule
@@ -5161,6 +5199,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: ca
   use: delete ca_id [ca_id]...
   alias_to: DeleteCa
@@ -5184,6 +5223,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: clientgateway
   use: delete client_gateway_id [client_gateway_id]...
   alias_to: DeleteClientGateway
@@ -5207,6 +5247,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: dedicatedgroup
   use: delete dedicated_group_id [dedicated_group_id]...
   alias_to: DeleteDedicatedGroup
@@ -5233,6 +5274,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: dhcpoption
   use: delete dhcp_options_set_id [dhcp_options_set_id]...
   alias_to: DeleteDhcpOptions
@@ -5256,6 +5298,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: directlink
   use: delete direct_link_id [direct_link_id]...
   alias_to: DeleteDirectLink
@@ -5279,6 +5322,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: directlinkinterface
   use: delete direct_link_interface_id [direct_link_interface_id]...
   alias_to: DeleteDirectLinkInterface
@@ -5302,6 +5346,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: exporttask
   use: delete export_task_id [export_task_id]...
   alias_to: DeleteExportTask
@@ -5341,6 +5386,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: image
   use: delete image_id [image_id]...
   alias_to: DeleteImage
@@ -5364,6 +5410,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: internetservice
   use: delete internet_service_id [internet_service_id]...
   alias_to: DeleteInternetService
@@ -5387,6 +5434,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: keypair
   use: delete keypair_id [keypair_id]...
   alias_to: DeleteKeypair
@@ -5413,6 +5461,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: listenerrule
   use: delete listener_rule_name [listener_rule_name]...
   alias_to: DeleteListenerRule
@@ -5436,6 +5485,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: loadbalancer
   use: delete load_balancer_name [load_balancer_name]...
   alias_to: DeleteLoadBalancer
@@ -5459,6 +5509,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: natservice
   use: delete nat_service_id [nat_service_id]...
   alias_to: DeleteNatService
@@ -5482,6 +5533,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: net
   use: delete net_id [net_id]...
   alias_to: DeleteNet
@@ -5505,6 +5557,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: netaccesspoint
   use: delete net_access_point_id [net_access_point_id]...
   alias_to: DeleteNetAccessPoint
@@ -5528,6 +5581,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: netpeering
   use: delete net_peering_id [net_peering_id]...
   alias_to: DeleteNetPeering
@@ -5551,6 +5605,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: nic
   use: delete nic_id [nic_id]...
   alias_to: DeleteNic
@@ -5574,6 +5629,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: producttype
   use: delete product_type_id [product_type_id]...
   alias_to: DeleteProductType
@@ -5600,6 +5656,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: publicip
   use: delete public_ip_id [public_ip_id]...
   alias_to: DeletePublicIp
@@ -5626,6 +5683,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: routetable
   use: delete route_table_id [route_table_id]...
   alias_to: DeleteRouteTable
@@ -5649,6 +5707,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: securitygroup
   use: delete security_group_id [security_group_id]...
   alias_to: DeleteSecurityGroup
@@ -5675,6 +5734,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: snapshot
   use: delete snapshot_id [snapshot_id]...
   alias_to: DeleteSnapshot
@@ -5698,6 +5758,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: subnet
   use: delete subnet_id [subnet_id]...
   alias_to: DeleteSubnet
@@ -5721,6 +5782,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: user
   use: delete user_name [user_name]...
   alias_to: DeleteUser
@@ -5781,6 +5843,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: vmgroup
   use: delete vm_group_id [vm_group_id]...
   alias_to: DeleteVmGroup
@@ -5804,6 +5867,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: vmtemplate
   use: delete vm_template_id [vm_template_id]...
   alias_to: DeleteVmTemplate
@@ -5827,6 +5891,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: vm
   use: delete vm_id [vm_id]...
   alias_to: DeleteVms
@@ -5850,6 +5915,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: volume
   use: delete volume_id [volume_id]...
   alias_to: DeleteVolume
@@ -5873,6 +5939,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: vpnconnection
   use: delete vpn_connection_id [vpn_connection_id]...
   alias_to: DeleteVpnConnection
@@ -5896,6 +5963,7 @@ aliases:
     - '%*'
     - --output
     - table
+    - --single
 - entity: accesskey
   use: update access_key_id [access_key_id]...
   alias_to: UpdateAccessKey
