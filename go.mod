@@ -19,6 +19,7 @@ require (
 	github.com/goccy/go-json v0.10.2
 	github.com/goccy/go-yaml v1.19.3-0.20260226144344-f167b933f7d0
 	github.com/google/go-github/v82 v82.0.0
+	github.com/google/go-github/v84 v84.0.0
 	github.com/itchyny/gojq v0.12.18
 	github.com/mattn/go-isatty v0.0.20
 	github.com/minio/selfupdate v0.6.0
