@@ -149,7 +149,7 @@ func (b *MethodBuilder) buildEntity() error {
 		if f, found := b.respContentType.FieldByName(typeName + "Id"); found {
 			e.Columns = append(e.Columns, config.Column{
 				Title:   "ID",
-				Content: f.Name,
+				Content: "." + f.Name,
 			})
 			e.Primary = f.Name
 			hasPrimary = true
@@ -159,7 +159,7 @@ func (b *MethodBuilder) buildEntity() error {
 	if f, found := b.respContentType.FieldByName(b.typeName + "Name"); found {
 		e.Columns = append(e.Columns, config.Column{
 			Title:   "Name",
-			Content: f.Name,
+			Content: "." + f.Name,
 		})
 		if !hasPrimary {
 			e.Primary = f.Name
@@ -168,13 +168,13 @@ func (b *MethodBuilder) buildEntity() error {
 	} else if _, found := b.respContentType.FieldByName("Tags"); found {
 		e.Columns = append(e.Columns, config.Column{
 			Title:   "Name",
-			Content: `find(Tags, #?.Key == "Name")?.Value`,
+			Content: `.Tags[] | select(.Key == "Name").Value`,
 		})
 	}
 	if f, found := b.respContentType.FieldByName(b.typeName + "Type"); found {
 		e.Columns = append(e.Columns, config.Column{
 			Title:   "Type",
-			Content: f.Name,
+			Content: "." + f.Name,
 		})
 	}
 	for _, name := range b.cfg.PriorityFields {
@@ -184,7 +184,7 @@ func (b *MethodBuilder) buildEntity() error {
 		if f, found := b.respContentType.FieldByName(name); found {
 			e.Columns = append(e.Columns, config.Column{
 				Title:   f.Name,
-				Content: f.Name,
+				Content: "." + f.Name,
 			})
 		}
 	}

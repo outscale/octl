@@ -7,6 +7,7 @@ package format
 
 import (
 	"fmt"
+	"math"
 	"reflect"
 	"strings"
 	"time"
@@ -16,6 +17,7 @@ import (
 	"github.com/outscale/osc-sdk-go/v3/pkg/iso8601"
 )
 
+// GetRows return one or multiple rows based on a single entry.
 func GetRows(v any, cols config.Columns, explode bool) ([][]string, error) {
 	// compute result in a single line table
 	raw := make([][]any, 1)
@@ -65,7 +67,18 @@ func GetRows(v any, cols config.Columns, explode bool) ([][]string, error) {
 			case time.Time:
 				rows[i][j] = val.Format(time.RFC3339)
 			case float64:
-				rows[i][j] = fmt.Sprintf("%.2f", val)
+				if math.Trunc(val) == val {
+					rows[i][j] = fmt.Sprintf("%.f", val)
+				} else {
+					rows[i][j] = fmt.Sprintf("%.2f", val)
+				}
+			case float32:
+				if float32(math.Trunc(float64(val))) == val {
+					rows[i][j] = fmt.Sprintf("%.f", val)
+				} else {
+					rows[i][j] = fmt.Sprintf("%.2f", val)
+				}
+				rows[i][j] = fmt.Sprintf("%.f", val)
 			default:
 				rows[i][j] = strings.TrimSpace(fmt.Sprint(val))
 			}

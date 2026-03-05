@@ -84,7 +84,7 @@ func init() {
 	rootCmd.PersistentFlags().String("jq", "", "jq filter")
 	rootCmd.PersistentFlags().StringSlice("filter", nil, `comma separated list of filters for results - name:value,name:value, alias for jq filter 'select(.name | test("value"))'`)
 
-	rootCmd.PersistentFlags().StringP("columns", "c", "", "columns to display - [+]title:content|title:content")
+	rootCmd.PersistentFlags().StringP("columns", "c", "", "columns to display - [+]<title>:<jq query for content>||<title>:<jq query for content>")
 	rootCmd.PersistentFlags().StringP("output", "o", "raw", "output format (raw, json, yaml, table, none, base64)")
 	rootCmd.PersistentFlags().StringP("out-file", "O", "", "redirect output to file")
 	rootCmd.PersistentFlags().Bool("single", false, "convert single entry lists to a single object")

@@ -858,79 +858,79 @@ entities:
     - ak
     columns:
     - title: ID
-      content: AccessKeyId
+      content: .AccessKeyId
     - title: Tag
-      content: Tag
+      content: .Tag
     - title: State
-      content: State
+      content: .State
     - title: ExpirationDate
-      content: ExpirationDate
+      content: .ExpirationDate
     primary: AccessKeyId
   account:
     columns:
     - title: ID
-      content: AccountId
+      content: .AccountId
     - title: Email
-      content: Email
+      content: .Email
     primary: AccountId
   adminpassword: {}
   apiaccesspolicy: {}
   apiaccessrule:
     columns:
     - title: ID
-      content: ApiAccessRuleId
+      content: .ApiAccessRuleId
     - title: Description
-      content: Description
+      content: .Description
     - title: CA
-      content: CaIds
+      content: .CaIds
     - title: CN
-      content: Cns
+      content: .Cns
     - title: IP Ranges
-      content: IpRanges
+      content: .IpRanges
     primary: ApiAccessRuleId
   apilog:
     aliases:
     - log
     columns:
     - title: Date
-      content: QueryDate
+      content: .QueryDate
     - title: UserAgent
-      content: QueryUserAgent
+      content: .QueryUserAgent
     - title: Call
-      content: QueryCallName
+      content: .QueryCallName
     - title: Payload
-      content: QueryPayloadRaw
+      content: .QueryPayloadRaw
     - title: Status
-      content: ResponseStatusCode
+      content: .ResponseStatusCode
   ca:
     columns:
     - title: ID
-      content: CaId
+      content: .CaId
     primary: CaId
   catalog:
     explode: true
     sort: true
     columns:
     - title: Service
-      content: 'map(Entries, #?.Service)'
+      content: .Entries[].Service
     - title: Category
-      content: 'map(Entries, #?.Category)'
+      content: .Entries[].Category
     - title: Title
-      content: 'map(Entries, #?.Title)'
+      content: .Entries[].Title
     - title: UnitPrice
-      content: 'map(Entries, #?.UnitPrice)'
+      content: .Entries[].UnitPrice
     - title: Flags
-      content: 'map(Entries, #?.Flags)'
+      content: .Entries[].Flags
   clientgateway:
     columns:
     - title: ID
-      content: ClientGatewayId
+      content: .ClientGatewayId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     - title: PublicIp
-      content: PublicIp
+      content: .PublicIp
     primary: ClientGatewayId
   co2emissionaccount: {}
   consoleoutput: {}
@@ -939,56 +939,56 @@ entities:
     - consumption
     columns:
     - title: From
-      content: FromDate
+      content: .FromDate
     - title: To
-      content: ToDate
+      content: .ToDate
     - title: Account
-      content: AccountId
+      content: .AccountId
     - title: Category
-      content: Category
+      content: .Category
     - title: Service
-      content: Service
+      content: .Service
     - title: Subregion
-      content: SubregionName
+      content: .SubregionName
     - title: Operation
-      content: Operation
+      content: .Operation
     - title: Value
-      content: Value
+      content: .Value
     - title: Unit Price
-      content: UnitPrice
+      content: .UnitPrice
     - title: Price
-      content: Price
+      content: .Price
   dedicatedgroup:
     columns:
     - title: ID
-      content: DedicatedGroupId
+      content: .DedicatedGroupId
     - title: SubregionName
-      content: SubregionName
+      content: .SubregionName
     primary: DedicatedGroupId
   dhcpoption:
     columns:
     - title: ID
-      content: DhcpOptionsSetId
+      content: .DhcpOptionsSetId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     primary: DhcpOptionsSetId
   directlink:
     columns:
     - title: ID
-      content: DirectLinkId
+      content: .DirectLinkId
     - title: Name
-      content: DirectLinkName
+      content: .DirectLinkName
     - title: State
-      content: State
+      content: .State
     primary: DirectLinkId
   directlinkinterface:
     columns:
     - title: ID
-      content: DirectLinkInterfaceId
+      content: .DirectLinkInterfaceId
     - title: Name
-      content: DirectLinkInterfaceName
+      content: .DirectLinkInterfaceName
     - title: State
-      content: State
+      content: .State
     primary: DirectLinkInterfaceId
   entitieslinkedtopolicy: {}
   exporttask:
@@ -998,72 +998,72 @@ entities:
     - fgpu
     columns:
     - title: ID
-      content: FlexibleGpuId
+      content: .FlexibleGpuId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     - title: SubregionName
-      content: SubregionName
+      content: .SubregionName
     primary: FlexibleGpuId
   flexiblegpucatalog:
     no_aliases: true
     columns:
     - title: Name
-      content: ModelName
+      content: .ModelName
     - title: VRAM
-      content: VRam
+      content: .VRam
     - title: Max CPu
-      content: MaxCpu
+      content: .MaxCpu
     - title: Max RAM
-      content: MaxRam
+      content: .MaxRam
     - title: Generations
-      content: Generations
+      content: .Generations
   image:
     columns:
     - title: ID
-      content: ImageId
+      content: .ImageId
     - title: Name
-      content: ImageName
+      content: .ImageName
     - title: Type
-      content: ImageType
+      content: .ImageType
     - title: State
-      content: State
+      content: .State
     primary: ImageId
   imageexporttask:
     columns:
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     primary: TaskId
   internetservice:
     columns:
     - title: ID
-      content: InternetServiceId
+      content: .InternetServiceId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     - title: NetId
-      content: NetId
+      content: .NetId
     primary: InternetServiceId
   keypair:
     columns:
     - title: ID
-      content: KeypairId
+      content: .KeypairId
     - title: Name
-      content: KeypairName
+      content: .KeypairName
     - title: Type
-      content: KeypairType
+      content: .KeypairType
     primary: KeypairId
   linkedpolicy: {}
   listenerrule:
     columns:
     - title: ID
-      content: ListenerRuleId
+      content: .ListenerRuleId
     - title: Name
-      content: ListenerRuleName
+      content: .ListenerRuleName
     primary: ListenerRuleName
   loadbalancer:
     aliases:
@@ -1071,185 +1071,187 @@ entities:
     - lbu
     columns:
     - title: Name
-      content: LoadBalancerName
+      content: .LoadBalancerName
     - title: Type
-      content: LoadBalancerType
+      content: .LoadBalancerType
     - title: PublicIp
-      content: PublicIp
+      content: .PublicIp
     - title: NetId
-      content: NetId
+      content: .NetId
     - title: SubregionNames
-      content: SubregionNames
+      content: .SubregionNames
     primary: LoadBalancerName
   loadbalancerlistener: {}
   loadbalancerpolicy: {}
   loadbalancertag:
     columns:
     - title: LBU
-      content: LoadBalancerName
+      content: .LoadBalancerName
     - title: Key
-      content: Key
+      content: .Key
     - title: Value
-      content: Value
+      content: .Value
   location:
     columns:
     - title: Code
-      content: Code
+      content: .Code
     - title: Name
-      content: Name
+      content: .Name
   managedpolicieslinkedtousergroup: {}
   natservice:
     aliases:
     - nat
     columns:
     - title: ID
-      content: NatServiceId
+      content: .NatServiceId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     - title: PublicIp
-      content: 'map(PublicIps, #?.PublicIp)'
+      content: .PublicIps[].PublicIp
     - title: NetId
-      content: NetId
+      content: .NetId
     - title: SubnetId
-      content: SubnetId
+      content: .SubnetId
     primary: NatServiceId
   net:
     columns:
     - title: ID
-      content: NetId
+      content: .NetId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
+    - title: NetId
+      content: .NetId
     - title: IpRange
-      content: IpRange
+      content: .IpRange
     primary: NetId
   netaccesspoint:
     columns:
     - title: ID
-      content: NetAccessPointId
+      content: .NetAccessPointId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     - title: NetId
-      content: NetId
+      content: .NetId
     primary: NetAccessPointId
   netaccesspointservice:
     no_aliases: true
     columns:
     - title: ID
-      content: ServiceId
+      content: .ServiceId
     - title: Name
-      content: ServiceName
+      content: .ServiceName
     - title: IP Ranges
-      content: IpRanges
+      content: .IpRanges
     primary: ServiceId
   netpeering:
     columns:
     - title: ID
-      content: NetPeeringId
+      content: .NetPeeringId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     primary: NetPeeringId
   nic:
     columns:
     - title: ID
-      content: NicId
+      content: .NicId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     - title: NetId
-      content: NetId
+      content: .NetId
     - title: SubnetId
-      content: SubnetId
+      content: .SubnetId
     - title: SubregionName
-      content: SubregionName
+      content: .SubregionName
     primary: NicId
   policy:
     no_aliases: true
     columns:
     - title: ORN
-      content: Orn
+      content: .Orn
     - title: Name
-      content: PolicyName
+      content: .PolicyName
     - title: Default Version
-      content: PolicyDefaultVersionId
+      content: .PolicyDefaultVersionId
     - title: Resources Count
-      content: ResourcesCount
+      content: .ResourcesCount
     primary: PolicyOrn
   policyversion:
     no_aliases: true
     columns:
     - title: Version
-      content: VersionId
+      content: .VersionId
     - title: Default
-      content: DefaultVersion
+      content: .DefaultVersion
     - title: Date
-      content: CreationDate
+      content: .CreationDate
     primary: PolicyOrn
   producttype:
     columns:
     - title: ID
-      content: ProductTypeId
+      content: .ProductTypeId
     primary: ProductTypeId
   publiccatalog: {}
   publicip:
     columns:
     - title: ID
-      content: PublicIpId
+      content: .PublicIpId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: PublicIp
-      content: PublicIp
+      content: .PublicIp
     - title: PrivateIp
-      content: PrivateIp
+      content: .PrivateIp
     primary: PublicIpId
   publiciprange: {}
   quota:
     explode: true
     columns:
     - title: Type
-      content: QuotaType
+      content: .QuotaType
     - title: Collection
-      content: 'map(Quotas, #?.QuotaCollection)'
+      content: .Quotas[].QuotaCollection
     - title: Name
-      content: 'map(Quotas, #?.Name)'
+      content: .Quotas[].Name
     - title: Used
-      content: 'map(Quotas, #?.UsedValue)'
+      content: .Quotas[].UsedValue
     - title: Max
-      content: 'map(Quotas, #?.MaxValue)'
+      content: .Quotas[].MaxValue
     - title: Description
-      content: 'map(Quotas, #?.Description)'
+      content: .Quotas[].Description
     primary: QuotaName
   region:
     columns:
     - title: Name
-      content: RegionName
+      content: .RegionName
     primary: RegionName
   route: {}
   routetable:
     columns:
     - title: ID
-      content: RouteTableId
+      content: .RouteTableId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: NetId
-      content: NetId
+      content: .NetId
     primary: RouteTableId
   securitygroup:
     columns:
     - title: ID
-      content: SecurityGroupId
+      content: .SecurityGroupId
     - title: Name
-      content: SecurityGroupName
+      content: .SecurityGroupName
     - title: NetId
-      content: NetId
+      content: .NetId
     primary: SecurityGroupId
   securitygrouprule: {}
   servercertificate: {}
@@ -1258,178 +1260,182 @@ entities:
     - snap
     columns:
     - title: ID
-      content: SnapshotId
+      content: .SnapshotId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     - title: Volume
-      content: VolumeId
+      content: .VolumeId
     - title: Size
-      content: VolumeSize
+      content: .VolumeSize
     - title: CreationDate
-      content: CreationDate
+      content: .CreationDate
     primary: SnapshotId
   snapshotexporttask:
     columns:
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     primary: TaskId
   subnet:
     columns:
     - title: ID
-      content: SubnetId
+      content: .SubnetId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     - title: NetId
-      content: NetId
+      content: .NetId
+    - title: SubnetId
+      content: .SubnetId
     - title: IpRange
-      content: IpRange
+      content: .IpRange
     - title: SubregionName
-      content: SubregionName
+      content: .SubregionName
     primary: SubnetId
   subregion:
     columns:
     - title: Name
-      content: SubregionName
+      content: .SubregionName
     - title: State
-      content: State
+      content: .State
+    - title: SubregionName
+      content: .SubregionName
     primary: SubregionName
   tag:
     columns:
     - title: Resource
-      content: ResourceId
+      content: .ResourceId
     - title: Type
-      content: ResourceType
+      content: .ResourceType
     - title: Key
-      content: Key
+      content: .Key
     - title: Value
-      content: Value
+      content: .Value
   unitprice: {}
   user:
     columns:
     - title: Name
-      content: UserName
+      content: .UserName
     - title: Email
-      content: UserEmail
+      content: .UserEmail
     primary: UserName
   usergroup:
     columns:
     - title: ID
-      content: UserGroupId
+      content: .UserGroupId
     primary: UserGroupName
   usergrouppolicy: {}
   usergroupsperuser:
     columns:
     - title: ID
-      content: UserGroupId
+      content: .UserGroupId
     primary: UserGroupId
   userpolicy: {}
   virtualgateway:
     columns:
     - title: ID
-      content: VirtualGatewayId
+      content: .VirtualGatewayId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     primary: VirtualGatewayId
   vm:
     columns:
     - title: ID
-      content: VmId
+      content: .VmId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: Type
-      content: VmType
+      content: .VmType
     - title: State
-      content: State
+      content: .State
     - title: PublicIp
-      content: PublicIp
+      content: .PublicIp
     - title: PrivateIp
-      content: PrivateIp
+      content: .PrivateIp
     - title: NetId
-      content: NetId
+      content: .NetId
     - title: SubnetId
-      content: SubnetId
+      content: .SubnetId
     primary: VmId
   vmgroup:
     columns:
     - title: ID
-      content: VmGroupId
+      content: .VmGroupId
     - title: Name
-      content: VmGroupName
+      content: .VmGroupName
     - title: State
-      content: State
+      content: .State
     - title: SubnetId
-      content: SubnetId
+      content: .SubnetId
     primary: VmGroupId
   vmshealth:
     columns:
     - title: VM
-      content: VmId
+      content: .VmId
     - title: State
-      content: State
+      content: .State
   vmsstate:
     columns:
     - title: VM ID
-      content: VmId
+      content: .VmId
     - title: SubregionName
-      content: SubregionName
+      content: .SubregionName
     - title: State
-      content: VmState
+      content: .VmState
   vmtemplate:
     columns:
     - title: ID
-      content: VmTemplateId
+      content: .VmTemplateId
     - title: Name
-      content: VmTemplateName
+      content: .VmTemplateName
     primary: VmTemplateId
   vmtype:
     columns:
     - title: Name
-      content: VmTypeName
+      content: .VmTypeName
     primary: VmTypeName
   volume:
     aliases:
     - vol
     columns:
     - title: ID
-      content: VolumeId
+      content: .VolumeId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: Type
-      content: VolumeType
+      content: .VolumeType
     - title: State
-      content: State
+      content: .State
     - title: Size
-      content: Size
+      content: .Size
     - title: Iops
-      content: Iops
+      content: .Iops
     - title: VM
-      content: 'map(LinkedVolumes, #?.VmId)'
+      content: .LinkedVolumes[].VmId
     - title: Device
-      content: 'map(LinkedVolumes, #?.DeviceName)'
+      content: .LinkedVolumes[].DeviceName
     primary: VolumeId
   volumeupdatetask:
     columns:
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     primary: TaskId
   vpnconnection:
     columns:
     - title: ID
-      content: VpnConnectionId
+      content: .VpnConnectionId
     - title: Name
-      content: 'find(Tags, #?.Key == "Name")?.Value'
+      content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: State
+      content: .State
     primary: VpnConnectionId
   vpnconnectionroute: {}
 aliases:
