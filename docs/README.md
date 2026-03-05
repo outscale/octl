@@ -15,7 +15,7 @@ This directory contains the documentation for **octl**.
 - Filters and jq: [usage/filters-and-jq.md](usage/filters-and-jq.md)
 - Templating: [usage/templating.md](usage/templating.md)
 - Chaining commands: [usage/chaining.md](usage/chaining.md)
-- Columns and expr: [usage/columns-and-expr.md](usage/columns-and-expr.md)
+- Table columns: [usage/columns.md](usage/columns.md)
 
 ## Reference
 

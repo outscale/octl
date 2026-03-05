@@ -154,17 +154,17 @@ entities:
   bucket:
     columns:
     - title: Name
-      content: Name
+      content: .Name
     primary: Bucket
   multipartupload: {}
   object:
     columns:
     - title: Key
-      content: Key
+      content: .Key
     - title: Size
-      content: Size
+      content: .Size
     - title: LastModified
-      content: LastModified
+      content: .LastModified
     primary: Key
   objectversion: {}
   part: {}

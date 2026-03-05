@@ -1,11 +1,11 @@
-# Changing table columns and expr language
+# Changing table columns
 
 ## Changing table columns
 
-Columns can be replaced:
+Columns can be replaced by defining a list of `<title>:<jq query for content>` column definitions, separated by `||`:
 
 ```sh
-octl iaas vm list --columns "ID:VmId|DNS:PrivateDnsName"
+octl iaas vm list --columns 'ID:.VmId||DNS:.PrivateDnsName'
 ┌────────────┬───────────────────────────────────────────┐
 │     ID     │                    DNS                    │
 ├────────────┼───────────────────────────────────────────┤
@@ -18,13 +18,11 @@ octl iaas vm list --columns "ID:VmId|DNS:PrivateDnsName"
 Columns can be added to the standard columns:
 
 ```sh
-octl iaas vm list --columns +DNS:PrivateDnsName
+octl iaas vm list --columns +DNS:.PrivateDnsName
 ```
 
-## expr language
-
-Column content is defined with the [expr language](https://expr-lang.org/docs/language-definition).
+## Examples
 
 To display a tag value:
 
-`octl iaas vm list --columns "+tag:find(Tags, #?.Key == \"Name\")?.Value"`
+`octl iaas vm list --columns '+tag:.Tags[] | select(.Key == "Name").Value'`

@@ -6,28 +6,29 @@ SPDX-License-Identifier: BSD-3-Clause
 package config
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
-	"github.com/expr-lang/expr"
-	"github.com/expr-lang/expr/vm"
+	"github.com/itchyny/gojq"
+	"github.com/outscale/octl/pkg/debug"
 	"github.com/samber/lo"
 )
 
 type Column struct {
-	Title    string `yaml:"title"`
-	Content  string `yaml:"content"`
-	Primary  bool   `yaml:"primary,omitempty"`
-	compiled *vm.Program
+	Title   string `yaml:"title"`
+	Content string `yaml:"content"`
+	Primary bool   `yaml:"primary,omitempty"`
+	query   *gojq.Query
 }
 
 func (c Column) String() string {
 	return c.Title + ":" + c.Content
 }
 
-func (c *Column) compile(s any) error {
+func (c *Column) compile() error {
 	var err error
-	c.compiled, err = expr.Compile(c.Content, expr.Env(s))
+	c.query, err = gojq.Parse(c.Content)
 	if err != nil {
 		return fmt.Errorf("invalid expression %q: %w", c.Content, err)
 	}
@@ -35,19 +36,51 @@ func (c *Column) compile(s any) error {
 }
 
 func (c *Column) Get(v any) (any, error) {
-	if c.compiled == nil {
-		err := c.compile(v)
+	if c.query == nil {
+		err := c.compile()
 		if err != nil {
 			return nil, fmt.Errorf("compile: %w", err)
 		}
 	}
-	return expr.Run(c.compiled, v)
+	buf, err := json.Marshal(v)
+	if err != nil {
+		return nil, fmt.Errorf("jq to JSON: %w", err)
+	}
+	var raw any
+	err = json.Unmarshal(buf, &raw)
+	if err != nil {
+		return nil, fmt.Errorf("jq from JSON: %w", err)
+	}
+	debug.Println(fmt.Sprintf("%+v", raw))
+	iter := c.query.Run(raw)
+	var vv []any
+	for {
+		v, ok := iter.Next()
+		if !ok {
+			break
+		}
+		if err, ok := v.(error); ok {
+			if err, ok := err.(*gojq.HaltError); ok && err.Value() == nil {
+				break
+			}
+			return nil, fmt.Errorf("jq error: %w", err)
+		}
+		vv = append(vv, v)
+	}
+	switch len(vv) {
+	case 0:
+		return nil, nil
+	case 1:
+		return vv[0], nil
+	default:
+		return vv, nil
+	}
 }
 
 type Columns []Column
 
 func ParseColumns(s string) Columns {
-	ss := strings.Split(s, "|")
+	ss := strings.Split(s, "||")
 	cs := make(Columns, 0, len(ss))
 	for _, s := range ss {
 		title, content, found := strings.Cut(s, ":")

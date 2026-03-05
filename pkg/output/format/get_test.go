@@ -33,9 +33,9 @@ func TestGetRow(t *testing.T) {
 			}},
 		}
 		rows, err := format.GetRows(vm, config.Columns{
-			{Content: "VmId"},
-			{Content: "BsuOptimized"},
-			{Content: "map(Nics, #?.LinkPublicIp?.PublicIp)"},
+			{Content: ".VmId"},
+			{Content: ".BsuOptimized"},
+			{Content: ".Nics[].LinkPublicIp.PublicIp"},
 		}, false)
 		require.NoError(t, err)
 		require.Len(t, rows, 1)
@@ -51,13 +51,59 @@ func TestGetRow(t *testing.T) {
 			},
 		}
 		rows, err := format.GetRows(vm, config.Columns{
-			{Content: "QuotaType"},
-			{Content: "map(Quotas, #?.Name)"},
-			{Content: "map(Quotas, #?.UsedValue)"},
+			{Content: ".QuotaType"},
+			{Content: ".Quotas[].Name"},
+			{Content: ".Quotas[].UsedValue"},
 		}, true)
 		require.NoError(t, err)
 		require.Len(t, rows, 2)
 		assert.Equal(t, []string{"global", "foo", "10"}, rows[0])
 		assert.Equal(t, []string{"global", "bar", "20"}, rows[1])
+	})
+	t.Run("Displaying rounded float64s", func(t *testing.T) {
+		types := &osc.UnitPriceEntry{
+			UnitPrice: ptr.To(1.),
+		}
+		rows, err := format.GetRows(types, config.Columns{
+			{Content: ".UnitPrice"},
+		}, false)
+		require.NoError(t, err)
+		require.Len(t, rows, 1)
+		assert.Equal(t, []string{"1"}, rows[0])
+	})
+	t.Run("Displaying rounded float32", func(t *testing.T) {
+		types := &osc.UnitPriceEntry{
+			UnitPrice: ptr.To(1.2345),
+		}
+		rows, err := format.GetRows(types, config.Columns{
+			{Content: ".UnitPrice"},
+		}, false)
+		require.NoError(t, err)
+		require.Len(t, rows, 1)
+		assert.Equal(t, []string{"1.23"}, rows[0])
+	})
+	t.Run("Displaying rounded float64s", func(t *testing.T) {
+		types := &osc.VmType{
+			Eth: ptr.To(1), MemorySize: ptr.To[float32](1.),
+		}
+		rows, err := format.GetRows(types, config.Columns{
+			{Content: ".Eth"},
+			{Content: ".MemorySize"},
+		}, false)
+		require.NoError(t, err)
+		require.Len(t, rows, 1)
+		assert.Equal(t, []string{"1", "1"}, rows[0])
+	})
+	t.Run("Displaying rounded float32", func(t *testing.T) {
+		types := &osc.VmType{
+			Eth: ptr.To(1), MemorySize: ptr.To[float32](1.2345),
+		}
+		rows, err := format.GetRows(types, config.Columns{
+			{Content: ".Eth"},
+			{Content: ".MemorySize"},
+		}, false)
+		require.NoError(t, err)
+		require.Len(t, rows, 1)
+		assert.Equal(t, []string{"1", "1.23"}, rows[0])
 	})
 }
