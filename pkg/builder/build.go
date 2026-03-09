@@ -51,6 +51,17 @@ func (b *Builder[T]) Build(rootCmd *cobra.Command) {
 			}
 			rootCmd.AddCommand(c)
 		}
+		if a.SubCommand != "" {
+			subc, found := lo.Find(c.Commands(), func(c *cobra.Command) bool { return c.Name() == a.SubCommand })
+			if !found {
+				subc = &cobra.Command{
+					Use:   a.SubCommand,
+					Short: a.SubCommand + " commands",
+				}
+				c.AddCommand(subc)
+			}
+			c = subc
+		}
 		spec := b.cfg.Spec.ForCall(a.AliasTo)
 		help := "> *" + a.Short + "*\n\n" + spec.Help
 		help, _ = md.Render(help)

@@ -45,9 +45,10 @@ octl iaas api ReadSnapshots [flags]
       --no-upgrade        do not check for new versions
   -O, --out-file string   redirect output to file
   -o, --output string     output format (raw, json, yaml, table, csv, none, base64) (default "raw")
+      --payload string    JSON content for query body
       --profile string    Profile to use in profile file (by default, "default")
       --single            convert single entry lists to a single object
-      --template string   JSON template for query body
+      --template string   JSON template file for query body
   -v, --verbose           Verbose output
   -y, --yes               answer yes to all prompts
 ```

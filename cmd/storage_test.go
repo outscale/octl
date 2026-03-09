@@ -14,6 +14,7 @@ import (
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/aws/aws-sdk-go-v2/service/s3/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -94,5 +95,54 @@ func TestObjectDownload(t *testing.T) {
 		content, err = os.ReadFile(largePath)
 		require.NoError(t, err)
 		assert.Equal(t, payload, string(content))
+	})
+}
+
+func TestBucketVersioning(t *testing.T) {
+	sum := sha1.Sum([]byte(t.TempDir()))
+	bucket := hex.EncodeToString(sum[:])
+
+	_ = run(t, []string{"storage", "bucket", "create", "--bucket", bucket}, nil)
+	defer func() {
+		_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
+	}()
+
+	t.Run("Versioning can be enabled and disabled", func(t *testing.T) {
+		var resp s3.GetBucketVersioningOutput
+
+		runJSON(t, []string{"storage", "bucket", "versioning", "describe", bucket, "-o", "json"}, nil, &resp)
+		assert.Equal(t, types.BucketVersioningStatus(""), resp.Status)
+
+		_ = run(t, []string{"storage", "bucket", "versioning", "enable", bucket}, nil)
+
+		runJSON(t, []string{"storage", "bucket", "versioning", "describe", bucket, "-o", "json"}, nil, &resp)
+		assert.Equal(t, types.BucketVersioningStatusEnabled, resp.Status)
+
+		_ = run(t, []string{"storage", "bucket", "versioning", "disable", bucket}, nil)
+
+		runJSON(t, []string{"storage", "bucket", "versioning", "describe", bucket, "-o", "json"}, nil, &resp)
+		assert.Equal(t, types.BucketVersioningStatusSuspended, resp.Status)
+	})
+}
+
+func TestBucketEncryption(t *testing.T) {
+	sum := sha1.Sum([]byte(t.TempDir()))
+	bucket := hex.EncodeToString(sum[:])
+
+	_ = run(t, []string{"storage", "bucket", "create", "--bucket", bucket}, nil)
+	defer func() {
+		_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
+	}()
+
+	t.Run("Encryption can be enabled and disabled", func(t *testing.T) {
+
+		_ = run(t, []string{"storage", "bucket", "encryption", "enable", bucket}, nil)
+
+		var resp s3.GetBucketEncryptionOutput
+		runJSON(t, []string{"storage", "bucket", "encryption", "describe", bucket, "-o", "json"}, nil, &resp)
+		require.Len(t, resp.ServerSideEncryptionConfiguration.Rules, 1)
+		assert.Equal(t, types.ServerSideEncryptionAes256, resp.ServerSideEncryptionConfiguration.Rules[0].ApplyServerSideEncryptionByDefault.SSEAlgorithm)
+
+		_ = run(t, []string{"storage", "bucket", "encryption", "disable", bucket}, nil)
 	})
 }
