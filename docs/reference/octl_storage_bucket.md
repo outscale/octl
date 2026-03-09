@@ -18,9 +18,10 @@ bucket commands
       --no-upgrade        do not check for new versions
   -O, --out-file string   redirect output to file
   -o, --output string     output format (raw, json, yaml, table, csv, none, base64) (default "raw")
+      --payload string    JSON content for query body
       --profile string    Profile to use in profile file (by default, "default")
       --single            convert single entry lists to a single object
-      --template string   JSON template for query body
+      --template string   JSON template file for query body
   -v, --verbose           Verbose output
   -y, --yes               answer yes to all prompts
 ```
@@ -30,5 +31,7 @@ bucket commands
 * [octl storage](octl_storage.md)	 - OUTSCALE Object Storage (OOS) management
 * [octl storage bucket create](octl_storage_bucket_create.md)	 - alias for api CreateBucket
 * [octl storage bucket delete](octl_storage_bucket_delete.md)	 - alias for api DeleteBucket --Bucket bucket
+* [octl storage bucket encryption](octl_storage_bucket_encryption.md)	 - encryption commands
 * [octl storage bucket list](octl_storage_bucket_list.md)	 - alias for api ListBuckets
+* [octl storage bucket versioning](octl_storage_bucket_versioning.md)	 - versioning commands
 

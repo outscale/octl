@@ -135,14 +135,15 @@ type Prompt struct {
 }
 
 type Alias struct {
-	Entity  string   `yaml:"entity"`
-	Use     string   `yaml:"use"`
-	AliasTo string   `yaml:"alias_to,omitempty"`
-	Aliases []string `yaml:"aliases,omitempty"`
-	Short   string   `yaml:"short,omitempty"`
-	Command []string `yaml:"command"`
-	Flags   FlagSet  `yaml:"flags,omitempty"`
-	Prompt  *Prompt  `yaml:"prompt,omitempty"`
+	Entity     string   `yaml:"entity"`
+	SubCommand string   `yaml:"sub_command,omitempty"`
+	Use        string   `yaml:"use"`
+	AliasTo    string   `yaml:"alias_to,omitempty"`
+	Aliases    []string `yaml:"aliases,omitempty"`
+	Short      string   `yaml:"short,omitempty"`
+	Command    []string `yaml:"command"`
+	Flags      FlagSet  `yaml:"flags,omitempty"`
+	Prompt     *Prompt  `yaml:"prompt,omitempty"`
 }
 
 type FlagConfig struct {

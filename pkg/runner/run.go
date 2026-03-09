@@ -102,7 +102,10 @@ func ToStruct(cmd *cobra.Command, arg reflect.Value, prefix string) error {
 		r      io.Reader
 		source string
 	)
-	if tpl, ferr := cmd.Flags().GetString("template"); ferr == nil && tpl != "" {
+	if payload, ferr := cmd.Flags().GetString("payload"); ferr == nil && payload != "" {
+		r = strings.NewReader(payload)
+		source = "payload"
+	} else if tpl, ferr := cmd.Flags().GetString("template"); ferr == nil && tpl != "" {
 		var rc io.ReadCloser
 		rc, err = os.Open(tpl) //nolint:gosec
 		if err == nil {

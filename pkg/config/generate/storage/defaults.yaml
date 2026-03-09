@@ -64,3 +64,85 @@ aliases:
   - name: bucket
     alias_to: Bucket
     required: true
+- entity: bucket
+  sub_command: versioning
+  use: describe bucket
+  alias_to: GetBucketVersioning
+  aliases:
+  - desc
+  short: Display versioning configuration, alias for api GetBucketVersioning --Bucket bucket
+  command:
+  - api
+  - GetBucketVersioning
+  - --Bucket
+  - '%0'
+  - --output
+  - yaml
+- entity: bucket
+  sub_command: versioning
+  use: enable bucket
+  alias_to: PutBucketVersioning
+  short: Enable versioning, alias for api PutBucketVersioning --Bucket bucket --VersioningConfiguration.Status Enabled
+  command:
+  - api
+  - PutBucketVersioning
+  - --Bucket
+  - '%0'
+  - --VersioningConfiguration.Status
+  - Enabled
+  - --output
+  - success
+- entity: bucket
+  sub_command: versioning
+  use: disable bucket
+  alias_to: PutBucketVersioning
+  short: Disable versioning, alias for api PutBucketVersioning --Bucket bucket --VersioningConfiguration.Status Suspended
+  command:
+  - api
+  - PutBucketVersioning
+  - --Bucket
+  - '%0'
+  - --VersioningConfiguration.Status
+  - Suspended
+  - --output
+  - success
+- entity: bucket
+  sub_command: encryption
+  use: describe bucket
+  alias_to: GetBucketEncryption
+  aliases:
+  - desc
+  short: Display encryption configuration, alias for api GetBucketEncryption --Bucket bucket
+  command:
+  - api
+  - GetBucketEncryption
+  - --Bucket
+  - '%0'
+  - --output
+  - yaml
+- entity: bucket
+  sub_command: encryption
+  use: enable bucket
+  alias_to: PutBucketEncryption
+  short: Enable encryption, alias for api PutBucketEncryption --Bucket bucket --ServerSideEncryptionConfiguration.Rules.0.ApplyServerSideEncryptionByDefault.SSEAlgorithm AES256
+  command:
+  - api
+  - PutBucketEncryption
+  - --Bucket
+  - '%0'
+  - --ServerSideEncryptionConfiguration.Rules.0.ApplyServerSideEncryptionByDefault.SSEAlgorithm
+  - AES256
+  - --output
+  - success
+- entity: bucket
+  sub_command: encryption
+  use: disable bucket
+  alias_to: DeleteBucketEncryption
+  short: Disable encryption, alias for api DeleteBucketEncryption --Bucket bucket
+  command:
+  - api
+  - DeleteBucketEncryption
+  - --Bucket
+  - '%0'
+  - --output
+  - success
