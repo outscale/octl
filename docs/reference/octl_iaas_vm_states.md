@@ -1,11 +1,21 @@
-## octl iaas vm
+## octl iaas vm states
 
-vm commands
+alias for api ReadVmsState
+
+### Synopsis
+
+> *alias for api ReadVmsState*
+
+Lists the status of one or more virtual machines (VMs).
+
+```
+octl iaas vm states [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for vm
+  -h, --help   help for states
 ```
 
 ### Options inherited from parent commands
@@ -28,14 +38,5 @@ vm commands
 
 ### SEE ALSO
 
-* [octl iaas](octl_iaas.md)	 - OUTSCALE IaaS management
-* [octl iaas vm create](octl_iaas_vm_create.md)	 - alias for api CreateVms
-* [octl iaas vm delete](octl_iaas_vm_delete.md)	 - alias for api DeleteVms --VmIds vm_id
-* [octl iaas vm describe](octl_iaas_vm_describe.md)	 - alias for api ReadVms --Filters.VmIds vm_id
-* [octl iaas vm list](octl_iaas_vm_list.md)	 - alias for api ReadVms
-* [octl iaas vm readconsole](octl_iaas_vm_readconsole.md)	 - alias for api ReadConsoleOutput --VmId vm_id
-* [octl iaas vm start](octl_iaas_vm_start.md)	 - alias for api StartVms --VmIds vm_id
-* [octl iaas vm states](octl_iaas_vm_states.md)	 - alias for api ReadVmsState
-* [octl iaas vm stop](octl_iaas_vm_stop.md)	 - alias for api StopVms --VmIds vm_id
-* [octl iaas vm update](octl_iaas_vm_update.md)	 - alias for api UpdateVm --VmId vm_id
+* [octl iaas vm](octl_iaas_vm.md)	 - vm commands
 

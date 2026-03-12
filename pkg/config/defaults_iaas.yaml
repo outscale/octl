@@ -1375,12 +1375,14 @@ entities:
       content: .SubnetId
     primary: VmGroupId
   vmshealth:
+    no_aliases: true
     columns:
     - title: VM
       content: .VmId
     - title: State
       content: .State
   vmsstate:
+    no_aliases: true
     columns:
     - title: VM ID
       content: .VmId
@@ -1504,6 +1506,17 @@ aliases:
   - name: net-id
     alias_to: NetId
     required: true
+- entity: loadbalancer
+  use: backends load_balancer_name
+  alias_to: ReadVmsHealth
+  short: alias for api ReadVmsHealth --LoadBalancerName load_balancer_name
+  command:
+  - api
+  - ReadVmsHealth
+  - --LoadBalancerName
+  - '%0'
+  - --output
+  - table
 - entity: nic
   use: link nic_id
   alias_to: LinkNic
@@ -1821,6 +1834,17 @@ aliases:
   - .ConsoleOutput
   - --output
   - base64
+- entity: vm
+  use: states
+  alias_to: ReadVmsState
+  aliases:
+  - ls
+  short: alias for api ReadVmsState
+  command:
+  - api
+  - ReadVmsState
+  - --output
+  - yaml
 - entity: accesskey
   use: list
   alias_to: ReadAccessKeys
@@ -3854,51 +3878,6 @@ aliases:
   - --output
   - yaml
   - --single
-- entity: vmshealth
-  use: list
-  alias_to: ReadVmsHealth
-  aliases:
-  - ls
-  short: alias for api ReadVmsHealth
-  command:
-  - api
-  - ReadVmsHealth
-  - --output
-  - table
-  flags:
-  - name: backend-vm-id
-    alias_to: BackendVmIds
-  - name: load-balancer-name
-    alias_to: LoadBalancerName
-    required: true
-- entity: vmsstate
-  use: list
-  alias_to: ReadVmsState
-  aliases:
-  - ls
-  short: alias for api ReadVmsState
-  command:
-  - api
-  - ReadVmsState
-  - --output
-  - table
-  flags:
-  - name: all-vm
-    alias_to: AllVms
-  - name: maintenance-event-code
-    alias_to: Filters.MaintenanceEventCodes
-  - name: maintenance-event-description
-    alias_to: Filters.MaintenanceEventDescriptions
-  - name: maintenance-event-not-after
-    alias_to: Filters.MaintenanceEventsNotAfter
-  - name: maintenance-event-not-before
-    alias_to: Filters.MaintenanceEventsNotBefore
-  - name: subregion
-    alias_to: Filters.SubregionNames
-  - name: vm-id
-    alias_to: Filters.VmIds
-  - name: vm-state
-    alias_to: Filters.VmStates
 - entity: volumeupdatetask
   use: list
   alias_to: ReadVolumeUpdateTasks
