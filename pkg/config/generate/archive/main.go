@@ -40,11 +40,8 @@ func main() {
 			messages.ExitErr(err)
 		}
 	}
-	if err == nil {
-		err = w.Close()
-	}
+	err = w.Close()
 	if err != nil {
 		messages.ExitErr(err)
 	}
-
 }

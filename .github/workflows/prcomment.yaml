@@ -6,7 +6,7 @@ on:
       - main
       - docautogen
 
-    
+
 permissions:
   contents: read
 #   issues: write
@@ -98,23 +98,25 @@ jobs:
       id: diff
       run: |
         set -ex
-        git diff -U0 refs/remotes/origin/main -- docs/reference | tee diff
+        git add .
+        git diff --staged -w -U0 refs/remotes/origin/main -- docs/reference | egrep -v '^(@@ |index |--- |\+\+\+ )' | sed -E 's|^diff --git a/(.*) .*$|```\n\1\n```|g' | tail -n +2 | tee diff
         if [ -s diff ]; then
           echo "**WARNING : Differences in reference doc** 🤔" > diffmsg.txt
           echo '```' >> diffmsg.txt
-          head -10 diff >> diffmsg.txt
-          echo "[...]" >> diffmsg.txt
+          git diff --staged --stat  refs/remotes/origin/main -- docs/reference >> diffmsg.txt
           echo '```' >> diffmsg.txt
-          echo "<details><summary>More...</summary>" >> diffmsg.txt
+          echo "<details><summary>Detailed changes</summary>" >> diffmsg.txt
           echo >> diffmsg.txt
-          echo '```' >> diffmsg.txt
-          tail -n +10 diff | head -200 >> diffmsg.txt
-          echo "[...]" >> diffmsg.txt
+          head -200 diff >> diffmsg.txt
+          if [ `cat diff|wc -l` -gt 200 ]; then
+            echo "[...]" >> diffmsg.txt
+          fi
           echo '```' >> diffmsg.txt
           echo "</details>" >> diffmsg.txt
         else
           echo "**No diff in reference doc** 😀" > diffmsg.txt
         fi
+
     - name: 🔎 Find Comment
       uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4
       id: find

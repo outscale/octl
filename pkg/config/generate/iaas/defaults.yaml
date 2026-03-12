@@ -1,661 +1,686 @@
 entities:
   accesskey:
     aliases:
-    - ak
+      - ak
     columns:
-    - title: ID
-      content: .AccessKeyId
-    - title: Tag
-      content: .Tag
-    - title: State
-      content: .State
-    - title: ExpirationDate
-      content: .ExpirationDate
+      - title: ID
+        content: .AccessKeyId
+      - title: Tag
+        content: .Tag
+      - title: State
+        content: .State
+      - title: ExpirationDate
+        content: .ExpirationDate
   apiaccessrule:
     columns:
-    - title: ID
-      content: .ApiAccessRuleId
-    - title: Description
-      content: .Description
-    - title: CA
-      content: .CaIds
-    - title: CN
-      content: .Cns
-    - title: IP Ranges
-      content: .IpRanges
+      - title: ID
+        content: .ApiAccessRuleId
+      - title: Description
+        content: .Description
+      - title: CA
+        content: .CaIds
+      - title: CN
+        content: .Cns
+      - title: IP Ranges
+        content: .IpRanges
   apilog:
     aliases:
-    - log
+      - log
     columns:
-    - title: Date
-      content: .QueryDate
-    - title: UserAgent
-      content: .QueryUserAgent
-    - title: Call
-      content: .QueryCallName
-    - title: Payload
-      content: .QueryPayloadRaw
-    - title: Status
-      content: .ResponseStatusCode
+      - title: Date
+        content: .QueryDate
+      - title: UserAgent
+        content: .QueryUserAgent
+      - title: Call
+        content: .QueryCallName
+      - title: Payload
+        content: .QueryPayloadRaw
+      - title: Status
+        content: .ResponseStatusCode
   catalog:
     explode: true
     sort: true
     columns:
-    - title: Service
-      content: ".Entries[].Service"
-    - title: Category
-      content: ".Entries[].Category"
-    - title: Title
-      content: ".Entries[].Title"
-    - title: UnitPrice
-      content: ".Entries[].UnitPrice"
-    - title: Flags
-      content: ".Entries[].Flags"
+      - title: Service
+        content: ".Entries[].Service"
+      - title: Category
+        content: ".Entries[].Category"
+      - title: Title
+        content: ".Entries[].Title"
+      - title: UnitPrice
+        content: ".Entries[].UnitPrice"
+      - title: Flags
+        content: ".Entries[].Flags"
   consumptionaccount:
     aliases:
-    - consumption
+      - consumption
     columns:
-    - title: From
-      content: .FromDate
-    - title: To
-      content: .ToDate
-    - title: Account
-      content: .AccountId
-    - title: Category
-      content: .Category
-    - title: Service
-      content: .Service
-    - title: Subregion
-      content: .SubregionName
-    - title: Operation
-      content: .Operation
-    - title: Value
-      content: .Value
-    - title: Unit Price
-      content: .UnitPrice
-    - title: Price
-      content: .Price
+      - title: From
+        content: .FromDate
+      - title: To
+        content: .ToDate
+      - title: Account
+        content: .AccountId
+      - title: Category
+        content: .Category
+      - title: Service
+        content: .Service
+      - title: Subregion
+        content: .SubregionName
+      - title: Operation
+        content: .Operation
+      - title: Value
+        content: .Value
+      - title: Unit Price
+        content: .UnitPrice
+      - title: Price
+        content: .Price
   exporttask:
     primary: ExportTaskId
   flexiblegpu:
     aliases:
-    - fgpu
+      - fgpu
   flexiblegpucatalog:
     no_aliases: true
     columns:
-    - title: Name
-      content: .ModelName
-    - title: VRAM
-      content: .VRam
-    - title: Max CPu
-      content: .MaxCpu
-    - title: Max RAM
-      content: .MaxRam
-    - title: Generations
-      content: .Generations
+      - title: Name
+        content: .ModelName
+      - title: VRAM
+        content: .VRam
+      - title: Max CPu
+        content: .MaxCpu
+      - title: Max RAM
+        content: .MaxRam
+      - title: Generations
+        content: .Generations
   imageexporttask:
     primary: TaskId
   listenerrule:
     primary: ListenerRuleName
   loadbalancer:
     aliases:
-    - lb
-    - lbu
+      - lb
+      - lbu
   loadbalancertag:
     columns:
-    - title: LBU
-      content: .LoadBalancerName
-    - title: Key
-      content: .Key
-    - title: Value
-      content: .Value
+      - title: LBU
+        content: .LoadBalancerName
+      - title: Key
+        content: .Key
+      - title: Value
+        content: .Value
   location:
     columns:
-    - title: Code
-      content: .Code
-    - title: Name
-      content: .Name
+      - title: Code
+        content: .Code
+      - title: Name
+        content: .Name
   natservice:
     aliases:
-    - nat
+      - nat
     columns:
-    - title: ID
-      content: .NatServiceId
-    - title: Name
-      content: '.Tags[] | select(.Key == "Name").Value'
-    - title: State
-      content: .State
-    - title: PublicIp
-      content: ".PublicIps[].PublicIp"
-    - title: NetId
-      content: .NetId
-    - title: SubnetId
-      content: .SubnetId
+      - title: ID
+        content: .NatServiceId
+      - title: Name
+        content: '.Tags[] | select(.Key == "Name").Value'
+      - title: State
+        content: .State
+      - title: PublicIp
+        content: ".PublicIps[].PublicIp"
+      - title: NetId
+        content: .NetId
+      - title: SubnetId
+        content: .SubnetId
   netaccesspointservice:
     no_aliases: true
     columns:
-    - title: ID
-      content: .ServiceId
-    - title: Name
-      content: .ServiceName
-    - title: IP Ranges
-      content: .IpRanges
+      - title: ID
+        content: .ServiceId
+      - title: Name
+        content: .ServiceName
+      - title: IP Ranges
+        content: .IpRanges
   policy:
     no_aliases: true
     columns:
-    - title: ORN
-      content: .Orn
-    - title: Name
-      content: .PolicyName
-    - title: Default Version
-      content: .PolicyDefaultVersionId
-    - title: Resources Count
-      content: .ResourcesCount
+      - title: ORN
+        content: .Orn
+      - title: Name
+        content: .PolicyName
+      - title: Default Version
+        content: .PolicyDefaultVersionId
+      - title: Resources Count
+        content: .ResourcesCount
     primary: PolicyOrn
   policyversion:
     no_aliases: true
     columns:
-    - title: Version
-      content: .VersionId
-    - title: Default
-      content: .DefaultVersion
-    - title: Date
-      content: .CreationDate
+      - title: Version
+        content: .VersionId
+      - title: Default
+        content: .DefaultVersion
+      - title: Date
+        content: .CreationDate
     primary: PolicyOrn
   quota:
     explode: true
     columns:
-    - title: Type
-      content: .QuotaType
-    - title: Collection
-      content: ".Quotas[].QuotaCollection"
-    - title: Name
-      content: ".Quotas[].Name"
-    - title: Used
-      content: ".Quotas[].UsedValue"
-    - title: Max
-      content: ".Quotas[].MaxValue"
-    - title: Description
-      content: ".Quotas[].Description"
+      - title: Type
+        content: .QuotaType
+      - title: Collection
+        content: ".Quotas[].QuotaCollection"
+      - title: Name
+        content: ".Quotas[].Name"
+      - title: Used
+        content: ".Quotas[].UsedValue"
+      - title: Max
+        content: ".Quotas[].MaxValue"
+      - title: Description
+        content: ".Quotas[].Description"
     primary: QuotaName
   snapshot:
     aliases:
-    - snap
+      - snap
     columns:
-    - title: ID
-      content: .SnapshotId
-    - title: Name
-      content: '.Tags[] | select(.Key == "Name").Value'
-    - title: State
-      content: .State
-    - title: Volume
-      content: .VolumeId
-    - title: Size
-      content: .VolumeSize
-    - title: CreationDate
-      content: .CreationDate
+      - title: ID
+        content: .SnapshotId
+      - title: Name
+        content: '.Tags[] | select(.Key == "Name").Value'
+      - title: State
+        content: .State
+      - title: Volume
+        content: .VolumeId
+      - title: Size
+        content: .VolumeSize
+      - title: CreationDate
+        content: .CreationDate
   snapshotexporttask:
     primary: TaskId
   tag:
     columns:
-    - title: Resource
-      content: .ResourceId
-    - title: Type
-      content: .ResourceType
-    - title: Key
-      content: .Key
-    - title: Value
-      content: .Value
+      - title: Resource
+        content: .ResourceId
+      - title: Type
+        content: .ResourceType
+      - title: Key
+        content: .Key
+      - title: Value
+        content: .Value
   user:
     columns:
-    - title: Name
-      content: .UserName
-    - title: Email
-      content: .UserEmail
+      - title: Name
+        content: .UserName
+      - title: Email
+        content: .UserEmail
     primary: UserName
   usergroup:
     primary: UserGroupName
   vmshealth:
+    no_aliases: true
     columns:
-    - title: VM
-      content: .VmId
-    - title: State
-      content: .State
+      - title: VM
+        content: .VmId
+      - title: State
+        content: .State
   vmsstate:
+    no_aliases: true
     columns:
-    - title: VM ID
-      content: .VmId
-    - title: SubregionName
-      content: .SubregionName
-    - title: State
-      content: .VmState
+      - title: VM ID
+        content: .VmId
+      - title: SubregionName
+        content: .SubregionName
+      - title: State
+        content: .VmState
   volume:
     aliases:
-    - vol
+      - vol
     columns:
-    - title: ID
-      content: .VolumeId
-    - title: Name
-      content: '.Tags[] | select(.Key == "Name").Value'
-    - title: Type
-      content: .VolumeType
-    - title: State
-      content: .State
-    - title: Size
-      content: .Size
-    - title: Iops
-      content: .Iops
-    - title: VM
-      content: ".LinkedVolumes[].VmId"
-    - title: Device
-      content: ".LinkedVolumes[].DeviceName"
+      - title: ID
+        content: .VolumeId
+      - title: Name
+        content: '.Tags[] | select(.Key == "Name").Value'
+      - title: Type
+        content: .VolumeType
+      - title: State
+        content: .State
+      - title: Size
+        content: .Size
+      - title: Iops
+        content: .Iops
+      - title: VM
+        content: ".LinkedVolumes[].VmId"
+      - title: Device
+        content: ".LinkedVolumes[].DeviceName"
   volumeupdatetask:
     primary: TaskId
 aliases:
-- entity: flexiblegpu
-  group: flexiblegpu
-  use: catalog
-  alias_to: ReadFlexibleGpuCatalog
-  short: alias for api ReadFlexibleGpuCatalog
-  command:
-  - api
-  - ReadFlexibleGpuCatalog
-  - --output
-  - table
-- entity: flexiblegpu
-  group: flexiblegpu
-  use: link fgpu_id
-  alias_to: LinkFlexibleGpu
-  short: alias for api LinkFlexibleGpu --FlexibleGpuId fgpu_id
-  command:
-  - api
-  - LinkFlexibleGpu
-  - --FlexibleGpuId
-  - '%0'
-  - --output
-  - success
-  flags:
-  - name: vm-id
-    alias_to: VmId
-    required: true
-- entity: flexiblegpu
-  group: flexiblegpu
-  use: unlink fgpu_id
-  alias_to: UnlinkFlexibleGpu
-  short: alias for api UnlinkFlexibleGpu --FlexibleGpuId fgpu_id
-  command:
-  - api
-  - UnlinkFlexibleGpu
-  - --FlexibleGpuId
-  - '%0'
-  - --output
-  - success
-- entity: internetservice
-  group: internetservice
-  use: link service_id
-  alias_to: LinkInternetService
-  short: alias for api LinkInternetService --InternetServiceId service_id
-  command:
-  - api
-  - LinkInternetService
-  - --InternetServiceId
-  - '%0'
-  - --output
-  - success
-  flags:
-  - name: net-id
-    alias_to: NetId
-    required: true
-- entity: internetservice
-  group: internetservice
-  use: unlink service_id
-  alias_to: UnlinkInternetService
-  short: alias for api UnlinkInternetService --InternetServiceId service_id
-  command:
-  - api
-  - UnlinkInternetService
-  - --InternetServiceId
-  - '%0'
-  - --output
-  - success
-  flags:
-  - name: net-id
-    alias_to: NetId
-    required: true
-- entity: nic
-  group: nic
-  use: link nic_id
-  alias_to: LinkNic
-  short: alias for api LinkNic --NicId nic_id
-  command:
-  - api
-  - LinkNic
-  - --NicId
-  - '%0'
-  - --output
-  - yaml
-  flags:
-  - name: vm-id
-    alias_to: VmId
-    required: true
-  - name: device-number
-    alias_to: DeviceNumber
-    required: true
-- entity: netaccesspoint
-  group: netaccesspoint
-  use: services
-  alias_to: ReadNetAccessPointServices
-  short: alias for api ReadNetAccessPointServices
-  command:
-  - api
-  - ReadNetAccessPointServices
-  - --output
-  - table
-- entity: netpeering
-  group: netpeering
-  use: accept netpeering_id
-  alias_to: AcceptNetPeering
-  short: alias for api AcceptNetPeering --NetPeeringId netpeering_id
-  command:
-  - api
-  - AcceptNetPeering
-  - --NetPeeringId
-  - '%0'
-  - --output
-  - success
-- entity: netpeering
-  group: netpeering
-  alias_to: RejectNetPeering
-  use: reject netpeering_id
-  short: alias for api RejectNetPeering --NetPeeringId netpeering_id
-  command:
-  - api
-  - RejectNetPeering
-  - --NetPeeringId
-  - '%0'
-  - --output
-  - success
-- entity: policy
-  group: policy
-  use: list
-  aliases:
-  - ls
-  alias_to: ReadPolicies
-  short: alias for api ReadPolicies
-  command:
-  - api
-  - ReadPolicies
-  - --output
-  - table
-  flags:
-  - name: only-linked
-    alias_to: Filters.OnlyLinked
-  - name: path-prefix
-    alias_to: Filters.PathPrefix
-  - name: scope
-    alias_to: Filters.Scope
-  - name: first-item
-    alias_to: FirstItem
-- entity: policy
-  group: policy
-  use: describe policy_orn
-  aliases:
-  - desc
-  alias_to: ReadPolicy
-  short: alias for api ReadPolicy --PolicyOrn policy_orn
-  command:
-  - api
-  - ReadPolicy
-  - --PolicyOrn
-  - '%0'
-  - --output
-  - yaml
-- entity: policy
-  group: policy
-  use: create
-  alias_to: CreatePolicy
-  short: alias for api CreatePolicy
-  command:
-  - api
-  - CreatePolicy
-  - --output
-  - yaml
-  flags:
-  - name: description
-    alias_to: Description
-  - name: document
-    alias_to: Document
-    required: true
-    type: file
-    usage: The file storing the policy document, corresponding to a JSON string that contains the policy.
-  - name: path
-    alias_to: Path
-  - name: name
-    alias_to: PolicyName
-    required: true
-- entity: policy
-  group: policy
-  use: delete policy_orn
-  aliases:
-  - del
-  alias_to: DeletePolicy
-  short: alias for api DeletePolicy --PolicyOrn policy_orn
-  command:
-  - api
-  - DeletePolicy
-  - --PolicyOrn
-  - '%0'
-  - --output
-  - none
-  prompt:
-    action: delete
-    display:
-    - api
-    - ReadPolicy
-    - --PolicyOrn
-    - '%0'
-    - --output
-    - table
-- entity: policy
-  group: policy
-  use: link policy_orn 
-  short: alias for api LinkPolicy --PolicyOrn policy_orn
-  alias_to: LinkPolicy
-  command:
-  - api
-  - LinkPolicy
-  - --PolicyOrn
-  - '%0'
-  - --output
-  - success
-  flags:
-  - name: user-name
-    alias_to: UserName
-    required: true
-- entity: policy
-  group: policy
-  use: unlink policy_orn
-  short: alias for api UnlinkPolicy --PolicyOrn policy_orn
-  alias_to: UnlinkPolicy
-  command:
-  - api
-  - UnlinkPolicy
-  - --PolicyOrn
-  - '%0'
-  - --output
-  - success
-  flags:
-  - name: user-name
-    alias_to: UserName
-    required: true
-- entity: policyversion
-  group: policyversion
-  use: list policy_orn
-  alias_to: ReadPolicyVersions
-  aliases:
-  - ls
-  short: alias for api ReadPolicyVersions --PolicyOrn policy_orn
-  command:
-  - api
-  - ReadPolicyVersions
-  - --PolicyOrn
-  - '%0'
-  - --output
-  - table
-- entity: policyversion
-  group: policyversion
-  use: describe policy_orn version
-  aliases:
-  - desc
-  alias_to: ReadPolicyVersion
-  short: alias for api ReadPolicyVersion --PolicyOrn policy_orn
-  command:
-  - api
-  - ReadPolicyVersion
-  - --PolicyOrn
-  - '%0'
-  - --output
-  - yaml
-  flags:
-  - name: version
-    alias_to: VersionId
-    required: true
-- entity: policyversion
-  group: policyversion
-  use: create policy_orn
-  alias_to: CreatePolicyVersion
-  short: alias for api CreatePolicyVersion --PolicyOrn policy_orn
-  command:
-  - api
-  - CreatePolicyVersion
-  - --PolicyOrn
-  - '%0'
-  - --output
-  - yaml
-  flags:
-  - name: document
-    alias_to: Document
-    required: true
-    type: file
-    usage: The file storing the policy document, corresponding to a JSON string that contains the policy.
-  - name: default
-    alias_to: SetAsDefault
-- entity: policyversion
-  group: policyversion
-  use: delete policy_orn
-  aliases:
-  - del
-  alias_to: DeletePolicyVersion
-  short: alias for api DeletePolicyVersion --PolicyOrn policy_orn
-  command:
-  - api
-  - DeletePolicyVersion
-  - --PolicyOrn
-  - '%0'
-  - --output
-  - none
-  flags:
-  - name: version
-    alias_to: VersionId
-    required: true
-  prompt:
-    action: delete
-    display:
-    - api
-    - ReadPolicyVersion
-    - --PolicyOrn
-    - '%0'
-    - --VersionId
-    - '%1'
-    - --output
-    - table
-- entity: policyversion
-  group: policyversion
-  use: set-default policy_orn
-  aliases:
-  - default
-  alias_to: SetDefaultPolicyVersion
-  short: alias for api SetDefaultPolicyVersion --PolicyOrn policy_orn
-  command:
-  - api
-  - SetDefaultPolicyVersion
-  - --PolicyOrn
-  - '%0'
-  - --output
-  - success
-  flags:
-  - name: version
-    alias_to: VersionId
-    required: true
-- entity: volume
-  group: volume
-  use: link volume_id
-  alias_to: LinkVolume
-  short: alias for api LinkVolume --VolumeId volume_id
-  command:
-  - api
-  - LinkVolume
-  - --VolumeId
-  - '%0'
-  - --output
-  - success
-  flags:
-  - name: vm-id
-    alias_to: VmId
-    required: true
-  - name: device_name
-    alias_to: DeviceName
-    required: true
-- entity: volume
-  group: volume
-  use: unlink volume_id
-  alias_to: UnlinkVolume
-  short: alias for api UnlinkVolume --VolumeId link_volume_id
-  command:
-  - api
-  - UnlinkVolume
-  - --VolumeId
-  - '%0'
-  - --output
-  - success
-  flags:
-  - name: force
-    alias_to: ForceUnlink
-- entity: vm
-  group: vm
-  use: start vm_id [vm_id]...
-  alias_to: StartVms
-  short: alias for api StartVms --VmIds vm_id
-  command:
-  - api
-  - StartVms
-  - --VmIds
-  - '%*'
-  - --output
-  - table
-- entity: vm
-  group: vm
-  use: stop vm_id [vm_id]...
-  alias_to: StopVms
-  short: alias for api StopVms --VmIds vm_id
-  command:
-  - api
-  - StopVms
-  - --VmIds
-  - '%*'
-  - --output
-  - table
-- entity: vm
-  group: vm
-  use: readconsole vm_id
-  alias_to: ReadConsoleOutput
-  short: alias for api ReadConsoleOutput --VmId vm_id
-  command:
-  - api
-  - ReadConsoleOutput
-  - --VmId
-  - '%0'
-  - --jq
-  - .ConsoleOutput
-  - --output
-  - base64
+  - entity: flexiblegpu
+    group: flexiblegpu
+    use: catalog
+    alias_to: ReadFlexibleGpuCatalog
+    short: alias for api ReadFlexibleGpuCatalog
+    command:
+      - api
+      - ReadFlexibleGpuCatalog
+      - --output
+      - table
+  - entity: flexiblegpu
+    group: flexiblegpu
+    use: link fgpu_id
+    alias_to: LinkFlexibleGpu
+    short: alias for api LinkFlexibleGpu --FlexibleGpuId fgpu_id
+    command:
+      - api
+      - LinkFlexibleGpu
+      - --FlexibleGpuId
+      - "%0"
+      - --output
+      - success
+    flags:
+      - name: vm-id
+        alias_to: VmId
+        required: true
+  - entity: flexiblegpu
+    group: flexiblegpu
+    use: unlink fgpu_id
+    alias_to: UnlinkFlexibleGpu
+    short: alias for api UnlinkFlexibleGpu --FlexibleGpuId fgpu_id
+    command:
+      - api
+      - UnlinkFlexibleGpu
+      - --FlexibleGpuId
+      - "%0"
+      - --output
+      - success
+  - entity: internetservice
+    group: internetservice
+    use: link service_id
+    alias_to: LinkInternetService
+    short: alias for api LinkInternetService --InternetServiceId service_id
+    command:
+      - api
+      - LinkInternetService
+      - --InternetServiceId
+      - "%0"
+      - --output
+      - success
+    flags:
+      - name: net-id
+        alias_to: NetId
+        required: true
+  - entity: internetservice
+    group: internetservice
+    use: unlink service_id
+    alias_to: UnlinkInternetService
+    short: alias for api UnlinkInternetService --InternetServiceId service_id
+    command:
+      - api
+      - UnlinkInternetService
+      - --InternetServiceId
+      - "%0"
+      - --output
+      - success
+    flags:
+      - name: net-id
+        alias_to: NetId
+        required: true
+  - entity: loadbalancer
+    group: loadbalancer
+    use: backends load_balancer_name
+    alias_to: ReadVmsHealth
+    short: alias for api ReadVmsHealth --LoadBalancerName load_balancer_name
+    command:
+      - api
+      - ReadVmsHealth
+      - --LoadBalancerName
+      - "%0"
+      - --output
+      - table
+  - entity: nic
+    group: nic
+    use: link nic_id
+    alias_to: LinkNic
+    short: alias for api LinkNic --NicId nic_id
+    command:
+      - api
+      - LinkNic
+      - --NicId
+      - "%0"
+      - --output
+      - yaml
+    flags:
+      - name: vm-id
+        alias_to: VmId
+        required: true
+      - name: device-number
+        alias_to: DeviceNumber
+        required: true
+  - entity: netaccesspoint
+    group: netaccesspoint
+    use: services
+    alias_to: ReadNetAccessPointServices
+    short: alias for api ReadNetAccessPointServices
+    command:
+      - api
+      - ReadNetAccessPointServices
+      - --output
+      - table
+  - entity: netpeering
+    group: netpeering
+    use: accept netpeering_id
+    alias_to: AcceptNetPeering
+    short: alias for api AcceptNetPeering --NetPeeringId netpeering_id
+    command:
+      - api
+      - AcceptNetPeering
+      - --NetPeeringId
+      - "%0"
+      - --output
+      - success
+  - entity: netpeering
+    group: netpeering
+    alias_to: RejectNetPeering
+    use: reject netpeering_id
+    short: alias for api RejectNetPeering --NetPeeringId netpeering_id
+    command:
+      - api
+      - RejectNetPeering
+      - --NetPeeringId
+      - "%0"
+      - --output
+      - success
+  - entity: policy
+    group: policy
+    use: list
+    aliases:
+      - ls
+    alias_to: ReadPolicies
+    short: alias for api ReadPolicies
+    command:
+      - api
+      - ReadPolicies
+      - --output
+      - table
+    flags:
+      - name: only-linked
+        alias_to: Filters.OnlyLinked
+      - name: path-prefix
+        alias_to: Filters.PathPrefix
+      - name: scope
+        alias_to: Filters.Scope
+      - name: first-item
+        alias_to: FirstItem
+  - entity: policy
+    group: policy
+    use: describe policy_orn
+    aliases:
+      - desc
+    alias_to: ReadPolicy
+    short: alias for api ReadPolicy --PolicyOrn policy_orn
+    command:
+      - api
+      - ReadPolicy
+      - --PolicyOrn
+      - "%0"
+      - --output
+      - yaml
+  - entity: policy
+    group: policy
+    use: create
+    alias_to: CreatePolicy
+    short: alias for api CreatePolicy
+    command:
+      - api
+      - CreatePolicy
+      - --output
+      - yaml
+    flags:
+      - name: description
+        alias_to: Description
+      - name: document
+        alias_to: Document
+        required: true
+        type: file
+        usage: The file storing the policy document, corresponding to a JSON string that contains the policy.
+      - name: path
+        alias_to: Path
+      - name: name
+        alias_to: PolicyName
+        required: true
+  - entity: policy
+    group: policy
+    use: delete policy_orn
+    aliases:
+      - del
+    alias_to: DeletePolicy
+    short: alias for api DeletePolicy --PolicyOrn policy_orn
+    command:
+      - api
+      - DeletePolicy
+      - --PolicyOrn
+      - "%0"
+      - --output
+      - none
+    prompt:
+      action: delete
+      display:
+        - api
+        - ReadPolicy
+        - --PolicyOrn
+        - "%0"
+        - --output
+        - table
+  - entity: policy
+    group: policy
+    use: link policy_orn
+    short: alias for api LinkPolicy --PolicyOrn policy_orn
+    alias_to: LinkPolicy
+    command:
+      - api
+      - LinkPolicy
+      - --PolicyOrn
+      - "%0"
+      - --output
+      - success
+    flags:
+      - name: user-name
+        alias_to: UserName
+        required: true
+  - entity: policy
+    group: policy
+    use: unlink policy_orn
+    short: alias for api UnlinkPolicy --PolicyOrn policy_orn
+    alias_to: UnlinkPolicy
+    command:
+      - api
+      - UnlinkPolicy
+      - --PolicyOrn
+      - "%0"
+      - --output
+      - success
+    flags:
+      - name: user-name
+        alias_to: UserName
+        required: true
+  - entity: policyversion
+    group: policyversion
+    use: list policy_orn
+    alias_to: ReadPolicyVersions
+    aliases:
+      - ls
+    short: alias for api ReadPolicyVersions --PolicyOrn policy_orn
+    command:
+      - api
+      - ReadPolicyVersions
+      - --PolicyOrn
+      - "%0"
+      - --output
+      - table
+  - entity: policyversion
+    group: policyversion
+    use: describe policy_orn version
+    aliases:
+      - desc
+    alias_to: ReadPolicyVersion
+    short: alias for api ReadPolicyVersion --PolicyOrn policy_orn
+    command:
+      - api
+      - ReadPolicyVersion
+      - --PolicyOrn
+      - "%0"
+      - --output
+      - yaml
+    flags:
+      - name: version
+        alias_to: VersionId
+        required: true
+  - entity: policyversion
+    group: policyversion
+    use: create policy_orn
+    alias_to: CreatePolicyVersion
+    short: alias for api CreatePolicyVersion --PolicyOrn policy_orn
+    command:
+      - api
+      - CreatePolicyVersion
+      - --PolicyOrn
+      - "%0"
+      - --output
+      - yaml
+    flags:
+      - name: document
+        alias_to: Document
+        required: true
+        type: file
+        usage: The file storing the policy document, corresponding to a JSON string that contains the policy.
+      - name: default
+        alias_to: SetAsDefault
+  - entity: policyversion
+    group: policyversion
+    use: delete policy_orn
+    aliases:
+      - del
+    alias_to: DeletePolicyVersion
+    short: alias for api DeletePolicyVersion --PolicyOrn policy_orn
+    command:
+      - api
+      - DeletePolicyVersion
+      - --PolicyOrn
+      - "%0"
+      - --output
+      - none
+    flags:
+      - name: version
+        alias_to: VersionId
+        required: true
+    prompt:
+      action: delete
+      display:
+        - api
+        - ReadPolicyVersion
+        - --PolicyOrn
+        - "%0"
+        - --VersionId
+        - "%1"
+        - --output
+        - table
+  - entity: policyversion
+    group: policyversion
+    use: set-default policy_orn
+    aliases:
+      - default
+    alias_to: SetDefaultPolicyVersion
+    short: alias for api SetDefaultPolicyVersion --PolicyOrn policy_orn
+    command:
+      - api
+      - SetDefaultPolicyVersion
+      - --PolicyOrn
+      - "%0"
+      - --output
+      - success
+    flags:
+      - name: version
+        alias_to: VersionId
+        required: true
+  - entity: volume
+    group: volume
+    use: link volume_id
+    alias_to: LinkVolume
+    short: alias for api LinkVolume --VolumeId volume_id
+    command:
+      - api
+      - LinkVolume
+      - --VolumeId
+      - "%0"
+      - --output
+      - success
+    flags:
+      - name: vm-id
+        alias_to: VmId
+        required: true
+      - name: device_name
+        alias_to: DeviceName
+        required: true
+  - entity: volume
+    group: volume
+    use: unlink volume_id
+    alias_to: UnlinkVolume
+    short: alias for api UnlinkVolume --VolumeId link_volume_id
+    command:
+      - api
+      - UnlinkVolume
+      - --VolumeId
+      - "%0"
+      - --output
+      - success
+    flags:
+      - name: force
+        alias_to: ForceUnlink
+  - entity: vm
+    group: vm
+    use: start vm_id [vm_id]...
+    alias_to: StartVms
+    short: alias for api StartVms --VmIds vm_id
+    command:
+      - api
+      - StartVms
+      - --VmIds
+      - "%*"
+      - --output
+      - table
+  - entity: vm
+    group: vm
+    use: stop vm_id [vm_id]...
+    alias_to: StopVms
+    short: alias for api StopVms --VmIds vm_id
+    command:
+      - api
+      - StopVms
+      - --VmIds
+      - "%*"
+      - --output
+      - table
+  - entity: vm
+    group: vm
+    use: readconsole vm_id
+    alias_to: ReadConsoleOutput
+    short: alias for api ReadConsoleOutput --VmId vm_id
+    command:
+      - api
+      - ReadConsoleOutput
+      - --VmId
+      - "%0"
+      - --jq
+      - .ConsoleOutput
+      - --output
+      - base64
+  - entity: vm
+    use: states
+    alias_to: ReadVmsState
+    aliases:
+      - ls
+    short: alias for api ReadVmsState
+    command:
+      - api
+      - ReadVmsState
+      - --output
+      - yaml

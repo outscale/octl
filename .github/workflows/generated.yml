@@ -6,7 +6,6 @@ on:
       - main
       - docautogen
 
-    
 permissions:
   contents: read
 
@@ -20,4 +19,5 @@ jobs:
       run: |
         set -ex
         go generate ./...
-        git diff --exit-code
+        git add .
+        git diff --staged --exit-code
