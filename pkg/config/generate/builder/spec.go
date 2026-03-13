@@ -39,6 +39,12 @@ func (b *SpecBuilder) BuildSpec(base *config.Config, pkgNames ...string) {
 				if !stmt.Name.IsExported() {
 					return false
 				}
+				if len(stmt.Type.Params.List) < 2 {
+					return false
+				}
+				if stmt.Type.Results == nil {
+					return false
+				}
 				if _, found := base.Calls[method]; !found {
 					_, _, entity := names(method)
 					var group string

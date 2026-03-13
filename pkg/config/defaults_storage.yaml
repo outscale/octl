@@ -86,8 +86,6 @@ contents:
   HeadObject:
     entity: object
     group: Object
-  ID:
-    entity: id
   ListBuckets:
     content: Buckets
     entity: bucket
@@ -708,7 +706,6 @@ spec:
     HandleBuild: {}
     HeadBucket: {}
     HeadObject: {}
-    ID: {}
     ListMultipartUploads: {}
     ListParts: {}
     PutBucketAcl: {}
