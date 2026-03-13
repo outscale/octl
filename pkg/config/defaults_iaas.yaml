@@ -348,12 +348,6 @@ contents:
   EnableOutscaleLoginPerUsers:
     entity: outscaleloginperuser
     group: IdentityProvider
-  Error:
-    entity: error
-  Expect:
-    entity: expect
-  GetCode:
-    entity: code
   LinkFlexibleGpu:
     entity: flexiblegpu
     group: FlexibleGpu
@@ -387,10 +381,6 @@ contents:
   LinkVolume:
     entity: volume
     group: Volume
-  LogRequest:
-    entity: request
-  LogResponse:
-    entity: response
   PutUserGroupPolicy:
     entity: usergrouppolicy
     group: Policy
@@ -708,10 +698,6 @@ contents:
   StartVms:
     entity: vm
     group: Vm
-  Status:
-    entity: status
-  StatusCode:
-    entity: code
   StopVms:
     entity: vm
     group: Vm
@@ -850,8 +836,6 @@ contents:
     content: VpnConnection
     entity: vpnconnection
     group: VpnConnection
-  Values:
-    entity: value
 entities:
   accesskey:
     aliases:
@@ -7291,9 +7275,6 @@ spec:
       help: Enables the possibility for all your EIM users to log in using their Outscale credentials when identity federation is activated.
     EnableOutscaleLoginPerUsers:
       help: Enables the possibility for one or more specific users to log in using their Outscale credentials when identity federation is activated.
-    Error: {}
-    Expect: {}
-    GetCode: {}
     LinkFlexibleGpu:
       help: |-
         Attaches one of your allocated flexible GPUs (fGPUs) to one of your virtual machines (VMs).
@@ -7372,8 +7353,6 @@ spec:
         Attaches a Block Storage Unit (BSU) volume to a virtual machine (VM).
         
         The volume and the VM must be in the same Subregion. The VM can be running or stopped. The volume is attached to the specified VM device.
-    LogRequest: {}
-    LogResponse: {}
     PutUserGroupPolicy:
       help: |-
         Creates or updates an inline policy included in a specified group.
@@ -7694,10 +7673,6 @@ spec:
         Start one or more virtual machines (VMs).
         
         You can start only VMs that are valid and that belong to you.
-    Status:
-      help: returns HTTPResponse.Status
-    StatusCode:
-      help: returns HTTPResponse.StatusCode
     StopVms:
       help: |-
         Stops one or more running virtual machines (VMs).
@@ -7926,8 +7901,6 @@ spec:
         - When the modification is not instantaneous, the response displays the previous value. You can use the [ReadVolumeUpdateTasks](#readvolumeupdatetasks) method to see the progression of the update.
     UpdateVpnConnection:
       help: Modifies the specified attributes of a VPN connection.
-    Values:
-      help: Method to return the list of values
   attributes:
     AcceptNetPeeringRequest.DryRun:
       help: If true, checks whether you have the required permissions to perform the action.
