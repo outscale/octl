@@ -1,2 +1,7 @@
 # Added by goreleaser init:
 dist/
+
+.terraform
+.terraform.lock.hcl
+*.tfstate
+*.backup

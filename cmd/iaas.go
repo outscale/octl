@@ -8,6 +8,7 @@ package cmd
 import (
 	"reflect"
 	"strings"
+	"time"
 
 	"github.com/outscale/octl/pkg/builder"
 	"github.com/outscale/octl/pkg/config"
@@ -32,6 +33,15 @@ func init() {
 		return m.Type.NumIn() == 4 && m.Type.NumOut() == 2 && !strings.HasSuffix(m.Name, "Raw")
 	}, oapi)
 	b.Build(iaasCmd)
+
+	cmd, _, err := iaasCmd.Find([]string{"net"})
+	if err != nil {
+		panic(err)
+	}
+	cmd.AddCommand(teardownCmd)
+	teardownCmd.Flags().Duration("timeout", 10*time.Minute, "Timeout for a single resource deletion")
+	teardownCmd.Flags().Bool("teardown-vms", false, "Tears down VM in net")
+	cmd.AddCommand(depsCmd)
 }
 
 func oapi(cmd *cobra.Command, args []string) {
