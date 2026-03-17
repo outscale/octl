@@ -1,11 +1,17 @@
-## octl iaas net
+## octl iaas net teardown
 
-net commands
+Tears down a net and its subresources
+
+```
+octl iaas net teardown net_id [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for net
+  -h, --help               help for teardown
+      --teardown-vms       Tears down VM in net
+      --timeout duration   Timeout for a single resource deletion (default 10m0s)
 ```
 
 ### Options inherited from parent commands
@@ -28,12 +34,5 @@ net commands
 
 ### SEE ALSO
 
-* [octl iaas](octl_iaas.md)	 - OUTSCALE IaaS management
-* [octl iaas net create](octl_iaas_net_create.md)	 - alias for api CreateNet
-* [octl iaas net delete](octl_iaas_net_delete.md)	 - alias for api DeleteNet --NetId net_id
-* [octl iaas net dependencies](octl_iaas_net_dependencies.md)	 - Shows all dependencies of a net
-* [octl iaas net describe](octl_iaas_net_describe.md)	 - alias for api ReadNets --Filters.NetIds net_id
-* [octl iaas net list](octl_iaas_net_list.md)	 - alias for api ReadNets
-* [octl iaas net teardown](octl_iaas_net_teardown.md)	 - Tears down a net and its subresources
-* [octl iaas net update](octl_iaas_net_update.md)	 - alias for api UpdateNet --NetId net_id
+* [octl iaas net](octl_iaas_net.md)	 - net commands
 

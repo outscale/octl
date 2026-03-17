@@ -22,11 +22,11 @@ var (
 		config.ActionDelete: "Are you sure you want to delete these resource(s) ?",
 	}
 	success = map[config.Action]string{
-		config.ActionDelete: "The resource(s) has been deleted",
+		config.ActionDelete: "The resource(s) have been deleted",
 	}
 )
 
-func confirm(action config.Action, display, run func(cmd *cobra.Command, args []string)) func(cmd *cobra.Command, args []string) {
+func Confirm(action config.Action, display, run func(cmd *cobra.Command, args []string)) func(cmd *cobra.Command, args []string) {
 	return func(cmd *cobra.Command, args []string) {
 		if yes, _ := cmd.Flags().GetBool("yes"); yes {
 			run(cmd, args)

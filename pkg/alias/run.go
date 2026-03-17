@@ -47,7 +47,7 @@ func runAliasWithPrompt(provider string, a config.Alias, cmd *cobra.Command) fun
 		if len(a.Prompt.DisplayCommand) > 0 {
 			display = runFunc(provider, a.Prompt.DisplayCommand, a.Prompt.Flags, cmd, true)
 		}
-		return confirm(a.Prompt.Action, display, run)
+		return Confirm(a.Prompt.Action, display, run)
 	}
 	return run
 }
