@@ -697,8 +697,6 @@ aliases:
   - entity: vm
     use: states
     alias_to: ReadVmsState
-    aliases:
-      - ls
     short: alias for api ReadVmsState
     command:
       - api
