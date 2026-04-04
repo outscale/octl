@@ -16,7 +16,7 @@ require (
 	github.com/gabriel-vasile/mimetype v1.4.13
 	github.com/gobuffalo/flect v1.0.3
 	github.com/goccy/go-yaml v1.19.3-0.20260226144344-f167b933f7d0
-	github.com/itchyny/gojq v0.12.18
+	github.com/itchyny/gojq v0.12.19
 	github.com/mattn/go-isatty v0.0.20
 	github.com/minio/selfupdate v0.6.0
 	github.com/outscale/goutils/sdk v0.0.1
@@ -111,7 +111,7 @@ require (
 	github.com/in-toto/attestation v1.1.2 // indirect
 	github.com/in-toto/in-toto-golang v0.9.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/itchyny/timefmt-go v0.1.7 // indirect
+	github.com/itchyny/timefmt-go v0.1.8 // indirect
 	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
 	github.com/mattn/go-runewidth v0.0.20 // indirect
