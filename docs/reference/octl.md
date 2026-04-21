@@ -30,7 +30,7 @@ octl [flags]
       --jq string                   jq filter
       --no-upgrade                  do not check for new versions
   -O, --out-file string             redirect output to file
-  -o, --output string               output format (raw, json, yaml, table, csv, none, base64, text) (default "raw")
+  -o, --output string               output format (raw, json, yaml, table, csv, none, base64, text)
       --payload string              JSON content for query body
       --profile string              Profile to use in profile file (by default, "default")
       --single                      convert single entry lists to a single object
@@ -47,6 +47,7 @@ octl [flags]
 
 * [octl iaas](octl_iaas.md)	 - OUTSCALE IaaS management
 * [octl kube](octl_kube.md)	 - OUTSCALE Kubernetes as a Service (OKS) management
+* [octl metadata](octl_metadata.md)	 - query the metadata server
 * [octl profile](octl_profile.md)	 - Profile file management
 * [octl storage](octl_storage.md)	 - OUTSCALE Object Storage (OOS) management
 * [octl update](octl_update.md)	 - Update octl to the latest version
