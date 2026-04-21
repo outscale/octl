@@ -92,7 +92,7 @@ func init() {
 	rootCmd.PersistentFlags().Duration("waitfor-timeout", 10*time.Minute, `maximum duration of a wait`)
 
 	rootCmd.PersistentFlags().StringP("columns", "c", "", "columns to display - [+]<title>:<jq query for content>||<title>:<jq query for content>")
-	rootCmd.PersistentFlags().StringP("output", "o", "raw", "output format (raw, json, yaml, table, csv, none, base64, text)")
+	rootCmd.PersistentFlags().StringP("output", "o", "", "output format (raw, json, yaml, table, csv, none, base64, text)")
 	rootCmd.PersistentFlags().StringP("out-file", "O", "", "redirect output to file")
 	rootCmd.PersistentFlags().Bool("single", false, "convert single entry lists to a single object")
 
