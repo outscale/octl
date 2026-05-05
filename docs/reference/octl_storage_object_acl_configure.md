@@ -15,9 +15,10 @@ octl storage object acl configure key [flags]
 ### Options
 
 ```
-      --bucket string      The bucket name that contains the object to which you want to attach the ACL.
-      --from-file string   the file storing the ACL config in JSON format (i.e. {"Grants":[...]})
-  -h, --help               help for configure
+      --bucket string        The bucket name that contains the object to which you want to attach the ACL.
+      --from-file string     The file storing the ACL config (JSON format, i.e. {"Grants":[...]})
+      --from-string string   The ACL config (JSON format, i.e. {"Grants":[...]})
+  -h, --help                 help for configure
 ```
 
 ### Options inherited from parent commands

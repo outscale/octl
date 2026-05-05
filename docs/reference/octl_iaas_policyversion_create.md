@@ -21,9 +21,9 @@ octl iaas policyversion create policy_orn [flags]
 ### Options
 
 ```
-      --default         If set to true, the new policy version is set as the default version and becomes the operative one.
-      --document File   The file storing the policy document, corresponding to a JSON string that contains the policy.
-  -h, --help            help for create
+      --default               If set to true, the new policy version is set as the default version and becomes the operative one.
+      --document fileOrJson   Either a file storing the policy document, or the policy document (in JSON format).
+  -h, --help                  help for create
 ```
 
 ### Options inherited from parent commands

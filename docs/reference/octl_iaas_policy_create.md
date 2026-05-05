@@ -17,11 +17,11 @@ octl iaas policy create [flags]
 ### Options
 
 ```
-      --description string   A description for the policy.
-      --document File        The file storing the policy document, corresponding to a JSON string that contains the policy.
-  -h, --help                 help for create
-      --name string          The name of the policy.
-      --path string          The path of the policy.
+      --description string    A description for the policy.
+      --document fileOrJson   Either a file storing the policy document or the policy document (in JSON format).
+  -h, --help                  help for create
+      --name string           The name of the policy.
+      --path string           The path of the policy.
 ```
 
 ### Options inherited from parent commands

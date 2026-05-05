@@ -123,7 +123,11 @@ func ToStruct(cmd *cobra.Command, arg reflect.Value, prefix string) error {
 		source string
 	)
 	if payload, ferr := cmd.Flags().GetString("payload"); ferr == nil && payload != "" {
-		r = strings.NewReader(payload)
+		if root, ferr := cmd.Flags().GetString("root"); ferr == nil && root != "" {
+			r = strings.NewReader(`{"` + root + `":` + payload + `}`)
+		} else {
+			r = strings.NewReader(payload)
+		}
 		source = "payload"
 	} else if tpl, ferr := cmd.Flags().GetString("template"); ferr == nil && tpl != "" {
 		var rc io.ReadCloser
@@ -132,7 +136,7 @@ func ToStruct(cmd *cobra.Command, arg reflect.Value, prefix string) error {
 			defer rc.Close() //nolint
 		}
 		r = rc
-		if root, ferr := cmd.Flags().GetString("template-root"); ferr == nil && root != "" {
+		if root, ferr := cmd.Flags().GetString("root"); ferr == nil && root != "" {
 			buf, err := io.ReadAll(r)
 			if err != nil {
 				return err

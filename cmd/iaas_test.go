@@ -268,7 +268,7 @@ func TestBase64File(t *testing.T) {
 	assert.Equal(t, "test-b64", *resp.KeypairName)
 }
 
-func TestFile(t *testing.T) {
+func TestPolicyFile(t *testing.T) {
 	policyFile := filepath.Join(t.TempDir(), "test.json")
 	policy := `{
   "Statement": [
@@ -285,6 +285,23 @@ func TestFile(t *testing.T) {
 	require.NoError(t, err)
 	var resp osc.Policy
 	runJSON(t, []string{"iaas", "policy", "create", "--document", policyFile, "--name", name, "-o", "json"}, nil, &resp)
+	_ = run(t, []string{"iaas", "policy", "delete", "-y", *resp.Orn}, nil)
+}
+
+func TestPolicyString(t *testing.T) {
+	policy := `{
+  "Statement": [
+    {
+      "Action": ["api:ReadVolumes"],
+      "Effect": "Allow",
+      "Resource": ["*"]
+    }
+  ]
+}`
+	sum := sha1.Sum([]byte(policy))
+	name := hex.EncodeToString(sum[:])
+	var resp osc.Policy
+	runJSON(t, []string{"iaas", "policy", "create", "--document", policy, "--name", name, "-o", "json"}, nil, &resp)
 	_ = run(t, []string{"iaas", "policy", "delete", "-y", *resp.Orn}, nil)
 }
 

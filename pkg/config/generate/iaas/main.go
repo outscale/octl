@@ -69,12 +69,12 @@ func main() {
 				Usage: "The file storing the data or script used to add a specific configuration to the VM (max size 500 KiB).",
 			},
 			"policy-document": {
-				Type:  "file",
-				Usage: "The file storing the policy document, corresponding to a JSON string that contains the policy.",
+				Type:  "fileOrJSON",
+				Usage: "Either a file storing the policy document, or the policy document (in JSON format).",
 			},
 			"document": {
-				Type:  "file",
-				Usage: "The file storing the policy document, corresponding to a JSON string that contains the policy.",
+				Type:  "fileOrJSON",
+				Usage: "Either a file storing the policy document, or the policy document (in JSON format).",
 			},
 		},
 		FlagReplaces: []string{

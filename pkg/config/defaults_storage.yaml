@@ -437,14 +437,17 @@ aliases:
   - PutBucketAcl
   - --Bucket
   - '%0'
-  - --template-root
+  - --root
   - AccessControlPolicy
   - --output
   - success
   flags:
   - name: from-file
     alias_to: template
-    usage: the file storing the ACL config in JSON format (i.e. {"Grants":[...]})
+    usage: The file storing the ACL config (JSON format, i.e. {"Grants":[...]})
+  - name: from-string
+    alias_to: payload
+    usage: The ACL config (JSON format, i.e. {"Grants":[...]})
   - name: acl
     alias_to: ACL
   - name: grant-full-control
@@ -484,15 +487,17 @@ aliases:
   - PutBucketCors
   - --Bucket
   - '%0'
-  - --template-root
+  - --root
   - CORSConfiguration
   - --output
   - success
   flags:
   - name: from-file
     alias_to: template
-    required: true
-    usage: the file storing the CORS config in JSON format (i.e. {"CORSRules":[...]})
+    usage: The file storing the CORS config (JSON format, i.e. {"CORSRules":[...]})
+  - name: from-string
+    alias_to: payload
+    usage: The CORS config (JSON format, i.e. {"CORSRules":[...]})
 - entity: bucket
   sub_command: cors
   use: disable bucket
@@ -535,15 +540,17 @@ aliases:
   - PutBucketLifecycleConfiguration
   - --Bucket
   - '%0'
-  - --template-root
+  - --root
   - LifecycleConfiguration
   - --output
   - success
   flags:
   - name: from-file
     alias_to: template
-    required: true
-    usage: the file storing the Lifecycle config in JSON format (i.e. {"Rules":[...]})
+    usage: The file storing the Lifecycle config (JSON format, i.e. {"Rules":[...]})
+  - name: from-string
+    alias_to: payload
+    usage: The Lifecycle config (JSON format, i.e. {"Rules":[...]})
 - entity: bucket
   sub_command: lifecycle
   use: disable bucket
@@ -586,15 +593,17 @@ aliases:
   - PutObjectLockConfiguration
   - --Bucket
   - '%0'
-  - --template-root
+  - --root
   - ObjectLockConfiguration
   - --output
   - success
   flags:
   - name: from-file
     alias_to: template
-    required: true
-    usage: the file storing the ObjectLock config in JSON format (i.e. {"ObjectLockEnabled":"Enabled", "Rule":{...}})
+    usage: The file storing the ObjectLock config (JSON format, i.e. {"ObjectLockEnabled":"Enabled", "Rule":{...}})
+  - name: from-string
+    alias_to: payload
+    usage: The ObjectLock config (JSON format, i.e. {"ObjectLockEnabled":"Enabled", "Rule":{...}})
 - entity: bucket
   sub_command: website
   use: describe bucket
@@ -622,15 +631,17 @@ aliases:
   - PutBucketWebsite
   - --Bucket
   - '%0'
-  - --template-root
+  - --root
   - WebsiteConfiguration
   - --output
   - success
   flags:
   - name: from-file
     alias_to: template
-    required: true
-    usage: the file storing the website config in JSON format (e.g. {"ErrorDocument":{...},"IndexDocument":{...},"RoutingRules":[...]})
+    usage: The file storing the website config (JSON format, e.g. {"ErrorDocument":{...},"IndexDocument":{...},"RoutingRules":[...]})
+  - name: from-string
+    alias_to: payload
+    usage: The website config (JSON format, e.g. {"ErrorDocument":{...},"IndexDocument":{...},"RoutingRules":[...]})
 - entity: bucket
   sub_command: website
   use: disable bucket
@@ -678,9 +689,11 @@ aliases:
   flags:
   - name: from-file
     alias_to: Policy
-    required: true
     type: file
-    usage: the file storing the policy config in JSON format (i.e. {"Version":"...","Statement":[...]})
+    usage: The file storing the policy config (JSON format, i.e. {"Version":"...","Statement":[...]})
+  - name: from-string
+    alias_to: Policy
+    usage: The policy config (JSON format, i.e. {"Version":"...","Statement":[...]})
   - name: remove-access
     alias_to: ConfirmRemoveSelfBucketAccess
 - entity: bucket
@@ -729,15 +742,17 @@ aliases:
   - PutObjectAcl
   - --Key
   - '%0'
-  - --template-root
+  - --root
   - AccessControlPolicy
   - --output
   - yaml
   flags:
   - name: from-file
     alias_to: template
-    required: true
-    usage: the file storing the ACL config in JSON format (i.e. {"Grants":[...]})
+    usage: The file storing the ACL config (JSON format, i.e. {"Grants":[...]})
+  - name: from-string
+    alias_to: payload
+    usage: The ACL config (JSON format, i.e. {"Grants":[...]})
   - name: bucket
     alias_to: Bucket
     required: true
@@ -814,15 +829,17 @@ aliases:
   - PutObjectTagging
   - --Key
   - '%0'
-  - --template-root
+  - --root
   - Tagging
   - --output
   - success
   flags:
   - name: from-file
     alias_to: template
-    required: true
-    usage: the file storing the tagging config in JSON format (i.e. {"TagSet":[{"Key":"...", "Value":"..."}]})
+    usage: The file storing the tagging config (JSON format, i.e. {"TagSet":[{"Key":"...", "Value":"..."}]})
+  - name: from-string
+    alias_to: payload
+    usage: The tagging config (JSON format, i.e. {"TagSet":[{"Key":"...", "Value":"..."}]})
   - name: bucket
     alias_to: Bucket
     required: true

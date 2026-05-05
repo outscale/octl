@@ -1,37 +1,46 @@
 package flags
 
 import (
+	"encoding/json"
+	"errors"
 	"os"
 )
 
-// FileValue sets a flag with a file content.
-type FileValue struct {
+var ErrInvalidFileOrJSON = errors.New("value is neither a file nor a JSON document")
+
+// FileOrJSONValue sets a flag with either a file content.
+type FileOrJSONValue struct {
 	content []byte
 }
 
-func NewFileValue() *FileValue {
-	return &FileValue{}
+func NewFileValue() *FileOrJSONValue {
+	return &FileOrJSONValue{}
 }
 
 // Set sets the value based on a file content.
-func (v *FileValue) Set(s string) error {
-	buf, err := os.ReadFile(s) //nolint:gosec
-	if err != nil {
+func (v *FileOrJSONValue) Set(s string) error {
+	if _, err := os.Stat(s); err == nil {
+		v.content, err = os.ReadFile(s) //nolint:gosec
 		return err
 	}
-	v.content = buf
+	var tmp any
+	err := json.Unmarshal([]byte(s), &tmp)
+	if err != nil {
+		return ErrInvalidFileOrJSON
+	}
+	v.content = []byte(s)
 	return nil
 }
 
 // Type name for File.File flags.
-func (v *FileValue) Type() string {
-	return "File"
+func (v *FileOrJSONValue) Type() string {
+	return "fileOrJson"
 }
 
-func (v *FileValue) String() string {
+func (v *FileOrJSONValue) String() string {
 	return string(v.content)
 }
 
-func (v *FileValue) Value() (string, bool) {
+func (v *FileOrJSONValue) Value() (string, bool) {
 	return v.String(), true
 }
