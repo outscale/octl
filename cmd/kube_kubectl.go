@@ -80,7 +80,9 @@ func getKubeconfig(ctx context.Context, cluster string, cl *oks.Client) (string,
 		}
 		var decoded *x509.Certificate
 		decoded, err = x509.ParseCertificate(b.Bytes)
-		debug.Println("kubeconfig valid until", decoded.NotAfter)
+		if decoded != nil {
+			debug.Println("kubeconfig valid until", decoded.NotAfter)
+		}
 		if err == nil && time.Since(decoded.NotAfter) > 0 {
 			debug.Println("expired kubeconfig certificate; refreshing")
 			err = refreshKubeconfig(ctx, id, filename, cl)
