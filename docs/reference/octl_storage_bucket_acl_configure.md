@@ -16,7 +16,8 @@ octl storage bucket acl configure bucket [flags]
 
 ```
       --acl string                  The canned ACL to apply to the bucket.
-      --from-file string            the file storing the ACL config in JSON format (i.e. {"Grants":[...]})
+      --from-file string            The file storing the ACL config (JSON format, i.e. {"Grants":[...]})
+      --from-string string          The ACL config (JSON format, i.e. {"Grants":[...]})
       --grant-full-control string   Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.
       --grant-read string           Allows grantee to list the objects in the bucket.
       --grant-write string          Allows grantee to create new objects in the bucket.

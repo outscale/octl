@@ -15,8 +15,9 @@ octl storage bucket website configure bucket [flags]
 ### Options
 
 ```
-      --from-file string   the file storing the website config in JSON format (e.g. {"ErrorDocument":{...},"IndexDocument":{...},"RoutingRules":[...]})
-  -h, --help               help for configure
+      --from-file string     The file storing the website config (JSON format, e.g. {"ErrorDocument":{...},"IndexDocument":{...},"RoutingRules":[...]})
+      --from-string string   The website config (JSON format, e.g. {"ErrorDocument":{...},"IndexDocument":{...},"RoutingRules":[...]})
+  -h, --help                 help for configure
 ```
 
 ### Options inherited from parent commands

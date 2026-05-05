@@ -15,8 +15,9 @@ octl storage bucket objectlock configure bucket [flags]
 ### Options
 
 ```
-      --from-file string   the file storing the ObjectLock config in JSON format (i.e. {"ObjectLockEnabled":"Enabled", "Rule":{...}})
-  -h, --help               help for configure
+      --from-file string     The file storing the ObjectLock config (JSON format, i.e. {"ObjectLockEnabled":"Enabled", "Rule":{...}})
+      --from-string string   The ObjectLock config (JSON format, i.e. {"ObjectLockEnabled":"Enabled", "Rule":{...}})
+  -h, --help                 help for configure
 ```
 
 ### Options inherited from parent commands

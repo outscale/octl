@@ -15,8 +15,9 @@ octl storage bucket cors configure bucket [flags]
 ### Options
 
 ```
-      --from-file string   the file storing the CORS config in JSON format (i.e. {"CORSRules":[...]})
-  -h, --help               help for configure
+      --from-file string     The file storing the CORS config (JSON format, i.e. {"CORSRules":[...]})
+      --from-string string   The CORS config (JSON format, i.e. {"CORSRules":[...]})
+  -h, --help                 help for configure
 ```
 
 ### Options inherited from parent commands

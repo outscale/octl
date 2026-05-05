@@ -15,9 +15,10 @@ octl storage bucket policy configure bucket [flags]
 ### Options
 
 ```
-      --from-file File   the file storing the policy config in JSON format (i.e. {"Version":"...","Statement":[...]})
-  -h, --help             help for configure
-      --remove-access    Set this parameter to true to confirm that you want to remove your permissions to change this bucket policy in the future.
+      --from-file fileOrJson   The file storing the policy config (JSON format, i.e. {"Version":"...","Statement":[...]})
+      --from-string string     The policy config (JSON format, i.e. {"Version":"...","Statement":[...]})
+  -h, --help                   help for configure
+      --remove-access          Set this parameter to true to confirm that you want to remove your permissions to change this bucket policy in the future.
 ```
 
 ### Options inherited from parent commands

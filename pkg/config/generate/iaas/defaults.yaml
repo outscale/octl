@@ -460,8 +460,8 @@ aliases:
       - name: document
         alias_to: Document
         required: true
-        type: file
-        usage: The file storing the policy document, corresponding to a JSON string that contains the policy.
+        type: fileOrJSON
+        usage: Either a file storing the policy document or the policy document (in JSON format).
       - name: path
         alias_to: Path
       - name: name
@@ -570,8 +570,8 @@ aliases:
       - name: document
         alias_to: Document
         required: true
-        type: file
-        usage: The file storing the policy document, corresponding to a JSON string that contains the policy.
+        type: fileOrJSON
+        usage: Either a file storing the policy document, or the policy document (in JSON format).
       - name: default
         alias_to: SetAsDefault
   - entity: policyversion

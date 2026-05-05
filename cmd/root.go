@@ -80,9 +80,9 @@ func init() {
 	rootCmd.PersistentFlags().String("profile", "", fmt.Sprintf("Profile to use in profile file (by default, %q)", profile.DefaultProfile))
 
 	rootCmd.PersistentFlags().String("template", "", "JSON template file for query body")
-	rootCmd.PersistentFlags().String("template-root", "", "the root attribute for the template")
-	_ = rootCmd.PersistentFlags().MarkHidden("template-root")
 	rootCmd.PersistentFlags().String("payload", "", "JSON content for query body")
+	rootCmd.PersistentFlags().String("root", "", "the root attribute for the template or payload")
+	_ = rootCmd.PersistentFlags().MarkHidden("root")
 
 	rootCmd.PersistentFlags().String("jq", "", "jq filter")
 	rootCmd.PersistentFlags().StringSlice("filter", nil, `comma separated list of filters for results - name:value,name:value, alias for jq filter 'select(.name | test("value"))'`)

@@ -160,7 +160,7 @@ func TestBucketCORS(t *testing.T) {
 		_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
 	}()
 
-	t.Run("CORS can be enabled and disabled", func(t *testing.T) {
+	t.Run("CORS can be enabled and disabled (from-file)", func(t *testing.T) {
 		runWithError(t, []string{"storage", "bucket", "cors", "describe", bucket, "-o", "json"}, nil)
 
 		_ = run(t, []string{"storage", "bucket", "cors", "configure", bucket, "--from-file", "testdata/storage/cors.json"}, nil)
@@ -172,6 +172,19 @@ func TestBucketCORS(t *testing.T) {
 		_ = run(t, []string{"storage", "bucket", "cors", "disable", bucket}, nil)
 
 		runWithError(t, []string{"storage", "bucket", "cors", "describe", bucket, "-o", "json"}, nil)
+	})
+
+	t.Run("CORS can be enabled (from-string)", func(t *testing.T) {
+		runWithError(t, []string{"storage", "bucket", "cors", "describe", bucket, "-o", "json"}, nil)
+
+		cors, err := os.ReadFile("testdata/storage/cors.json")
+		require.NoError(t, err)
+
+		_ = run(t, []string{"storage", "bucket", "cors", "configure", bucket, "--from-string", string(cors)}, nil)
+
+		var resp []types.CORSRule
+		runJSON(t, []string{"storage", "bucket", "cors", "describe", bucket, "-o", "json"}, nil, &resp)
+		assert.NotEmpty(t, resp)
 	})
 }
 
@@ -200,7 +213,7 @@ func TestBucketPolicy(t *testing.T) {
 	err := os.WriteFile(file, []byte(data), 0o600)
 	require.NoError(t, err)
 
-	t.Run("A policy can be configured and removed", func(t *testing.T) {
+	t.Run("A policy can be configured and removed (from-file)", func(t *testing.T) {
 		runWithError(t, []string{"storage", "bucket", "policy", "describe", bucket, "-o", "json"}, nil)
 
 		_ = run(t, []string{"storage", "bucket", "policy", "configure", bucket, "--from-file", file}, nil)
@@ -211,6 +224,15 @@ func TestBucketPolicy(t *testing.T) {
 		_ = run(t, []string{"storage", "bucket", "policy", "disable", bucket}, nil)
 
 		runWithError(t, []string{"storage", "bucket", "policy", "describe", bucket, "-o", "json"}, nil)
+	})
+
+	t.Run("A policy can be configured (from-string)", func(t *testing.T) {
+		runWithError(t, []string{"storage", "bucket", "policy", "describe", bucket, "-o", "json"}, nil)
+
+		_ = run(t, []string{"storage", "bucket", "policy", "configure", bucket, "--from-string", string(data)}, nil)
+
+		resp := run(t, []string{"storage", "bucket", "policy", "describe", bucket, "-o", "json"}, nil)
+		assert.NotEmpty(t, resp)
 	})
 }
 
@@ -223,7 +245,7 @@ func TestBucketWebsite(t *testing.T) {
 		_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
 	}()
 
-	t.Run("A website can be configured and disabled", func(t *testing.T) {
+	t.Run("A website can be configured and disabled (from-file)", func(t *testing.T) {
 		runWithError(t, []string{"storage", "bucket", "website", "describe", bucket, "-o", "json"}, nil)
 
 		_ = run(t, []string{"storage", "bucket", "website", "configure", bucket, "--from-file", "testdata/storage/website.json"}, nil)
@@ -238,6 +260,21 @@ func TestBucketWebsite(t *testing.T) {
 
 		runWithError(t, []string{"storage", "bucket", "website", "describe", bucket, "-o", "json"}, nil)
 	})
+
+	t.Run("A website can be configured (from-string)", func(t *testing.T) {
+		runWithError(t, []string{"storage", "bucket", "website", "describe", bucket, "-o", "json"}, nil)
+
+		website, err := os.ReadFile("testdata/storage/website.json")
+		require.NoError(t, err)
+
+		_ = run(t, []string{"storage", "bucket", "website", "configure", bucket, "--from-string", string(website)}, nil)
+
+		var resp s3.GetBucketWebsiteOutput
+		runJSON(t, []string{"storage", "bucket", "website", "describe", bucket, "-o", "json"}, nil, &resp)
+		assert.NotNil(t, resp.IndexDocument)
+		assert.NotNil(t, resp.IndexDocument.Suffix)
+		assert.Equal(t, "index.html", *resp.IndexDocument.Suffix)
+	})
 }
 
 func TestBucketLifecycle(t *testing.T) {
@@ -249,7 +286,7 @@ func TestBucketLifecycle(t *testing.T) {
 		_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
 	}()
 
-	t.Run("Lifecycle can be configured and disabled", func(t *testing.T) {
+	t.Run("Lifecycle can be configured and disabled (from-file)", func(t *testing.T) {
 		runWithError(t, []string{"storage", "bucket", "lifecycle", "describe", bucket, "-o", "json"}, nil)
 
 		_ = run(t, []string{"storage", "bucket", "lifecycle", "configure", bucket, "--from-file", "testdata/storage/lifecycle.json"}, nil)
@@ -261,6 +298,19 @@ func TestBucketLifecycle(t *testing.T) {
 		_ = run(t, []string{"storage", "bucket", "lifecycle", "disable", bucket}, nil)
 
 		runWithError(t, []string{"storage", "bucket", "lifecycle", "describe", bucket, "-o", "json"}, nil)
+	})
+
+	t.Run("Lifecycle can be configured (from-string)", func(t *testing.T) {
+		runWithError(t, []string{"storage", "bucket", "lifecycle", "describe", bucket, "-o", "json"}, nil)
+
+		lifecycle, err := os.ReadFile("testdata/storage/lifecycle.json")
+		require.NoError(t, err)
+
+		_ = run(t, []string{"storage", "bucket", "lifecycle", "configure", bucket, "--from-string", string(lifecycle)}, nil)
+
+		var resp s3.GetBucketLifecycleConfigurationOutput
+		runJSON(t, []string{"storage", "bucket", "lifecycle", "describe", bucket, "-o", "json"}, nil, &resp)
+		assert.NotEmpty(t, resp.Rules)
 	})
 }
 
@@ -301,7 +351,7 @@ func TestBucketACL(t *testing.T) {
 		_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
 	}()
 
-	t.Run("ACL can be added", func(t *testing.T) {
+	t.Run("ACL can be added (from-file)", func(t *testing.T) {
 		var resp s3.GetBucketAclOutput
 		runJSON(t, []string{"storage", "bucket", "acl", "describe", bucket, "-o", "json"}, nil, &resp)
 		assert.NotEmpty(t, resp.Grants)
@@ -325,6 +375,28 @@ func TestBucketACL(t *testing.T) {
 		runJSON(t, []string{"storage", "bucket", "acl", "describe", bucket, "-o", "json"}, nil, &resp)
 		assert.Len(t, resp.Grants, before+1)
 	})
+
+	t.Run("ACL can be added (from-string)", func(t *testing.T) {
+		var resp s3.GetBucketAclOutput
+		runJSON(t, []string{"storage", "bucket", "acl", "describe", bucket, "-o", "json"}, nil, &resp)
+		assert.NotEmpty(t, resp.Grants)
+		before := len(resp.Grants)
+
+		resp.Grants = append(resp.Grants, types.Grant{
+			Grantee: &types.Grantee{
+				Type: types.TypeGroup,
+				URI:  new("http://acs.amazonaws.com/groups/global/AllUsers"),
+			},
+			Permission: types.PermissionRead,
+		})
+		buf, err := json.Marshal(resp)
+		require.NoError(t, err)
+
+		_ = run(t, []string{"storage", "bucket", "acl", "configure", bucket, "--from-string", string(buf)}, nil)
+
+		runJSON(t, []string{"storage", "bucket", "acl", "describe", bucket, "-o", "json"}, nil, &resp)
+		assert.Len(t, resp.Grants, before+1)
+	})
 }
 
 func TestObjectACL(t *testing.T) {
@@ -343,7 +415,7 @@ func TestObjectACL(t *testing.T) {
 		_ = run(t, []string{"storage", "object", "del", object, "--bucket", bucket, "-y"}, nil)
 	}()
 
-	t.Run("ACL can be added", func(t *testing.T) {
+	t.Run("ACL can be added (from-file)", func(t *testing.T) {
 		var resp s3.GetObjectAclOutput
 		runJSON(t, []string{"storage", "object", "acl", "describe", object, "--bucket", bucket, "-o", "json"}, nil, &resp)
 		assert.NotEmpty(t, resp.Grants)
@@ -367,6 +439,28 @@ func TestObjectACL(t *testing.T) {
 		runJSON(t, []string{"storage", "object", "acl", "describe", object, "--bucket", bucket, "-o", "json"}, nil, &resp)
 		assert.Len(t, resp.Grants, before+1)
 	})
+
+	t.Run("ACL can be added (from-string)", func(t *testing.T) {
+		var resp s3.GetObjectAclOutput
+		runJSON(t, []string{"storage", "object", "acl", "describe", object, "--bucket", bucket, "-o", "json"}, nil, &resp)
+		assert.NotEmpty(t, resp.Grants)
+		before := len(resp.Grants)
+
+		resp.Grants = append(resp.Grants, types.Grant{
+			Grantee: &types.Grantee{
+				Type: types.TypeGroup,
+				URI:  new("http://acs.amazonaws.com/groups/global/AllUsers"),
+			},
+			Permission: types.PermissionRead,
+		})
+		buf, err := json.Marshal(resp)
+		require.NoError(t, err)
+
+		_ = run(t, []string{"storage", "object", "acl", "configure", object, "--bucket", bucket, "--from-string", string(buf)}, nil)
+
+		runJSON(t, []string{"storage", "object", "acl", "describe", object, "--bucket", bucket, "-o", "json"}, nil, &resp)
+		assert.Len(t, resp.Grants, before+1)
+	})
 }
 
 func TestObjectTagging(t *testing.T) {
@@ -385,7 +479,7 @@ func TestObjectTagging(t *testing.T) {
 		_ = run(t, []string{"storage", "object", "del", object, "--bucket", bucket, "-y"}, nil)
 	}()
 
-	t.Run("Tags can be added and removed", func(t *testing.T) {
+	t.Run("Tags can be added and removed (from-file)", func(t *testing.T) {
 		var resp s3.GetObjectTaggingOutput
 		runJSON(t, []string{"storage", "object", "tagging", "describe", object, "--bucket", bucket, "-o", "json"}, nil, &resp)
 		assert.Empty(t, resp.TagSet)
@@ -399,5 +493,19 @@ func TestObjectTagging(t *testing.T) {
 
 		runJSON(t, []string{"storage", "object", "tagging", "describe", object, "--bucket", bucket, "-o", "json"}, nil, &resp)
 		assert.Empty(t, resp.TagSet)
+	})
+
+	t.Run("Tags can be added and removed (from-string)", func(t *testing.T) {
+		var resp s3.GetObjectTaggingOutput
+		runJSON(t, []string{"storage", "object", "tagging", "describe", object, "--bucket", bucket, "-o", "json"}, nil, &resp)
+		assert.Empty(t, resp.TagSet)
+
+		tags, err := os.ReadFile("testdata/storage/tagging.json")
+		require.NoError(t, err)
+
+		_ = run(t, []string{"storage", "object", "tagging", "configure", object, "--bucket", bucket, "--from-string", string(tags)}, nil)
+
+		runJSON(t, []string{"storage", "object", "tagging", "describe", object, "--bucket", bucket, "-o", "json"}, nil, &resp)
+		assert.Equal(t, []types.Tag{{Key: new("key1"), Value: new("value1")}, {Key: new("key2"), Value: new("value2")}}, resp.TagSet)
 	})
 }

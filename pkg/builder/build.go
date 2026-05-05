@@ -98,7 +98,7 @@ func (b *Builder[T]) Build(rootCmd, apiCmd *cobra.Command) {
 				case "base64File":
 					debug.Println("overriding type for flag", f.Name, "to", f.Type)
 					nflag.Value = flags.NewBase64FileValue()
-				case "file":
+				case "file", "fileOrJSON":
 					debug.Println("overriding type for flag", f.Name, "to", f.Type)
 					nflag.Value = flags.NewFileValue()
 				}
