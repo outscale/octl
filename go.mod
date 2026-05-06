@@ -7,7 +7,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.39.6
 	github.com/aws/aws-sdk-go-v2/config v1.31.20
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.72.3
-	github.com/aws/smithy-go v1.24.2
+	github.com/aws/smithy-go v1.25.1
 	github.com/charmbracelet/glamour v0.10.0
 	github.com/charmbracelet/huh v0.8.0
 	github.com/charmbracelet/huh/spinner v0.0.0-20260216111231-bffc99a26329
@@ -22,7 +22,7 @@ require (
 	github.com/minio/selfupdate v0.6.0
 	github.com/outscale/goutils/oks v0.0.1
 	github.com/outscale/goutils/sdk v0.0.3
-	github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.1.0.20260325152615-8ac3c57fdae9
+	github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.2
 	github.com/samber/lo v1.53.0
 	github.com/sigstore/sigstore-go v1.1.4
 	github.com/spf13/cobra v1.10.2
@@ -152,7 +152,7 @@ require (
 	github.com/muesli/termenv v0.16.0 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f // indirect
-	github.com/oapi-codegen/runtime v1.2.0 // indirect
+	github.com/oapi-codegen/runtime v1.3.1 // indirect
 	github.com/oklog/ulid v1.3.1 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
