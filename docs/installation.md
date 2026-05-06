@@ -41,4 +41,4 @@ source ~/.config/fish/config.fish
 octl update
 ```
 
-> This requires write access to the binary. If `octl update` does not work, download the binary from the [latest release](https://github.com/outscale/octl/releases/latest).
+> This requires write access to the binary (use `sudo octl update` if you installed it in `/usr/local/bin`). If `octl update` does not work, download the binary from the [latest release](https://github.com/outscale/octl/releases/latest).

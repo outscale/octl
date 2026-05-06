@@ -60,16 +60,29 @@ And includes a preliminary support for OKS Kubernetes clusters.
 
 Download the latest binary from the [Releases page](https://github.com/outscale/octl/releases).
 
-On a Debian-based amd64 Linux:
+### Linux
+
+On an amd64 platform:
 ```shell
 curl -L -o octl https://github.com/outscale/octl/releases/latest/download/octl_Linux_x86_64
-install octl /usr/local/bin
+chmod +x octl
+sudo mv octl /usr/local/bin
 ```
 
 Autocompletion setup is documented here:
 - [docs/installation.md](docs/installation.md)
 
-A `outscale/octl` Docker image is also available.
+### MacOS
+
+Using Homebrew:
+```shell
+brew tap outscale/tap
+brew install outscale/tap/octl
+```
+
+### Docker
+
+A `outscale/octl` Docker image is available.
 
 ---
 
@@ -80,7 +93,7 @@ Configuration can be provided either via environment variables or a profile file
 
 Quick example (env vars):
 
-```bash
+```shell
 export OSC_ACCESS_KEY="..."
 export OSC_SECRET_KEY="..."
 export OSC_REGION="eu-west-2"
