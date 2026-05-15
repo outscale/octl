@@ -16,6 +16,7 @@ octl kube api UpdateProject id [flags]
       --Description string      
       --DisableApiTermination   
       --Quirks strings          
+      --Tags stringToString      (default [])
   -h, --help                    help for UpdateProject
 ```
 

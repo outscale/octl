@@ -15,7 +15,37 @@ octl kube cluster update id [id]... [flags]
 ### Options
 
 ```
-  -h, --help   help for update
+      --admin-whitelist strings                                        
+      --admission-flag-disable-admission-plugin strings                List of Kubernetes admission plugins to disable
+      --admission-flag-enable-admission-plugin strings                 List of Kubernetes admission plugins to enable
+      --auth-oidc-client-id string                                     The client id that all tokens must be issued for.
+      --auth-oidc-group-claim strings                                  
+      --auth-oidc-group-prefix string                                  
+      --auth-oidc-issuer-url string                                    The URL of the provider that allows the API server to discover public signing keys.
+      --auth-oidc-required-claim stringToString                         (default [])
+      --auth-oidc-username-claim string                                
+      --auth-oidc-username-prefix string                               
+      --auto-maintenance-minor-upgrade-maintenance-duration-hour int   Duration of the maintenance window in hours
+      --auto-maintenance-minor-upgrade-maintenance-enabled             Flag to enable or disable the maintenance window
+      --auto-maintenance-minor-upgrade-maintenance-start-hour int      Hour of the day when maintenance window starts (0-23)
+      --auto-maintenance-minor-upgrade-maintenance-tz string           Timezone for the maintenance window
+      --auto-maintenance-minor-upgrade-maintenance-week-day string     Day of the week for the maintenance window
+      --auto-maintenance-patch-upgrade-maintenance-duration-hour int   Duration of the maintenance window in hours
+      --auto-maintenance-patch-upgrade-maintenance-enabled             Flag to enable or disable the maintenance window
+      --auto-maintenance-patch-upgrade-maintenance-start-hour int      Hour of the day when maintenance window starts (0-23)
+      --auto-maintenance-patch-upgrade-maintenance-tz string           Timezone for the maintenance window
+      --auto-maintenance-patch-upgrade-maintenance-week-day string     Day of the week for the maintenance window
+      --control-plane string                                           Size of control plane deployment for the cluster
+      --description string                                             
+      --disable-api-termination                                        
+  -h, --help                                                           help for update
+      --maintenance-window-duration-hour int                           Duration of the maintenance window in hours
+      --maintenance-window-start-hour int                              Hour of the day when maintenance window starts (0-23)
+      --maintenance-window-tz string                                   Timezone for the maintenance window
+      --maintenance-window-week-day string                             Day of the week for the maintenance window
+      --quirk strings                                                  
+      --tags stringToString                                            Tags (key=value,key=value) (default [])
+      --version string                                                 
 ```
 
 ### Options inherited from parent commands

@@ -88,14 +88,14 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		return nil, nil, fmt.Errorf("unknown format %q", out)
 	}
 
-	writeTo, _ := fs.GetString("out-file")
 	single, _ := fs.GetBool("single")
-	switch {
-	case out == "raw":
-		return fmter, &Paginated{Read: read.NewRaw(), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
-	case single:
-		return fmter, &Paginated{Read: read.NewPaginated(contentField), Format: format.Single{ForFormat: fmter}, Filters: filters, WriteTo: writeTo}, nil
-	default:
-		return fmter, &Paginated{Read: read.NewPaginated(contentField), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
+	if single {
+		fmter = format.Single{ForFormat: fmter}
 	}
+
+	writeTo, _ := fs.GetString("out-file")
+	if out == "raw" {
+		return fmter, &Paginated{Read: read.NewRaw(), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
+	}
+	return fmter, &Paginated{Read: read.NewPaginated(contentField), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
 }

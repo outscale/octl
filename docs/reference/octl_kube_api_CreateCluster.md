@@ -21,6 +21,7 @@ octl kube api CreateCluster [flags]
       --Auth.Oidc.GroupsClaim strings                                
       --Auth.Oidc.GroupsPrefix string                                
       --Auth.Oidc.IssuerUrl string                                   The URL of the provider that allows the API server to discover public signing keys.
+      --Auth.Oidc.RequiredClaim stringToString                        (default [])
       --Auth.Oidc.UsernameClaim string                               
       --Auth.Oidc.UsernamePrefix string                              
       --AutoMaintenances.MinorUpgradeMaintenance.DurationHours int   Duration of the maintenance window in hours
@@ -48,6 +49,7 @@ octl kube api CreateCluster [flags]
       --Name string                                                  Unique cluster name per project, must start with a letter and contain only lowercase letters, numbers, or hyphens
       --ProjectId string                                             Unique identifier of the project this cluster belongs to
       --Quirks strings                                               
+      --Tags stringToString                                           (default [])
       --Version string                                               Version of Kubernetes to be deployed
   -h, --help                                                         help for CreateCluster
 ```

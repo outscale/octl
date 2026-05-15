@@ -20,6 +20,7 @@ octl kube api UpdateCluster id [flags]
       --Auth.Oidc.GroupsClaim strings                                
       --Auth.Oidc.GroupsPrefix string                                
       --Auth.Oidc.IssuerUrl string                                   The URL of the provider that allows the API server to discover public signing keys.
+      --Auth.Oidc.RequiredClaim stringToString                        (default [])
       --Auth.Oidc.UsernameClaim string                               
       --Auth.Oidc.UsernamePrefix string                              
       --AutoMaintenances.MinorUpgradeMaintenance.DurationHours int   Duration of the maintenance window in hours
@@ -40,6 +41,7 @@ octl kube api UpdateCluster id [flags]
       --MaintenanceWindow.Tz string                                  Timezone for the maintenance window
       --MaintenanceWindow.WeekDay string                             Day of the week for the maintenance window
       --Quirks strings                                               
+      --Tags stringToString                                           (default [])
       --Version string                                               
   -h, --help                                                         help for UpdateCluster
 ```

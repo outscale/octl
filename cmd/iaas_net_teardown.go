@@ -10,8 +10,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/outscale/octl/pkg/alias"
-	"github.com/outscale/octl/pkg/config"
 	"github.com/outscale/octl/pkg/debug"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/spinner"
@@ -22,7 +20,7 @@ import (
 var teardownCmd = &cobra.Command{
 	Use:   "teardown net_id",
 	Short: "Tears down a net and its subresources",
-	Run:   alias.Confirm(config.ActionDelete, displayNet(true), teardownNet),
+	Run:   teardownNet,
 }
 
 func teardownNet(cmd *cobra.Command, args []string) {
@@ -31,6 +29,12 @@ func teardownNet(cmd *cobra.Command, args []string) {
 	if len(args) == 0 {
 		messages.ExitErr(fmt.Errorf("not enough arguments for %s", cmd.Name()))
 	}
+
+	displayNet(cmd, args, true)
+	if !messages.Prompt("Are you sure you want to teardown this net ?") {
+		return
+	}
+
 	netID := args[0]
 	p := loadProfile(cmd)
 	cl, err := osc.NewClient(p, sdkOptions(cmd)...)

@@ -1040,6 +1040,8 @@ aliases:
     alias_to: GrantReadACP
   - name: grant-write-acp
     alias_to: GrantWriteACP
+  - name: metadatum
+    alias_to: Metadata
   - name: object-lock-legal-hold-status
     alias_to: ObjectLockLegalHoldStatus
   - name: object-lock-mode
@@ -1065,7 +1067,7 @@ aliases:
   - --Bucket
   - '%0'
   - --output
-  - none
+  - success
   flags:
   - name: expected-bucket-owner
     alias_to: ExpectedBucketOwner
@@ -1091,7 +1093,7 @@ aliases:
   - --Key
   - '%0'
   - --output
-  - none
+  - success
   flags:
   - name: bucket
     alias_to: Bucket
@@ -1172,6 +1174,8 @@ aliases:
     alias_to: IfMatch
   - name: if-none-match
     alias_to: IfNoneMatch
+  - name: metadatum
+    alias_to: Metadata
   - name: lock-legal-hold-status
     alias_to: ObjectLockLegalHoldStatus
   - name: lock-mode

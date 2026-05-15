@@ -25,6 +25,7 @@ octl storage api CreateMultipartUpload [flags]
       --GrantReadACP string                 Specify access permissions explicitly to allows grantee to read the object ACL.
       --GrantWriteACP string                Specify access permissions explicitly to allows grantee to allow grantee to write the ACL for the applicable object.
       --Key string                          Object key for which the multipart upload is to be initiated.
+      --Metadata stringToString             A map of metadata to store with the object in S3. (default [])
       --ObjectLockLegalHoldStatus string    Specifies whether you want to apply a legal hold to the uploaded object.
       --ObjectLockMode string               Specifies the Object Lock mode that you want to apply to the uploaded object.
       --ObjectLockRetainUntilDate osctime   Specifies the date and time when you want the Object Lock to expire.

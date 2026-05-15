@@ -37,6 +37,7 @@ octl storage object put key [key]... [flags]
       --lock-legal-hold-status string      Specifies whether a legal hold will be applied to this object.
       --lock-mode string                   The Object Lock mode that you want to apply to this object.
       --lock-retain-until-date osctime     The date and time when you want this object's Object Lock to expire.
+      --metadatum stringToString           A map of metadata to store with the object in S3. (default [])
       --server-side-encryption string      The server-side encryption algorithm that was used when you store this object in Amazon S3 (for example, AES256 , aws:kms , aws:kms:dsse ).
       --tagging string                     The tag-set for the object.
       --website-redirect-location string   If the bucket is configured as a website, redirects requests for this object to another object in the same bucket or to an external URL.

@@ -15,7 +15,11 @@ octl kube project update id [id]... [flags]
 ### Options
 
 ```
-  -h, --help   help for update
+      --description string        
+      --disable-api-termination   
+  -h, --help                      help for update
+      --quirk strings             
+      --tags stringToString       Tags (key=value,key=value) (default [])
 ```
 
 ### Options inherited from parent commands

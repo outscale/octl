@@ -9,12 +9,14 @@ octl kube nodepool api Create [flags]
 ### Options
 
 ```
+      --ObjectMeta.Annotations stringToString                            (default [])
       --ObjectMeta.CreationTimestamp string                             
       --ObjectMeta.DeletionGracePeriodSeconds int                       
       --ObjectMeta.DeletionTimestamp string                             
       --ObjectMeta.Finalizers strings                                   
       --ObjectMeta.GenerateName string                                  
       --ObjectMeta.Generation int                                       
+      --ObjectMeta.Labels stringToString                                 (default [])
       --ObjectMeta.ManagedFields.0.APIVersion string                    
       --ObjectMeta.ManagedFields.0.FieldsType string                    
       --ObjectMeta.ManagedFields.0.FieldsV1 string                      
@@ -43,6 +45,8 @@ octl kube nodepool api Create [flags]
       --Spec.IpPoolName string                                          
       --Spec.MaxNodes int                                               
       --Spec.MinNodes int                                               
+      --Spec.NodeAnnotations stringToString                              (default [])
+      --Spec.NodeLabels stringToString                                   (default [])
       --Spec.NodeType string                                            
       --Spec.PhysicalPlacement.NodeAttractCluster string                
       --Spec.PhysicalPlacement.NodeAttractServer string                 

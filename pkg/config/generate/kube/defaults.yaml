@@ -99,8 +99,8 @@ aliases:
   command:
   - api
   - GetProjectTemplate
-  - --output
-  - json
+  - --jq
+  - '.Template'
   - --single
   - '|'
   - api
@@ -177,8 +177,8 @@ aliases:
   command:
   - api
   - GetClusterTemplate
-  - --output
-  - json
+  - --jq
+  - '.Template'
   - --single
   - '|'
   - api
@@ -255,6 +255,8 @@ aliases:
     required: true
   - name: quirk
     alias_to: Quirks
+  - name: tags
+    alias_to: Tags
   - name: version
     alias_to: Version
 - entity: cluster

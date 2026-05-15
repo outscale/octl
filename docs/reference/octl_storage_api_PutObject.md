@@ -34,6 +34,7 @@ octl storage api PutObject [flags]
       --IfMatch string                      Uploads the object only if the ETag (entity tag) value provided during the WRITE operation matches the ETag of the object in S3.
       --IfNoneMatch string                  Uploads the object only if the object key name does not already exist in the bucket specified.
       --Key string                          Object key for which the PUT action was initiated.
+      --Metadata stringToString             A map of metadata to store with the object in S3. (default [])
       --ObjectLockLegalHoldStatus string    Specifies whether a legal hold will be applied to this object.
       --ObjectLockMode string               The Object Lock mode that you want to apply to this object.
       --ObjectLockRetainUntilDate osctime   The date and time when you want this object's Object Lock to expire.

@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/outscale/octl/pkg/config"
+	"github.com/outscale/octl/pkg/debug"
 	"github.com/outscale/octl/pkg/flags"
 	"github.com/outscale/osc-sdk-go/v3/pkg/iso8601"
 	"github.com/spf13/pflag"
@@ -110,6 +111,23 @@ func (b *Builder) Build(fs *FlagSet, arg reflect.Type, prefix string, allowRequi
 				f.AllowedValues = reflect.New(t).Interface().(Enum).Values()
 			}
 			fs.Add(f)
+		case reflect.Map:
+			if t.Key().Kind() == reflect.String && t.Elem().Kind() == reflect.String {
+				if slice {
+					debug.Println("slices of maps are not supported")
+					continue
+				}
+				f := Flag{
+					Name:      b.normalize(flagName),
+					FieldPath: flagName,
+					Kind:      reflect.Map,
+					Help:      spec.Help,
+					Required:  required,
+				}
+				fs.Add(f)
+			} else {
+				debug.Println("only map[string]string are supported")
+			}
 		case reflect.Interface:
 			if t == reflect.TypeFor[io.Reader]() {
 				f := Flag{

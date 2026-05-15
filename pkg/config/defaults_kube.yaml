@@ -177,8 +177,8 @@ aliases:
   command:
   - api
   - GetProjectTemplate
-  - --output
-  - json
+  - --jq
+  - .Template
   - --single
   - '|'
   - api
@@ -255,8 +255,8 @@ aliases:
   command:
   - api
   - GetClusterTemplate
-  - --output
-  - json
+  - --jq
+  - .Template
   - --single
   - '|'
   - api
@@ -333,6 +333,8 @@ aliases:
     required: true
   - name: quirk
     alias_to: Quirks
+  - name: tags
+    alias_to: Tags
   - name: version
     alias_to: Version
 - entity: cluster
@@ -468,7 +470,7 @@ aliases:
   - DeleteCluster
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -490,7 +492,7 @@ aliases:
   - DeleteProject
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -510,6 +512,69 @@ aliases:
   - '%0'
   - --output
   - yaml
+  flags:
+  - name: admin-whitelist
+    alias_to: AdminWhitelist
+  - name: admission-flag-disable-admission-plugin
+    alias_to: AdmissionFlags.DisableAdmissionPlugins
+  - name: admission-flag-enable-admission-plugin
+    alias_to: AdmissionFlags.EnableAdmissionPlugins
+  - name: auth-oidc-client-id
+    alias_to: Auth.Oidc.ClientId
+  - name: auth-oidc-group-claim
+    alias_to: Auth.Oidc.GroupsClaim
+  - name: auth-oidc-group-prefix
+    alias_to: Auth.Oidc.GroupsPrefix
+  - name: auth-oidc-issuer-url
+    alias_to: Auth.Oidc.IssuerUrl
+  - name: auth-oidc-required-claim
+    alias_to: Auth.Oidc.RequiredClaim
+  - name: auth-oidc-username-claim
+    alias_to: Auth.Oidc.UsernameClaim
+  - name: auth-oidc-username-prefix
+    alias_to: Auth.Oidc.UsernamePrefix
+  - name: auto-maintenance-minor-upgrade-maintenance-duration-hour
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.DurationHours
+  - name: auto-maintenance-minor-upgrade-maintenance-enabled
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.Enabled
+  - name: auto-maintenance-minor-upgrade-maintenance-start-hour
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.StartHour
+  - name: auto-maintenance-minor-upgrade-maintenance-tz
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.Tz
+  - name: auto-maintenance-minor-upgrade-maintenance-week-day
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.WeekDay
+  - name: auto-maintenance-patch-upgrade-maintenance-duration-hour
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.DurationHours
+  - name: auto-maintenance-patch-upgrade-maintenance-enabled
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.Enabled
+  - name: auto-maintenance-patch-upgrade-maintenance-start-hour
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.StartHour
+  - name: auto-maintenance-patch-upgrade-maintenance-tz
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.Tz
+  - name: auto-maintenance-patch-upgrade-maintenance-week-day
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.WeekDay
+  - name: control-plane
+    alias_to: ControlPlanes
+  - name: description
+    alias_to: Description
+  - name: disable-api-termination
+    alias_to: DisableApiTermination
+  - name: maintenance-window-duration-hour
+    alias_to: MaintenanceWindow.DurationHours
+  - name: maintenance-window-start-hour
+    alias_to: MaintenanceWindow.StartHour
+  - name: maintenance-window-tz
+    alias_to: MaintenanceWindow.Tz
+  - name: maintenance-window-week-day
+    alias_to: MaintenanceWindow.WeekDay
+  - name: quirk
+    alias_to: Quirks
+  - name: tags
+    alias_to: Tags
+    type: stringToString
+    usage: Tags (key=value,key=value)
+  - name: version
+    alias_to: Version
 - entity: project
   use: update id [id]...
   alias_to: UpdateProject
@@ -520,6 +585,17 @@ aliases:
   - '%0'
   - --output
   - yaml
+  flags:
+  - name: description
+    alias_to: Description
+  - name: disable-api-termination
+    alias_to: DisableApiTermination
+  - name: quirk
+    alias_to: Quirks
+  - name: tags
+    alias_to: Tags
+    type: stringToString
+    usage: Tags (key=value,key=value)
 spec:
   calls:
     CreateCluster:

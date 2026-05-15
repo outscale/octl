@@ -5126,7 +5126,7 @@ aliases:
   - --AccessKeyId
   - '%0'
   - --output
-  - none
+  - success
   flags:
   - name: user-name
     alias_to: UserName
@@ -5153,7 +5153,7 @@ aliases:
   - --ApiAccessRuleId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5177,7 +5177,7 @@ aliases:
   - --CaId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5201,7 +5201,7 @@ aliases:
   - --ClientGatewayId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5225,7 +5225,7 @@ aliases:
   - --DedicatedGroupId
   - '%0'
   - --output
-  - none
+  - success
   flags:
   - name: force
     alias_to: Force
@@ -5252,7 +5252,7 @@ aliases:
   - --DhcpOptionsSetId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5276,7 +5276,7 @@ aliases:
   - --DirectLinkId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5300,7 +5300,7 @@ aliases:
   - --DirectLinkInterfaceId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5324,7 +5324,7 @@ aliases:
   - --ExportTaskId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
 - entity: flexiblegpu
@@ -5340,7 +5340,7 @@ aliases:
   - --FlexibleGpuId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5364,7 +5364,7 @@ aliases:
   - --ImageId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5388,7 +5388,7 @@ aliases:
   - --InternetServiceId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5412,7 +5412,7 @@ aliases:
   - --KeypairId
   - '%0'
   - --output
-  - none
+  - success
   flags:
   - name: name
     alias_to: KeypairName
@@ -5439,7 +5439,7 @@ aliases:
   - --ListenerRuleName
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5463,7 +5463,7 @@ aliases:
   - --LoadBalancerName
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5487,7 +5487,7 @@ aliases:
   - --NatServiceId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5511,7 +5511,7 @@ aliases:
   - --NetId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5535,7 +5535,7 @@ aliases:
   - --NetAccessPointId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5559,7 +5559,7 @@ aliases:
   - --NetPeeringId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5583,7 +5583,7 @@ aliases:
   - --NicId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5607,7 +5607,7 @@ aliases:
   - --ProductTypeId
   - '%0'
   - --output
-  - none
+  - success
   flags:
   - name: force
     alias_to: Force
@@ -5634,7 +5634,7 @@ aliases:
   - --PublicIpId
   - '%0'
   - --output
-  - none
+  - success
   flags:
   - name: public-ip
     alias_to: PublicIp
@@ -5661,7 +5661,7 @@ aliases:
   - --RouteTableId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5685,7 +5685,7 @@ aliases:
   - --SecurityGroupId
   - '%0'
   - --output
-  - none
+  - success
   flags:
   - name: name
     alias_to: SecurityGroupName
@@ -5712,7 +5712,7 @@ aliases:
   - --SnapshotId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5736,7 +5736,7 @@ aliases:
   - --SubnetId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5760,7 +5760,7 @@ aliases:
   - --UserName
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
 - entity: usergroup
@@ -5776,7 +5776,7 @@ aliases:
   - --UserGroupName
   - '%0'
   - --output
-  - none
+  - success
   flags:
   - name: force
     alias_to: Force
@@ -5797,7 +5797,7 @@ aliases:
   - --VirtualGatewayId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5821,7 +5821,7 @@ aliases:
   - --VmGroupId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5845,7 +5845,7 @@ aliases:
   - --VmTemplateId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5869,7 +5869,7 @@ aliases:
   - --VmIds
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5893,7 +5893,7 @@ aliases:
   - --VolumeId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:
@@ -5917,7 +5917,7 @@ aliases:
   - --VpnConnectionId
   - '%0'
   - --output
-  - none
+  - success
   prompt:
     action: delete
     display:

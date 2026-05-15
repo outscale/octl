@@ -256,6 +256,8 @@ func (b *Builder[T]) buildFlags(cmd *cobra.Command, arg reflect.Type) {
 					return lo.Map(f.AllowedValues, func(v string, _ int) cobra.Completion { return cobra.Completion(v) }), cobra.ShellCompDirectiveDefault
 				})
 			}
+		case reflect.Map:
+			fs.StringToString(f.Name, map[string]string{}, f.Help)
 		}
 	}
 }
