@@ -31,6 +31,7 @@ octl storage multipartupload create [flags]
       --grant-write-acp string                  Specify access permissions explicitly to allows grantee to allow grantee to write the ACL for the applicable object.
   -h, --help                                    help for create
       --key string                              Object key for which the multipart upload is to be initiated.
+      --metadatum stringToString                A map of metadata to store with the object in S3. (default [])
       --object-lock-legal-hold-status string    Specifies whether you want to apply a legal hold to the uploaded object.
       --object-lock-mode string                 Specifies the Object Lock mode that you want to apply to the uploaded object.
       --object-lock-retain-until-date osctime   Specifies the date and time when you want the Object Lock to expire.

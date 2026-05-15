@@ -19,6 +19,7 @@ octl kube api CreateProject [flags]
       --Name string             Unique name for the project, must start with a letter and contain only lowercase letters, numbers, or hyphens
       --Quirks strings          
       --Region string           Region where the project is deployed
+      --Tags stringToString      (default [])
   -h, --help                    help for CreateProject
 ```
 

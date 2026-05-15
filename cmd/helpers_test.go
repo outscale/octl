@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const tmout = 15 * time.Minute
+const tmout = 20 * time.Minute
 
 func run(t *testing.T, args []string, input []byte) []byte {
 	t.Helper()

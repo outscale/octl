@@ -22,33 +22,33 @@ var depsCmd = &cobra.Command{
 	Use:     "dependencies net_id",
 	Aliases: []string{"deps"},
 	Short:   "Shows all dependencies of a net",
-	Run:     displayNet(false),
+	Run: func(cmd *cobra.Command, args []string) {
+		displayNet(cmd, args, false)
+	},
 }
 
-func displayNet(failOnVms bool) func(cmd *cobra.Command, args []string) {
-	return func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
-			messages.ExitErr(fmt.Errorf("not enough arguments for %s", cmd.Name()))
-		}
-		netID := args[0]
+func displayNet(cmd *cobra.Command, args []string, failOnVms bool) {
+	if len(args) == 0 {
+		messages.ExitErr(fmt.Errorf("not enough arguments for %s", cmd.Name()))
+	}
+	netID := args[0]
 
-		p := loadProfile(cmd)
-		cl, err := osc.NewClient(p, sdkOptions(cmd)...)
-		if err != nil {
-			messages.ExitErr(err)
-		}
-		r, hasVM, err := listResources(cmd.Context(), cl, netID)
-		if err == nil {
-			err = tree.WriteTo(r, os.Stdout)
-		}
-		if err != nil {
-			messages.ExitErr(err)
-		}
+	p := loadProfile(cmd)
+	cl, err := osc.NewClient(p, sdkOptions(cmd)...)
+	if err != nil {
+		messages.ExitErr(err)
+	}
+	r, hasVM, err := listResources(cmd.Context(), cl, netID)
+	if err == nil {
+		err = tree.WriteTo(r, os.Stdout)
+	}
+	if err != nil {
+		messages.ExitErr(err)
+	}
 
-		teardownVMs, _ := cmd.Flags().GetBool("teardown-vms")
-		if failOnVms && hasVM && !teardownVMs {
-			messages.ExitErr(errors.New("cannot teardown a net having VMs unless --teardown-vms is set"))
-		}
+	teardownVMs, _ := cmd.Flags().GetBool("teardown-vms")
+	if failOnVms && hasVM && !teardownVMs {
+		messages.ExitErr(errors.New("cannot teardown a net having VMs unless --teardown-vms is set"))
 	}
 }
 

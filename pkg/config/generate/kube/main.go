@@ -43,6 +43,13 @@ func main() {
 	cfg := builder.Config{
 		InputStructSuffix:        "Request",
 		RequiredFromFieldPointer: true,
+		FlagOverrides: map[string]config.Flag{
+			"tag": {
+				Name:  "tags",
+				Type:  "stringToString",
+				Usage: "Tags (key=value,key=value)",
+			},
+		},
 	}
 
 	sb := builder.NewSpecBuilder(cfg)

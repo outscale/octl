@@ -39,6 +39,7 @@ octl kube cluster create [flags]
       --project string                      Unique identifier of the project this cluster belongs to
       --quirk strings                       
       --subregions strings                  List of subregions where control plane components are deployed
+      --tags stringToString                  (default [])
       --upgrade-minor-duration-hour int     Duration of the maintenance window in hours
       --upgrade-minor-enabled               Flag to enable or disable the maintenance window
       --upgrade-minor-start-hour int        Hour of the day when maintenance window starts (0-23)

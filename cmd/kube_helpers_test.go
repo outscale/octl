@@ -8,6 +8,8 @@ import (
 
 const projectName = "octl-test"
 
+// project creates a testing project
+// as project creation is very slow, the project is kept between runs
 func project(t *testing.T) {
 	t.Helper()
 
@@ -19,6 +21,8 @@ func project(t *testing.T) {
 	retryUntil(t, []string{"kube", "project", "desc", projectName, "-o", "json"}, nil, "status", "ready")
 }
 
+// cluster creates a testing cluster
+// it is deleted after tests.
 func cluster(t *testing.T) string {
 	t.Helper()
 

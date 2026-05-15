@@ -242,7 +242,7 @@ func (b *MethodBuilder) buildFlags(t reflect.Type, prefixes []string, ignore []s
 
 	cfs := config.FlagSet{}
 	for _, f := range fs {
-		if lo.ContainsBy(ignore, func(ignore string) bool { return strings.HasPrefix(f.FieldPath, ignore) }) {
+		if lo.ContainsBy(ignore, func(ignore string) bool { return ignore != "" && strings.HasPrefix(f.FieldPath, ignore) }) {
 			continue
 		}
 		flag := f.Name
@@ -512,7 +512,7 @@ func (b *MethodBuilder) buildDeleteAlias() error {
 		idField = "--" + idField
 		cmd = append(cmd, idField)
 	}
-	cmd = append(cmd, "%0", "--output", "none")
+	cmd = append(cmd, "%0", "--output", "success")
 
 	b.aliases = append(b.aliases, config.Alias{
 		Entity:  b.entityName,

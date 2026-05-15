@@ -34,6 +34,7 @@ octl storage api CopyObject [flags]
       --GrantReadACP string                     Allows grantee to read the object ACL.
       --GrantWriteACP string                    Allows grantee to write the ACL for the applicable object.
       --Key string                              The key of the destination object.
+      --Metadata stringToString                 A map of metadata to store with the object in S3. (default [])
       --MetadataDirective string                Specifies whether the metadata is copied from the source object or replaced with metadata that's provided in the request.
       --ObjectLockLegalHoldStatus string        Specifies whether you want to apply a legal hold to the object copy.
       --ObjectLockMode string                   The Object Lock mode that you want to apply to the object copy.

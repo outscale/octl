@@ -242,6 +242,8 @@ func setValue(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
 		return setValueInt64(arg, fs, flag)
 	case reflect.String:
 		return setValueString(arg, fs, flag)
+	case reflect.Map:
+		return setValueMap(arg, fs, flag)
 	}
 	return nil
 }
@@ -416,5 +418,15 @@ func setValueInterface(arg reflect.Value, fs *pflag.FlagSet, flag string) error 
 	debug.Println("setValueInterface", flag)
 	v, _ := rv.Value()
 	arg.Set(reflect.ValueOf(v))
+	return nil
+}
+
+func setValueMap(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetStringToString(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueMap", flag, ss)
+	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
 	return nil
 }
