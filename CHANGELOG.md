@@ -1,5 +1,36 @@
 # 📜 Changelog
 
+## [v0.0.22] - 2026-05-19
+
+### ✨ Added
+* ✨ feat(kube): add OKS aliases by @jfbus in https://github.com/outscale/octl/pull/142
+* 🚸 ux(jq): jq should always return a list by @jfbus in https://github.com/outscale/octl/pull/158
+* ✨ feat(metadata): add metadata commands by @jfbus in https://github.com/outscale/octl/pull/162
+* ✨ feat(flags): allow json content in addition to filename by @jfbus in https://github.com/outscale/octl/pull/173
+### 📝 Documentation
+* 📝 doc(README): updated install section by @jfbus in https://github.com/outscale/octl/pull/178
+### 🐛 Fixed
+* 🐛 fix(kube): fix crash with invalid kubeconfig content by @jfbus in https://github.com/outscale/octl/pull/175
+* 🐛 fix(kube): config/profile/verbose flags on piped commands, tags by @jfbus in https://github.com/outscale/octl/pull/183
+### 📦 Dependency updates
+* 📌 deps: lock aws sdk version by @jfbus in https://github.com/outscale/octl/pull/153
+* ⬆️ deps(gomod): update module github.com/itchyny/gojq to v0.12.19 by @Open-Source-Bot in https://github.com/outscale/octl/pull/150
+* ⬆️ deps(gomod): update module github.com/mattn/go-isatty to v0.0.21 by @Open-Source-Bot in https://github.com/outscale/octl/pull/159
+* ⬆️ deps(gomod): update module golang.org/x/mod to v0.35.0 by @Open-Source-Bot in https://github.com/outscale/octl/pull/160
+* ⬆️ deps(dockerfile): pin gcr.io/distroless/static-debian13 docker tag to a77dbde by @Open-Source-Bot in https://github.com/outscale/octl/pull/169
+* ⬆️ deps(gomod): update module golang.org/x/tools to v0.44.0 by @Open-Source-Bot in https://github.com/outscale/octl/pull/171
+* ⬆️ deps: bump go, pin goreleaser by @jfbus in https://github.com/outscale/octl/pull/174
+* ⬆️ deps(gomod): update module github.com/outscale/osc-sdk-go/v3 to v3.0.0-rc.2 by @Open-Source-Bot in https://github.com/outscale/octl/pull/179
+
+## [v0.0.21] - 2026-04-03
+
+### ✨ Added
+* ✨ feat(storage): more bucket aliases by @jfbus in https://github.com/outscale/octl/pull/141
+* 🚸 ux(storage): bucket describe/objectlock, object acl/retention/tagging/copy by @jfbus in https://github.com/outscale/octl/pull/145
+### 🛠️ Changed / Refactoring
+* 🚨 lint: modernize fixes by @jfbus in https://github.com/outscale/octl/pull/147
+* 👽️ homebrew: use homebrew for updates by @jfbus in https://github.com/outscale/octl/pull/148
+
 ## [v0.0.20] - 2026-03-24
 
 ### ✨ Added
