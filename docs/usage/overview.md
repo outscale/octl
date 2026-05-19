@@ -10,6 +10,8 @@ octl <command> <subcommand> [flags]
 
 - `iaas` - Core IaaS API
 - `kube` - OKS API
+- `storage` - OOS API
+- `metadata` - metadata API
 - `profile` - Profile management
 - `update` - Update to the latest version
 - `completion` - Generate completion shell script
@@ -39,10 +41,12 @@ The flag syntax is:
 - lists of embedded objects (e.g. `Nics` or `BlockDeviceMappings` in `CreateVms`) can be configured using indexes:
     - `--BlockDeviceMappings.0.Bsu.VolumeType`
 
-- time flag values can be set:
+- date-time flag values can be set:
     - using the RFC3339 format (e.g. `2026-02-10T14:52:30Z`)
     - as a duration offset with a `+` or `-` prefix (e.g. `+10m`, `-1h`)
     - as a day/month/year offset with a `+` or `-` prefix (e.g. `+1mo`, `-1y`)
+
+- maps (tags, labels, annotations, etc.) use the `key=value,key=value` format
 
 ## Next
 - IaaS examples:    [iaas.md](./iaas.md)
