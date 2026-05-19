@@ -1,5 +1,16 @@
 # 📜 Changelog
 
+## [v0.0.23] - 2026-05-20
+
+### ✨ Added
+* ✨ feat(kube): add --node-labels and --node-annotations to nodepool create by @jfbus in https://github.com/outscale/octl/pull/190
+### 🛠️ Changed / Refactoring
+* ♻️ refacto(kube): refactored kubectl args & flags by @jfbus in https://github.com/outscale/octl/pull/189
+### 📝 Documentation
+* 📝 doc: updated overview by @jfbus in https://github.com/outscale/octl/pull/191
+### 📦 Dependency updates
+* ⬆️ deps(gomod): update module golang.org/x/tools to v0.45.0 by @Open-Source-Bot in https://github.com/outscale/octl/pull/182
+
 ## [v0.0.22] - 2026-05-19
 
 ### ✨ Added
