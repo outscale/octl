@@ -20,11 +20,10 @@ import (
 )
 
 var kubectlCmd = &cobra.Command{
-	Use: "kubectl cluster_name [kubectl_args] [kubectl_flags]",
+	Use: "kubectl [octl_flags] -- kubectl_args [kubectl_flags]",
 	Long: `Launch kubectl commands on a cluster.
-Example: octl kube kubectl cluster_name get pods -o wide`,
-	DisableFlagParsing: true,
-	Run:                kubectl,
+Example: octl kube kubectl --cluster cluster_name -- get pods -o wide`,
+	Run: kubectl,
 }
 
 func kubectl(cmd *cobra.Command, args []string) {
@@ -33,15 +32,15 @@ func kubectl(cmd *cobra.Command, args []string) {
 	if err != nil {
 		messages.ExitErr(err)
 	}
-	cluster := args[0]
+	cluster, _ := cmd.Flags().GetString("cluster")
 	kubeconfig, err := getKubeconfig(cmd.Context(), cluster, cl)
 	if err != nil {
 		messages.ExitErr(err)
 	}
-	newArgs := make([]string, 1, len(args)+2)
+	newArgs := make([]string, 1, len(args)+3)
 	newArgs[0] = "kubectl"
 	newArgs = append(newArgs, "--kubeconfig", kubeconfig)
-	newArgs = append(newArgs, args[1:]...)
+	newArgs = append(newArgs, args...)
 	os.Args = newArgs
 	debug.Println("new args", newArgs)
 	kubectlCmd := kubecmd.NewDefaultKubectlCommand()
@@ -117,4 +116,10 @@ func refreshKubeconfig(ctx context.Context, id, path string, cl *oks.Client) err
 		return fmt.Errorf("fetch Kubeconfig: %w", err)
 	}
 	return os.WriteFile(path, []byte(res.Cluster.Data.Kubeconfig), 0o600)
+}
+
+func init() {
+	oksCmd.AddCommand(kubectlCmd)
+	kubectlCmd.Flags().String("cluster", "", "Name or ID of cluster")
+	_ = kubectlCmd.MarkFlagRequired("cluster")
 }

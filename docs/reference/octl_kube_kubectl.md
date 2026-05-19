@@ -5,16 +5,17 @@
 ### Synopsis
 
 Launch kubectl commands on a cluster.
-Example: octl kube kubectl cluster_name get pods -o wide
+Example: octl kube kubectl --cluster cluster_name -- get pods -o wide
 
 ```
-octl kube kubectl cluster_name [kubectl_args] [kubectl_flags] [flags]
+octl kube kubectl [octl_flags] -- kubectl_args [kubectl_flags] [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for kubectl
+      --cluster string   Name or ID of cluster
+  -h, --help             help for kubectl
 ```
 
 ### Options inherited from parent commands

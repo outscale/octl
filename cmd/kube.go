@@ -37,8 +37,6 @@ func init() {
 			!strings.HasSuffix(m.Name, "WithBody")
 	}, kube)
 	b.Build(oksCmd, nil)
-
-	oksCmd.AddCommand(kubectlCmd)
 }
 
 func kube(cmd *cobra.Command, args []string) {

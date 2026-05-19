@@ -33,7 +33,7 @@ func TestKube(t *testing.T) {
 	t.Log("Kubectl can be run")
 	{
 		var resp corev1.NodeList
-		runJSON(t, []string{"kube", "kubectl", cluster, "get", "nodes", "-o", "json"}, nil, &resp)
+		runJSON(t, []string{"kube", "kubectl", "--cluster", cluster, "--", "get", "nodes", "-o", "json"}, nil, &resp)
 		assert.Equal(t, "List", resp.Kind)
 	}
 }
