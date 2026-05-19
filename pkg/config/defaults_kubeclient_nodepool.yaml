@@ -131,6 +131,10 @@ aliases:
   - name: node-type
     alias_to: Spec.NodeType
     required: true
+  - name: node-annotations
+    alias_to: Spec.NodeAnnotations
+  - name: node-labels
+    alias_to: Spec.NodeLabels
   - name: placement-attract-cluster
     alias_to: Spec.PhysicalPlacement.NodeAttractCluster
   - name: placement-attract-server
