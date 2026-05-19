@@ -29,6 +29,8 @@ octl kube nodepool create [flags]
       --max-nodes int                      
       --min-nodes int                      
       --name string                        
+      --node-annotations stringToString     (default [])
+      --node-labels stringToString          (default [])
       --node-type string                   
       --placement-attract-cluster string   
       --placement-attract-server string    
