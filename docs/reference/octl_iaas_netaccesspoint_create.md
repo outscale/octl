@@ -6,7 +6,7 @@ alias for api CreateNetAccessPoint
 
 > *alias for api CreateNetAccessPoint*
 
-Creates a Net access point to access an OUTSCALE service from this Net without using the Internet and public IPs.
+Creates a Net access point to access an OUTSCALE service from this Net without using the Internet or public IPs.
 
 You specify the service using its name. For more information about the available services, see [ReadNetAccessPointServices](#readnetaccesspointservices).
  

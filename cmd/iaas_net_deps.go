@@ -22,15 +22,13 @@ var depsCmd = &cobra.Command{
 	Use:     "dependencies net_id",
 	Aliases: []string{"deps"},
 	Short:   "Shows all dependencies of a net",
+	Args:    cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		displayNet(cmd, args, false)
 	},
 }
 
 func displayNet(cmd *cobra.Command, args []string, failOnVms bool) {
-	if len(args) == 0 {
-		messages.ExitErr(fmt.Errorf("not enough arguments for %s", cmd.Name()))
-	}
 	netID := args[0]
 
 	p := loadProfile(cmd)

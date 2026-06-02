@@ -44,12 +44,14 @@ var profileCurrentCmd = &cobra.Command{
 var profileAddCmd = &cobra.Command{
 	Use:   "add name",
 	Short: "Add a profile to a config file",
+	Args:  cobra.ExactArgs(1),
 	Run:   addProfile,
 }
 
 var profileUseCmd = &cobra.Command{
 	Use:   "use name",
 	Short: "Mark a profile as the default one",
+	Args:  cobra.ExactArgs(1),
 	Run:   setDefaultProfile,
 }
 
@@ -57,6 +59,7 @@ var profileDeleteCmd = &cobra.Command{
 	Use:     "delete name",
 	Aliases: []string{"del", "rm"},
 	Short:   "Delete a profile from a config file",
+	Args:    cobra.ExactArgs(1),
 	Run:     deleteProfile,
 }
 
@@ -136,10 +139,6 @@ func currentProfile(cmd *cobra.Command, _ []string) {
 }
 
 func addProfile(cmd *cobra.Command, args []string) {
-	if len(args) == 0 {
-		_ = cmd.Usage()
-		return
-	}
 	name := args[0]
 
 	cf, err := loadConfig(cmd)
@@ -200,10 +199,6 @@ func addProfile(cmd *cobra.Command, args []string) {
 }
 
 func setDefaultProfile(cmd *cobra.Command, args []string) {
-	if len(args) == 0 {
-		_ = cmd.Usage()
-		return
-	}
 	name := args[0]
 	cf, err := loadConfig(cmd)
 	if err != nil {
@@ -220,10 +215,6 @@ func setDefaultProfile(cmd *cobra.Command, args []string) {
 }
 
 func deleteProfile(cmd *cobra.Command, args []string) {
-	if len(args) == 0 {
-		_ = cmd.Usage()
-		return
-	}
 	name := args[0]
 	cf, err := loadConfig(cmd)
 	if err != nil {

@@ -1,11 +1,17 @@
-## octl storage object
+## octl storage object presign
 
-object commands
+Create a pre-signed URL
+
+```
+octl storage object presign key [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for object
+      --bucket string      bucket
+      --expires duration   URL expiration (e.g. 30s, 1h)
+  -h, --help               help for presign
 ```
 
 ### Options inherited from parent commands
@@ -31,16 +37,5 @@ object commands
 
 ### SEE ALSO
 
-* [octl storage](octl_storage.md)	 - OUTSCALE Object Storage (OOS) management
-* [octl storage object acl](octl_storage_object_acl.md)	 - acl commands
-* [octl storage object copy](octl_storage_object_copy.md)	 - Copy an object, alias for api CopyObject --CopySource bucket_src/key_src --Key key_dst
-* [octl storage object delete](octl_storage_object_delete.md)	 - alias for api DeleteObject --Key key
-* [octl storage object describe](octl_storage_object_describe.md)	 - Display an object metadata, alias for api HeadObject --Key key
-* [octl storage object download](octl_storage_object_download.md)	 - Download an object to the standard output, alias for api GetObject --Key key
-* [octl storage object list](octl_storage_object_list.md)	 - alias for api ListObjectsV2
-* [octl storage object presign](octl_storage_object_presign.md)	 - Create a pre-signed URL
-* [octl storage object put](octl_storage_object_put.md)	 - alias for api PutObject --Key key
-* [octl storage object retention](octl_storage_object_retention.md)	 - retention commands
-* [octl storage object tagging](octl_storage_object_tagging.md)	 - tagging commands
-* [octl storage object versions](octl_storage_object_versions.md)	 - Display an object metadata, alias for api ListObjectVersions
+* [octl storage object](octl_storage_object.md)	 - object commands
 

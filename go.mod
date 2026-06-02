@@ -22,7 +22,7 @@ require (
 	github.com/minio/selfupdate v0.6.0
 	github.com/outscale/goutils/oks v0.0.1
 	github.com/outscale/goutils/sdk v0.0.3
-	github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.2
+	github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.2.0.20260602134633-980ca652ea65
 	github.com/samber/lo v1.53.0
 	github.com/sigstore/sigstore-go v1.1.4
 	github.com/spf13/cobra v1.10.2
@@ -37,6 +37,7 @@ require (
 )
 
 // replace github.com/outscale/goutils/sdk => ../goutils/sdk
+// replace github.com/outscale/osc-sdk-go/v3 => ../osc-sdk-go
 
 require (
 	aead.dev/minisign v0.2.0 // indirect

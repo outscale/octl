@@ -56,7 +56,7 @@ iaas api calls
 * [octl iaas api CreateLoadBalancerTags](octl_iaas_api_CreateLoadBalancerTags.md)	 - Adds one or more tags to the specified load balancers.
 * [octl iaas api CreateNatService](octl_iaas_api_CreateNatService.md)	 - Creates a network address translation (NAT) service in the specified public Subnet of a Net.
 * [octl iaas api CreateNet](octl_iaas_api_CreateNet.md)	 - Creates a Net with a specified IP range.
-* [octl iaas api CreateNetAccessPoint](octl_iaas_api_CreateNetAccessPoint.md)	 - Creates a Net access point to access an OUTSCALE service from this Net without using the Internet and public IPs.
+* [octl iaas api CreateNetAccessPoint](octl_iaas_api_CreateNetAccessPoint.md)	 - Creates a Net access point to access an OUTSCALE service from this Net without using the Internet or public IPs.
 * [octl iaas api CreateNetPeering](octl_iaas_api_CreateNetPeering.md)	 - Requests a Net peering between a Net you own and a peer Net that belongs to you or another OUTSCALE account.
 * [octl iaas api CreateNic](octl_iaas_api_CreateNic.md)	 - Creates a network interface card (NIC) in the specified Subnet.
 * [octl iaas api CreatePolicy](octl_iaas_api_CreatePolicy.md)	 - Creates a managed policy to apply to a user.
