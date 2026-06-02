@@ -1062,6 +1062,8 @@ entities:
       content: .State
     - title: PublicIp
       content: .PublicIp
+    - title: PrivateIp
+      content: .PrivateIp
     - title: NetId
       content: .NetId
     - title: SubregionNames
@@ -6624,7 +6626,7 @@ spec:
         For more information, see [About Nets](https://docs.outscale.com/en/userguide/About-Nets.html).
     CreateNetAccessPoint:
       help: |-
-        Creates a Net access point to access an OUTSCALE service from this Net without using the Internet and public IPs.
+        Creates a Net access point to access an OUTSCALE service from this Net without using the Internet or public IPs.
         
         You specify the service using its name. For more information about the available services, see [ReadNetAccessPointServices](#readnetaccesspointservices).
          
@@ -10136,6 +10138,8 @@ spec:
       help: The type of load balancer.
     LoadBalancer.NetId:
       help: The ID of the Net for the load balancer.
+    LoadBalancer.PrivateIp:
+      help: The primary private IP of the load balancer.
     LoadBalancer.PublicIp:
       help: (internet-facing only) The public IP associated with the load balancer.
     LoadBalancer.SecuredCookies:
@@ -10484,12 +10488,16 @@ spec:
       help: The vendor of the product type.
     PublicIp.LinkPublicIpId:
       help: (Required in a Net) The ID representing the association of the public IP with the VM or the NIC.
+    PublicIp.NatServiceId:
+      help: The ID of the NAT service associated with the public IP (if any).
+    PublicIp.NetAccessPointIds:
+      help: The IDs of the Net access points associated with the public IP (if any).
     PublicIp.NicAccountId:
       help: The OUTSCALE account ID of the owner of the NIC.
     PublicIp.NicId:
       help: The ID of the NIC the public IP is associated with (if any).
     PublicIp.PrivateIp:
-      help: The private IP associated with the public IP.
+      help: The private IP associated with the NIC or load balancer.
     PublicIp.PublicIp:
       help: The public IP.
     PublicIp.PublicIpId:

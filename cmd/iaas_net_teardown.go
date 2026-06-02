@@ -20,15 +20,12 @@ import (
 var teardownCmd = &cobra.Command{
 	Use:   "teardown net_id",
 	Short: "Tears down a net and its subresources",
+	Args:  cobra.ExactArgs(1),
 	Run:   teardownNet,
 }
 
 func teardownNet(cmd *cobra.Command, args []string) {
 	debug.Println(cmd.Name() + " called")
-
-	if len(args) == 0 {
-		messages.ExitErr(fmt.Errorf("not enough arguments for %s", cmd.Name()))
-	}
 
 	displayNet(cmd, args, true)
 	if !messages.Prompt("Are you sure you want to teardown this net ?") {

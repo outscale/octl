@@ -9,6 +9,7 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"encoding/json"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strings"
@@ -507,5 +508,41 @@ func TestObjectTagging(t *testing.T) {
 
 		runJSON(t, []string{"storage", "object", "tagging", "describe", object, "--bucket", bucket, "-o", "json"}, nil, &resp)
 		assert.Equal(t, []types.Tag{{Key: new("key1"), Value: new("value1")}, {Key: new("key2"), Value: new("value2")}}, resp.TagSet)
+	})
+}
+
+func TestPResign(t *testing.T) {
+	sum := sha1.Sum([]byte(t.TempDir()))
+	bucket := hex.EncodeToString(sum[:])
+
+	object := "object.txt"
+	path := file(t, object, hello)
+
+	t.Run("Presigning URL works", func(t *testing.T) {
+		_ = run(t, []string{"storage", "bucket", "create", "--bucket", bucket}, nil)
+		defer func() {
+			_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
+		}()
+
+		var res s3.PutObjectOutput
+		runJSON(t, []string{"storage", "object", "put", object, "--bucket", bucket, "--body", path, "--output", "json"}, nil, &res)
+		defer func() {
+			_ = run(t, []string{"storage", "object", "del", object, "--bucket", bucket, "-y"}, nil)
+		}()
+
+		out := run(t, []string{"storage", "object", "presign", object, "--bucket", bucket, "--expires", "2s"}, nil)
+		require.True(t, strings.HasPrefix(string(out), "http"))
+
+		resp, err := http.Get(string(out)) //nolint
+		require.NoError(t, err)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		resp.Body.Close() //nolint
+
+		time.Sleep(2 * time.Second)
+
+		resp, err = http.Get(string(out)) //nolint
+		require.NoError(t, err)
+		assert.NotEqual(t, http.StatusOK, resp.StatusCode)
+		resp.Body.Close() //nolint
 	})
 }

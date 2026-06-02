@@ -8,6 +8,7 @@ package cmd
 import (
 	"fmt"
 	"io"
+	"os"
 	"reflect"
 
 	"github.com/aws/aws-sdk-go-v2/service/s3"
@@ -19,6 +20,7 @@ import (
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/runner"
 	"github.com/outscale/osc-sdk-go/v3/pkg/oos"
+	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 )
 
@@ -30,6 +32,14 @@ var storageCmd = &cobra.Command{
 	Aliases: []string{"oos"},
 }
 
+var presignCmd = &cobra.Command{
+	// GroupID: "object",
+	Use:   "presign key",
+	Short: "Create a pre-signed URL",
+	Args:  cobra.ExactArgs(1),
+	Run:   presign,
+}
+
 func init() {
 	rootCmd.AddCommand(storageCmd)
 	b := builder.NewBuilder[oos.Client]("storage", "")
@@ -37,6 +47,12 @@ func init() {
 		return true
 	}, callOOS)
 	b.Build(storageCmd, nil)
+
+	objectCmd, _ := lo.Find(storageCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "object" })
+	objectCmd.AddCommand(presignCmd)
+	presignCmd.Flags().String("bucket", "", "bucket")
+	presignCmd.Flags().Duration("expires", 0, "URL expiration (e.g. 30s, 1h)")
+	_ = presignCmd.MarkFlagRequired("bucket")
 
 	runner.RegisterHook("auto-content-type", guessContentType)
 }
@@ -56,6 +72,34 @@ func callOOS(cmd *cobra.Command, args []string) {
 	if err != nil {
 		messages.ExitErr(err)
 	}
+}
+
+func presign(cmd *cobra.Command, args []string) {
+	debug.Println(cmd.Name() + " called")
+	p := loadProfile(cmd)
+	s3cl, err := oos.NewClient(cmd.Context(), p, awsOptions(cmd)...)
+	if err != nil {
+		messages.ExitErr(err)
+	}
+	cl := oos.NewPresignClient(s3cl)
+	if err != nil {
+		messages.ExitErr(err)
+	}
+	dur, _ := cmd.Flags().GetDuration("expires")
+	var opts []func(*s3.PresignOptions)
+	if dur > 0 {
+		opts = append(opts, s3.WithPresignExpires(dur))
+	}
+	key := args[0]
+	bucket, _ := cmd.Flags().GetString("bucket")
+	req, err := cl.PresignGetObject(cmd.Context(), &s3.GetObjectInput{
+		Key:    new(key),
+		Bucket: new(bucket),
+	}, opts...)
+	if err != nil {
+		messages.ExitErr(err)
+	}
+	_, _ = fmt.Fprint(os.Stdout, req.URL)
 }
 
 func guessContentType(arg reflect.Value) {
