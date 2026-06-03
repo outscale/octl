@@ -727,3 +727,92 @@ aliases:
     - name: to-date
       alias_to: ToDate
       default: today
+  - entity: consumptionaccount
+    sub_command: aggregate
+    use: compute
+    alias_to: ReadConsumptionAccount
+    short: Aggregate all compute costs using ReadConsumptionAccount
+    command:
+    - api
+    - ReadConsumptionAccount
+    - --ShowPrice
+    - --jq
+    - |
+      [
+        .ConsumptionEntries[]
+        | select(
+            (.Operation == "RunInstances-OD" and (.Type | test("^BoxUsage:")))
+            or
+            (.Operation == "RunDedicatedInstances-OD" and (.Type | test("^BoxUsage:")))           or
+            (.Operation == "RunDedicatedInstances" and .Type == "UseDedicated")                   or
+            (.Operation == "RunDedicatedGroupsInstances" and .Type == "UseDedicatedGroups")
+          )
+      ]
+      | map(.Price)
+      | add
+    - --single
+    - --output
+    - raw
+    flags:
+    - name: from-date
+      alias_to: FromDate
+      default: beginning-of-month
+    - name: overall
+      alias_to: Overall
+    - name: to-date
+      alias_to: ToDate
+      default: today
+  - entity: consumptionaccount
+    sub_command: aggregate
+    use: gpu
+    alias_to: ReadConsumptionAccount
+    short: Aggregate all GPU costs using ReadConsumptionAccount
+    command:
+    - api
+    - ReadConsumptionAccount
+    - --ShowPrice
+    - --jq
+    - |
+      [
+        .ConsumptionEntries[]
+        | select(.Operation == "AllocateGpu")
+      ]
+      | map(.Price)
+      | add
+    - --single
+    - --output
+    - raw
+    flags:
+    - name: from-date
+      alias_to: FromDate
+      default: beginning-of-month
+    - name: overall
+      alias_to: Overall
+    - name: to-date
+      alias_to: ToDate
+      default: today
+  - entity: consumptionaccount
+    sub_command: aggregate
+    use: all
+    alias_to: ReadConsumptionAccount
+    short: Aggregate all costs using ReadConsumptionAccount
+    command:
+    - api
+    - ReadConsumptionAccount
+    - --ShowPrice
+    - --jq
+    - .ConsumptionEntries
+      | map(.Price)
+      | add
+    - --single
+    - --output
+    - raw
+    flags:
+    - name: from-date
+      alias_to: FromDate
+      default: beginning-of-month
+    - name: overall
+      alias_to: Overall
+    - name: to-date
+      alias_to: ToDate
+      default: today
