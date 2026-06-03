@@ -1,11 +1,11 @@
-## octl iaas consumptionaccount
+## octl iaas consumptionaccount aggregate
 
-consumptionaccount commands
+aggregate commands
 
 ### Options
 
 ```
-  -h, --help   help for consumptionaccount
+  -h, --help   help for aggregate
 ```
 
 ### Options inherited from parent commands
@@ -31,7 +31,8 @@ consumptionaccount commands
 
 ### SEE ALSO
 
-* [octl iaas](octl_iaas.md)	 - OUTSCALE IaaS management
-* [octl iaas consumptionaccount aggregate](octl_iaas_consumptionaccount_aggregate.md)	 - aggregate commands
-* [octl iaas consumptionaccount list](octl_iaas_consumptionaccount_list.md)	 - alias for api ReadConsumptionAccount
+* [octl iaas consumptionaccount](octl_iaas_consumptionaccount.md)	 - consumptionaccount commands
+* [octl iaas consumptionaccount aggregate all](octl_iaas_consumptionaccount_aggregate_all.md)	 - Aggregate all costs using ReadConsumptionAccount
+* [octl iaas consumptionaccount aggregate compute](octl_iaas_consumptionaccount_aggregate_compute.md)	 - Aggregate all compute costs using ReadConsumptionAccount
+* [octl iaas consumptionaccount aggregate gpu](octl_iaas_consumptionaccount_aggregate_gpu.md)	 - Aggregate all GPU costs using ReadConsumptionAccount
 

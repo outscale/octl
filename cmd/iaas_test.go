@@ -393,3 +393,9 @@ func TestReadConsumption(t *testing.T) {
 	runJSON(t, []string{"iaas", "consumption", "ls", "-o", "json"}, nil, &resp)
 	assert.NotEmpty(t, resp)
 }
+
+func TestReadConsumptionAggregate(t *testing.T) {
+	var resp float64
+	runJSON(t, []string{"iaas", "consumption", "aggregate", "all"}, nil, &resp)
+	assert.Greater(t, resp, 0.)
+}

@@ -1,11 +1,24 @@
-## octl iaas consumptionaccount
+## octl iaas consumptionaccount aggregate all
 
-consumptionaccount commands
+Aggregate all costs using ReadConsumptionAccount
+
+### Synopsis
+
+> *Aggregate all costs using ReadConsumptionAccount*
+
+Gets information about the consumption of your OUTSCALE account for each billable resource within the specified time period.
+
+```
+octl iaas consumptionaccount aggregate all [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for consumptionaccount
+      --from-date osctime   The beginning of the time period, in ISO 8601 date format (for example, 2020-06-14).
+  -h, --help                help for all
+      --overall             If false, returns only the consumption of the specific account that sends this request.
+      --to-date osctime     The end of the time period, in ISO 8601 date format (for example, 2020-06-30).
 ```
 
 ### Options inherited from parent commands
@@ -31,7 +44,5 @@ consumptionaccount commands
 
 ### SEE ALSO
 
-* [octl iaas](octl_iaas.md)	 - OUTSCALE IaaS management
 * [octl iaas consumptionaccount aggregate](octl_iaas_consumptionaccount_aggregate.md)	 - aggregate commands
-* [octl iaas consumptionaccount list](octl_iaas_consumptionaccount_list.md)	 - alias for api ReadConsumptionAccount
 
