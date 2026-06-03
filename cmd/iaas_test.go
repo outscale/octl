@@ -386,3 +386,10 @@ func TestReadCatalog(t *testing.T) {
 	runJSON(t, []string{"iaas", "catalog", "ls", "-o", "json"}, nil, &resp)
 	assert.NotEmpty(t, *resp.Entries)
 }
+
+func TestReadConsumption(t *testing.T) {
+	t.Log("consumption ls has default dates")
+	var resp []osc.ConsumptionEntry
+	runJSON(t, []string{"iaas", "consumption", "ls", "-o", "json"}, nil, &resp)
+	assert.NotEmpty(t, resp)
+}

@@ -23,6 +23,21 @@ func NewTimeValue() *TimeValue {
 // Set time.Time value from string (rfc3339, iso8601 or duration).
 func (d *TimeValue) Set(s string) error {
 	s = strings.TrimSpace(s)
+	// shortcuts
+	switch s {
+	case "bom", "beginning-of-month":
+		n := Now()
+		*d.t = iso8601.Day(n.Year(), n.Month(), 1)
+		return nil
+	case "t", "today":
+		n := Now()
+		*d.t = iso8601.Day(n.Year(), n.Month(), n.Day())
+		return nil
+	case "y", "yesterday":
+		n := Now()
+		*d.t = iso8601.Day(n.Year(), n.Month(), n.Day()-1)
+		return nil
+	}
 	// try a iso8601 time
 	v, err := iso8601.ParseString(s)
 	if err == nil {

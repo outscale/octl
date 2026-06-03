@@ -49,7 +49,7 @@ func TestTimeValue(t *testing.T) {
 			assert.Equal(t, now.Add(-time.Hour), vts)
 		}
 	})
-	t.Run("day delta work", func(t *testing.T) {
+	t.Run("day deltas work", func(t *testing.T) {
 		v := flags.NewTimeValue()
 		{
 			err := v.Set("+1d")
@@ -66,7 +66,7 @@ func TestTimeValue(t *testing.T) {
 			assert.Equal(t, now.AddDate(0, 0, -1), vts)
 		}
 	})
-	t.Run("month delta work", func(t *testing.T) {
+	t.Run("month deltas work", func(t *testing.T) {
 		v := flags.NewTimeValue()
 		{
 			err := v.Set("+1mo")
@@ -83,7 +83,7 @@ func TestTimeValue(t *testing.T) {
 			assert.Equal(t, now.AddDate(0, -1, 0), vts)
 		}
 	})
-	t.Run("year delta work", func(t *testing.T) {
+	t.Run("year deltas work", func(t *testing.T) {
 		v := flags.NewTimeValue()
 		{
 			err := v.Set("+1y")
@@ -98,6 +98,38 @@ func TestTimeValue(t *testing.T) {
 			vts, ok := v.Value()
 			assert.True(t, ok)
 			assert.Equal(t, now.AddDate(-1, 0, 0), vts)
+		}
+	})
+	t.Run("shortcuts work", func(t *testing.T) {
+		n := time.Now()
+		v := flags.NewTimeValue()
+		for _, s := range []string{"today", "t"} {
+			err := v.Set(s)
+			require.NoError(t, err)
+			vts, ok := v.Value()
+			assert.True(t, ok)
+			assert.Equal(t, n.Year(), vts.Year())
+			assert.Equal(t, n.Month(), vts.Month())
+			assert.Equal(t, n.Day(), vts.Day())
+		}
+		for _, s := range []string{"yesterday", "y"} {
+			y := n.AddDate(0, 0, -1)
+			err := v.Set(s)
+			require.NoError(t, err)
+			vts, ok := v.Value()
+			assert.True(t, ok)
+			assert.Equal(t, y.Year(), vts.Year())
+			assert.Equal(t, y.Month(), vts.Month())
+			assert.Equal(t, y.Day(), vts.Day())
+		}
+		for _, s := range []string{"beginning-of-month", "bom"} {
+			err := v.Set(s)
+			require.NoError(t, err)
+			vts, ok := v.Value()
+			assert.True(t, ok)
+			assert.Equal(t, n.Year(), vts.Year())
+			assert.Equal(t, n.Month(), vts.Month())
+			assert.Equal(t, 1, vts.Day())
 		}
 	})
 }

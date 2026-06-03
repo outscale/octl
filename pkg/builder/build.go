@@ -94,6 +94,9 @@ func (b *Builder[T]) Build(rootCmd, apiCmd *cobra.Command) {
 			if flag != nil {
 				nflag := *flag
 				nflag.Name = f.Name
+				if f.Default != "" {
+					nflag.Annotations = map[string][]string{alias.DefaultValue: {f.Default}}
+				}
 				switch f.Type {
 				case "base64File":
 					debug.Println("overriding type for flag", f.Name, "to", f.Type)

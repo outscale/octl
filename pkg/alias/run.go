@@ -22,6 +22,8 @@ import (
 	"github.com/spf13/pflag"
 )
 
+const DefaultValue = "default.octl.outscale.com"
+
 var prompts = map[config.Action]string{
 	config.ActionDelete: "Are you sure you want to delete these resource(s) ?",
 }
@@ -136,21 +138,24 @@ func iterate(fn func(cmd *cobra.Command, args []string) int, cmd *cobra.Command,
 func userArgs(cmd *cobra.Command, flags config.FlagSet, skipUserFlags bool) []string {
 	var userArgs []string
 	cmd.Flags().VisitAll(func(f *pflag.Flag) {
-		if f.Changed {
-			newFlag := f.Name
-			nf, found := flags.Get(newFlag)
-			switch {
-			case newFlag == "verbose" || newFlag == "config" || newFlag == "profile":
-			case !found && skipUserFlags:
-				return
-			case found:
-				newFlag = nf.AliasTo
-			}
+		newFlag := f.Name
+		nf, found := flags.Get(newFlag)
+		switch {
+		case newFlag == "verbose" || newFlag == "config" || newFlag == "profile":
+		case !found && skipUserFlags:
+			return
+		case found:
+			newFlag = nf.AliasTo
+		}
+		switch {
+		case f.Changed:
 			if svalue, ok := f.Value.(pflag.SliceValue); ok {
 				userArgs = append(userArgs, "--"+newFlag+"="+strings.Join(svalue.GetSlice(), ","))
 				return
 			}
 			userArgs = append(userArgs, "--"+newFlag+"="+f.Value.String())
+		case f.Annotations != nil && len(f.Annotations[DefaultValue]) > 0:
+			userArgs = append(userArgs, "--"+newFlag+"="+f.Annotations[DefaultValue][0])
 		}
 	})
 	return userArgs

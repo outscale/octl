@@ -703,3 +703,27 @@ aliases:
       - ReadVmsState
       - --output
       - yaml
+  - entity: consumptionaccount
+    use: list
+    alias_to: ReadConsumptionAccount
+    aliases:
+    - ls
+    short: alias for api ReadConsumptionAccount
+    command:
+    - api
+    - ReadConsumptionAccount
+    - --output
+    - table
+    flags:
+    - name: from-date
+      alias_to: FromDate
+      default: beginning-of-month
+    - name: overall
+      alias_to: Overall
+    - name: show-price
+      alias_to: ShowPrice
+    - name: show-resource-details
+      alias_to: ShowResourceDetails
+    - name: to-date
+      alias_to: ToDate
+      default: today

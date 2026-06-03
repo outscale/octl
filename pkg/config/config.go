@@ -127,6 +127,7 @@ type Flag struct {
 	Required bool   `yaml:"required,omitempty"`
 	Type     string `yaml:"type,omitempty"`
 	Usage    string `yaml:"usage,omitempty"`
+	Default  string `yaml:"default,omitempty"`
 }
 
 type Prompt struct {

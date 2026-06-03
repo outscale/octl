@@ -42,9 +42,14 @@ The flag syntax is:
     - `--BlockDeviceMappings.0.Bsu.VolumeType`
 
 - date-time flag values can be set:
-    - using the RFC3339 format (e.g. `2026-02-10T14:52:30Z`)
-    - as a duration offset with a `+` or `-` prefix (e.g. `+10m`, `-1h`)
-    - as a day/month/year offset with a `+` or `-` prefix (e.g. `+1mo`, `-1y`)
+    - using the RFC3339 format (e.g. `2026-02-10T14:52:30Z`),
+    - as a duration offset with a `+` or `-` prefix (e.g. `+10m`, `-1h`),
+    - as a day/month/year offset with a `+` or `-` prefix (e.g. `+1mo`, `-1y`).
+
+- date flag values can be set:
+    - using the `YYYY-MM-DD` format,
+    - as a day/month/year offset with a `+` or `-` prefix (e.g. `+1mo`, `-1y`),
+    - using shortcuts: `beginning-of-month`/`bom` (1st day of the current month), `yesterday`/`y` or `today`/`t`.
 
 - maps (tags, labels, annotations, etc.) use the `key=value,key=value` format
 
