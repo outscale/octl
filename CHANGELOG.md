@@ -1,5 +1,11 @@
 # 📜 Changelog
 
+## [v0.0.24] - 2026-06-04
+
+### ✨ Added
+* ✨ feat(storage): url presigning by @jfbus in https://github.com/outscale/octl/pull/197
+* ✨ feat(iaas): add default dates to consumption list by @jfbus in https://github.com/outscale/octl/pull/199
+
 ## [v0.0.23] - 2026-05-20
 
 ### ✨ Added
