@@ -79,10 +79,10 @@ func TestProfileList(t *testing.T) {
 		var lst []any
 		runJSON(t, []string{"profile", "list", "--config", file, "-o", "json"}, nil, &lst)
 		require.Len(t, lst, 2)
-		assert.Equal(t, "bar", lst[0].(map[string]any)["Name"])
-		assert.False(t, lst[0].(map[string]any)["Default"].(bool))
-		assert.Equal(t, "foo", lst[1].(map[string]any)["Name"])
-		assert.True(t, lst[1].(map[string]any)["Default"].(bool))
+		assert.Equal(t, "bar", lst[0].(map[string]any)["name"])
+		assert.Empty(t, lst[0].(map[string]any)["default"])
+		assert.Equal(t, "foo", lst[1].(map[string]any)["name"])
+		assert.Equal(t, true, lst[1].(map[string]any)["default"])
 	})
 	t.Run("Profiles can be listed, even if no default profile is configured", func(t *testing.T) {
 		file := filepath.Join(t.TempDir(), "list.json")
@@ -97,6 +97,24 @@ func TestProfileList(t *testing.T) {
 		var lst []any
 		runJSON(t, []string{"profile", "list", "--config", file, "-o", "json"}, nil, &lst)
 		require.Len(t, lst, 1)
+	})
+	t.Run("Table output works", func(t *testing.T) {
+		file := filepath.Join(t.TempDir(), "list.json")
+		cf := &profile.ConfigFile{
+			Path: file,
+			Profiles: map[string]profile.Profile{
+				"foo": {
+					Default: true,
+					Region:  "eu-west-2",
+				},
+			},
+		}
+		err := cf.Save()
+		require.NoError(t, err)
+		res := run(t, []string{"profile", "list", "--config", file}, nil)
+		assert.Contains(t, string(res), "foo")
+		assert.Contains(t, string(res), "true")
+		assert.Contains(t, string(res), "eu-west-2")
 	})
 }
 
@@ -116,10 +134,10 @@ func TestProfileSetDefault(t *testing.T) {
 		var lst []any
 		runJSON(t, []string{"profile", "list", "--config", file, "-o", "json"}, nil, &lst)
 		require.Len(t, lst, 2)
-		assert.Equal(t, "bar", lst[0].(map[string]any)["Name"])
-		assert.True(t, lst[0].(map[string]any)["Default"].(bool))
-		assert.Equal(t, "foo", lst[1].(map[string]any)["Name"])
-		assert.False(t, lst[1].(map[string]any)["Default"].(bool))
+		assert.Equal(t, "bar", lst[0].(map[string]any)["name"])
+		assert.Equal(t, true, lst[0].(map[string]any)["default"])
+		assert.Equal(t, "foo", lst[1].(map[string]any)["name"])
+		assert.Empty(t, lst[1].(map[string]any)["default"])
 	})
 }
 

@@ -30,9 +30,10 @@ var profileCmd = &cobra.Command{
 }
 
 var profileListCmd = &cobra.Command{
-	Use:   "list",
-	Short: "Lists all profiles from a config file",
-	Run:   listProfiles,
+	Use:     "list",
+	Short:   "Lists all profiles from a config file",
+	Aliases: []string{"ls"},
+	Run:     listProfiles,
 }
 
 var profileCurrentCmd = &cobra.Command{
@@ -82,12 +83,12 @@ func init() {
 }
 
 type profileEntry struct {
-	Name    string
-	Default bool
-	profile.Profile
+	Name            string `json:"name"`
+	Default         bool   `json:"default,omitempty"`
+	profile.Profile `json:",inline"`
 }
 
-var profileColumns = config.Columns{{Title: "Name", Content: "Name"}, {Title: "Region", Content: "Region"}, {Title: "Default", Content: "Default"}}
+var profileColumns = config.Columns{{Title: "Name", Content: ".name"}, {Title: "Region", Content: ".region"}, {Title: "Default", Content: ".default"}}
 
 func configPath(cmd *cobra.Command) string {
 	path, _ := cmd.Flags().GetString("config")
