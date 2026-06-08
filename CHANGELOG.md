@@ -1,5 +1,14 @@
 # 📜 Changelog
 
+## [v0.0.25] - 2026-06-08
+
+### 🛠️ Changed / Refactoring
+* 👷 build: build octl with Go 1.26.4 by @jfbus in https://github.com/outscale/octl/pull/207
+### 🐛 Fixed
+* 🐛 fix(profile): fix profile ls output by @jfbus in https://github.com/outscale/octl/pull/209
+### 📦 Dependency updates
+* ⬆️ deps(dockerfile): update gcr.io/distroless/static-debian13:debug docker digest to 8555404 by @Open-Source-Bot in https://github.com/outscale/octl/pull/193
+
 ## [v0.0.24] - 2026-06-04
 
 ### ✨ Added
