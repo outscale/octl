@@ -39,6 +39,8 @@ entities:
     no_aliases: true
   kubernetesversion:
     no_aliases: true
+  kubeconfig:
+    no_aliases: true
   kubeconfigwithpubkeynacl:
     no_aliases: true
   cpsubregion:
