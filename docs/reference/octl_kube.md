@@ -34,7 +34,6 @@ OUTSCALE Kubernetes as a Service (OKS) management
 * [octl](octl.md)	 - A modern CLI for Outscale services
 * [octl kube api](octl_kube_api.md)	 - kube api calls
 * [octl kube cluster](octl_kube_cluster.md)	 - cluster commands
-* [octl kube kubeconfig](octl_kube_kubeconfig.md)	 - kubeconfig commands
 * [octl kube kubectl](octl_kube_kubectl.md)	 - 
 * [octl kube nodepool](octl_kube_nodepool.md)	 - nodepool commands
 * [octl kube project](octl_kube_project.md)	 - project commands

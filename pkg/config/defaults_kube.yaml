@@ -101,7 +101,8 @@ entities:
     no_aliases: true
   cpsubregion:
     no_aliases: true
-  kubeconfig: {}
+  kubeconfig:
+    no_aliases: true
   kubeconfigwithpubkeynacl:
     no_aliases: true
   kubernetesversion:
@@ -366,18 +367,6 @@ aliases:
   command:
   - api
   - GetCluster
-  - '%*'
-  - --output
-  - yaml
-  - --single
-- entity: kubeconfig
-  use: describe id [id]...
-  aliases:
-  - desc
-  short: alias for api GetKubeconfig  id
-  command:
-  - api
-  - GetKubeconfig
   - '%*'
   - --output
   - yaml
