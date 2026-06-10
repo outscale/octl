@@ -1811,7 +1811,7 @@ aliases:
   - --VmIds
   - '%*'
   - --output
-  - table
+  - success
 - entity: vm
   use: stop vm_id [vm_id]...
   alias_to: StopVms
@@ -1822,7 +1822,7 @@ aliases:
   - --VmIds
   - '%*'
   - --output
-  - table
+  - success
 - entity: vm
   use: readconsole vm_id
   alias_to: ReadConsoleOutput
