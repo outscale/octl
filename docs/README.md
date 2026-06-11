@@ -17,6 +17,7 @@ This directory contains the documentation for **octl**.
 - Templating: [usage/templating.md](usage/templating.md)
 - Chaining commands: [usage/chaining.md](usage/chaining.md)
 - Table columns: [usage/columns.md](usage/columns.md)
+- Working with self-signed certificates: [usage/self-signed.md](usage/self-signed.md)
 
 ## Security
 
