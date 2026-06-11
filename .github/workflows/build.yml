@@ -24,7 +24,7 @@ jobs:
       with:
         go-version-file: 'go.mod'
     - name: 🔎 golangci-lint
-      uses: outscale/goutils/.github/actions/lint@main
+      uses: outscale/goutils/.github/actions/lint@8a4f7b08b35c0c071190ecca48362a3c3cd5a190 # main
     - name: 📦 Build
       run: go build -o octl main.go
   unit:
@@ -37,7 +37,7 @@ jobs:
       with:
         go-version-file: 'go.mod'
     - name: 🧹 Frieza
-      uses: outscale/frieza-github-actions/frieza-clean@master
+      uses: outscale/frieza-github-actions/frieza-clean@68ffd39d7e181f3548369e332242b329b04a3182 # master
       with:
         access_key: ${{ secrets.OSC_ACCESS_KEY }}
         secret_key: ${{ secrets.OSC_SECRET_KEY }}
