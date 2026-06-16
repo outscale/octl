@@ -1,5 +1,18 @@
 # 📜 Changelog
 
+## [v0.0.26] - 2026-06-16
+
+### ✨ Added
+* ✨ feat(iaas): add consumption aggregate commands by @jfbus in https://github.com/outscale/octl/pull/200
+### 🛠️ Changed / Refactoring
+* 🚸 ux(iaas): success output on vm start/stop by @jfbus in https://github.com/outscale/octl/pull/214
+* 🚸 ux: updated status colors by @jfbus in https://github.com/outscale/octl/pull/218
+### 📝 Documentation
+* 📝 doc: insecure mode by @jfbus in https://github.com/outscale/octl/pull/217
+* 📝 doc: update project stage badge to graduated by @outscale-rce in https://github.com/outscale/octl/pull/219
+### 🗑️ Removed
+* 🔥 cleanup(kube): remove kube kubeconfig by @jfbus in https://github.com/outscale/octl/pull/215
+
 ## [v0.0.25] - 2026-06-08
 
 ### 🛠️ Changed / Refactoring
