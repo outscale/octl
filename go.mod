@@ -23,7 +23,7 @@ require (
 	github.com/mattn/go-isatty v0.0.21
 	github.com/minio/selfupdate v0.6.0
 	github.com/outscale/goutils/oks v0.0.1
-	github.com/outscale/goutils/sdk v0.0.3
+	github.com/outscale/goutils/sdk v0.0.4
 	github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.2.0.20260602134633-980ca652ea65
 	github.com/samber/lo v1.53.0
 	github.com/sigstore/sigstore-go v1.1.4
