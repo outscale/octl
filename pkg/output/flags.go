@@ -31,7 +31,7 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	filts, _ := fs.GetStringSlice("filter")
 	for _, filt := range filts {
 		name, value, _ := strings.Cut(filt, ":")
-		jqf, err := filter.NewJQ(fmt.Sprintf(`select(.%s | test("%s"))`, name, value))
+		jqf, err := filter.NewJQ(fmt.Sprintf(`select(.%s | tostring | test("%s"))`, name, value))
 		if err != nil {
 			return nil, nil, err
 		}
