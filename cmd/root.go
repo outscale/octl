@@ -85,7 +85,7 @@ func init() {
 	_ = rootCmd.PersistentFlags().MarkHidden("root")
 
 	rootCmd.PersistentFlags().String("jq", "", "jq filter")
-	rootCmd.PersistentFlags().StringSlice("filter", nil, `comma separated list of filters for results - name:value,name:value, alias for jq filter 'select(.name | test("value"))'`)
+	rootCmd.PersistentFlags().StringSlice("filter", nil, `comma separated list of filters for results - name:value,name:value, alias for jq filter 'select(.name | tostring | test("value"))'`)
 
 	rootCmd.PersistentFlags().String("waitfor", "", `jq expression to wait for - octl will query every waitfor-interval until the expression returns 1/true or a non empty result`)
 	rootCmd.PersistentFlags().Duration("waitfor-interval", 5*time.Second, `interval between two waitfor iterations`)

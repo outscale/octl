@@ -399,3 +399,7 @@ func TestReadConsumptionAggregate(t *testing.T) {
 	runJSON(t, []string{"iaas", "consumption", "aggregate", "all"}, nil, &resp)
 	assert.Greater(t, resp, 0.)
 }
+
+func TestFilterNullValues(t *testing.T) {
+	run(t, []string{"iaas", "image", "ls", "--filter", "AccountAlias:Outscale"}, nil)
+}
