@@ -93,6 +93,16 @@ entities:
         content: .MaxRam
       - title: Generations
         content: .Generations
+  image:
+    columns:
+      - title: ID
+        content: .ImageId
+      - title: Name
+        content: .ImageName
+      - title: Account
+        content: .AccountAlias // .AccountId
+      - title: Created On
+        content: .CreationDate
   imageexporttask:
     primary: TaskId
   listenerrule:

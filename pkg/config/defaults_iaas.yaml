@@ -1009,10 +1009,10 @@ entities:
       content: .ImageId
     - title: Name
       content: .ImageName
-    - title: Type
-      content: .ImageType
-    - title: State
-      content: .State
+    - title: Account
+      content: .AccountAlias // .AccountId
+    - title: Created On
+      content: .CreationDate
     primary: ImageId
   imageexporttask:
     columns:
