@@ -178,6 +178,13 @@ aliases:
   - name: bucket
     alias_to: Bucket
     required: true
+  - name: version
+    alias_to: VersionId
+  - name: part
+    alias_to: PartNumber
+  - name: range
+    alias_to: Range
+    usage: Range to download, as defined by RFC 9110 (e.g. bytes=0-500)
 - entity: object
   use: copy bucket_src/key_src key_dst
   alias_to: CopyObject
