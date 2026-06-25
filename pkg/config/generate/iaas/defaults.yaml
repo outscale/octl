@@ -204,6 +204,9 @@ entities:
         content: .VolumeSize
       - title: CreationDate
         content: .CreationDate
+  securitygroup:
+    aliases:
+      - sg
   snapshotexporttask:
     primary: TaskId
   tag:

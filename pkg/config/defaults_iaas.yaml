@@ -1231,6 +1231,8 @@ entities:
       content: .NetId
     primary: RouteTableId
   securitygroup:
+    aliases:
+    - sg
     columns:
     - title: ID
       content: .SecurityGroupId
