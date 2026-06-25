@@ -6,6 +6,7 @@ package format
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
 	"io"
 	"os"
@@ -16,7 +17,11 @@ import (
 type YAML struct{}
 
 func (YAML) Format(ctx context.Context, w io.Writer, v any) error {
-	enc := yaml.NewEncoder(w, yaml.OmitZero(), yaml.UseSingleQuote(true), yaml.Indent(2))
+	enc := yaml.NewEncoder(w, yaml.OmitZero(), yaml.UseSingleQuote(true), yaml.Indent(2), yaml.CustomMarshaler(
+		func(v []byte) ([]byte, error) {
+			return []byte(base64.StdEncoding.EncodeToString(v)), nil
+		},
+	))
 	err := enc.Encode(v)
 	if err != nil {
 		return fmt.Errorf("marshal yaml: %w", err)
