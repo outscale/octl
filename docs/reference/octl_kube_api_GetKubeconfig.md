@@ -9,10 +9,11 @@ octl kube api GetKubeconfig id [flags]
 ### Options
 
 ```
-      --Group string   
-      --Ttl string     
-      --User string    
-  -h, --help           help for GetKubeconfig
+      --Group string     
+      --Ttl string       
+      --User string      
+  -h, --help             help for GetKubeconfig
+      --project string   project name
 ```
 
 ### Options inherited from parent commands

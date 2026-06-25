@@ -52,6 +52,7 @@ octl kube api CreateCluster [flags]
       --Tags stringToString                                           (default [])
       --Version string                                               Version of Kubernetes to be deployed
   -h, --help                                                         help for CreateCluster
+      --project string                                               project name
 ```
 
 ### Options inherited from parent commands

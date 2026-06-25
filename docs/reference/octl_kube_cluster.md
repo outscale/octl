@@ -5,7 +5,8 @@ cluster commands
 ### Options
 
 ```
-  -h, --help   help for cluster
+  -h, --help             help for cluster
+      --project string   project name
 ```
 
 ### Options inherited from parent commands

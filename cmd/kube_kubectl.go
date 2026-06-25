@@ -13,6 +13,7 @@ import (
 
 	"github.com/outscale/octl/pkg/debug"
 	"github.com/outscale/octl/pkg/messages"
+	"github.com/outscale/octl/pkg/preferences"
 	"github.com/outscale/osc-sdk-go/v3/pkg/oks"
 	"github.com/spf13/cobra"
 	"k8s.io/client-go/tools/clientcmd"
@@ -33,7 +34,8 @@ func kubectl(cmd *cobra.Command, args []string) {
 		messages.ExitErr(err)
 	}
 	cluster, _ := cmd.Flags().GetString("cluster")
-	kubeconfig, err := getKubeconfig(cmd.Context(), cluster, cl)
+	project, _ := cmd.Flags().GetString("project")
+	kubeconfig, err := getKubeconfig(cmd.Context(), cluster, project, cl)
 	if err != nil {
 		messages.ExitErr(err)
 	}
@@ -50,8 +52,8 @@ func kubectl(cmd *cobra.Command, args []string) {
 	}
 }
 
-func getKubeconfig(ctx context.Context, cluster string, cl *oks.Client) (string, error) {
-	id, err := clusterNameToID(ctx, cluster, cl)
+func getKubeconfig(ctx context.Context, cluster, project string, cl *oks.Client) (string, error) {
+	id, err := clusterNameToID(ctx, cluster, project, cl)
 	if err != nil {
 		return "", err
 	}
@@ -122,4 +124,5 @@ func init() {
 	oksCmd.AddCommand(kubectlCmd)
 	kubectlCmd.Flags().String("cluster", "", "Name or ID of cluster")
 	_ = kubectlCmd.MarkFlagRequired("cluster")
+	kubectlCmd.Flags().String("project", preferences.Preferences.Kube.DefaultProject, "Name or ID of project")
 }

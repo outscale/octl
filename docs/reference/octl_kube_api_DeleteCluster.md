@@ -13,7 +13,8 @@ octl kube api DeleteCluster id [flags]
 ### Options
 
 ```
-  -h, --help   help for DeleteCluster
+  -h, --help             help for DeleteCluster
+      --project string   project name
 ```
 
 ### Options inherited from parent commands

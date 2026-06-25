@@ -6,6 +6,7 @@ import (
 
 	oksv1beta2 "github.com/outscale/goutils/oks/clientset/typed/oks.dev/v1beta2"
 	"github.com/outscale/octl/pkg/builder"
+	"github.com/outscale/octl/pkg/preferences"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 )
@@ -27,6 +28,9 @@ func init() {
 	apiCmd, _ := lo.Find(nodepoolCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "api" })
 	apiCmd.PersistentFlags().String("cluster", "", "Name or ID of cluster")
 	_ = apiCmd.MarkPersistentFlagRequired("cluster")
+	apiCmd.PersistentFlags().String("project", preferences.Preferences.Kube.DefaultProject, "Name or ID of project")
 	// nodepool commands need to be added to the upper level, otherwise we will get kube nodepool nodepool
 	b.Build(oksCmd, apiCmd)
+	clusterCmd, _ := lo.Find(oksCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "nodepool" })
+	clusterCmd.PersistentFlags().String("project", preferences.Preferences.Kube.DefaultProject, "project name")
 }

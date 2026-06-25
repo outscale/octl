@@ -44,6 +44,7 @@ octl kube api UpdateCluster id [flags]
       --Tags stringToString                                           (default [])
       --Version string                                               
   -h, --help                                                         help for UpdateCluster
+      --project string                                               project name
 ```
 
 ### Options inherited from parent commands

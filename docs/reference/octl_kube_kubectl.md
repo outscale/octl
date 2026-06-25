@@ -16,6 +16,7 @@ octl kube kubectl [octl_flags] -- kubectl_args [kubectl_flags] [flags]
 ```
       --cluster string   Name or ID of cluster
   -h, --help             help for kubectl
+      --project string   Name or ID of project
 ```
 
 ### Options inherited from parent commands

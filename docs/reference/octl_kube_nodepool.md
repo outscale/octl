@@ -5,7 +5,8 @@ nodepool commands
 ### Options
 
 ```
-  -h, --help   help for nodepool
+  -h, --help             help for nodepool
+      --project string   project name
 ```
 
 ### Options inherited from parent commands

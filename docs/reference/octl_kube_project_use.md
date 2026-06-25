@@ -1,28 +1,15 @@
-## octl kube cluster list
+## octl kube project use
 
-alias for api ListAllClusters
-
-### Synopsis
-
-> *alias for api ListAllClusters*
-
-
+Set a default project for cluster commands, reset it without args
 
 ```
-octl kube cluster list [flags]
+octl kube project use [project_id_or_name] [flags]
 ```
 
 ### Options
 
 ```
-      --cursor string    
-      --deleted          
-  -h, --help             help for list
-      --limit int        
-      --name string      
-      --page int         
-      --status string    
-      --version string   
+  -h, --help   help for use
 ```
 
 ### Options inherited from parent commands
@@ -37,7 +24,6 @@ octl kube cluster list [flags]
   -o, --output string               output format (raw, json, yaml, table, csv, none, base64, text)
       --payload string              JSON content for query body
       --profile string              Profile to use in profile file (by default, "default")
-      --project string              project name
       --single                      convert single entry lists to a single object
       --template string             JSON template file for query body
   -v, --verbose                     Verbose output
@@ -49,5 +35,5 @@ octl kube cluster list [flags]
 
 ### SEE ALSO
 
-* [octl kube cluster](octl_kube_cluster.md)	 - cluster commands
+* [octl kube project](octl_kube_project.md)	 - project commands
 

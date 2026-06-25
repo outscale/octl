@@ -42,4 +42,5 @@ project commands
 * [octl kube project quotas](octl_kube_project_quotas.md)	 - alias for api GetProjectQuotas id
 * [octl kube project snapshots](octl_kube_project_snapshots.md)	 - alias for api GetProjectSnapshots id
 * [octl kube project update](octl_kube_project_update.md)	 - alias for api UpdateProject  id
+* [octl kube project use](octl_kube_project_use.md)	 - Set a default project for cluster commands, reset it without args
 
