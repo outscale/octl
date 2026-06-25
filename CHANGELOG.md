@@ -1,5 +1,17 @@
 # 📜 Changelog
 
+## [v0.0.27] - 2026-06-24
+
+### ✨ Added
+* ✨ feat(storage): add missing flags to object download by @jfbus in https://github.com/outscale/octl/pull/227
+### 🛠️ Changed / Refactoring
+* 🚸 ux: iaas image columns by @jfbus in https://github.com/outscale/octl/pull/224
+### 🐛 Fixed
+* 🐛 fix: allow --filter to work with null values by @jfbus in https://github.com/outscale/octl/pull/225
+### 📦 Dependency updates
+* ⬆️ deps(gomod): update module github.com/outscale/goutils/sdk to v0.0.4 by @Open-Source-Bot in https://github.com/outscale/octl/pull/222
+
+
 ## [v0.0.26] - 2026-06-16
 
 ### ✨ Added
