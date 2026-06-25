@@ -1,11 +1,35 @@
-## octl kube
+## octl kube secret
 
-OUTSCALE Kubernetes as a Service (OKS) management
+Create secret for CCM or CSI driver deployment
+
+### Synopsis
+
+Create secret for CCM/CSI driver/Cluster-API provider deployments using the selected AK/SK.
+
+CCM:
+```shell
+octl kube secret --name osc-secret | kubectl apply -f -
+```
+CSI driver:
+```shell
+octl kube secret --name osc-csi-bsu | kubectl apply -f -
+```
+Cluster-API:
+```shell
+octl kube secret --name cluster-api-provider-outscale --namespace cluster-api-provider-outscale-system | kubectl apply -f -
+```
+
+
+```
+octl kube secret [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for kube
+  -h, --help               help for secret
+      --name string        name of secret
+      --namespace string   namespace of secret (default "kube-system")
 ```
 
 ### Options inherited from parent commands
@@ -31,13 +55,5 @@ OUTSCALE Kubernetes as a Service (OKS) management
 
 ### SEE ALSO
 
-* [octl](octl.md)	 - A modern CLI for Outscale services
-* [octl kube api](octl_kube_api.md)	 - kube api calls
-* [octl kube cluster](octl_kube_cluster.md)	 - cluster commands
-* [octl kube kubectl](octl_kube_kubectl.md)	 - 
-* [octl kube nodepool](octl_kube_nodepool.md)	 - nodepool commands
-* [octl kube project](octl_kube_project.md)	 - project commands
-* [octl kube publicip](octl_kube_publicip.md)	 - publicip commands
-* [octl kube quota](octl_kube_quota.md)	 - quota commands
-* [octl kube secret](octl_kube_secret.md)	 - Create secret for CCM or CSI driver deployment
+* [octl kube](octl_kube.md)	 - OUTSCALE Kubernetes as a Service (OKS) management
 
