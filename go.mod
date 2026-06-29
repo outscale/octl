@@ -9,7 +9,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.39.6
 	github.com/aws/aws-sdk-go-v2/config v1.31.20
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.72.3
-	github.com/aws/smithy-go v1.25.1
+	github.com/aws/smithy-go v1.27.3
 	github.com/charmbracelet/glamour v0.10.0
 	github.com/charmbracelet/huh v0.8.0
 	github.com/charmbracelet/huh/spinner v0.0.0-20260216111231-bffc99a26329
@@ -34,6 +34,7 @@ require (
 	golang.org/x/mod v0.36.0
 	golang.org/x/tools v0.45.0
 	k8s.io/api v0.35.3
+	k8s.io/apimachinery v0.35.3
 	k8s.io/client-go v0.35.3
 	k8s.io/kubectl v0.35.3
 )
@@ -201,7 +202,6 @@ require (
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/apimachinery v0.35.3 // indirect
 	k8s.io/cli-runtime v0.35.3 // indirect
 	k8s.io/component-base v0.35.3 // indirect
 	k8s.io/component-helpers v0.35.3 // indirect
