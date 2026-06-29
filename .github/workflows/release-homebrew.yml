@@ -25,5 +25,5 @@ jobs:
               repo: 'homebrew-tap',
               workflow_id: 'release-pr.yml',
               ref: 'main',
-              inputs: {tool: 'octl', tag: context.ref, hash: context.hash },
+              inputs: {tool: 'octl', tag: context.ref, hash: context.sha },
             });
