@@ -1,5 +1,12 @@
 # 📜 Changelog
 
+## [v0.0.28] - 2026-06-29
+
+### ✨ Added
+* 🚸 ux(iaas): add sg alias to securitygroup by @jfbus in https://github.com/outscale/octl/pull/231
+* ✨ feat(kube): add command to create CCM/CSI secrets by @jfbus in https://github.com/outscale/octl/pull/229
+* 🐛 fix(kube): add missing --project flag on cluster commands by @jfbus in https://github.com/outscale/octl/pull/230
+
 ## [v0.0.27] - 2026-06-24
 
 ### ✨ Added

@@ -6,7 +6,7 @@
 2. Update [actions/setup_octl/action.yaml](../actions/setup_octl/action.yaml)
  - Set `version.default` to the new release
 3. Open a pull request with the above changes and merge it once approved.
-4. Tag and push the container release:
+4. Tag and push the release:
 ```shell
 export VERSION=vX.Y.Z
 git tag -a $VERSION -m "🔖 octl $VERSION" && git push origin $VERSION
