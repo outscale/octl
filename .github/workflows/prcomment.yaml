@@ -23,7 +23,7 @@ jobs:
     - name: 📦 Run GoReleaser
       uses: goreleaser/goreleaser-action@5daf1e915a5f0af01ddbcd89a43b8061ff4f1a89 # v7
       with:
-        version: '~> v2'
+        version: 'v2.15.4'
         args: build --skip validate --clean --snapshot --single-target
       env:
         KUBECTL_VERSION: 1.2.3
@@ -39,7 +39,7 @@ jobs:
     - name: 📦 Run GoReleaser
       uses: goreleaser/goreleaser-action@5daf1e915a5f0af01ddbcd89a43b8061ff4f1a89 # v7
       with:
-        version: '~> v2'
+        version: 'v2.15.4'
         args: build --skip validate --clean --snapshot --single-target
       env:
         KUBECTL_VERSION: 1.2.3
