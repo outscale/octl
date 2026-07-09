@@ -7,15 +7,16 @@ package cmd
 
 import (
 	"fmt"
+	"runtime/debug"
 	"time"
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/outscale/octl/cmd/prerun"
 	"github.com/outscale/octl/pkg/markdown"
 	"github.com/outscale/octl/pkg/version"
+	"github.com/outscale/osc-sdk-go/v3/pkg/oks"
 	"github.com/outscale/osc-sdk-go/v3/pkg/osc"
 	"github.com/outscale/osc-sdk-go/v3/pkg/profile"
-	sdkversion "github.com/outscale/osc-sdk-go/v3/pkg/version"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 )
@@ -48,15 +49,7 @@ var rootCmd = &cobra.Command{
 		prerun.CheckFalse(cmd, args)
 		prerun.CheckUpdate(cmd, args)
 	},
-	Run: func(cmd *cobra.Command, _ []string) {
-		if b, _ := cmd.Flags().GetBool("version"); b {
-			fmt.Printf("octl version %s\n", version.Version)
-			fmt.Printf("based on Go SDK %s\n", sdkversion.Version)
-			fmt.Printf("Providers:\n* iaas: %s\n", osc.Version)
-			return
-		}
-		_ = cmd.Help()
-	},
+	Run:               root,
 	SilenceErrors:     true, // do not display errors when an error occurred, we do it
 	SilenceUsage:      true, // do not display usage when an error occurred, the user will need to call -h
 	DisableAutoGenTag: true,
@@ -110,4 +103,25 @@ func init() {
 		cf, _ := loadConfig(cmd)
 		return lo.Map(lo.Keys(cf.Profiles), func(k string, _ int) cobra.Completion { return cobra.Completion(k) }), cobra.ShellCompDirectiveDefault
 	})
+}
+
+func root(cmd *cobra.Command, _ []string) {
+	if b, _ := cmd.Flags().GetBool("version"); b {
+		fmt.Printf("octl version %s\n", version.Version)
+		build, ok := debug.ReadBuildInfo()
+		if ok {
+			fmt.Println("Based on:")
+			for _, dep := range build.Deps {
+				switch dep.Path {
+				case "github.com/outscale/osc-sdk-go/v3", "github.com/aws/aws-sdk-go-v2/service/s3", "k8s.io/kubectl":
+					fmt.Printf("* %s %s\n", dep.Path, dep.Version)
+				}
+			}
+		}
+		fmt.Println("Providers:")
+		fmt.Printf("* osc: %s\n", osc.Version)
+		fmt.Printf("* oks: %s\n", oks.Version)
+		return
+	}
+	_ = cmd.Help()
 }

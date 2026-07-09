@@ -439,10 +439,10 @@ github.com/opencontainers/go-digest v1.0.0 h1:apOUWs51W5PlhuyGyz9FCeeBIOUDA/6nW8
 github.com/opencontainers/go-digest v1.0.0/go.mod h1:0JzlMkj0TRzQZfJkVvzbP0HBR3IKzErnv2BNG4W4MAM=
 github.com/outscale/goutils/oks v0.0.1 h1:7i+a7iD9VlYgj8sTz7Na+9GYtW3gsbpDrmykYAnlCb0=
 github.com/outscale/goutils/oks v0.0.1/go.mod h1:K9VSlCA2l6MjA31TD2c3FLceR9z48qf7NO3aKxF8Nm0=
-github.com/outscale/goutils/sdk v0.0.5 h1:UVu7uC38VOSCPqeCORsw1rKWaoHrsv+TTp6TGUHenjo=
-github.com/outscale/goutils/sdk v0.0.5/go.mod h1:LiXmAIA3CAXCdanEARKQ3Q/Lb8n8dKeGSbPRxIe43kc=
-github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.3 h1:dE2Swgp2M3gSdv5Yx28JFHF1LBhGzVOb6NbVjyshFAs=
-github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.3/go.mod h1:Yi0j2XAZ0/8g0ObVFofMSL5+IuNIDp/AiEI6gXc7txc=
+github.com/outscale/goutils/sdk v0.0.4 h1:hm+LZyeHUBYj066MjVVYYEPnlZRQSv4v74TZgfIQkRM=
+github.com/outscale/goutils/sdk v0.0.4/go.mod h1:LiXmAIA3CAXCdanEARKQ3Q/Lb8n8dKeGSbPRxIe43kc=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.3.0.20260709150001-abf6e77bc1d0 h1:pcjUB56ldZ+4AvJcO1sEz7oKJsU2GXWsxjmlffG5siE=
+github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.3.0.20260709150001-abf6e77bc1d0/go.mod h1:Yi0j2XAZ0/8g0ObVFofMSL5+IuNIDp/AiEI6gXc7txc=
 github.com/peterbourgon/diskv v2.0.1+incompatible h1:UBdAOUP5p4RWqPBg048CAvpKN+vxiaj6gdUUzhl4XmI=
 github.com/peterbourgon/diskv v2.0.1+incompatible/go.mod h1:uqqh8zWWbv1HBMNONnaR/tNboyR3/BZd58JJSHlUSCU=
 github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c h1:+mdjkGKdHQG3305AYmdv1U2eRNDiU2ErMBj1gwrq8eQ=
