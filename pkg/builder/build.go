@@ -36,10 +36,14 @@ func NewBuilder[T any](provider string, helpURL string) *Builder[T] {
 
 // Build builds the high-level API, must be run after BuildAPI as aliases might use API flags.
 func (b *Builder[T]) Build(rootCmd, apiCmd *cobra.Command) {
-	rootCmd.AddGroup(&cobra.Group{
-		ID:    "service",
-		Title: "service",
-	})
+	if !lo.ContainsBy(rootCmd.Groups(), func(item *cobra.Group) bool {
+		return item.ID == "service"
+	}) {
+		rootCmd.AddGroup(&cobra.Group{
+			ID:    "service",
+			Title: "service",
+		})
+	}
 	if apiCmd == nil {
 		apiCmd, _ = lo.Find(rootCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "api" })
 	}
