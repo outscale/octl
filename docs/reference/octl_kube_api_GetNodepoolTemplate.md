@@ -1,10 +1,10 @@
 ## octl kube api GetNodepoolTemplate
 
-request returning *TemplateResponseNodepool
+Retrieves the default node pool template, including predefined configurations for node scaling, storage, and upgrade strategies.
 
 ### Synopsis
 
-request returning *TemplateResponseNodepool
+Retrieves the default node pool template, including predefined configurations for node scaling, storage, and upgrade strategies. Returns a JSON response containing the request context and template details, such as node count, node type, availability zones, volume specifications, upgrade strategy, and auto-healing settings.
 
 ```
 octl kube api GetNodepoolTemplate [flags]

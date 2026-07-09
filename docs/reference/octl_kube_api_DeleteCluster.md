@@ -1,10 +1,10 @@
 ## octl kube api DeleteCluster
 
-request returning *DetailResponse
+Deletes a specific cluster by its ID.
 
 ### Synopsis
 
-request returning *DetailResponse
+Deletes a specific cluster by its ID. Returns confirmation of the deletion.
 
 ```
 octl kube api DeleteCluster id [flags]

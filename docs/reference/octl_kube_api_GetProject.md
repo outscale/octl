@@ -1,10 +1,10 @@
 ## octl kube api GetProject
 
-request returning *ProjectResponse
+Retrieves detailed information about a specific project by its ID.
 
 ### Synopsis
 
-request returning *ProjectResponse
+Retrieves detailed information about a specific project by its ID. Returns the details of the project if found.
 
 ```
 octl kube api GetProject id [flags]

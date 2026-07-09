@@ -1,10 +1,10 @@
 ## octl kube api GetCPSubregions
 
-request returning *CPSubregionsResponse
+Retrieves the available subregions for cluster deployment.
 
 ### Synopsis
 
-request returning *CPSubregionsResponse
+Retrieves the available subregions for cluster deployment. Returns a list of supported subregions for cluster creation.
 
 ```
 octl kube api GetCPSubregions [flags]

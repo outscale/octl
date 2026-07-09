@@ -1,10 +1,10 @@
 ## octl kube api GetControlPlanePlans
 
-request returning *ControlPlanesResponse
+Retrieves the available control plane plans for cluster deployment.
 
 ### Synopsis
 
-request returning *ControlPlanesResponse
+Retrieves the available control plane plans for cluster deployment. Returns a list of supported control plane plans for cluster creation or upgrades.
 
 ```
 octl kube api GetControlPlanePlans [flags]

@@ -1,10 +1,10 @@
 ## octl kube api GetClusterTemplate
 
-request returning *TemplateResponseClusterInputTemplate
+Retrieves the default cluster template, including predefined control plane configurations, networking settings, and maintenance schedules.
 
 ### Synopsis
 
-request returning *TemplateResponseClusterInputTemplate
+Retrieves the default cluster template, including predefined control plane configurations, networking settings, and maintenance schedules. Returns a JSON response containing the request context and template details, such as control plane type, CIDR ranges for pods and services, admission flags, multi-AZ support, Kubernetes version, subregions, and scheduled automatic maintenance settings.
 
 ```
 octl kube api GetClusterTemplate [flags]

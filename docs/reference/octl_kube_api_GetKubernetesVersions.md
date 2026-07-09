@@ -1,10 +1,10 @@
 ## octl kube api GetKubernetesVersions
 
-request returning *KubernetesVersionsResponse
+Retrieves the available Kubernetes versions for cluster creation or upgrades.
 
 ### Synopsis
 
-request returning *KubernetesVersionsResponse
+Retrieves the available Kubernetes versions for cluster creation or upgrades. Returns a list of supported Kubernetes versions.
 
 ```
 octl kube api GetKubernetesVersions [flags]

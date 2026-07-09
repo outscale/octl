@@ -1,10 +1,10 @@
 ## octl kube api GetKubeconfigWithPubkeyNACL
 
-request returning *KubeconfigResponse
+Retrieves the kubeconfig for a specific cluster by its ID with optional NaCl public key encryption.
 
 ### Synopsis
 
-request returning *KubeconfigResponse
+Retrieves the kubeconfig for a specific cluster by its ID with optional NaCl public key encryption. Optionally, you can specify a user, group, and TTL (time-to-live) for the kubeconfig. If the x_encrypt_nacl header is provided, the kubeconfig will be encrypted using the given NaCl public key. Returns the kubeconfig details as a dictionary.
 
 ```
 octl kube api GetKubeconfigWithPubkeyNACL id [flags]

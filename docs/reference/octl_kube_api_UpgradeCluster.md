@@ -1,10 +1,10 @@
 ## octl kube api UpgradeCluster
 
-request returning *ClusterResponse
+Upgrades a specific cluster by its ID to the latest available version.
 
 ### Synopsis
 
-request returning *ClusterResponse
+Upgrades a specific cluster by its ID to the latest available version. Returns the updated cluster details after the upgrade process is completed.
 
 ```
 octl kube api UpgradeCluster id [flags]

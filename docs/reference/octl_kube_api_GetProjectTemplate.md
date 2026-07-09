@@ -1,10 +1,10 @@
 ## octl kube api GetProjectTemplate
 
-request returning *TemplateResponseProjectInput
+Retrieves the default project template, including predefined network configurations, region, and metadata.
 
 ### Synopsis
 
-request returning *TemplateResponseProjectInput
+Retrieves the default project template, including predefined network configurations, region, and metadata. Returns a JSON response containing the request context and template details, such as CIDR block, project name, region, description, and tags.
 
 ```
 octl kube api GetProjectTemplate [flags]

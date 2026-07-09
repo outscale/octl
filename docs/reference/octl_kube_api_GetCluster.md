@@ -1,10 +1,10 @@
 ## octl kube api GetCluster
 
-request returning *ClusterResponse
+Retrieves detailed information about a specific cluster by its ID.
 
 ### Synopsis
 
-request returning *ClusterResponse
+Retrieves detailed information about a specific cluster by its ID. Returns the cluster details if found.
 
 ```
 octl kube api GetCluster id [flags]

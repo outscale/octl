@@ -6,7 +6,7 @@ alias for api DeleteCluster  id
 
 > *alias for api DeleteCluster  id*
 
-request returning *DetailResponse
+Deletes a specific cluster by its ID. Returns confirmation of the deletion.
 
 ```
 octl kube cluster delete id [id]... [flags]

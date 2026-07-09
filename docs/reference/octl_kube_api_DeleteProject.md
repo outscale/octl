@@ -1,10 +1,10 @@
 ## octl kube api DeleteProject
 
-request returning *DetailResponse
+Deletes a specific project by its ID.
 
 ### Synopsis
 
-request returning *DetailResponse
+Deletes a specific project by its ID. Returns a confirmation of the project deletion.
 
 ```
 octl kube api DeleteProject id [flags]

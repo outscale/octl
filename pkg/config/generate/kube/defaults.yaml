@@ -49,22 +49,30 @@ contents:
   ListAllClusters:
     entity: cluster
     content: Clusters
+    group: Clusters
   ListClustersByProjectID:
     entity: cluster
     content: Clusters
+    group: Clusters
   GetProjectNets:
     entity: net
+    group: Projects
   GetProjectQuotas:
     entity: quota
+    group: Projects
   GetQuotas:
     entity: quota
+    group: Quotas
   GetProjectPublicIps:
     entity: publicip
+    group: Projects
   GetProjectSnapshots:
     entity: publicip
+    group: Projects
   GetKubeconfig:
     content: Cluster.Data.Kubeconfig
     entity: kubeconfig
+    group: Clusters
 aliases:
 - entity: project
   use: clusters project_id

@@ -1,10 +1,10 @@
 ## octl kube api GetNetPeeringAcceptanceTemplate
 
-request returning *TemplateResponseNetPeeringAcceptance
+NetPeering Acceptance manifest
 
 ### Synopsis
 
-request returning *TemplateResponseNetPeeringAcceptance
+NetPeering Acceptance manifest
 
 ```
 octl kube api GetNetPeeringAcceptanceTemplate [flags]

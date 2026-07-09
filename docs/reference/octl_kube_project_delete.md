@@ -6,7 +6,7 @@ alias for api DeleteProject  id
 
 > *alias for api DeleteProject  id*
 
-request returning *DetailResponse
+Deletes a specific project by its ID. Returns a confirmation of the project deletion.
 
 ```
 octl kube project delete id [id]... [flags]

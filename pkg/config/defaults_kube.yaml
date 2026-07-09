@@ -9,65 +9,87 @@ contents:
     group: Projects
   DeleteCluster:
     entity: cluster
+    group: Clusters
   DeleteProject:
     entity: project
+    group: Projects
   GetCPSubregions:
     entity: cpsubregion
+    group: Clusters
   GetCluster:
     content: Cluster
     entity: cluster
+    group: Clusters
   GetClusterTemplate:
     content: Template
     entity: clustertemplate
+    group: Templates
   GetControlPlanePlans:
     entity: controlplaneplan
+    group: Clusters
   GetKubeconfig:
     content: Cluster.Data.Kubeconfig
     entity: kubeconfig
+    group: Clusters
   GetKubeconfigWithPubkeyNACL:
     content: Cluster
     entity: kubeconfigwithpubkeynacl
+    group: Clusters
   GetKubernetesVersions:
     entity: kubernetesversion
+    group: Clusters
   GetNetPeeringAcceptanceTemplate:
     content: Template
     entity: netpeeringacceptancetemplate
+    group: Templates
   GetNetPeeringRequestTemplate:
     content: Template
     entity: netpeeringrequesttemplate
+    group: Templates
   GetNodepoolTemplate:
     content: Template
     entity: nodepooltemplate
+    group: Templates
   GetProject:
     content: Project
     entity: project
+    group: Projects
   GetProjectNets:
     content: Nets
     entity: net
+    group: Projects
   GetProjectPublicIps:
     content: PublicIps
     entity: publicip
+    group: Projects
   GetProjectQuotas:
     content: Project
     entity: quota
+    group: Projects
   GetProjectSnapshots:
     content: Snapshots
     entity: publicip
+    group: Projects
   GetProjectTemplate:
     content: Template
     entity: projecttemplate
+    group: Templates
   GetQuotas:
     content: Quotas
     entity: quota
+    group: Quotas
   ListAllClusters:
     content: Clusters
     entity: cluster
+    group: Clusters
   ListClustersByProjectID:
     content: Clusters
     entity: cluster
+    group: Clusters
   ListProjects:
     content: Projects
     entity: project
+    group: Projects
   UpdateCluster:
     content: Cluster
     entity: cluster
@@ -78,6 +100,7 @@ contents:
     group: Projects
   UpgradeCluster:
     entity: cluster
+    group: Clusters
 entities:
   cluster:
     columns:
@@ -592,39 +615,39 @@ spec:
     CreateProject:
       help: Creates a new project with the provided details. The request must include the project data in the request body. Returns the details of the created project.
     DeleteCluster:
-      help: request returning *DetailResponse
+      help: Deletes a specific cluster by its ID. Returns confirmation of the deletion.
     DeleteProject:
-      help: request returning *DetailResponse
+      help: Deletes a specific project by its ID. Returns a confirmation of the project deletion.
     GetCPSubregions:
-      help: request returning *CPSubregionsResponse
+      help: Retrieves the available subregions for cluster deployment. Returns a list of supported subregions for cluster creation.
     GetCluster:
-      help: request returning *ClusterResponse
+      help: Retrieves detailed information about a specific cluster by its ID. Returns the cluster details if found.
     GetClusterTemplate:
-      help: request returning *TemplateResponseClusterInputTemplate
+      help: Retrieves the default cluster template, including predefined control plane configurations, networking settings, and maintenance schedules. Returns a JSON response containing the request context and template details, such as control plane type, CIDR ranges for pods and services, admission flags, multi-AZ support, Kubernetes version, subregions, and scheduled automatic maintenance settings.
     GetControlPlanePlans:
-      help: request returning *ControlPlanesResponse
+      help: Retrieves the available control plane plans for cluster deployment. Returns a list of supported control plane plans for cluster creation or upgrades.
     GetKubeconfigWithPubkeyNACL:
-      help: request returning *KubeconfigResponse
+      help: Retrieves the kubeconfig for a specific cluster by its ID with optional NaCl public key encryption. Optionally, you can specify a user, group, and TTL (time-to-live) for the kubeconfig. If the x_encrypt_nacl header is provided, the kubeconfig will be encrypted using the given NaCl public key. Returns the kubeconfig details as a dictionary.
     GetKubernetesVersions:
-      help: request returning *KubernetesVersionsResponse
+      help: Retrieves the available Kubernetes versions for cluster creation or upgrades. Returns a list of supported Kubernetes versions.
     GetNetPeeringAcceptanceTemplate:
-      help: request returning *TemplateResponseNetPeeringAcceptance
+      help: NetPeering Acceptance manifest
     GetNetPeeringRequestTemplate:
-      help: request returning *TemplateResponseNetPeeringRequest
+      help: NetPeering Request manifest
     GetNodepoolTemplate:
-      help: request returning *TemplateResponseNodepool
+      help: Retrieves the default node pool template, including predefined configurations for node scaling, storage, and upgrade strategies. Returns a JSON response containing the request context and template details, such as node count, node type, availability zones, volume specifications, upgrade strategy, and auto-healing settings.
     GetProject:
-      help: request returning *ProjectResponse
+      help: Retrieves detailed information about a specific project by its ID. Returns the details of the project if found.
     GetProjectTemplate:
-      help: request returning *TemplateResponseProjectInput
+      help: Retrieves the default project template, including predefined network configurations, region, and metadata. Returns a JSON response containing the request context and template details, such as CIDR block, project name, region, description, and tags.
     ListProjects:
-      help: request returning *ProjectResponseList
+      help: Retrieves a list of all projects with optional filters for name, status, CIDR, and deletion status. Returns a list of matching projects based on the specified filters.
     UpdateCluster:
       help: Updates the configuration of an existing cluster by its ID. The request must include the updated cluster details in the request body. Returns the updated cluster information
     UpdateProject:
       help: Updates the details of an existing project by its ID. The request must include the updated project data in the request body. Returns the updated project information.
     UpgradeCluster:
-      help: request returning *ClusterResponse
+      help: Upgrades a specific cluster by its ID to the latest available version. Returns the updated cluster details after the upgrade process is completed.
   attributes:
     AdmissionFlags.AppliedAdmissionPlugins:
       help: List of admission plugins currently applied to the cluster
