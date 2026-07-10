@@ -279,6 +279,13 @@ aliases:
   - '%0'
   - --output
   - text
+  flags:
+  - name: group
+    alias_to: Group
+  - name: user
+    alias_to: User
+  - name: ttl
+    alias_to: Ttl
 - entity: quota
   use: describe
   aliases:
