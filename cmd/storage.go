@@ -8,9 +8,11 @@ package cmd
 import (
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"reflect"
 
+	v4 "github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/gabriel-vasile/mimetype"
 	"github.com/outscale/octl/pkg/builder"
@@ -51,8 +53,12 @@ func init() {
 	objectCmd, _ := lo.Find(storageCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "object" })
 	objectCmd.AddCommand(presignCmd)
 	presignCmd.Flags().String("bucket", "", "bucket")
-	presignCmd.Flags().Duration("expires", 0, "URL expiration (e.g. 30s, 1h)")
 	_ = presignCmd.MarkFlagRequired("bucket")
+	presignCmd.Flags().Duration("expires", 0, "URL expiration (e.g. 30s, 1h)")
+	presignCmd.Flags().String("method", http.MethodGet, "Method used to access the presigned URL (GET, PUT, DELETE)")
+	_ = presignCmd.RegisterFlagCompletionFunc("method", func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
+		return []cobra.Completion{http.MethodGet, http.MethodPut, http.MethodDelete}, cobra.ShellCompDirectiveDefault
+	})
 
 	runner.RegisterHook("auto-content-type", guessContentType)
 }
@@ -92,10 +98,25 @@ func presign(cmd *cobra.Command, args []string) {
 	}
 	key := args[0]
 	bucket, _ := cmd.Flags().GetString("bucket")
-	req, err := cl.PresignGetObject(cmd.Context(), &s3.GetObjectInput{
-		Key:    new(key),
-		Bucket: new(bucket),
-	}, opts...)
+	method, _ := cmd.Flags().GetString("method")
+	var req *v4.PresignedHTTPRequest
+	switch method {
+	case http.MethodGet:
+		req, err = cl.PresignGetObject(cmd.Context(), &s3.GetObjectInput{
+			Key:    new(key),
+			Bucket: new(bucket),
+		}, opts...)
+	case http.MethodPut:
+		req, err = cl.PresignPutObject(cmd.Context(), &s3.PutObjectInput{
+			Key:    new(key),
+			Bucket: new(bucket),
+		}, opts...)
+	case http.MethodDelete:
+		req, err = cl.PresignDeleteObject(cmd.Context(), &s3.DeleteObjectInput{
+			Key:    new(key),
+			Bucket: new(bucket),
+		}, opts...)
+	}
 	if err != nil {
 		messages.ExitErr(err)
 	}
