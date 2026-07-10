@@ -449,6 +449,8 @@ github.com/outscale/goutils/oks v0.0.1 h1:7i+a7iD9VlYgj8sTz7Na+9GYtW3gsbpDrmykYA
 github.com/outscale/goutils/oks v0.0.1/go.mod h1:K9VSlCA2l6MjA31TD2c3FLceR9z48qf7NO3aKxF8Nm0=
 github.com/outscale/goutils/sdk v0.0.4 h1:hm+LZyeHUBYj066MjVVYYEPnlZRQSv4v74TZgfIQkRM=
 github.com/outscale/goutils/sdk v0.0.4/go.mod h1:LiXmAIA3CAXCdanEARKQ3Q/Lb8n8dKeGSbPRxIe43kc=
+github.com/outscale/goutils/sdk v0.0.5 h1:UVu7uC38VOSCPqeCORsw1rKWaoHrsv+TTp6TGUHenjo=
+github.com/outscale/goutils/sdk v0.0.5/go.mod h1:LiXmAIA3CAXCdanEARKQ3Q/Lb8n8dKeGSbPRxIe43kc=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.3.0.20260709150001-abf6e77bc1d0 h1:pcjUB56ldZ+4AvJcO1sEz7oKJsU2GXWsxjmlffG5siE=
 github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.3.0.20260709150001-abf6e77bc1d0/go.mod h1:Yi0j2XAZ0/8g0ObVFofMSL5+IuNIDp/AiEI6gXc7txc=
 github.com/peterbourgon/diskv v2.0.1+incompatible h1:UBdAOUP5p4RWqPBg048CAvpKN+vxiaj6gdUUzhl4XmI=
