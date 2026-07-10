@@ -24,7 +24,7 @@ octl iaas keypair create [flags]
 
 ```
   -h, --help                    help for create
-      --name string             A unique name for the keypair, with a maximum length of 255 [ASCII printable characters](https://en.wikipedia.org/wiki/ASCII#Printable_characters).
+      --name string             [REQUIRED] A unique name for the keypair, with a maximum length of 255 [ASCII printable characters](https://en.wikipedia.org/wiki/ASCII#Printable_characters).
       --public-key base64File   The file storing the public key to import in your account, if you are importing an existing keypair.
 ```
 

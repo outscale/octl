@@ -18,7 +18,7 @@ octl iaas linkedpolicy list [flags]
       --first-item int       The item starting the list of policies requested.
   -h, --help                 help for list
       --path-prefix string   The path prefix of the policies.
-      --user-name string     The name of the user the policies are linked to.
+      --user-name string     [REQUIRED] The name of the user the policies are linked to.
 ```
 
 ### Options inherited from parent commands

@@ -9,14 +9,14 @@ octl storage api GetObject [flags]
 ### Options
 
 ```
-      --Bucket string                       The bucket name containing the object.
+      --Bucket string                       [REQUIRED] The bucket name containing the object.
       --ChecksumMode string                 To retrieve the checksum, this mode must be enabled.
       --ExpectedBucketOwner string          The account ID of the expected bucket owner.
       --IfMatch string                      Return the object only if its entity tag (ETag) is the same as the one specified in this header; otherwise, return a 412 Precondition Failed error.
       --IfModifiedSince osctime             Return the object only if it has been modified since the specified time; otherwise, return a 304 Not Modified error.
       --IfNoneMatch string                  Return the object only if its entity tag (ETag) is different from the one specified in this header; otherwise, return a 304 Not Modified error.
       --IfUnmodifiedSince osctime           Return the object only if it has not been modified since the specified time; otherwise, return a 412 Precondition Failed error.
-      --Key string                          of the object to get.
+      --Key string                          [REQUIRED] of the object to get.
       --PartNumber int32                    Part number of the object being read.
       --Range string                        Downloads the specified byte range of an object.
       --RequestPayer string                 Confirms that the requester knows that they will be charged for the request.

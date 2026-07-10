@@ -15,7 +15,7 @@ octl storage object tagging delete key [flags]
 ### Options
 
 ```
-      --bucket string   The bucket name containing the objects from which to remove the tags.
+      --bucket string   [REQUIRED] The bucket name containing the objects from which to remove the tags.
   -h, --help            help for delete
 ```
 

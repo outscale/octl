@@ -10,7 +10,7 @@ octl storage api CreateMultipartUpload [flags]
 
 ```
       --ACL string                          The canned ACL to apply to the object.
-      --Bucket string                       The name of the bucket where the multipart upload is initiated and where the object is uploaded.
+      --Bucket string                       [REQUIRED] The name of the bucket where the multipart upload is initiated and where the object is uploaded.
       --BucketKeyEnabled                    Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using Key Management Service (KMS) keys (SSE-KMS).
       --CacheControl string                 Specifies caching behavior along the request/reply chain.
       --ChecksumAlgorithm string            Indicates the algorithm that you want Amazon S3 to use to create the checksum for the object.
@@ -24,7 +24,7 @@ octl storage api CreateMultipartUpload [flags]
       --GrantRead string                    Specify access permissions explicitly to allow grantee to read the object data and its metadata.
       --GrantReadACP string                 Specify access permissions explicitly to allows grantee to read the object ACL.
       --GrantWriteACP string                Specify access permissions explicitly to allows grantee to allow grantee to write the ACL for the applicable object.
-      --Key string                          Object key for which the multipart upload is to be initiated.
+      --Key string                          [REQUIRED] Object key for which the multipart upload is to be initiated.
       --Metadata stringToString             A map of metadata to store with the object in S3. (default [])
       --ObjectLockLegalHoldStatus string    Specifies whether you want to apply a legal hold to the uploaded object.
       --ObjectLockMode string               Specifies the Object Lock mode that you want to apply to the uploaded object.

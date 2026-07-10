@@ -9,7 +9,7 @@ octl storage api DeleteBucketCors [flags]
 ### Options
 
 ```
-      --Bucket string                Specifies the bucket whose cors configuration is being deleted.
+      --Bucket string                [REQUIRED] Specifies the bucket whose cors configuration is being deleted.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for DeleteBucketCors
 ```

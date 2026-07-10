@@ -19,7 +19,7 @@ octl iaas virtualgateway create [flags]
 ### Options
 
 ```
-      --connection-type string   The type of VPN connection supported by the virtual gateway (always ipsec.1).
+      --connection-type string   [REQUIRED] The type of VPN connection supported by the virtual gateway (always ipsec.1).
   -h, --help                     help for create
 ```
 

@@ -19,7 +19,7 @@ octl kube project create [flags]
       --description string        Optional description of the project
       --disable-api-termination   Flag to prevent accidental project deletion
   -h, --help                      help for create
-      --name string               Unique name for the project, must start with a letter and contain only lowercase letters, numbers, or hyphens
+      --name string               [REQUIRED] Unique name for the project, must start with a letter and contain only lowercase letters, numbers, or hyphens
       --quirk strings             
       --region string             Region where the project is deployed
 ```

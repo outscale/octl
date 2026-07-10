@@ -18,7 +18,7 @@ octl iaas internetservice unlink service_id [flags]
 
 ```
   -h, --help            help for unlink
-      --net-id string   The ID of the Net from which you want to detach the internet service.
+      --net-id string   [REQUIRED] The ID of the Net from which you want to detach the internet service.
 ```
 
 ### Options inherited from parent commands

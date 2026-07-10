@@ -19,7 +19,7 @@ octl iaas ca create [flags]
 ```
       --description string   The description of the CA.
   -h, --help                 help for create
-      --pem string           The CA in PEM format.
+      --pem string           [REQUIRED] The CA in PEM format.
 ```
 
 ### Options inherited from parent commands

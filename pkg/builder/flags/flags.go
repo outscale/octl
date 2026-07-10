@@ -97,13 +97,17 @@ func (b *Builder) Build(fs *FlagSet, arg reflect.Type, prefix string, allowRequi
 		if spec.Required {
 			required = spec.Required
 		}
+		help := spec.Help
+		if required {
+			help = RequiredHelp(help)
+		}
 		switch t.Kind() {
 		case reflect.Bool, reflect.String, reflect.Int, reflect.Int32, reflect.Int64:
 			f := Flag{
 				Name:      b.normalize(flagName),
 				FieldPath: flagName,
 				Kind:      t.Kind(),
-				Help:      spec.Help,
+				Help:      help,
 				Required:  required,
 				Slice:     slice,
 			}
@@ -121,7 +125,7 @@ func (b *Builder) Build(fs *FlagSet, arg reflect.Type, prefix string, allowRequi
 					Name:      b.normalize(flagName),
 					FieldPath: flagName,
 					Kind:      reflect.Map,
-					Help:      spec.Help,
+					Help:      help,
 					Required:  required,
 				}
 				fs.Add(f)
@@ -134,7 +138,7 @@ func (b *Builder) Build(fs *FlagSet, arg reflect.Type, prefix string, allowRequi
 					Name:      b.normalize(flagName),
 					FieldPath: flagName,
 					Kind:      reflect.String,
-					Help:      spec.Help,
+					Help:      help,
 					Required:  required,
 					Slice:     slice,
 					FlagValue: flags.NewReaderValue(),
@@ -148,7 +152,7 @@ func (b *Builder) Build(fs *FlagSet, arg reflect.Type, prefix string, allowRequi
 					Name:      b.normalize(flagName),
 					FieldPath: flagName,
 					Kind:      reflect.String,
-					Help:      spec.Help,
+					Help:      help,
 					Required:  required,
 					Slice:     slice,
 					FlagValue: flags.NewTimeValue(),
@@ -159,7 +163,7 @@ func (b *Builder) Build(fs *FlagSet, arg reflect.Type, prefix string, allowRequi
 					Name:      b.normalize(flagName),
 					FieldPath: flagName,
 					Kind:      reflect.String,
-					Help:      spec.Help,
+					Help:      help,
 					Required:  required,
 					Slice:     slice,
 				}

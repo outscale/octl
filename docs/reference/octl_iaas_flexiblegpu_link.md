@@ -22,7 +22,7 @@ octl iaas flexiblegpu link fgpu_id [flags]
 
 ```
   -h, --help           help for link
-      --vm-id string   The ID of the VM you want to attach the fGPU to.
+      --vm-id string   [REQUIRED] The ID of the VM you want to attach the fGPU to.
 ```
 
 ### Options inherited from parent commands

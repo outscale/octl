@@ -20,7 +20,7 @@ octl iaas routetable create [flags]
 
 ```
   -h, --help            help for create
-      --net-id string   The ID of the Net for which you want to create a route table.
+      --net-id string   [REQUIRED] The ID of the Net for which you want to create a route table.
 ```
 
 ### Options inherited from parent commands

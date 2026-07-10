@@ -15,7 +15,7 @@ octl iaas producttype create [flags]
 ### Options
 
 ```
-      --description string   The description of the product type.
+      --description string   [REQUIRED] The description of the product type.
   -h, --help                 help for create
       --vendor string        The vendor of the product type.
 ```

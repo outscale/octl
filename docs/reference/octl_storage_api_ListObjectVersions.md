@@ -9,7 +9,7 @@ octl storage api ListObjectVersions [flags]
 ### Options
 
 ```
-      --Bucket string                      The bucket name that contains the objects.
+      --Bucket string                      [REQUIRED] The bucket name that contains the objects.
       --Delimiter string                   A delimiter is a character that you specify to group keys.
       --EncodingType string                Encoding type used by Amazon S3 to encode the [object keys] in the response.
       --ExpectedBucketOwner string         The account ID of the expected bucket owner.

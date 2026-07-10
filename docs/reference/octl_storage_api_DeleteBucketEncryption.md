@@ -9,7 +9,7 @@ octl storage api DeleteBucketEncryption [flags]
 ### Options
 
 ```
-      --Bucket string                The name of the bucket containing the server-side encryption configuration to delete.
+      --Bucket string                [REQUIRED] The name of the bucket containing the server-side encryption configuration to delete.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for DeleteBucketEncryption
 ```

@@ -15,7 +15,7 @@ octl storage object describe key [flags]
 ### Options
 
 ```
-      --bucket string   The name of the bucket that contains the object.
+      --bucket string   [REQUIRED] The name of the bucket that contains the object.
   -h, --help            help for describe
 ```
 

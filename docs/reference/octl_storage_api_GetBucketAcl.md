@@ -9,7 +9,7 @@ octl storage api GetBucketAcl [flags]
 ### Options
 
 ```
-      --Bucket string                Specifies the S3 bucket whose ACL is being requested.
+      --Bucket string                [REQUIRED] Specifies the S3 bucket whose ACL is being requested.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for GetBucketAcl
 ```

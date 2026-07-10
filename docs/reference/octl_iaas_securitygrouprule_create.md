@@ -36,10 +36,10 @@ octl iaas securitygrouprule create [flags]
 
 ```
       --account-id-to-link string                               The OUTSCALE account ID that owns the source or destination security group specified in the SecurityGroupNameToLink parameter.
-      --flow string                                             The direction of the flow: Inbound or Outbound.
+      --flow string                                             [REQUIRED] The direction of the flow: Inbound or Outbound.
       --from-port-range int                                     The beginning of the port range for the TCP and UDP protocols, or an ICMP type number.
   -h, --help                                                    help for create
-      --id string                                               The ID of the security group for which you want to create a rule.
+      --id string                                               [REQUIRED] The ID of the security group for which you want to create a rule.
       --ip-protocol string                                      The IP protocol name (tcp, udp, icmp, or -1 for all protocols).
       --ip-range string                                         The IP range for the security group rule, in CIDR notation (for example, 10.0.0.0/16).
       --name-to-link string                                     The ID of a source or destination security group that you want to link to the security group of the rule.

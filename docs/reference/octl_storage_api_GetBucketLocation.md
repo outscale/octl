@@ -9,7 +9,7 @@ octl storage api GetBucketLocation [flags]
 ### Options
 
 ```
-      --Bucket string                The name of the bucket for which to get the location.
+      --Bucket string                [REQUIRED] The name of the bucket for which to get the location.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for GetBucketLocation
 ```

@@ -20,7 +20,7 @@ octl iaas net create [flags]
 
 ```
   -h, --help              help for create
-      --ip-range string   The IP range for the Net, in CIDR notation (for example, 10.0.0.0/16).
+      --ip-range string   [REQUIRED] The IP range for the Net, in CIDR notation (for example, 10.0.0.0/16).
       --tenancy string    The tenancy options for the VMs: - default if a VM created in a Net can be launched with any tenancy.
 ```
 

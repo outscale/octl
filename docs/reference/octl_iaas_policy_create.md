@@ -18,9 +18,9 @@ octl iaas policy create [flags]
 
 ```
       --description string    A description for the policy.
-      --document fileOrJson   Either a file storing the policy document or the policy document (in JSON format).
+      --document fileOrJson   [REQUIRED] Either a file storing the policy document or the policy document (in JSON format).
   -h, --help                  help for create
-      --name string           The name of the policy.
+      --name string           [REQUIRED] The name of the policy.
       --path string           The path of the policy.
 ```
 

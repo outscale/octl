@@ -16,7 +16,7 @@ octl storage bucket create [flags]
 
 ```
       --acl string                       The canned ACL to apply to the bucket.
-      --bucket string                    The name of the bucket to create.
+      --bucket string                    [REQUIRED] The name of the bucket to create.
       --grant-full-control string        Allows grantee the read, write, read ACP, and write ACP permissions on the bucket.
       --grant-read string                Allows grantee to list the objects in the bucket.
       --grant-read-acp string            Allows grantee to read the bucket ACL.

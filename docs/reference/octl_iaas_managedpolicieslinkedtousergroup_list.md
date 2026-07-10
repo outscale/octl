@@ -19,7 +19,7 @@ octl iaas managedpolicieslinkedtousergroup list [flags]
   -h, --help                     help for list
       --path-prefix string       The path prefix of the groups.
       --user-group-id strings    The IDs of the user groups.
-      --user-group-name string   The name of the group.
+      --user-group-name string   [REQUIRED] The name of the group.
 ```
 
 ### Options inherited from parent commands

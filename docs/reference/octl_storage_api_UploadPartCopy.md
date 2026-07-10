@@ -9,8 +9,8 @@ octl storage api UploadPartCopy [flags]
 ### Options
 
 ```
-      --Bucket string                           The bucket name.
-      --CopySource string                       Specifies the source object for the copy operation.
+      --Bucket string                           [REQUIRED] The bucket name.
+      --CopySource string                       [REQUIRED] Specifies the source object for the copy operation.
       --CopySourceIfMatch string                Copies the object if its entity tag (ETag) matches the specified tag.
       --CopySourceIfModifiedSince osctime       Copies the object if it has been modified since the specified time.
       --CopySourceIfNoneMatch string            Copies the object if its entity tag (ETag) is different than the specified ETag.
@@ -21,13 +21,13 @@ octl storage api UploadPartCopy [flags]
       --CopySourceSSECustomerKeyMD5 string      Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321.
       --ExpectedBucketOwner string              The account ID of the expected destination bucket owner.
       --ExpectedSourceBucketOwner string        The account ID of the expected source bucket owner.
-      --Key string                              Object key for which the multipart upload was initiated.
-      --PartNumber int32                        Part number of part being copied.
+      --Key string                              [REQUIRED] Object key for which the multipart upload was initiated.
+      --PartNumber int32                        [REQUIRED] Part number of part being copied.
       --RequestPayer string                     Confirms that the requester knows that they will be charged for the request.
       --SSECustomerAlgorithm string             Specifies the algorithm to use when encrypting the object (for example, AES256).
       --SSECustomerKey string                   Specifies the customer-provided encryption key for Amazon S3 to use in encrypting data.
       --SSECustomerKeyMD5 string                Specifies the 128-bit MD5 digest of the encryption key according to RFC 1321.
-      --UploadId string                         Upload ID identifying the multipart upload whose part is being copied.
+      --UploadId string                         [REQUIRED] Upload ID identifying the multipart upload whose part is being copied.
   -h, --help                                    help for UploadPartCopy
 ```
 

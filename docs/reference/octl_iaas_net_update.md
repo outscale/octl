@@ -15,7 +15,7 @@ octl iaas net update net_id [net_id]... [flags]
 ### Options
 
 ```
-      --dhcp-options-set-id string   The ID of the DHCP options set (or default if you want to associate the default one).
+      --dhcp-options-set-id string   [REQUIRED] The ID of the DHCP options set (or default if you want to associate the default one).
   -h, --help                         help for update
 ```
 

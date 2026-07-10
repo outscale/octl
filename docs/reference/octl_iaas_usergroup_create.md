@@ -18,7 +18,7 @@ octl iaas usergroup create [flags]
 
 ```
   -h, --help          help for create
-      --name string   The name of the group.
+      --name string   [REQUIRED] The name of the group.
       --path string   The path to the group.
 ```
 

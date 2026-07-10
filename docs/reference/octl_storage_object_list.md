@@ -15,7 +15,7 @@ octl storage object list [flags]
 ### Options
 
 ```
-      --bucket string                       Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format Bucket-name.s3express-zone-id.region-code.amazonaws.com .
+      --bucket string                       [REQUIRED] Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format Bucket-name.s3express-zone-id.region-code.amazonaws.com .
       --delimiter string                    A delimiter is a character that you use to group keys.
       --encoding-type string                Encoding type used by Amazon S3 to encode the [object keys] in the response.
       --expected-bucket-owner string        The account ID of the expected bucket owner.

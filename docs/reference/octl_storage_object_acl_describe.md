@@ -15,7 +15,7 @@ octl storage object acl describe key [flags]
 ### Options
 
 ```
-      --bucket string   The bucket name that contains the object for which to get the ACL information.
+      --bucket string   [REQUIRED] The bucket name that contains the object for which to get the ACL information.
   -h, --help            help for describe
 ```
 

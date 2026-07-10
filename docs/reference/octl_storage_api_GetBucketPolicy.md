@@ -9,7 +9,7 @@ octl storage api GetBucketPolicy [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket name to get the bucket policy for.
+      --Bucket string                [REQUIRED] The bucket name to get the bucket policy for.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for GetBucketPolicy
 ```

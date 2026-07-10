@@ -16,7 +16,7 @@ octl iaas policyversion describe policy_orn version [flags]
 
 ```
   -h, --help             help for describe
-      --version string   The ID of the policy version.
+      --version string   [REQUIRED] The ID of the policy version.
 ```
 
 ### Options inherited from parent commands

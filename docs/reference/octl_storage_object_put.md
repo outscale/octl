@@ -17,7 +17,7 @@ octl storage object put key [key]... [flags]
 ```
       --acl string                         The canned ACL to apply to the object.
       --body streamedFile                  Object data.
-      --bucket string                      The bucket name to which the PUT action was initiated.
+      --bucket string                      [REQUIRED] The bucket name to which the PUT action was initiated.
       --bucket-key-enabled                 Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using Key Management Service (KMS) keys (SSE-KMS).
       --cache-control string               Can be used to specify caching behavior along the request/reply chain.
       --content-disposition string         Specifies presentational information for the object.

@@ -16,7 +16,7 @@ octl iaas dedicatedgroup update dedicated_group_id [dedicated_group_id]... [flag
 
 ```
   -h, --help          help for update
-      --name string   The new name of the dedicated group.
+      --name string   [REQUIRED] The new name of the dedicated group.
 ```
 
 ### Options inherited from parent commands

@@ -17,7 +17,7 @@ octl iaas usergrouppolicy list [flags]
 ```
       --first-item int           The item starting the list of policies requested.
   -h, --help                     help for list
-      --user-group-name string   The name of the group.
+      --user-group-name string   [REQUIRED] The name of the group.
       --user-group-path string   The path to the group.
 ```
 

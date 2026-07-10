@@ -17,10 +17,10 @@ octl iaas dedicatedgroup create [flags]
 ### Options
 
 ```
-      --cpu-generation int   The processor generation for the VMs in the dedicated group (for example, 4).
+      --cpu-generation int   [REQUIRED] The processor generation for the VMs in the dedicated group (for example, 4).
   -h, --help                 help for create
-      --name string          A name for the dedicated group.
-      --subregion string     The Subregion in which you want to create the dedicated group.
+      --name string          [REQUIRED] A name for the dedicated group.
+      --subregion string     [REQUIRED] The Subregion in which you want to create the dedicated group.
 ```
 
 ### Options inherited from parent commands

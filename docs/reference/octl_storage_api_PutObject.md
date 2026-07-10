@@ -11,7 +11,7 @@ octl storage api PutObject [flags]
 ```
       --ACL string                          The canned ACL to apply to the object.
       --Body streamedFile                   Object data.
-      --Bucket string                       The bucket name to which the PUT action was initiated.
+      --Bucket string                       [REQUIRED] The bucket name to which the PUT action was initiated.
       --BucketKeyEnabled                    Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using Key Management Service (KMS) keys (SSE-KMS).
       --CacheControl string                 Can be used to specify caching behavior along the request/reply chain.
       --ChecksumAlgorithm string            Indicates the algorithm used to create the checksum for the object when you use the SDK.
@@ -33,7 +33,7 @@ octl storage api PutObject [flags]
       --GrantWriteACP string                Allows grantee to write the ACL for the applicable object.
       --IfMatch string                      Uploads the object only if the ETag (entity tag) value provided during the WRITE operation matches the ETag of the object in S3.
       --IfNoneMatch string                  Uploads the object only if the object key name does not already exist in the bucket specified.
-      --Key string                          Object key for which the PUT action was initiated.
+      --Key string                          [REQUIRED] Object key for which the PUT action was initiated.
       --Metadata stringToString             A map of metadata to store with the object in S3. (default [])
       --ObjectLockLegalHoldStatus string    Specifies whether a legal hold will be applied to this object.
       --ObjectLockMode string               The Object Lock mode that you want to apply to this object.

@@ -9,7 +9,7 @@ octl storage api PutObjectLockConfiguration [flags]
 ### Options
 
 ```
-      --Bucket string                                               The bucket whose Object Lock configuration you want to create or replace.
+      --Bucket string                                               [REQUIRED] The bucket whose Object Lock configuration you want to create or replace.
       --ChecksumAlgorithm string                                    Indicates the algorithm used to create the checksum for the object when you use the SDK.
       --ContentMD5 string                                           The MD5 hash for the request body.
       --ExpectedBucketOwner string                                  The account ID of the expected bucket owner.

@@ -17,9 +17,9 @@ octl iaas nic link nic_id [flags]
 ### Options
 
 ```
-      --device-number int   The index of the VM device for the NIC attachment (between 1 and 7, both included).
+      --device-number int   [REQUIRED] The index of the VM device for the NIC attachment (between 1 and 7, both included).
   -h, --help                help for link
-      --vm-id string        The ID of the VM to which you want to attach the NIC.
+      --vm-id string        [REQUIRED] The ID of the VM to which you want to attach the NIC.
 ```
 
 ### Options inherited from parent commands

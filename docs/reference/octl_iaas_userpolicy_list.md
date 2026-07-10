@@ -16,7 +16,7 @@ octl iaas userpolicy list [flags]
 
 ```
   -h, --help               help for list
-      --user-name string   The name of the user.
+      --user-name string   [REQUIRED] The name of the user.
 ```
 
 ### Options inherited from parent commands

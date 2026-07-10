@@ -15,7 +15,7 @@ octl storage object copy bucket_src/key_src key_dst [flags]
 ### Options
 
 ```
-      --bucket string                           The name of the destination bucket.
+      --bucket string                           [REQUIRED] The name of the destination bucket.
       --cache-control string                    Specifies the caching behavior along the request/reply chain.
       --content-disposition string              Specifies presentational information for the object.
       --content-encoding string                 Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.

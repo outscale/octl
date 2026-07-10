@@ -10,7 +10,7 @@ octl storage api CopyObject [flags]
 
 ```
       --ACL string                              The canned access control list (ACL) to apply to the object.
-      --Bucket string                           The name of the destination bucket.
+      --Bucket string                           [REQUIRED] The name of the destination bucket.
       --BucketKeyEnabled                        Specifies whether Amazon S3 should use an S3 Bucket Key for object encryption with server-side encryption using Key Management Service (KMS) keys (SSE-KMS).
       --CacheControl string                     Specifies the caching behavior along the request/reply chain.
       --ChecksumAlgorithm string                Indicates the algorithm that you want Amazon S3 to use to create the checksum for the object.
@@ -18,7 +18,7 @@ octl storage api CopyObject [flags]
       --ContentEncoding string                  Specifies what content encodings have been applied to the object and thus what decoding mechanisms must be applied to obtain the media-type referenced by the Content-Type header field.
       --ContentLanguage string                  The language the content is in.
       --ContentType string                      A standard MIME type that describes the format of the object data.
-      --CopySource string                       Specifies the source object for the copy operation.
+      --CopySource string                       [REQUIRED] Specifies the source object for the copy operation.
       --CopySourceIfMatch string                Copies the object if its entity tag (ETag) matches the specified tag.
       --CopySourceIfModifiedSince osctime       Copies the object if it has been modified since the specified time.
       --CopySourceIfNoneMatch string            Copies the object if its entity tag (ETag) is different than the specified ETag.
@@ -33,7 +33,7 @@ octl storage api CopyObject [flags]
       --GrantRead string                        Allows grantee to read the object data and its metadata.
       --GrantReadACP string                     Allows grantee to read the object ACL.
       --GrantWriteACP string                    Allows grantee to write the ACL for the applicable object.
-      --Key string                              The key of the destination object.
+      --Key string                              [REQUIRED] The key of the destination object.
       --Metadata stringToString                 A map of metadata to store with the object in S3. (default [])
       --MetadataDirective string                Specifies whether the metadata is copied from the source object or replaced with metadata that's provided in the request.
       --ObjectLockLegalHoldStatus string        Specifies whether you want to apply a legal hold to the object copy.

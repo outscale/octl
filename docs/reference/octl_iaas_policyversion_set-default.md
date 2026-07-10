@@ -22,7 +22,7 @@ octl iaas policyversion set-default policy_orn [flags]
 
 ```
   -h, --help             help for set-default
-      --version string   The ID of the version.
+      --version string   [REQUIRED] The ID of the version.
 ```
 
 ### Options inherited from parent commands

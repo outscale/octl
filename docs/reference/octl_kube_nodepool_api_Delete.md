@@ -15,7 +15,7 @@ octl kube nodepool api Delete id [flags]
 ### Options inherited from parent commands
 
 ```
-      --cluster string              Name or ID of cluster
+      --cluster string              [REQUIRED] Name or ID of cluster
   -c, --columns string              columns to display - [+]<title>:<jq query for content>||<title>:<jq query for content>
       --config string               Path of profile file (by default, ~/.osc/config.json)
       --dry-run                     Display the request payload that would be sent to the API without sending it

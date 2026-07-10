@@ -15,7 +15,7 @@ octl storage object versions [flags]
 ### Options
 
 ```
-      --bucket string   The bucket name that contains the objects.
+      --bucket string   [REQUIRED] The bucket name that contains the objects.
   -h, --help            help for versions
 ```
 

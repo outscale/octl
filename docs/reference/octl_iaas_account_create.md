@@ -24,20 +24,20 @@ octl iaas account create [flags]
 
 ```
       --additional-email strings   One or more additional email addresses for the account.
-      --city string                The city of the account owner.
-      --company-name string        The name of the company for the account.
-      --country string             The country of the account owner.
-      --customer-id string         The ID of the customer.
-      --email string               The main email address for the account.
-      --first-name string          The first name of the account owner.
+      --city string                [REQUIRED] The city of the account owner.
+      --company-name string        [REQUIRED] The name of the company for the account.
+      --country string             [REQUIRED] The country of the account owner.
+      --customer-id string         [REQUIRED] The ID of the customer.
+      --email string               [REQUIRED] The main email address for the account.
+      --first-name string          [REQUIRED] The first name of the account owner.
   -h, --help                       help for create
       --job-title string           The job title of the account owner.
-      --last-name string           The last name of the account owner.
+      --last-name string           [REQUIRED] The last name of the account owner.
       --mobile-number string       The mobile phone number of the account owner.
       --phone-number string        The landline phone number of the account owner.
       --state-province string      The state/province of the account.
       --vat-number string          The value added tax (VAT) number for the account.
-      --zip-code string            The ZIP code of the city.
+      --zip-code string            [REQUIRED] The ZIP code of the city.
 ```
 
 ### Options inherited from parent commands

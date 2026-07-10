@@ -20,8 +20,8 @@ octl iaas subnet create [flags]
 
 ```
   -h, --help               help for create
-      --ip-range string    The IP range in the Subnet, in CIDR notation (for example, 10.0.0.0/16).
-      --net-id string      The ID of the Net for which you want to create a Subnet.
+      --ip-range string    [REQUIRED] The IP range in the Subnet, in CIDR notation (for example, 10.0.0.0/16).
+      --net-id string      [REQUIRED] The ID of the Net for which you want to create a Subnet.
       --subregion string   The name of the Subregion in which you want to create the Subnet.
 ```
 

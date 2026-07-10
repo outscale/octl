@@ -15,10 +15,10 @@ octl iaas co2emissionaccount list [flags]
 ### Options
 
 ```
-      --from-month osctime   The beginning of the time period, in ISO 8601 date format (for example, 2020-06-01).
+      --from-month osctime   [REQUIRED] The beginning of the time period, in ISO 8601 date format (for example, 2020-06-01).
   -h, --help                 help for list
       --overall              If false, returns only the CO2 emission of the specific account that sends the request.
-      --to-month osctime     The end of the time period, in ISO 8601 date format (for example, 2020-06-14).
+      --to-month osctime     [REQUIRED] The end of the time period, in ISO 8601 date format (for example, 2020-06-14).
 ```
 
 ### Options inherited from parent commands

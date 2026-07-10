@@ -9,7 +9,7 @@ octl storage api GetBucketVersioning [flags]
 ### Options
 
 ```
-      --Bucket string                The name of the bucket for which to get the versioning information.
+      --Bucket string                [REQUIRED] The name of the bucket for which to get the versioning information.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for GetBucketVersioning
 ```

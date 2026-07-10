@@ -21,15 +21,15 @@ octl iaas vmtemplate create [flags]
 ### Options
 
 ```
-      --cpu-core int             The number of vCores to use for each VM.
-      --cpu-generation string    The processor generation to use for each VM (for example, v4).
+      --cpu-core int             [REQUIRED] The number of vCores to use for each VM.
+      --cpu-generation string    [REQUIRED] The processor generation to use for each VM (for example, v4).
       --cpu-performance string   The performance of the VMs.
       --description string       A description for the VM template.
   -h, --help                     help for create
-      --image-id string          The ID of the OMI to use for each VM.
+      --image-id string          [REQUIRED] The ID of the OMI to use for each VM.
       --keypair-name string      The name of the keypair to use for each VM.
-      --name string              The name of the VM template.
-      --ram int                  The amount of RAM to use for each VM.
+      --name string              [REQUIRED] The name of the VM template.
+      --ram int                  [REQUIRED] The amount of RAM to use for each VM.
       --tag-key string           The key of the tag, between 1 and 255 characters.
       --tag-value string         The value of the tag, between 0 and 255 characters.
 ```

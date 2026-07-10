@@ -30,11 +30,11 @@ octl iaas imageexporttask create [flags]
 
 ```
   -h, --help                                       help for create
-      --image-id string                            The ID of the OMI to export.
-      --osu-export-disk-image-format string        The format of the export disk (qcow2 | raw).
+      --image-id string                            [REQUIRED] The ID of the OMI to export.
+      --osu-export-disk-image-format string        [REQUIRED] The format of the export disk (qcow2 | raw).
       --osu-export-osu-api-key-api-key-id string   The API key of the OOS account that enables you to access the bucket.
       --osu-export-osu-api-key-secret-key string   The secret key of the OOS account that enables you to access the bucket.
-      --osu-export-osu-bucket string               The name of the OOS bucket where you want to export the object.
+      --osu-export-osu-bucket string               [REQUIRED] The name of the OOS bucket where you want to export the object.
       --osu-export-osu-manifest-url string         The URL of the manifest file.
       --osu-export-osu-prefix string               The prefix for the key of the OOS object.
 ```

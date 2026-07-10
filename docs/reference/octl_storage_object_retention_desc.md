@@ -15,7 +15,7 @@ octl storage object retention desc key [flags]
 ### Options
 
 ```
-      --bucket string   The bucket name containing the object whose retention settings you want to retrieve.
+      --bucket string   [REQUIRED] The bucket name containing the object whose retention settings you want to retrieve.
   -h, --help            help for desc
 ```
 

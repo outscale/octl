@@ -29,14 +29,14 @@ octl kube cluster create [flags]
       --maintenance-tz string               Timezone for the maintenance window
       --maintenance-week-day string         Day of the week for the maintenance window
       --multi-az                            Flag to enable multi-availability zone for the control plane
-      --name string                         Unique cluster name per project, must start with a letter and contain only lowercase letters, numbers, or hyphens
+      --name string                         [REQUIRED] Unique cluster name per project, must start with a letter and contain only lowercase letters, numbers, or hyphens
       --oidc-client-id string               The client id that all tokens must be issued for.
       --oidc-group-claim strings            
       --oidc-group-prefix string            
       --oidc-issuer-url string              The URL of the provider that allows the API server to discover public signing keys.
       --oidc-username-claim string          
       --oidc-username-prefix string         
-      --project string                      Unique identifier of the project this cluster belongs to
+      --project string                      [REQUIRED] Unique identifier of the project this cluster belongs to
       --quirk strings                       
       --subregions strings                  List of subregions where control plane components are deployed
       --tags stringToString                  (default [])

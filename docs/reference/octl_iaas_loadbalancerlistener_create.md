@@ -23,7 +23,7 @@ octl iaas loadbalancerlistener create [flags]
       --listener-load-balancer-port int          The port on which the load balancer is listening (between 1 and 65535, both included).
       --listener-load-balancer-protocol string   The routing protocol (HTTP | HTTPS | TCP | SSL).
       --listener-server-certificate-id string    The OUTSCALE Resource Name (ORN) of the server certificate.
-      --name string                              The name of the load balancer for which you want to create listeners.
+      --name string                              [REQUIRED] The name of the load balancer for which you want to create listeners.
 ```
 
 ### Options inherited from parent commands

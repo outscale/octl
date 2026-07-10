@@ -9,7 +9,7 @@ octl storage api GetObjectLockConfiguration [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket whose Object Lock configuration you want to retrieve.
+      --Bucket string                [REQUIRED] The bucket whose Object Lock configuration you want to retrieve.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for GetObjectLockConfiguration
 ```

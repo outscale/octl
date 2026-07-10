@@ -22,8 +22,8 @@ octl iaas flexiblegpu create [flags]
       --delete-on-vm-deletion   If true, the fGPU is deleted when the VM is terminated.
       --generation string       The processor generation that the fGPU must be compatible with.
   -h, --help                    help for create
-      --model-name string       The model of fGPU you want to allocate.
-      --subregion string        The Subregion in which you want to create the fGPU.
+      --model-name string       [REQUIRED] The model of fGPU you want to allocate.
+      --subregion string        [REQUIRED] The Subregion in which you want to create the fGPU.
 ```
 
 ### Options inherited from parent commands

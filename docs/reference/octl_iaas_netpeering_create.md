@@ -25,10 +25,10 @@ octl iaas netpeering create [flags]
 ### Options
 
 ```
-      --accepter-net-id string     The ID of the Net you want to connect with.
+      --accepter-net-id string     [REQUIRED] The ID of the Net you want to connect with.
       --accepter-owner-id string   The OUTSCALE account ID of the owner of the Net you want to connect with.
   -h, --help                       help for create
-      --source-net-id string       The ID of the Net you send the peering request from.
+      --source-net-id string       [REQUIRED] The ID of the Net you send the peering request from.
 ```
 
 ### Options inherited from parent commands

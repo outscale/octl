@@ -112,6 +112,9 @@ func (b *Builder[T]) Build(rootCmd, apiCmd *cobra.Command) {
 				if f.Usage != "" {
 					nflag.Usage = f.Usage
 				}
+				if f.Required {
+					nflag.Usage = flagbuilder.RequiredHelp(nflag.Usage)
+				}
 				cmd.Flags().AddFlag(&nflag)
 
 				completion, found := callCmd.GetFlagCompletionFunc(f.AliasTo)

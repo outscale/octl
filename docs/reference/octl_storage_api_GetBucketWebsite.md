@@ -9,7 +9,7 @@ octl storage api GetBucketWebsite [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket name for which to get the website configuration.
+      --Bucket string                [REQUIRED] The bucket name for which to get the website configuration.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for GetBucketWebsite
 ```

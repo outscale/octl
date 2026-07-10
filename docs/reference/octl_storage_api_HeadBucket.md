@@ -9,7 +9,7 @@ octl storage api HeadBucket [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket name.
+      --Bucket string                [REQUIRED] The bucket name.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for HeadBucket
 ```

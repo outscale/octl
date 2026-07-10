@@ -20,7 +20,7 @@ octl iaas consoleoutput list [flags]
 
 ```
   -h, --help           help for list
-      --vm-id string   The ID of the VM.
+      --vm-id string   [REQUIRED] The ID of the VM.
 ```
 
 ### Options inherited from parent commands

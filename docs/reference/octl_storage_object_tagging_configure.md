@@ -15,7 +15,7 @@ octl storage object tagging configure key [flags]
 ### Options
 
 ```
-      --bucket string        The bucket name containing the object.
+      --bucket string        [REQUIRED] The bucket name containing the object.
       --from-file string     The file storing the tagging config (JSON format, i.e. {"TagSet":[{"Key":"...", "Value":"..."}]})
       --from-string string   The tagging config (JSON format, i.e. {"TagSet":[{"Key":"...", "Value":"..."}]})
   -h, --help                 help for configure

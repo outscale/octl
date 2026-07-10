@@ -21,10 +21,10 @@ octl iaas clientgateway create [flags]
 ### Options
 
 ```
-      --bgp-asn int              The Autonomous System Number (ASN) used by the Border Gateway Protocol (BGP) to find the path to your client gateway through the Internet.
-      --connection-type string   The communication protocol used to establish tunnel with your client gateway (always ipsec.1).
+      --bgp-asn int              [REQUIRED] The Autonomous System Number (ASN) used by the Border Gateway Protocol (BGP) to find the path to your client gateway through the Internet.
+      --connection-type string   [REQUIRED] The communication protocol used to establish tunnel with your client gateway (always ipsec.1).
   -h, --help                     help for create
-      --public-ip string         The public fixed IPv4 address of your client gateway.
+      --public-ip string         [REQUIRED] The public fixed IPv4 address of your client gateway.
 ```
 
 ### Options inherited from parent commands

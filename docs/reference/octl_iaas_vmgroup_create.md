@@ -23,14 +23,14 @@ octl iaas vmgroup create [flags]
 ```
       --description string            A description for the VM group.
   -h, --help                          help for create
-      --name string                   The name of the VM group.
+      --name string                   [REQUIRED] The name of the VM group.
       --positioning-strategy string   The positioning strategy of VMs on hypervisors.
       --security-group-id strings     One or more IDs of security groups for the VM group.
-      --subnet-id string              The ID of the Subnet in which you want to create the VM group.
+      --subnet-id string              [REQUIRED] The ID of the Subnet in which you want to create the VM group.
       --tag-key string                The key of the tag, between 1 and 255 characters.
       --tag-value string              The value of the tag, between 0 and 255 characters.
-      --vm-count int                  The number of VMs deployed in the VM group.
-      --vm-template-id string         The ID of the VM template used to launch VMs in the VM group.
+      --vm-count int                  [REQUIRED] The number of VMs deployed in the VM group.
+      --vm-template-id string         [REQUIRED] The ID of the VM template used to launch VMs in the VM group.
 ```
 
 ### Options inherited from parent commands

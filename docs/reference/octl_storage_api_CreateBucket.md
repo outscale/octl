@@ -10,7 +10,7 @@ octl storage api CreateBucket [flags]
 
 ```
       --ACL string                                               The canned ACL to apply to the bucket.
-      --Bucket string                                            The name of the bucket to create.
+      --Bucket string                                            [REQUIRED] The name of the bucket to create.
       --CreateBucketConfiguration.Bucket.DataRedundancy string   The number of Zone (Availability Zone or Local Zone) that's used for redundancy for the bucket.
       --CreateBucketConfiguration.Bucket.Type string             The type of bucket.
       --CreateBucketConfiguration.Location.Name string           The name of the location where the bucket will be created.

@@ -15,7 +15,7 @@ octl storage object download key [flags]
 ### Options
 
 ```
-      --bucket string    The bucket name containing the object.
+      --bucket string    [REQUIRED] The bucket name containing the object.
   -h, --help             help for download
       --part int32       Part number of the object being read.
       --range string     Range to download, as defined by RFC 9110 (e.g. bytes=0-500)

@@ -9,7 +9,7 @@ octl storage api DeleteBucketWebsite [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket name for which you want to remove the website configuration.
+      --Bucket string                [REQUIRED] The bucket name for which you want to remove the website configuration.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for DeleteBucketWebsite
 ```

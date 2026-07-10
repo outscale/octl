@@ -9,9 +9,9 @@ octl storage api DeleteObjectTagging [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket name containing the objects from which to remove the tags.
+      --Bucket string                [REQUIRED] The bucket name containing the objects from which to remove the tags.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
-      --Key string                   The key that identifies the object in the bucket from which to remove all tags.
+      --Key string                   [REQUIRED] The key that identifies the object in the bucket from which to remove all tags.
       --VersionId string             The versionId of the object that the tag-set will be removed from.
   -h, --help                         help for DeleteObjectTagging
 ```

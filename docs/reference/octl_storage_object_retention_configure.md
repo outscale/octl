@@ -15,9 +15,9 @@ octl storage object retention configure key [flags]
 ### Options
 
 ```
-      --bucket string          The bucket name that contains the object you want to apply this Object Retention configuration to.
+      --bucket string          [REQUIRED] The bucket name that contains the object you want to apply this Object Retention configuration to.
   -h, --help                   help for configure
-      --retain-until osctime   The date on which this Object Lock Retention will expire.
+      --retain-until osctime   [REQUIRED] The date on which this Object Lock Retention will expire.
 ```
 
 ### Options inherited from parent commands

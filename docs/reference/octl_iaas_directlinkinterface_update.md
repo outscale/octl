@@ -16,7 +16,7 @@ octl iaas directlinkinterface update direct_link_interface_id [direct_link_inter
 
 ```
   -h, --help      help for update
-      --mtu int   The maximum transmission unit (MTU) of the DirectLink interface, in bytes.
+      --mtu int   [REQUIRED] The maximum transmission unit (MTU) of the DirectLink interface, in bytes.
 ```
 
 ### Options inherited from parent commands

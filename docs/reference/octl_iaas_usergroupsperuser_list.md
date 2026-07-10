@@ -16,7 +16,7 @@ octl iaas usergroupsperuser list [flags]
 
 ```
   -h, --help               help for list
-      --user-name string   The name of the user.
+      --user-name string   [REQUIRED] The name of the user.
       --user-path string   The path to the user (by default, /).
 ```
 

@@ -20,7 +20,7 @@ octl iaas policyversion delete policy_orn [flags]
 
 ```
   -h, --help             help for delete
-      --version string   The ID of the version of the policy you want to delete.
+      --version string   [REQUIRED] The ID of the version of the policy you want to delete.
 ```
 
 ### Options inherited from parent commands

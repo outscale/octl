@@ -15,7 +15,7 @@ octl storage object delete key [key]... [flags]
 ### Options
 
 ```
-      --bucket string                         The bucket name of the bucket containing the object.
+      --bucket string                         [REQUIRED] The bucket name of the bucket containing the object.
       --bypass-governance-retention           Indicates whether S3 Object Lock should bypass Governance-mode restrictions to process this operation.
       --expected-bucket-owner string          The account ID of the expected bucket owner.
   -h, --help                                  help for delete

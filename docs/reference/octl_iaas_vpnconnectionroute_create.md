@@ -19,9 +19,9 @@ octl iaas vpnconnectionroute create [flags]
 ### Options
 
 ```
-      --destination-ip-range string   The network prefix of the route, in CIDR notation (for example, 10.12.0.0/16).
+      --destination-ip-range string   [REQUIRED] The network prefix of the route, in CIDR notation (for example, 10.12.0.0/16).
   -h, --help                          help for create
-      --vpn-connection-id string      The ID of the target VPN connection of the static route.
+      --vpn-connection-id string      [REQUIRED] The ID of the target VPN connection of the static route.
 ```
 
 ### Options inherited from parent commands

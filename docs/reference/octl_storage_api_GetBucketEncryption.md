@@ -9,7 +9,7 @@ octl storage api GetBucketEncryption [flags]
 ### Options
 
 ```
-      --Bucket string                The name of the bucket from which the server-side encryption configuration is retrieved.
+      --Bucket string                [REQUIRED] The name of the bucket from which the server-side encryption configuration is retrieved.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for GetBucketEncryption
 ```

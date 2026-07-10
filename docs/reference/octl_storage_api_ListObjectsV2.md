@@ -9,7 +9,7 @@ octl storage api ListObjectsV2 [flags]
 ### Options
 
 ```
-      --Bucket string                      Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format Bucket-name.s3express-zone-id.region-code.amazonaws.com .
+      --Bucket string                      [REQUIRED] Directory buckets - When you use this operation with a directory bucket, you must use virtual-hosted-style requests in the format Bucket-name.s3express-zone-id.region-code.amazonaws.com .
       --ContinuationToken string           indicates to Amazon S3 that the list is being continued on this bucket with a token.
       --Delimiter string                   A delimiter is a character that you use to group keys.
       --EncodingType string                Encoding type used by Amazon S3 to encode the [object keys] in the response.

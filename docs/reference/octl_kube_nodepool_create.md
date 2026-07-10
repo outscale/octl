@@ -18,8 +18,8 @@ octl kube nodepool create [flags]
       --auto-healing                       
       --auto-upgrade-enabled               
       --autoscaling                        
-      --cluster string                     Name or ID of cluster
-      --desired-nodes int                  
+      --cluster string                     [REQUIRED] Name or ID of cluster
+      --desired-nodes int                  [REQUIRED] 
       --fgpu-model string                  
       --fgpu-operator                      
       --flavour string                     
@@ -28,10 +28,10 @@ octl kube nodepool create [flags]
       --ip-pool string                     
       --max-nodes int                      
       --min-nodes int                      
-      --name string                        
+      --name string                        [REQUIRED] 
       --node-annotations stringToString     (default [])
       --node-labels stringToString          (default [])
-      --node-type string                   
+      --node-type string                   [REQUIRED] 
       --placement-attract-cluster string   
       --placement-attract-server string    
       --placement-repulse-cluster string   
@@ -47,7 +47,7 @@ octl kube nodepool create [flags]
       --volume-size int                    
       --volume-snapshot string             
       --volume-type string                 
-      --zones strings                      
+      --zones strings                      [REQUIRED] 
 ```
 
 ### Options inherited from parent commands

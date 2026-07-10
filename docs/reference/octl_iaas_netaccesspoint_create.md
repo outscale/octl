@@ -26,9 +26,9 @@ octl iaas netaccesspoint create [flags]
 
 ```
   -h, --help                     help for create
-      --net-id string            The ID of the Net.
+      --net-id string            [REQUIRED] The ID of the Net.
       --route-table-id strings   One or more IDs of route tables to use for the connection.
-      --service-name string      The name of the service (in the format com.outscale.region.service).
+      --service-name string      [REQUIRED] The name of the service (in the format com.outscale.region.service).
 ```
 
 ### Options inherited from parent commands

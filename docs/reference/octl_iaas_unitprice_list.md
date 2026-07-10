@@ -16,9 +16,9 @@ octl iaas unitprice list [flags]
 
 ```
   -h, --help               help for list
-      --operation string   The operation associated with the catalog entry (for example, RunInstances-OD or CreateVolume).
-      --service string     The service associated with the catalog entry (for example, TinaOS-FCU or TinaOS-OOS).
-      --type string        The type associated with the catalog entry (for example, BSU:VolumeIOPS:io1 or BoxUsage:tinav6.c6r16p3).
+      --operation string   [REQUIRED] The operation associated with the catalog entry (for example, RunInstances-OD or CreateVolume).
+      --service string     [REQUIRED] The service associated with the catalog entry (for example, TinaOS-FCU or TinaOS-OOS).
+      --type string        [REQUIRED] The type associated with the catalog entry (for example, BSU:VolumeIOPS:io1 or BoxUsage:tinav6.c6r16p3).
 ```
 
 ### Options inherited from parent commands

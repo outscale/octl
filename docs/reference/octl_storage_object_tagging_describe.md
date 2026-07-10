@@ -15,7 +15,7 @@ octl storage object tagging describe key [flags]
 ### Options
 
 ```
-      --bucket string   The bucket name containing the object for which to get the tagging information.
+      --bucket string   [REQUIRED] The bucket name containing the object for which to get the tagging information.
   -h, --help            help for describe
 ```
 

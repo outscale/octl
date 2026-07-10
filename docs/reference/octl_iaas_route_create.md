@@ -33,10 +33,10 @@ octl iaas route create [flags]
 ### Options
 
 ```
-      --destination-ip-range string   The IP range used for the destination match, in CIDR notation (for example, 10.0.0.0/24).
+      --destination-ip-range string   [REQUIRED] The IP range used for the destination match, in CIDR notation (for example, 10.0.0.0/24).
       --gateway-id string             The ID of an internet service or virtual gateway attached to your Net.
   -h, --help                          help for create
-      --id string                     The ID of the route table for which you want to create a route.
+      --id string                     [REQUIRED] The ID of the route table for which you want to create a route.
       --nat-service-id string         The ID of a NAT service.
       --net-peering-id string         The ID of a Net peering.
       --nic-id string                 The ID of a NIC.

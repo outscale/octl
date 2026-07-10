@@ -19,7 +19,7 @@ octl iaas user create [flags]
 ```
       --email string   The email address of the EIM user.
   -h, --help           help for create
-      --name string    The name of the EIM user.
+      --name string    [REQUIRED] The name of the EIM user.
       --path string    The path to the EIM user you want to create (by default, /).
 ```
 

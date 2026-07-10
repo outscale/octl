@@ -15,7 +15,7 @@ octl kube nodepool delete name [name]... [flags]
 ### Options
 
 ```
-      --cluster string   Name or ID of cluster
+      --cluster string   [REQUIRED] Name or ID of cluster
   -h, --help             help for delete
 ```
 

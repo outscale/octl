@@ -23,11 +23,11 @@ octl iaas vpnconnection create [flags]
 ### Options
 
 ```
-      --client-gateway-id string    The ID of the client gateway.
-      --connection-type string      The type of VPN connection (always ipsec.1).
+      --client-gateway-id string    [REQUIRED] The ID of the client gateway.
+      --connection-type string      [REQUIRED] The type of VPN connection (always ipsec.1).
   -h, --help                        help for create
       --static-route-only           By default or if false, the VPN connection uses dynamic routing with Border Gateway Protocol (BGP).
-      --virtual-gateway-id string   The ID of the virtual gateway.
+      --virtual-gateway-id string   [REQUIRED] The ID of the virtual gateway.
 ```
 
 ### Options inherited from parent commands

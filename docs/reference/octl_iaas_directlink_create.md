@@ -17,10 +17,10 @@ octl iaas directlink create [flags]
 ### Options
 
 ```
-      --bandwidth string   The bandwidth of the DirectLink (1Gbps | 10Gbps).
+      --bandwidth string   [REQUIRED] The bandwidth of the DirectLink (1Gbps | 10Gbps).
   -h, --help               help for create
-      --location string    The code of the requested location for the DirectLink, returned by the [ReadLocations](#readlocations) method.
-      --name string        The name of the DirectLink.
+      --location string    [REQUIRED] The code of the requested location for the DirectLink, returned by the [ReadLocations](#readlocations) method.
+      --name string        [REQUIRED] The name of the DirectLink.
 ```
 
 ### Options inherited from parent commands

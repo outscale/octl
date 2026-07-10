@@ -29,8 +29,8 @@ octl iaas natservice create [flags]
 ```
       --client-token string   A unique identifier which enables you to manage the idempotency.
   -h, --help                  help for create
-      --public-ip-id string   The allocation ID of the public IP to associate with the NAT service.
-      --subnet-id string      The ID of the Subnet in which you want to create the NAT service.
+      --public-ip-id string   [REQUIRED] The allocation ID of the public IP to associate with the NAT service.
+      --subnet-id string      [REQUIRED] The ID of the Subnet in which you want to create the NAT service.
 ```
 
 ### Options inherited from parent commands

@@ -17,9 +17,9 @@ octl iaas volume link volume_id [flags]
 ### Options
 
 ```
-      --device_name string   The name of the device.
+      --device_name string   [REQUIRED] The name of the device.
   -h, --help                 help for link
-      --vm-id string         The ID of the VM you want to attach the volume to.
+      --vm-id string         [REQUIRED] The ID of the VM you want to attach the volume to.
 ```
 
 ### Options inherited from parent commands

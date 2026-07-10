@@ -20,7 +20,7 @@ octl iaas policy unlink policy_orn [flags]
 
 ```
   -h, --help               help for unlink
-      --user-name string   The name of the user you want to detach the policy from.
+      --user-name string   [REQUIRED] The name of the user you want to detach the policy from.
 ```
 
 ### Options inherited from parent commands

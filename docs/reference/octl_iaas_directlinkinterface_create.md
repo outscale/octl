@@ -19,15 +19,15 @@ octl iaas directlinkinterface create [flags]
 ### Options
 
 ```
-      --bgp-asn int                         
+      --bgp-asn int                         [REQUIRED] 
       --bgp-key string                      
       --client-private-ip string            
-      --direct-link-id string               The ID of the existing DirectLink for which you want to create the DirectLink interface.
-      --direct-link-interface-name string   
+      --direct-link-id string               [REQUIRED] The ID of the existing DirectLink for which you want to create the DirectLink interface.
+      --direct-link-interface-name string   [REQUIRED] 
   -h, --help                                help for create
       --outscale-private-ip string          
-      --virtual-gateway-id string           
-      --vlan int                            
+      --virtual-gateway-id string           [REQUIRED] 
+      --vlan int                            [REQUIRED] 
 ```
 
 ### Options inherited from parent commands

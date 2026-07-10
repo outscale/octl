@@ -9,7 +9,7 @@ octl storage api GetBucketLifecycleConfiguration [flags]
 ### Options
 
 ```
-      --Bucket string                The name of the bucket for which to get the lifecycle information.
+      --Bucket string                [REQUIRED] The name of the bucket for which to get the lifecycle information.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for GetBucketLifecycleConfiguration
 ```

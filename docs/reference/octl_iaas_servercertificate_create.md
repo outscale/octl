@@ -27,12 +27,12 @@ octl iaas servercertificate create [flags]
 ### Options
 
 ```
-      --body string          The PEM-encoded X509 certificate.
+      --body string          [REQUIRED] The PEM-encoded X509 certificate.
       --chain string         The PEM-encoded intermediate certification authorities.
   -h, --help                 help for create
-      --name string          A unique name for the certificate.
+      --name string          [REQUIRED] A unique name for the certificate.
       --path string          The path to the server certificate, set to a slash (/) if not specified.
-      --private-key string   The PEM-encoded private key matching the certificate.
+      --private-key string   [REQUIRED] The PEM-encoded private key matching the certificate.
 ```
 
 ### Options inherited from parent commands

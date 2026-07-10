@@ -9,7 +9,7 @@ octl storage api GetBucketCors [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket name for which to get the cors configuration.
+      --Bucket string                [REQUIRED] The bucket name for which to get the cors configuration.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for GetBucketCors
 ```

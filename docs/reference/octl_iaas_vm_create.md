@@ -38,7 +38,7 @@ octl iaas vm create [flags]
       --client-token string                      A unique identifier which enables you to manage the idempotency.
       --deletion-protection                      If true, you cannot delete the VM unless you change this parameter back to false.
   -h, --help                                     help for create
-      --image-id string                          The ID of the OMI used to create the VM.
+      --image-id string                          [REQUIRED] The ID of the OMI used to create the VM.
       --initiated-shutdown-behavior string       The VM behavior when you stop it.
       --keypair-name string                      The name of the keypair.
       --max-vm-count int                         The maximum number of VMs you want to create.

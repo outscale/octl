@@ -9,12 +9,12 @@ octl storage api AbortMultipartUpload [flags]
 ### Options
 
 ```
-      --Bucket string                  The bucket name to which the upload was taking place.
+      --Bucket string                  [REQUIRED] The bucket name to which the upload was taking place.
       --ExpectedBucketOwner string     The account ID of the expected bucket owner.
       --IfMatchInitiatedTime osctime   If present, this header aborts an in progress multipart upload only if it was initiated on the provided timestamp.
-      --Key string                     of the object for which the multipart upload was initiated.
+      --Key string                     [REQUIRED] of the object for which the multipart upload was initiated.
       --RequestPayer string            Confirms that the requester knows that they will be charged for the request.
-      --UploadId string                Upload ID that identifies the multipart upload.
+      --UploadId string                [REQUIRED] Upload ID that identifies the multipart upload.
   -h, --help                           help for AbortMultipartUpload
 ```
 

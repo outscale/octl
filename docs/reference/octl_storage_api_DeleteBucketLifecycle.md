@@ -9,7 +9,7 @@ octl storage api DeleteBucketLifecycle [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket name of the lifecycle to delete.
+      --Bucket string                [REQUIRED] The bucket name of the lifecycle to delete.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for DeleteBucketLifecycle
 ```

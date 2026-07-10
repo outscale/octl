@@ -43,7 +43,7 @@ var (
 
 func init() {
 	oksCmd.AddCommand(secretCmd)
-	secretCmd.Flags().String("name", "", "name of secret")
+	secretCmd.Flags().String("name", "", "[REQUIRED] name of secret")
 	secretCmd.Flags().String("namespace", "kube-system", "namespace of secret")
 	_ = secretCmd.MarkFlagRequired("name")
 }

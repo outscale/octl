@@ -9,10 +9,10 @@ octl storage api PutBucketCors [flags]
 ### Options
 
 ```
-      --Bucket string                                          Specifies the bucket impacted by the cors configuration.
+      --Bucket string                                          [REQUIRED] Specifies the bucket impacted by the cors configuration.
       --CORSConfiguration.CORSRules.0.AllowedHeaders strings   Headers that are specified in the Access-Control-Request-Headers header.
-      --CORSConfiguration.CORSRules.0.AllowedMethods strings   An HTTP method that you allow the origin to execute.
-      --CORSConfiguration.CORSRules.0.AllowedOrigins strings   One or more origins you want customers to be able to access the bucket from.
+      --CORSConfiguration.CORSRules.0.AllowedMethods strings   [REQUIRED] An HTTP method that you allow the origin to execute.
+      --CORSConfiguration.CORSRules.0.AllowedOrigins strings   [REQUIRED] One or more origins you want customers to be able to access the bucket from.
       --CORSConfiguration.CORSRules.0.ExposeHeaders strings    One or more headers in the response that you want customers to be able to access from their applications (for example, from a JavaScript XMLHttpRequest object).
       --CORSConfiguration.CORSRules.0.ID string                Unique identifier for the rule.
       --CORSConfiguration.CORSRules.0.MaxAgeSeconds int32      The time in seconds that your browser is to cache the preflight response for the specified resource.

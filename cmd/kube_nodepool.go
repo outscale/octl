@@ -26,7 +26,7 @@ func init() {
 		return slices.Contains([]string{"List", "Get", "Create", "Update", "Delete"}, m.Name)
 	}, kubeapi("kubeclient_nodepool"))
 	apiCmd, _ := lo.Find(nodepoolCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "api" })
-	apiCmd.PersistentFlags().String("cluster", "", "Name or ID of cluster")
+	apiCmd.PersistentFlags().String("cluster", "", "[REQUIRED] Name or ID of cluster")
 	_ = apiCmd.MarkPersistentFlagRequired("cluster")
 	apiCmd.PersistentFlags().String("project", preferences.Preferences.Kube.DefaultProject, "Name or ID of project")
 	// nodepool commands need to be added to the upper level, otherwise we will get kube nodepool nodepool

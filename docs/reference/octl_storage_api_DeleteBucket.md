@@ -9,7 +9,7 @@ octl storage api DeleteBucket [flags]
 ### Options
 
 ```
-      --Bucket string                Specifies the bucket being deleted.
+      --Bucket string                [REQUIRED] Specifies the bucket being deleted.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
   -h, --help                         help for DeleteBucket
 ```

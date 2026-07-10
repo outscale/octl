@@ -16,7 +16,7 @@ octl iaas subnet update subnet_id [subnet_id]... [flags]
 
 ```
   -h, --help                      help for update
-      --map-public-ip-on-launch   If true, a public IP is assigned to the network interface cards (NICs) created in the specified Subnet.
+      --map-public-ip-on-launch   [REQUIRED] If true, a public IP is assigned to the network interface cards (NICs) created in the specified Subnet.
 ```
 
 ### Options inherited from parent commands

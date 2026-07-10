@@ -28,7 +28,7 @@ octl kube secret [flags]
 
 ```
   -h, --help               help for secret
-      --name string        name of secret
+      --name string        [REQUIRED] name of secret
       --namespace string   namespace of secret (default "kube-system")
 ```
 

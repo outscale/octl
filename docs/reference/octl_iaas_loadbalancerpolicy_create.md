@@ -30,9 +30,9 @@ octl iaas loadbalancerpolicy create [flags]
       --cookie-expiration-period int   The lifetime of the cookie, in seconds.
       --cookie-name string             The name of the application cookie used for stickiness, between 1 and 255 characters.
   -h, --help                           help for create
-      --name string                    The name of the load balancer for which you want to create a policy.
-      --policy-name string             The unique name of the policy, with a maximum length of 32 alphanumeric characters and dashes (-).
-      --policy-type string             The type of stickiness policy you want to create: app or load_balancer.
+      --name string                    [REQUIRED] The name of the load balancer for which you want to create a policy.
+      --policy-name string             [REQUIRED] The unique name of the policy, with a maximum length of 32 alphanumeric characters and dashes (-).
+      --policy-type string             [REQUIRED] The type of stickiness policy you want to create: app or load_balancer.
 ```
 
 ### Options inherited from parent commands

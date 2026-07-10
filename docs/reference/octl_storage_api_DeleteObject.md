@@ -9,13 +9,13 @@ octl storage api DeleteObject [flags]
 ### Options
 
 ```
-      --Bucket string                     The bucket name of the bucket containing the object.
+      --Bucket string                     [REQUIRED] The bucket name of the bucket containing the object.
       --BypassGovernanceRetention         Indicates whether S3 Object Lock should bypass Governance-mode restrictions to process this operation.
       --ExpectedBucketOwner string        The account ID of the expected bucket owner.
       --IfMatch string                    The If-Match header field makes the request method conditional on ETags.
       --IfMatchLastModifiedTime osctime   If present, the object is deleted only if its modification times matches the provided Timestamp .
       --IfMatchSize int                   If present, the object is deleted only if its size matches the provided size in bytes.
-      --Key string                        name of the object to delete.
+      --Key string                        [REQUIRED] name of the object to delete.
       --MFA string                        The concatenation of the authentication device's serial number, a space, and the value that is displayed on your authentication device.
       --RequestPayer string               Confirms that the requester knows that they will be charged for the request.
       --VersionId string                  Version ID used to reference a specific version of the object.

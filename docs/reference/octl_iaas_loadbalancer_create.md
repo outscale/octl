@@ -29,7 +29,7 @@ octl iaas loadbalancer create [flags]
       --listener-load-balancer-port int          The port on which the load balancer is listening (between 1 and 65535, both included).
       --listener-load-balancer-protocol string   The routing protocol (HTTP | HTTPS | TCP | SSL).
       --listener-server-certificate-id string    The OUTSCALE Resource Name (ORN) of the server certificate.
-      --name string                              The unique name of the load balancer, with a maximum length of 32 alphanumeric characters and dashes (-).
+      --name string                              [REQUIRED] The unique name of the load balancer, with a maximum length of 32 alphanumeric characters and dashes (-).
       --public-ip string                         (internet-facing only) The public IP you want to associate with the load balancer.
       --security-group strings                   (Net only) One or more IDs of security groups you want to assign to the load balancer.
       --subnet strings                           (Net only) The ID of the Subnet in which you want to create the load balancer.

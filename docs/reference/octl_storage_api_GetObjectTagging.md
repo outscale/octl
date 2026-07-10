@@ -9,9 +9,9 @@ octl storage api GetObjectTagging [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket name containing the object for which to get the tagging information.
+      --Bucket string                [REQUIRED] The bucket name containing the object for which to get the tagging information.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
-      --Key string                   Object key for which to get the tagging information.
+      --Key string                   [REQUIRED] Object key for which to get the tagging information.
       --RequestPayer string          Confirms that the requester knows that they will be charged for the request.
       --VersionId string             The versionId of the object for which to get the tagging information.
   -h, --help                         help for GetObjectTagging

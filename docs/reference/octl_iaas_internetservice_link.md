@@ -18,7 +18,7 @@ octl iaas internetservice link service_id [flags]
 
 ```
   -h, --help            help for link
-      --net-id string   The ID of the Net to which you want to attach the internet service.
+      --net-id string   [REQUIRED] The ID of the Net to which you want to attach the internet service.
 ```
 
 ### Options inherited from parent commands

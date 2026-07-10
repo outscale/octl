@@ -5,7 +5,7 @@ nodepool api calls
 ### Options
 
 ```
-      --cluster string   Name or ID of cluster
+      --cluster string   [REQUIRED] Name or ID of cluster
   -h, --help             help for api
       --project string   Name or ID of project
 ```

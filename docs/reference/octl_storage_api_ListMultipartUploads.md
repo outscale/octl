@@ -9,7 +9,7 @@ octl storage api ListMultipartUploads [flags]
 ### Options
 
 ```
-      --Bucket string                The name of the bucket to which the multipart upload was initiated.
+      --Bucket string                [REQUIRED] The name of the bucket to which the multipart upload was initiated.
       --Delimiter string             Character you use to group keys.
       --EncodingType string          Encoding type used by Amazon S3 to encode the [object keys] in the response.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.

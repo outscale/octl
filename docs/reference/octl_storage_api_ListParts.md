@@ -9,16 +9,16 @@ octl storage api ListParts [flags]
 ### Options
 
 ```
-      --Bucket string                 The name of the bucket to which the parts are being uploaded.
+      --Bucket string                 [REQUIRED] The name of the bucket to which the parts are being uploaded.
       --ExpectedBucketOwner string    The account ID of the expected bucket owner.
-      --Key string                    Object key for which the multipart upload was initiated.
+      --Key string                    [REQUIRED] Object key for which the multipart upload was initiated.
       --MaxParts int32                Sets the maximum number of parts to return.
       --PartNumberMarker string       Specifies the part after which listing should begin.
       --RequestPayer string           Confirms that the requester knows that they will be charged for the request.
       --SSECustomerAlgorithm string   The server-side encryption (SSE) algorithm used to encrypt the object.
       --SSECustomerKey string         The server-side encryption (SSE) customer managed key.
       --SSECustomerKeyMD5 string      The MD5 server-side encryption (SSE) customer managed key.
-      --UploadId string               Upload ID identifying the multipart upload whose parts are being listed.
+      --UploadId string               [REQUIRED] Upload ID identifying the multipart upload whose parts are being listed.
   -h, --help                          help for ListParts
 ```
 

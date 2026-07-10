@@ -9,9 +9,9 @@ octl storage api GetObjectAcl [flags]
 ### Options
 
 ```
-      --Bucket string                The bucket name that contains the object for which to get the ACL information.
+      --Bucket string                [REQUIRED] The bucket name that contains the object for which to get the ACL information.
       --ExpectedBucketOwner string   The account ID of the expected bucket owner.
-      --Key string                   The key of the object for which to get the ACL information.
+      --Key string                   [REQUIRED] The key of the object for which to get the ACL information.
       --RequestPayer string          Confirms that the requester knows that they will be charged for the request.
       --VersionId string             Version ID used to reference a specific version of the object.
   -h, --help                         help for GetObjectAcl

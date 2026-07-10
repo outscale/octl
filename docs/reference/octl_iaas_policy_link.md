@@ -20,7 +20,7 @@ octl iaas policy link policy_orn [flags]
 
 ```
   -h, --help               help for link
-      --user-name string   The name of the user you want to link the policy to (between 1 and 64 characters).
+      --user-name string   [REQUIRED] The name of the user you want to link the policy to (between 1 and 64 characters).
 ```
 
 ### Options inherited from parent commands

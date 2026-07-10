@@ -27,9 +27,9 @@ octl iaas securitygroup create [flags]
 ### Options
 
 ```
-      --description string   A description for the security group.
+      --description string   [REQUIRED] A description for the security group.
   -h, --help                 help for create
-      --name string          The name of the security group.
+      --name string          [REQUIRED] The name of the security group.
       --net-id string        The ID of the Net for the security group.
 ```
 

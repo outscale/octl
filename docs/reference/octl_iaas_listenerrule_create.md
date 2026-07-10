@@ -22,11 +22,11 @@ octl iaas listenerrule create [flags]
       --action string                        The type of action for the rule (always forward).
   -h, --help                                 help for create
       --host-name-pattern string             A host-name pattern for the rule, with a maximum length of 128 characters.
-      --listener-load-balancer-name string   The name of the load balancer to which the listener is attached.
-      --listener-load-balancer-port int      The port of load balancer on which the load balancer is listening (between 1 and 65535 both included).
-      --listener-rule-name string            A human-readable name for the listener rule.
+      --listener-load-balancer-name string   [REQUIRED] The name of the load balancer to which the listener is attached.
+      --listener-load-balancer-port int      [REQUIRED] The port of load balancer on which the load balancer is listening (between 1 and 65535 both included).
+      --listener-rule-name string            [REQUIRED] A human-readable name for the listener rule.
       --path-pattern string                  A path pattern for the rule, with a maximum length of 128 characters.
-      --priority int                         The priority level of the listener rule, between 1 and 19999 both included.
+      --priority int                         [REQUIRED] The priority level of the listener rule, between 1 and 19999 both included.
       --vm-id strings                        The IDs of the backend VMs.
 ```
 

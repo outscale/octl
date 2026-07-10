@@ -26,7 +26,7 @@ octl iaas volume create [flags]
       --iops int              The number of I/O operations per second (IOPS).
       --size int              The size of the volume, in gibibytes (GiB).
       --snapshot-id string    The ID of the snapshot from which you want to create the volume.
-      --subregion string      The Subregion in which you want to create the volume.
+      --subregion string      [REQUIRED] The Subregion in which you want to create the volume.
       --type string           The type of volume you want to create (io1 | gp2 | standard).
 ```
 

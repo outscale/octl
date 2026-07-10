@@ -9,14 +9,14 @@ octl storage api HeadObject [flags]
 ### Options
 
 ```
-      --Bucket string                       The name of the bucket that contains the object.
+      --Bucket string                       [REQUIRED] The name of the bucket that contains the object.
       --ChecksumMode string                 To retrieve the checksum, this parameter must be enabled.
       --ExpectedBucketOwner string          The account ID of the expected bucket owner.
       --IfMatch string                      Return the object only if its entity tag (ETag) is the same as the one specified; otherwise, return a 412 (precondition failed) error.
       --IfModifiedSince osctime             Return the object only if it has been modified since the specified time; otherwise, return a 304 (not modified) error.
       --IfNoneMatch string                  Return the object only if its entity tag (ETag) is different from the one specified; otherwise, return a 304 (not modified) error.
       --IfUnmodifiedSince osctime           Return the object only if it has not been modified since the specified time; otherwise, return a 412 (precondition failed) error.
-      --Key string                          The object key.
+      --Key string                          [REQUIRED] The object key.
       --PartNumber int32                    Part number of the object being read.
       --Range string                        HeadObject returns only the metadata for an object.
       --RequestPayer string                 Confirms that the requester knows that they will be charged for the request.
