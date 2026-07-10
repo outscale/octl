@@ -75,7 +75,11 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		} else {
 			cols = slices.Clone(cols)
 		}
+		dryRun, _ := fs.GetBool("dry-run")
 		switch {
+		case dryRun:
+			messages.Info("--dry-run is incompatible with the table output format, switching to YAML...")
+			fmter = format.YAML{}
 		case len(cols) == 0:
 			messages.Info("No columns for table, switching to YAML...")
 			fmter = format.YAML{}

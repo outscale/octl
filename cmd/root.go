@@ -76,6 +76,7 @@ func init() {
 	rootCmd.PersistentFlags().String("payload", "", "JSON content for query body")
 	rootCmd.PersistentFlags().String("root", "", "the root attribute for the template or payload")
 	_ = rootCmd.PersistentFlags().MarkHidden("root")
+	rootCmd.PersistentFlags().Bool("dry-run", false, "Display the request payload that would be sent to the API without sending it")
 
 	rootCmd.PersistentFlags().String("jq", "", "jq filter")
 	rootCmd.PersistentFlags().StringSlice("filter", nil, `comma separated list of filters for results - name:value,name:value, alias for jq filter 'select(.name | tostring | test("value"))'`)

@@ -93,10 +93,20 @@ func doRun[Client any, Error error](cmd *cobra.Command, args []string, cl Client
 	debug.Println("call", cmd.Name())
 	e := cfg.Entities[c.Entity]
 	debug.Println("entity", c.Entity)
-	_, out, err := output.NewFromFlags(cmd.Flags(), "", c.Content, e.Columns, e.Explode, e.Sort)
+	fmter, out, err := output.NewFromFlags(cmd.Flags(), "", c.Content, e.Columns, e.Explode, e.Sort)
 	if err != nil {
 		return err
 	}
+
+	dryRun, _ := cmd.Flags().GetBool("dry-run")
+	if dryRun {
+		arg := callArgs[len(callArgs)-1]
+		if !arg.CanInterface() {
+			messages.ExitErr(errors.New("payload cannot be displayed"))
+		}
+		return fmter.Format(cmd.Context(), os.Stdout, arg.Interface())
+	}
+
 	call := read.FetchPage{
 		Method: reflect.ValueOf(cl).MethodByName(cmd.Name()),
 		Args:   callArgs,
