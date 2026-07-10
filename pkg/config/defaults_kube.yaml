@@ -167,7 +167,7 @@ entities:
     no_aliases: true
 aliases:
 - entity: project
-  use: clusters project_id
+  use: clusters id_or_name
   alias_to: ListClustersByProjectID
   short: alias for api ListClustersByProjectID
   command:
@@ -225,11 +225,11 @@ aliases:
   - name: region
     alias_to: Region
 - entity: project
-  use: nets id
+  use: nets id_or_name
   alias_to: GetProjectNets
   aliases:
   - net
-  short: alias for api GetProjectNets id
+  short: alias for api GetProjectNets id_or_name
   command:
   - api
   - GetProjectNets
@@ -237,8 +237,8 @@ aliases:
   - --output
   - yaml
 - entity: project
-  use: quotas id
-  short: alias for api GetProjectQuotas id
+  use: quotas id_or_name
+  short: alias for api GetProjectQuotas id_or_name
   command:
   - api
   - GetProjectQuotas
@@ -246,11 +246,11 @@ aliases:
   - --output
   - yaml
 - entity: project
-  use: public-ips id
+  use: public-ips id_or_name
   alias_to: GetProjectPublicIps
   aliases:
   - ip
-  short: alias for api GetProjectPublicIps id
+  short: alias for api GetProjectPublicIps id_or_name
   command:
   - api
   - GetProjectPublicIps
@@ -258,12 +258,12 @@ aliases:
   - --output
   - yaml
 - entity: project
-  use: snapshots id
+  use: snapshots id_or_name
   alias_to: GetProjectSnapshots
   aliases:
   - snap
   - snapshot
-  short: alias for api GetProjectSnapshots id
+  short: alias for api GetProjectSnapshots id_or_name
   command:
   - api
   - GetProjectSnapshots
@@ -362,15 +362,22 @@ aliases:
   - name: version
     alias_to: Version
 - entity: cluster
-  use: kubeconfig cluster_name_or_id
+  use: kubeconfig id_or_name
   alias_to: GetKubeconfig
-  short: alias for api GetKubeconfig cluster_name_or_id
+  short: alias for api GetKubeconfig id_or_name
   command:
   - api
   - GetKubeconfig
   - '%0'
   - --output
   - text
+  flags:
+  - name: group
+    alias_to: Group
+  - name: user
+    alias_to: User
+  - name: ttl
+    alias_to: Ttl
 - entity: quota
   use: describe
   aliases:
@@ -383,10 +390,10 @@ aliases:
   - yaml
   - --single
 - entity: cluster
-  use: describe id [id]...
+  use: describe id_or_name [id_or_name]...
   aliases:
   - desc
-  short: alias for api GetCluster  id
+  short: alias for api GetCluster  id_or_name
   command:
   - api
   - GetCluster
@@ -395,10 +402,10 @@ aliases:
   - yaml
   - --single
 - entity: project
-  use: describe id [id]...
+  use: describe id_or_name [id_or_name]...
   aliases:
   - desc
-  short: alias for api GetProject  id
+  short: alias for api GetProject  id_or_name
   command:
   - api
   - GetProject
@@ -407,10 +414,10 @@ aliases:
   - yaml
   - --single
 - entity: publicip
-  use: describe public_ip_id [public_ip_id]...
+  use: describe id_or_name [id_or_name]...
   aliases:
   - desc
-  short: alias for api GetProjectPublicIps  public_ip_id
+  short: alias for api GetProjectPublicIps  id_or_name
   command:
   - api
   - GetProjectPublicIps
@@ -471,12 +478,12 @@ aliases:
   - name: limit
     alias_to: Limit
 - entity: cluster
-  use: delete id [id]...
+  use: delete id_or_name [id_or_name]...
   alias_to: DeleteCluster
   aliases:
   - del
   - rm
-  short: alias for api DeleteCluster  id
+  short: alias for api DeleteCluster  id_or_name
   command:
   - api
   - DeleteCluster
@@ -493,12 +500,12 @@ aliases:
     - table
     - --single
 - entity: project
-  use: delete id [id]...
+  use: delete id_or_name [id_or_name]...
   alias_to: DeleteProject
   aliases:
   - del
   - rm
-  short: alias for api DeleteProject  id
+  short: alias for api DeleteProject  id_or_name
   command:
   - api
   - DeleteProject
@@ -515,9 +522,9 @@ aliases:
     - table
     - --single
 - entity: cluster
-  use: update id [id]...
+  use: update id_or_name [id_or_name]...
   alias_to: UpdateCluster
-  short: alias for api UpdateCluster  id
+  short: alias for api UpdateCluster  id_or_name
   command:
   - api
   - UpdateCluster
@@ -588,9 +595,9 @@ aliases:
   - name: version
     alias_to: Version
 - entity: project
-  use: update id [id]...
+  use: update id_or_name [id_or_name]...
   alias_to: UpdateProject
-  short: alias for api UpdateProject  id
+  short: alias for api UpdateProject  id_or_name
   command:
   - api
   - UpdateProject

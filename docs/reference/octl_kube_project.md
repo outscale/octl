@@ -35,13 +35,13 @@ project commands
 * [octl kube](octl_kube.md)	 - OUTSCALE Kubernetes as a Service (OKS) management
 * [octl kube project clusters](octl_kube_project_clusters.md)	 - alias for api ListClustersByProjectID
 * [octl kube project create](octl_kube_project_create.md)	 - alias for api CreateProject
-* [octl kube project delete](octl_kube_project_delete.md)	 - alias for api DeleteProject  id
-* [octl kube project describe](octl_kube_project_describe.md)	 - alias for api GetProject  id
+* [octl kube project delete](octl_kube_project_delete.md)	 - alias for api DeleteProject  id_or_name
+* [octl kube project describe](octl_kube_project_describe.md)	 - alias for api GetProject  id_or_name
 * [octl kube project list](octl_kube_project_list.md)	 - alias for api ListProjects
-* [octl kube project nets](octl_kube_project_nets.md)	 - alias for api GetProjectNets id
-* [octl kube project public-ips](octl_kube_project_public-ips.md)	 - alias for api GetProjectPublicIps id
-* [octl kube project quotas](octl_kube_project_quotas.md)	 - alias for api GetProjectQuotas id
-* [octl kube project snapshots](octl_kube_project_snapshots.md)	 - alias for api GetProjectSnapshots id
-* [octl kube project update](octl_kube_project_update.md)	 - alias for api UpdateProject  id
+* [octl kube project nets](octl_kube_project_nets.md)	 - alias for api GetProjectNets id_or_name
+* [octl kube project public-ips](octl_kube_project_public-ips.md)	 - alias for api GetProjectPublicIps id_or_name
+* [octl kube project quotas](octl_kube_project_quotas.md)	 - alias for api GetProjectQuotas id_or_name
+* [octl kube project snapshots](octl_kube_project_snapshots.md)	 - alias for api GetProjectSnapshots id_or_name
+* [octl kube project update](octl_kube_project_update.md)	 - alias for api UpdateProject  id_or_name
 * [octl kube project use](octl_kube_project_use.md)	 - Set a default project for cluster commands, reset it without args
 

@@ -1,15 +1,15 @@
 ## octl kube project quotas
 
-alias for api GetProjectQuotas id
+alias for api GetProjectQuotas id_or_name
 
 ### Synopsis
 
-> *alias for api GetProjectQuotas id*
+> *alias for api GetProjectQuotas id_or_name*
 
 
 
 ```
-octl kube project quotas id [flags]
+octl kube project quotas id_or_name [flags]
 ```
 
 ### Options

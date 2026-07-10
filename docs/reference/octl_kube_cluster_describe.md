@@ -1,15 +1,15 @@
 ## octl kube cluster describe
 
-alias for api GetCluster  id
+alias for api GetCluster  id_or_name
 
 ### Synopsis
 
-> *alias for api GetCluster  id*
+> *alias for api GetCluster  id_or_name*
 
 
 
 ```
-octl kube cluster describe id [id]... [flags]
+octl kube cluster describe id_or_name [id_or_name]... [flags]
 ```
 
 ### Options

@@ -1,15 +1,15 @@
 ## octl kube project describe
 
-alias for api GetProject  id
+alias for api GetProject  id_or_name
 
 ### Synopsis
 
-> *alias for api GetProject  id*
+> *alias for api GetProject  id_or_name*
 
 
 
 ```
-octl kube project describe id [id]... [flags]
+octl kube project describe id_or_name [id_or_name]... [flags]
 ```
 
 ### Options

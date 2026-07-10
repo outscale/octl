@@ -1,21 +1,24 @@
 ## octl kube cluster kubeconfig
 
-alias for api GetKubeconfig cluster_name_or_id
+alias for api GetKubeconfig id_or_name
 
 ### Synopsis
 
-> *alias for api GetKubeconfig cluster_name_or_id*
+> *alias for api GetKubeconfig id_or_name*
 
 
 
 ```
-octl kube cluster kubeconfig cluster_name_or_id [flags]
+octl kube cluster kubeconfig id_or_name [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for kubeconfig
+      --group string   
+  -h, --help           help for kubeconfig
+      --ttl string     
+      --user string    
 ```
 
 ### Options inherited from parent commands

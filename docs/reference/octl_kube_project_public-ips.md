@@ -1,15 +1,15 @@
 ## octl kube project public-ips
 
-alias for api GetProjectPublicIps id
+alias for api GetProjectPublicIps id_or_name
 
 ### Synopsis
 
-> *alias for api GetProjectPublicIps id*
+> *alias for api GetProjectPublicIps id_or_name*
 
 
 
 ```
-octl kube project public-ips id [flags]
+octl kube project public-ips id_or_name [flags]
 ```
 
 ### Options

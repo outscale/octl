@@ -1,15 +1,15 @@
 ## octl kube project delete
 
-alias for api DeleteProject  id
+alias for api DeleteProject  id_or_name
 
 ### Synopsis
 
-> *alias for api DeleteProject  id*
+> *alias for api DeleteProject  id_or_name*
 
 Deletes a specific project by its ID. Returns a confirmation of the project deletion.
 
 ```
-octl kube project delete id [id]... [flags]
+octl kube project delete id_or_name [id_or_name]... [flags]
 ```
 
 ### Options

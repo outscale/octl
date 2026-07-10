@@ -75,7 +75,7 @@ contents:
     group: Clusters
 aliases:
 - entity: project
-  use: clusters project_id
+  use: clusters id_or_name
   alias_to: ListClustersByProjectID
   short: alias for api ListClustersByProjectID
   command:
@@ -133,10 +133,10 @@ aliases:
   - name: region
     alias_to: Region
 - entity: project
-  use: nets id
+  use: nets id_or_name
   aliases:
     - net
-  short: alias for api GetProjectNets id
+  short: alias for api GetProjectNets id_or_name
   alias_to: GetProjectNets
   command:
   - api
@@ -145,8 +145,8 @@ aliases:
   - --output
   - yaml
 - entity: project
-  use: quotas id
-  short: alias for api GetProjectQuotas id
+  use: quotas id_or_name
+  short: alias for api GetProjectQuotas id_or_name
   command:
   - api
   - GetProjectQuotas
@@ -154,10 +154,10 @@ aliases:
   - --output
   - yaml
 - entity: project
-  use: public-ips id
+  use: public-ips id_or_name
   aliases:
     - ip
-  short: alias for api GetProjectPublicIps id
+  short: alias for api GetProjectPublicIps id_or_name
   alias_to: GetProjectPublicIps
   command:
   - api
@@ -166,11 +166,11 @@ aliases:
   - --output
   - yaml
 - entity: project
-  use: snapshots id
+  use: snapshots id_or_name
   aliases:
     - snap
     - snapshot
-  short: alias for api GetProjectSnapshots id
+  short: alias for api GetProjectSnapshots id_or_name
   alias_to: GetProjectSnapshots
   command:
   - api
@@ -270,8 +270,8 @@ aliases:
   - name: version
     alias_to: Version
 - entity: cluster
-  use: kubeconfig cluster_name_or_id
-  short: alias for api GetKubeconfig cluster_name_or_id
+  use: kubeconfig id_or_name
+  short: alias for api GetKubeconfig id_or_name
   alias_to: GetKubeconfig
   command:
   - api
