@@ -511,21 +511,19 @@ func TestObjectTagging(t *testing.T) {
 	})
 }
 
-func TestPResign(t *testing.T) {
+func TestPresign(t *testing.T) {
 	sum := sha1.Sum([]byte(t.TempDir()))
 	bucket := hex.EncodeToString(sum[:])
 
-	object := "object.txt"
-	path := file(t, object, hello)
+	_ = run(t, []string{"storage", "bucket", "create", "--bucket", bucket}, nil)
+	defer func() {
+		_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
+	}()
 
-	t.Run("Presigning URL works", func(t *testing.T) {
-		_ = run(t, []string{"storage", "bucket", "create", "--bucket", bucket}, nil)
-		defer func() {
-			_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
-		}()
-
-		var res s3.PutObjectOutput
-		runJSON(t, []string{"storage", "object", "put", object, "--bucket", bucket, "--body", path, "--output", "json"}, nil, &res)
+	t.Run("Presigning GetObject works", func(t *testing.T) {
+		object := "GetObject.txt"
+		path := file(t, object, hello)
+		_ = run(t, []string{"storage", "object", "put", object, "--bucket", bucket, "--body", path, "--output", "json"}, nil)
 		defer func() {
 			_ = run(t, []string{"storage", "object", "del", object, "--bucket", bucket, "-y"}, nil)
 		}()
@@ -544,5 +542,42 @@ func TestPResign(t *testing.T) {
 		require.NoError(t, err)
 		assert.NotEqual(t, http.StatusOK, resp.StatusCode)
 		resp.Body.Close() //nolint
+	})
+
+	t.Run("Presigning PutObject works", func(t *testing.T) {
+		object := "PutObject.txt"
+		out := run(t, []string{"storage", "object", "presign", object, "--bucket", bucket, "--expires", "2s", "--method", "PUT"}, nil)
+		require.True(t, strings.HasPrefix(string(out), "http"))
+
+		req, err := http.NewRequestWithContext(t.Context(), http.MethodPut, string(out), strings.NewReader(hello))
+		require.NoError(t, err)
+		resp, err := http.DefaultClient.Do(req)
+		require.NoError(t, err)
+		assert.Equal(t, http.StatusOK, resp.StatusCode)
+		resp.Body.Close() //nolint
+		defer func() {
+			_ = run(t, []string{"storage", "object", "del", object, "--bucket", bucket, "-y"}, nil)
+		}()
+
+		res := run(t, []string{"storage", "object", "download", object, "--bucket", bucket}, nil)
+		assert.Equal(t, hello, string(res))
+	})
+
+	t.Run("Presigning DeleteObject works", func(t *testing.T) {
+		object := "DeleteObject.txt"
+		path := file(t, object, hello)
+		_ = run(t, []string{"storage", "object", "put", object, "--bucket", bucket, "--body", path, "--output", "json"}, nil)
+
+		out := run(t, []string{"storage", "object", "presign", object, "--bucket", bucket, "--expires", "2s", "--method", "DELETE"}, nil)
+		require.True(t, strings.HasPrefix(string(out), "http"))
+
+		req, err := http.NewRequestWithContext(t.Context(), http.MethodDelete, string(out), nil)
+		require.NoError(t, err)
+		resp, err := http.DefaultClient.Do(req)
+		require.NoError(t, err)
+		assert.Equal(t, http.StatusNoContent, resp.StatusCode)
+		resp.Body.Close() //nolint
+
+		runWithError(t, []string{"storage", "object", "download", object, "--bucket", bucket}, nil)
 	})
 }

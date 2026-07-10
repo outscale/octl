@@ -12,6 +12,7 @@ octl storage object presign key [flags]
       --bucket string      bucket
       --expires duration   URL expiration (e.g. 30s, 1h)
   -h, --help               help for presign
+      --method string      Method used to access the presigned URL (GET, PUT, DELETE) (default "GET")
 ```
 
 ### Options inherited from parent commands
