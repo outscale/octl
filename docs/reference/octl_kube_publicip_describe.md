@@ -1,15 +1,15 @@
 ## octl kube publicip describe
 
-alias for api GetProjectPublicIps  public_ip_id
+alias for api GetProjectPublicIps  id_or_name
 
 ### Synopsis
 
-> *alias for api GetProjectPublicIps  public_ip_id*
+> *alias for api GetProjectPublicIps  id_or_name*
 
 
 
 ```
-octl kube publicip describe public_ip_id [public_ip_id]... [flags]
+octl kube publicip describe id_or_name [id_or_name]... [flags]
 ```
 
 ### Options

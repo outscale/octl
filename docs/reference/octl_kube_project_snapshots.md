@@ -1,15 +1,15 @@
 ## octl kube project snapshots
 
-alias for api GetProjectSnapshots id
+alias for api GetProjectSnapshots id_or_name
 
 ### Synopsis
 
-> *alias for api GetProjectSnapshots id*
+> *alias for api GetProjectSnapshots id_or_name*
 
 
 
 ```
-octl kube project snapshots id [flags]
+octl kube project snapshots id_or_name [flags]
 ```
 
 ### Options

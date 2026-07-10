@@ -1,15 +1,15 @@
 ## octl kube cluster update
 
-alias for api UpdateCluster  id
+alias for api UpdateCluster  id_or_name
 
 ### Synopsis
 
-> *alias for api UpdateCluster  id*
+> *alias for api UpdateCluster  id_or_name*
 
 Updates the configuration of an existing cluster by its ID. The request must include the updated cluster details in the request body. Returns the updated cluster information
 
 ```
-octl kube cluster update id [id]... [flags]
+octl kube cluster update id_or_name [id_or_name]... [flags]
 ```
 
 ### Options

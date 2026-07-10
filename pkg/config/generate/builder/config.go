@@ -24,5 +24,7 @@ type Config struct {
 	RequiredFromFieldPointer bool
 	RequiredFromComment      func(string) bool
 
+	IdFieldInUsage string
+
 	AliasRootPath []string
 }

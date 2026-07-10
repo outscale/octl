@@ -50,6 +50,7 @@ func main() {
 				Usage: "Tags (key=value,key=value)",
 			},
 		},
+		IdFieldInUsage: "id_or_name",
 	}
 
 	sb := builder.NewSpecBuilder(cfg)

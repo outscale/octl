@@ -340,10 +340,7 @@ func (b *MethodBuilder) buildReadAliases() error {
 		return nil
 	}
 	fmt.Println("describe", b.typeName, "idFilter", idFilter)
-	id := lo.SnakeCase(b.entity.Primary)
-	if id == "" {
-		id = "id"
-	}
+	id := b.idFieldInUsage()
 	cmd := []string{
 		"api",
 		b.m.Name,
@@ -421,7 +418,7 @@ func (b *MethodBuilder) buildUpdateAlias(verb string) error {
 		flags = b.buildFlags(req, b.cfg.UpdateFlagPrefixes, []string{idField})
 	}
 	fmt.Println(verb, b.typeName, "idField", idField, "flags", flags.Names())
-	id := lo.SnakeCase(b.entity.Primary)
+	id := b.idFieldInUsage()
 	cmd := []string{
 		"api",
 		b.m.Name,
@@ -460,6 +457,13 @@ func (b *MethodBuilder) guessIDFilter() (string, error) {
 		return "", ErrCantBuild
 	}
 	return fids.Name, nil
+}
+
+func (b *MethodBuilder) idFieldInUsage() string {
+	if b.cfg.IdFieldInUsage != "" {
+		return b.cfg.IdFieldInUsage
+	}
+	return lo.SnakeCase(b.entity.Primary)
 }
 
 func (b *MethodBuilder) buildDeleteAlias() error {
@@ -503,7 +507,7 @@ func (b *MethodBuilder) buildDeleteAlias() error {
 			})
 		}
 	}
-	id := lo.SnakeCase(b.entity.Primary)
+	id := b.idFieldInUsage()
 	cmd := []string{
 		"api",
 		b.m.Name,

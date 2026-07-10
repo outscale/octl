@@ -9,7 +9,7 @@ alias for api ListClustersByProjectID
 
 
 ```
-octl kube project clusters project_id [flags]
+octl kube project clusters id_or_name [flags]
 ```
 
 ### Options

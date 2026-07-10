@@ -41,6 +41,7 @@ func main() {
 
 	cfg := builder.Config{
 		RequiredFromFieldPointer: true,
+		IdFieldInUsage:           "id_or_name",
 	}
 
 	sb := builder.NewSpecBuilder(cfg)

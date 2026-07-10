@@ -1,15 +1,15 @@
 ## octl kube cluster delete
 
-alias for api DeleteCluster  id
+alias for api DeleteCluster  id_or_name
 
 ### Synopsis
 
-> *alias for api DeleteCluster  id*
+> *alias for api DeleteCluster  id_or_name*
 
 Deletes a specific cluster by its ID. Returns confirmation of the deletion.
 
 ```
-octl kube cluster delete id [id]... [flags]
+octl kube cluster delete id_or_name [id_or_name]... [flags]
 ```
 
 ### Options
