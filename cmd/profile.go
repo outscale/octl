@@ -131,12 +131,22 @@ func listProfiles(cmd *cobra.Command, _ []string) {
 }
 
 func currentProfile(cmd *cobra.Command, _ []string) {
+	cf, err := loadConfig(cmd)
+	if err != nil {
+		messages.ExitErr(err)
+	}
 	out, _, err := output.NewFromFlags(cmd.Flags(), "yaml", "", profileColumns, false, true)
 	if err != nil {
 		messages.ExitErr(err)
 	}
-	p := loadProfile(cmd)
-	_ = out.Format(cmd.Context(), os.Stdout, p)
+	prof := *loadProfile(cmd)
+	name, _ := cmd.Flags().GetString("profile")
+	if name == "" {
+		name, _ = lo.FindKeyBy(cf.Profiles, func(name string, p profile.Profile) bool {
+			return prof.AccessKey == p.AccessKey && prof.Region == p.Region
+		})
+	}
+	_ = out.Format(cmd.Context(), os.Stdout, profileEntry{Name: name, Profile: prof, Default: prof.Default})
 }
 
 func addProfile(cmd *cobra.Command, args []string) {
