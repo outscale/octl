@@ -401,5 +401,11 @@ func TestReadConsumptionAggregate(t *testing.T) {
 }
 
 func TestFilterNullValues(t *testing.T) {
-	run(t, []string{"iaas", "image", "ls", "--filter", "AccountAlias:Outscale"}, nil)
+	_ = run(t, []string{"iaas", "image", "ls", "--filter", "AccountAlias:Outscale"}, nil)
+}
+
+func TestDryRun(t *testing.T) {
+	var req osc.ReadVmsRequest
+	runJSON(t, []string{"iaas", "vm", "ls", "--subregion", "foo", "--dry-run", "-o", "json"}, nil, &req)
+	assert.Equal(t, osc.ReadVmsRequest{Filters: &osc.FiltersVm{SubregionNames: &[]string{"foo"}}}, req)
 }
