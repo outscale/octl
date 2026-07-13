@@ -3,14 +3,13 @@ description: Install & configure octl
 inputs:
   version:
     description: 'octl version to install'
-    default: v0.0.28
+    default: v0.0.29
   OSC_ACCESS_KEY:
     description: 'access key'
   OSC_SECRET_KEY:
     description: 'secret key'
   OSC_REGiON:
     description: 'region'
-
 runs:
   using: "composite"
   steps:

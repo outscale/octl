@@ -1,5 +1,30 @@
 # 📜 Changelog
 
+## [v0.0.29](https://github.com/outscale/octl/releases/tag/v0.0.29) - 2026-07-13
+
+### ✨ Added
+* ✨ feat: --dry-run by @jfbus in https://github.com/outscale/octl/pull/248
+* ✨ feat(storage): presigned PutObject/DeleteObject URLs by @jfbus in https://github.com/outscale/octl/pull/247
+### 🛠️ Changed / Refactoring
+* 🚸 ux: fix kube api usage by @jfbus in https://github.com/outscale/octl/pull/241
+* 🚸 ux(profile): add profile name in profile current by @jfbus in https://github.com/outscale/octl/pull/246
+* 🚸 ux(kube): use id_or_name as primary field / missing flags in cluster kubeconfig by @jfbus in https://github.com/outscale/octl/pull/249
+### 📝 Documentation
+* 📝 doc(usage): label required flags by @jfbus in https://github.com/outscale/octl/pull/250
+### 🐛 Fixed
+* 🐛 fix(kubectl): kubectl does not report the kubectl version by @jfbus in https://github.com/outscale/octl/pull/239
+* 🐛 fix: avoid duplicate service group in usage by @jfbus in https://github.com/outscale/octl/pull/240
+* 🐛 fix(version): fix pkg versions in --version by @jfbus in https://github.com/outscale/octl/pull/242
+### 📦 Dependency updates
+* ⬆️ deps(gomod): update module golang.org/x/mod to v0.37.0 by @Open-Source-Bot in https://github.com/outscale/octl/pull/244
+* ⬆️ deps(gomod): update module golang.org/x/tools to v0.47.0 by @Open-Source-Bot in https://github.com/outscale/octl/pull/245
+* ⬆️ deps(gomod): update kubernetes monorepo to v0.36.2 by @Open-Source-Bot in https://github.com/outscale/octl/pull/216
+* ⬆️ deps(gomod): update module github.com/outscale/goutils/sdk to v0.0.5 by @Open-Source-Bot in https://github.com/outscale/octl/pull/251
+* ⬆️ deps(gomod): update module golang.org/x/tools to v0.48.0 by @Open-Source-Bot in https://github.com/outscale/octl/pull/253
+### 🌱 Others
+* 🚀 release v0.0.28 by @jfbus in https://github.com/outscale/octl/pull/233
+
+
 ## [v0.0.28] - 2026-06-29
 
 ### ✨ Added
