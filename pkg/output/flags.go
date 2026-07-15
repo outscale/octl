@@ -114,5 +114,6 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	if out == "raw" {
 		return fmter, &Paginated{Read: read.NewRaw(), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
 	}
-	return fmter, &Paginated{Read: read.NewPaginated(contentField), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
+	maxPages, _ := fs.GetInt("max-pages")
+	return fmter, &Paginated{Read: read.NewPaginated(contentField, maxPages), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
 }

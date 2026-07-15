@@ -16,14 +16,14 @@ import (
 	"github.com/outscale/octl/pkg/output/result"
 )
 
-const MaxPages = 20
-
 type Paginated struct {
+	maxPages     int
 	contentField string
 }
 
-func NewPaginated(contentField string) *Paginated {
+func NewPaginated(contentField string, maxPages int) *Paginated {
 	return &Paginated{
+		maxPages:     maxPages,
 		contentField: contentField,
 	}
 }
@@ -33,7 +33,7 @@ func (p *Paginated) Read(ctx context.Context, fetch FetchPage) iter.Seq[result.R
 	return func(yield func(result.Result) bool) {
 		fetch := fetch
 		idx := 0
-		for range MaxPages {
+		for range p.maxPages {
 			vres := fetch.Call(ctx)
 			if len(vres) == 0 {
 				_ = yield(result.Result{Error: errors.New("no result from call")})

@@ -86,6 +86,8 @@ func init() {
 	rootCmd.PersistentFlags().Duration("interval", 5*time.Second, "interval between two watch/waitfor iterations")
 	rootCmd.PersistentFlags().Duration("waitfor-timeout", 10*time.Minute, "maximum duration of a wait")
 
+	rootCmd.PersistentFlags().Int("max-pages", 20, "maximum number of pages a command can fetch")
+
 	rootCmd.PersistentFlags().StringP("columns", "c", "", "columns to display - [+]<title>:<jq query for content>||<title>:<jq query for content>")
 	rootCmd.PersistentFlags().StringP("output", "o", "", "output format (raw, json, yaml, table, csv, none, base64, text)")
 	rootCmd.PersistentFlags().StringP("out-file", "O", "", "redirect output to file")

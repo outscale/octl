@@ -29,6 +29,7 @@ octl iaas api DeleteVms [flags]
       --filter strings             comma separated list of filters for results - name:value,name:value, alias for jq filter 'select(.name | tostring | test("value"))'
       --interval duration          interval between two watch/waitfor iterations (default 5s)
       --jq string                  jq filter
+      --max-pages int              maximum number of pages a command can fetch (default 20)
       --no-upgrade                 do not check for new versions
   -O, --out-file string            redirect output to file
   -o, --output string              output format (raw, json, yaml, table, csv, none, base64, text)
