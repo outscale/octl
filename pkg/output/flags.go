@@ -14,6 +14,7 @@ import (
 	"github.com/outscale/octl/pkg/output/filter"
 	"github.com/outscale/octl/pkg/output/format"
 	"github.com/outscale/octl/pkg/output/read"
+	"github.com/outscale/octl/pkg/watch"
 	"github.com/spf13/pflag"
 )
 
@@ -22,10 +23,15 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	if fout != "" {
 		out = fout
 	}
-	if out == "" {
+	out = strings.ToLower(out)
+	doWatch, _ := fs.GetBool("watch")
+	switch {
+	case doWatch && out != "table" && out != "csv":
+		messages.Info("Switching to table...")
+		out = "table"
+	case out == "":
 		out = "raw"
 	}
-	out = strings.ToLower(out)
 
 	var filters []filter.Interface
 	filts, _ := fs.GetStringSlice("filter")
@@ -95,9 +101,13 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		return nil, nil, fmt.Errorf("unknown format %q", out)
 	}
 
-	single, _ := fs.GetBool("single")
-	if single {
-		fmter = format.Single{ForFormat: fmter}
+	if doWatch {
+		fmter = watch.NewFormat(fmter)
+	} else { // single breaks --watch
+		single, _ := fs.GetBool("single")
+		if single {
+			fmter = format.Single{ForFormat: fmter}
+		}
 	}
 
 	writeTo, _ := fs.GetString("out-file")

@@ -81,9 +81,10 @@ func init() {
 	rootCmd.PersistentFlags().String("jq", "", "jq filter")
 	rootCmd.PersistentFlags().StringSlice("filter", nil, `comma separated list of filters for results - name:value,name:value, alias for jq filter 'select(.name | tostring | test("value"))'`)
 
-	rootCmd.PersistentFlags().String("waitfor", "", `jq expression to wait for - octl will query every waitfor-interval until the expression returns 1/true or a non empty result`)
-	rootCmd.PersistentFlags().Duration("waitfor-interval", 5*time.Second, `interval between two waitfor iterations`)
-	rootCmd.PersistentFlags().Duration("waitfor-timeout", 10*time.Minute, `maximum duration of a wait`)
+	rootCmd.PersistentFlags().Bool("watch", false, "repeatedly call the API and display changes")
+	rootCmd.PersistentFlags().String("waitfor", "", "repeatedly call the API until the specified jq expression returns 1/true or a non empty result")
+	rootCmd.PersistentFlags().Duration("interval", 5*time.Second, "interval between two watch/waitfor iterations")
+	rootCmd.PersistentFlags().Duration("waitfor-timeout", 10*time.Minute, "maximum duration of a wait")
 
 	rootCmd.PersistentFlags().StringP("columns", "c", "", "columns to display - [+]<title>:<jq query for content>||<title>:<jq query for content>")
 	rootCmd.PersistentFlags().StringP("output", "o", "", "output format (raw, json, yaml, table, csv, none, base64, text)")

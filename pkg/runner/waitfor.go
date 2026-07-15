@@ -30,7 +30,7 @@ func waitfor[Client any, Error error](cmd *cobra.Command, args []string, cl Clie
 	tmout, _ := cmd.Flags().GetDuration("waitfor-timeout")
 	ctx, cancel := context.WithTimeout(cmd.Context(), tmout)
 	defer cancel()
-	interval, _ := cmd.Flags().GetDuration("waitfor-interval")
+	interval, _ := cmd.Flags().GetDuration("interval")
 	for {
 		select {
 		case <-ctx.Done():

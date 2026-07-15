@@ -6,27 +6,20 @@ SPDX-License-Identifier: BSD-3-Clause
 package runner
 
 import (
-	"bytes"
-	"encoding/json"
+	"context"
 	"errors"
 	"fmt"
-	"io"
 	"os"
 	"reflect"
-	"strconv"
-	"strings"
-	"time"
 
 	"github.com/outscale/octl/pkg/config"
 	"github.com/outscale/octl/pkg/debug"
-	"github.com/outscale/octl/pkg/flags"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/output"
 	"github.com/outscale/octl/pkg/output/read"
 	"github.com/outscale/octl/pkg/style"
-	"github.com/outscale/osc-sdk-go/v3/pkg/iso8601"
+	"github.com/outscale/octl/pkg/watch"
 	"github.com/spf13/cobra"
-	"github.com/spf13/pflag"
 )
 
 func Run[Client any, Error error](cmd *cobra.Command, args []string, cl Client, cfg config.Config) error {
@@ -107,336 +100,28 @@ func doRun[Client any, Error error](cmd *cobra.Command, args []string, cl Client
 		return fmter.Format(cmd.Context(), os.Stdout, arg.Interface())
 	}
 
-	call := read.FetchPage{
-		Method: reflect.ValueOf(cl).MethodByName(cmd.Name()),
-		Args:   callArgs,
-	}
-	err = out.Output(ctx, call)
-	if err != nil {
-		var appErr Error
-		if errors.As(err, &appErr) {
-			_, _ = fmt.Fprintln(os.Stderr, style.Error.Render("The server returned an error"))
-			_ = out.Error(ctx, appErr)
-			os.Exit(1)
-		}
-		return err
+	doWatch, _ := cmd.Flags().GetBool("watch")
+	if doWatch {
+		interval, _ := cmd.Flags().GetDuration("interval")
+		err = watch.Run[Error](cmd.Context(), fmter, func(ctx context.Context) error {
+			return runSingle[Client, Error](ctx, cl, cmd.Name(), callArgs, out)
+		}, interval)
+	} else {
+		err = runSingle[Client, Error](cmd.Context(), cl, cmd.Name(), callArgs, out)
 	}
 
-	return nil
-}
-
-func ToStruct(cmd *cobra.Command, arg reflect.Value, prefix string) error {
-	fs := cmd.Flags()
-	var (
-		err    error
-		r      io.Reader
-		source string
-	)
-	if payload, ferr := cmd.Flags().GetString("payload"); ferr == nil && payload != "" {
-		if root, ferr := cmd.Flags().GetString("root"); ferr == nil && root != "" {
-			r = strings.NewReader(`{"` + root + `":` + payload + `}`)
-		} else {
-			r = strings.NewReader(payload)
-		}
-		source = "payload"
-	} else if tpl, ferr := cmd.Flags().GetString("template"); ferr == nil && tpl != "" {
-		var rc io.ReadCloser
-		rc, err = os.Open(tpl) //nolint:gosec
-		if err == nil {
-			defer rc.Close() //nolint
-		}
-		r = rc
-		if root, ferr := cmd.Flags().GetString("root"); ferr == nil && root != "" {
-			buf, err := io.ReadAll(r)
-			if err != nil {
-				return err
-			}
-			r = bytes.NewBufferString(`{"` + root + `":` + string(buf) + `}`)
-		}
-		source = "template file"
-	} else if stdin, ok := Stdin(); ok {
-		r = bytes.NewReader(stdin)
-		source = "standard input"
+	if appErr, ok := errors.AsType[Error](err); ok {
+		_, _ = fmt.Fprintln(os.Stderr, style.Error.Render("The server returned an error"))
+		_ = out.Error(ctx, appErr)
+		os.Exit(1)
 	}
-	if r != nil {
-		parg := arg
-		if arg.Kind() != reflect.Pointer {
-			parg = parg.Addr()
-		}
-		dec := json.NewDecoder(r)
-		dec.DisallowUnknownFields()
-		err := dec.Decode(parg.Interface())
-		if err == nil {
-			messages.Info("Using %s as request payload", source)
-		} else {
-			debug.Println("unable to inject", source, "into", arg.Type().Name(), err)
-		}
-	}
-	if err == nil {
-		fs.VisitAll(func(f *pflag.Flag) {
-			if f.Changed { // skipping default values
-				debug.Println(f.Name, "=>", f.Value)
-				if serr := set(arg, fs, f.Name, f.Name); serr != nil {
-					err = serr
-				}
-			}
-		})
-	}
-	// apply hooks
-	if hooks, _ := fs.GetStringSlice("hooks"); len(hooks) > 0 {
-		applyHooks(arg, hooks)
-	}
-	debug.Println(fmt.Sprintf("ToStruct result: %+v", reflect.Indirect(arg).Interface()))
 	return err
 }
 
-func set(arg reflect.Value, fs *pflag.FlagSet, flag, path string) error {
-	if arg.Kind() == reflect.Pointer && arg.IsNil() {
-		debug.Println("allocating")
-		arg.Set(reflect.New(arg.Type().Elem()))
+func runSingle[Client any, Error error](ctx context.Context, cl Client, callName string, callArgs []reflect.Value, out output.Outputter) error {
+	call := read.FetchPage{
+		Method: reflect.ValueOf(cl).MethodByName(callName),
+		Args:   callArgs,
 	}
-	arg = reflect.Indirect(arg)
-	if path == "" {
-		return setValue(arg, fs, flag)
-	}
-	debug.Println("set", path, "on", arg.Type().Name())
-	before, after, _ := strings.Cut(path, ".")
-	switch arg.Kind() {
-	case reflect.Struct:
-		return set(arg.FieldByName(before), fs, flag, after)
-	case reflect.Slice:
-		idx, err := strconv.Atoi(before)
-		if err != nil {
-			return fmt.Errorf("invalid array index %s in %s", before, path)
-		}
-		for arg.Len() < idx+1 {
-			arg.Set(reflect.Append(arg, reflect.New(arg.Type().Elem()).Elem()))
-		}
-		return set(arg.Index(idx), fs, flag, after)
-	case reflect.Pointer:
-		arg.Set(reflect.New(arg.Type().Elem()))
-		arg = reflect.Indirect(arg)
-		return set(arg, fs, flag, path)
-	default:
-		return fmt.Errorf("invalid kind %v for %s in %s", arg.Kind(), before, flag)
-	}
-}
-
-func setValue(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	debug.Println("setValue " + flag + " " + arg.Kind().String())
-	switch arg.Kind() {
-	case reflect.Slice:
-		switch arg.Type().Elem().Kind() {
-		case reflect.Bool:
-			return setValueBoolSlice(arg, fs, flag)
-		case reflect.Int:
-			return setValueIntSlice(arg, fs, flag)
-		case reflect.String:
-			return setValueStringSlice(arg, fs, flag)
-		case reflect.Struct:
-			return setValueStructSlice(arg, fs, flag)
-		default:
-			debug.Println("invalid slice kind", arg.Elem().Kind())
-		}
-	case reflect.Interface:
-		return setValueInterface(arg, fs, flag)
-	case reflect.Struct:
-		return setValueStruct(arg, fs, flag)
-	case reflect.Bool:
-		return setValueBool(arg, fs, flag)
-	case reflect.Int:
-		return setValueInt(arg, fs, flag)
-	case reflect.Int32:
-		return setValueInt32(arg, fs, flag)
-	case reflect.Int64:
-		return setValueInt64(arg, fs, flag)
-	case reflect.String:
-		return setValueString(arg, fs, flag)
-	case reflect.Map:
-		return setValueMap(arg, fs, flag)
-	}
-	return nil
-}
-
-func setValueBool(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetBool(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueBool", flag, ss)
-	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
-	return nil
-}
-
-func setValueBoolSlice(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetBoolSlice(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueBoolSlice", flag, ss)
-	narg := reflect.MakeSlice(arg.Type(), len(ss), len(ss))
-	for i, s := range ss {
-		narg.Index(i).Set(reflect.ValueOf(s).Convert(arg.Type().Elem()))
-	}
-	arg.Set(narg)
-	return nil
-}
-
-func setValueInt(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetInt(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueInt", flag, ss)
-	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
-	return nil
-}
-
-func setValueIntSlice(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetIntSlice(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueIntSlice", flag, ss)
-	narg := reflect.MakeSlice(arg.Type(), len(ss), len(ss))
-	for i, s := range ss {
-		narg.Index(i).Set(reflect.ValueOf(s).Convert(arg.Type().Elem()))
-	}
-	arg.Set(narg)
-	return nil
-}
-
-func setValueInt32(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetInt32(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueInt32", flag, ss)
-	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
-	return nil
-}
-
-func setValueInt64(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetInt64(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueInt64", flag, ss)
-	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
-	return nil
-}
-
-func setValueString(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetString(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueString", flag, ss)
-	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
-	return nil
-}
-
-func setValueStringSlice(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetStringSlice(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueStringSlice", flag, ss)
-	narg := reflect.MakeSlice(arg.Type(), len(ss), len(ss))
-	for i, s := range ss {
-		narg.Index(i).Set(reflect.ValueOf(s).Convert(arg.Type().Elem()))
-	}
-	arg.Set(narg)
-	return nil
-}
-
-func setValueStruct(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	_, ok := fs.Lookup(flag).Value.(*flags.TimeValue)
-	if ok {
-		return setValueStructTime(arg, fs, flag)
-	}
-	if arg.Type().Implements(reflect.TypeFor[json.Unmarshaler]()) {
-		return setValueStructJSON(arg, fs, flag)
-	}
-	debug.Println("unable to set struct value", flag)
-	debug.Println("flag value", reflect.TypeOf(fs.Lookup(flag).Value).Elem().Name())
-	return nil
-}
-
-func setValueStructTime(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	val, ok := fs.Lookup(flag).Value.(*flags.TimeValue)
-	if !ok {
-		return nil
-	}
-	debug.Println("setValueStructTime", flag, val.String())
-	if t, ok := val.Value(); ok {
-		switch arg.Type() {
-		case reflect.TypeFor[iso8601.Time]():
-			arg.Set(reflect.ValueOf(t))
-		case reflect.TypeFor[time.Time]():
-			arg.Set(reflect.ValueOf(t.Time))
-		default:
-			return fmt.Errorf("unsupported time format for %s", flag)
-		}
-	}
-	return nil
-}
-
-func setValueStructJSON(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetString(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueStructJSON", flag, ss)
-	v := reflect.New(arg.Type()).Interface()
-	err = json.Unmarshal([]byte(`"`+ss+`"`), v)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	arg.Set(reflect.ValueOf(v).Elem())
-	return nil
-}
-
-func setValueStructSlice(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	if !reflect.PointerTo(arg.Type().Elem()).Implements(reflect.TypeFor[json.Unmarshaler]()) {
-		return nil
-	}
-	ss, err := fs.GetStringSlice(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueStructSlice/JSON", flag, ss)
-	narg := reflect.MakeSlice(arg.Type(), len(ss), len(ss))
-	for i, s := range ss {
-		v := reflect.New(arg.Type().Elem()).Interface()
-		err = json.Unmarshal([]byte(`"`+s+`"`), v)
-		if err != nil {
-			return fmt.Errorf("invalid %s value: %w", flag, err)
-		}
-		narg.Index(i).Set(reflect.ValueOf(v).Elem())
-	}
-	arg.Set(narg)
-	return nil
-}
-
-func setValueInterface(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	rv, ok := fs.Lookup(flag).Value.(*flags.ReaderValue)
-	if !ok {
-		debug.Println("unable to set interface value", flag)
-		return nil
-	}
-	debug.Println("setValueInterface", flag)
-	v, _ := rv.Value()
-	arg.Set(reflect.ValueOf(v))
-	return nil
-}
-
-func setValueMap(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
-	ss, err := fs.GetStringToString(flag)
-	if err != nil {
-		return fmt.Errorf("invalid %s value: %w", flag, err)
-	}
-	debug.Println("setValueMap", flag, ss)
-	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
-	return nil
+	return out.Output(ctx, call)
 }

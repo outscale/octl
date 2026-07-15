@@ -18,4 +18,4 @@ or returning a list:
 octl iaas vm list --waitfor 'length==6'
 ```
 
-By default, waitfor runs the query every 10 seconds (configured by `--waitfor-interval`) and timeouts at 10 minutes (configured by `--waitfor-timeout`).
+By default, waitfor runs the query every 10 seconds (configured by `--interval`) and timeouts at 10 minutes (configured by `--waitfor-timeout`).

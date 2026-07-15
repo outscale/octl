@@ -377,7 +377,7 @@ func TestWaitFor(t *testing.T) {
 	_ = run(t, []string{"iaas", "vm", "describe", vm.VmId, "--waitfor", `.State=="running"`}, nil)
 	runJSON(t, []string{"iaas", "vm", "describe", vm.VmId, "-o", "json"}, nil, &vm)
 	assert.Equal(t, osc.VmStateRunning, vm.State)
-	runWithError(t, []string{"iaas", "vm", "describe", vm.VmId, "--waitfor", `.State=="invalid state"`, "--waitfor-timeout", "10s", "--waitfor-interval", "5s"}, nil)
+	runWithError(t, []string{"iaas", "vm", "describe", vm.VmId, "--waitfor", `.State=="invalid state"`, "--waitfor-timeout", "10s", "--interval", "5s"}, nil)
 }
 
 func TestReadCatalog(t *testing.T) {
