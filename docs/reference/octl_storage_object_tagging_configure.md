@@ -24,6 +24,7 @@ octl storage object tagging configure key [flags]
 ### Options inherited from parent commands
 
 ```
+      --color-by string             color lines by this item (JQ syntax)
   -c, --columns string              columns to display - [+]<title>:<jq query for content>||<title>:<jq query for content>
       --config string               Path of profile file (by default, ~/.osc/config.json)
       --dry-run                     Display the request payload that would be sent to the API without sending it

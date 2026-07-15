@@ -89,6 +89,7 @@ func init() {
 	rootCmd.PersistentFlags().StringP("output", "o", "", "output format (raw, json, yaml, table, csv, none, base64, text)")
 	rootCmd.PersistentFlags().StringP("out-file", "O", "", "redirect output to file")
 	rootCmd.PersistentFlags().Bool("single", false, "convert single entry lists to a single object")
+	rootCmd.PersistentFlags().String("color-by", "", "color lines by this item (JQ syntax)")
 
 	rootCmd.PersistentFlags().Bool("no-upgrade", false, "do not check for new versions")
 	rootCmd.PersistentFlags().BoolP("yes", "y", false, "answer yes to all prompts")

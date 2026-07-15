@@ -45,6 +45,17 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		}
 		filters = append(filters, jqf)
 	}
+	color, _ := fs.GetString("color-by")
+	if color != "" {
+		colorf, err := filter.NewColor(color)
+		if err != nil {
+			return nil, nil, err
+		}
+		filters = append(filters, colorf)
+	}
+	if len(filters) > 0 {
+		filters = slices.Insert(filters, 0, filter.Interface(filter.JSON{}))
+	}
 
 	var fmter format.Interface
 	switch out {
