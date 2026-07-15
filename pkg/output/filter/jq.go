@@ -6,7 +6,6 @@ package filter
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"iter"
 
@@ -21,7 +20,7 @@ type JQ struct {
 func NewJQ(s string) (JQ, error) {
 	query, err := gojq.Parse(s)
 	if err != nil {
-		return JQ{}, fmt.Errorf("parse jq filter: %w", err)
+		return JQ{}, fmt.Errorf("invalid jq filter: %w", err)
 	}
 	return JQ{query: query}, nil
 }
@@ -33,18 +32,7 @@ func (j JQ) Filter(ctx context.Context, seq iter.Seq[result.Result]) iter.Seq[re
 				_ = yield(v)
 				return
 			}
-			buf, err := json.Marshal(v.Ok)
-			if err != nil {
-				_ = yield(result.Result{Error: fmt.Errorf("jq to JSON: %w", err)})
-				return
-			}
-			var raw any
-			err = json.Unmarshal(buf, &raw)
-			if err != nil {
-				_ = yield(result.Result{Error: fmt.Errorf("jq from JSON: %w", err)})
-				return
-			}
-			iter := j.query.RunWithContext(ctx, raw)
+			iter := j.query.RunWithContext(ctx, v.Ok)
 			for {
 				v, ok := iter.Next()
 				if !ok {

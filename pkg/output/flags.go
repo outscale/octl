@@ -45,6 +45,9 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		}
 		filters = append(filters, jqf)
 	}
+	if len(filters) > 0 {
+		filters = slices.Insert(filters, 0, filter.Interface(filter.JSON{}))
+	}
 
 	var fmter format.Interface
 	switch out {
