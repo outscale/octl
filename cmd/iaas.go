@@ -49,6 +49,9 @@ func oapi(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
 	cl, err := osc.NewClient(p, sdkOptions(cmd)...)
 	if err == nil {
+		err = deviceToVolumeID(cmd, cl)
+	}
+	if err == nil {
 		err = runner.Run[*osc.Client, *osc.ErrorResponse](cmd, args, cl, config.For("iaas"))
 	}
 	if err != nil {

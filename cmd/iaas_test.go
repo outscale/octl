@@ -419,3 +419,10 @@ func TestReverse(t *testing.T) {
 	slices.Reverse(reverse)
 	assert.Equal(t, imgs, reverse)
 }
+
+func TestVolumeByDeviceName(t *testing.T) {
+	var resp osc.Volume
+	runJSON(t, []string{"iaas", "vol", "desc", "/dev/sda1", "-o", "json"}, nil, &resp)
+	require.Len(t, resp.LinkedVolumes, 1)
+	assert.Equal(t, "/dev/sda1", resp.LinkedVolumes[0].DeviceName)
+}

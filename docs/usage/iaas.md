@@ -80,3 +80,13 @@ The API can be directly called, with a `raw` output:
 ```sh
 octl iaas api ReadVms --Filters.VmStateNames running
 ```
+
+## Referencing volumes on the local machine
+
+When running octl on a VM, you can reference the volume attached to the local VM by device name:
+```sh
+octl iaas vol desc /dev/xvdb
+```
+```sh
+octl iaas snap create --volume-id /dev/xvdb
+```
