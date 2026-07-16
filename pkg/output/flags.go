@@ -51,6 +51,10 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		}
 		filters = append(filters, jqf)
 	}
+	reverse, _ := fs.GetBool("reverse")
+	if reverse {
+		filters = append(filters, filter.Reverse{})
+	}
 	if len(filters) > 0 {
 		filters = slices.Insert(filters, 0, filter.Interface(filter.JSON{}))
 	}

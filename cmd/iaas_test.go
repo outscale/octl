@@ -15,6 +15,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 	"testing"
 	"time"
 
@@ -408,4 +409,13 @@ func TestDryRun(t *testing.T) {
 	var req osc.ReadVmsRequest
 	runJSON(t, []string{"iaas", "vm", "ls", "--subregion", "foo", "--dry-run", "-o", "json"}, nil, &req)
 	assert.Equal(t, osc.ReadVmsRequest{Filters: &osc.FiltersVm{SubregionNames: &[]string{"foo"}}}, req)
+}
+
+func TestReverse(t *testing.T) {
+	var imgs []string
+	runJSON(t, []string{"iaas", "image", "ls", "--jq", ".ImageId", "-o", "json"}, nil, &imgs)
+	var reverse []string
+	runJSON(t, []string{"iaas", "image", "ls", "--jq", ".ImageId", "--reverse", "-o", "json"}, nil, &reverse)
+	slices.Reverse(reverse)
+	assert.Equal(t, imgs, reverse)
 }

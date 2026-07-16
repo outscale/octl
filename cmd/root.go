@@ -80,6 +80,8 @@ func init() {
 
 	rootCmd.PersistentFlags().String("jq", "", "jq filter")
 	rootCmd.PersistentFlags().StringSlice("filter", nil, `comma separated list of filters for results - name:value,name:value, alias for jq filter 'select(.name | tostring | test("value"))'`)
+	rootCmd.PersistentFlags().Bool("reverse", false, "reverse the order of results")
+	_ = rootCmd.PersistentFlags().MarkHidden("reverse")
 
 	rootCmd.PersistentFlags().Bool("watch", false, "repeatedly call the API and display changes")
 	rootCmd.PersistentFlags().String("waitfor", "", "repeatedly call the API until the specified jq expression returns 1/true or a non empty result")
