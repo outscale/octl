@@ -6,7 +6,9 @@ import (
 	"crypto/sha1" //nolint
 	"encoding/json"
 	"io"
+	"maps"
 	"reflect"
+	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/outscale/octl/pkg/output/format"
@@ -69,7 +71,18 @@ func (m *Format) Format(ctx context.Context, w io.Writer, v any) error {
 	ndedup := make(map[[sha1.Size]byte]struct{})
 	for i := range vv.Len() {
 		// skip if present in last call
-		buf, err := json.Marshal(vv.Index(i).Interface())
+		e := vv.Index(i).Interface()
+		// filter out fields unused for dedup
+		if me, ok := e.(map[string]any); ok {
+			me := maps.Clone(me)
+			for k := range me {
+				if strings.HasPrefix(k, "_") {
+					delete(me, k)
+				}
+			}
+			e = me
+		}
+		buf, err := json.Marshal(e)
 		if err == nil {
 			hash := sha1.Sum(buf) //nolint
 			ndedup[hash] = struct{}{}

@@ -84,6 +84,7 @@ func init() {
 	_ = rootCmd.PersistentFlags().MarkHidden("reverse")
 
 	rootCmd.PersistentFlags().Bool("watch", false, "repeatedly call the API and display changes")
+	rootCmd.PersistentFlags().Bool("elapsed", true, "add elapsed time column when using --watch")
 	rootCmd.PersistentFlags().String("waitfor", "", "repeatedly call the API until the specified jq expression returns 1/true or a non empty result")
 	rootCmd.PersistentFlags().Duration("interval", 5*time.Second, "interval between two watch/waitfor iterations")
 	rootCmd.PersistentFlags().Duration("waitfor-timeout", 10*time.Minute, "maximum duration of a wait")

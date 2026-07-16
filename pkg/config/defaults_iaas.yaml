@@ -2007,6 +2007,7 @@ aliases:
   - '20'
   - --reverse
   - --watch
+  - --elapsed=false
   flags:
   - name: access-key
     alias_to: Filters.QueryAccessKeys

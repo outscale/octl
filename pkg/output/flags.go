@@ -25,6 +25,7 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	}
 	out = strings.ToLower(out)
 	doWatch, _ := fs.GetBool("watch")
+	elapsed, _ := fs.GetBool("elapsed")
 	switch {
 	case doWatch && out != "table" && out != "csv":
 		messages.Info("Switching to table...")
@@ -34,6 +35,9 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	}
 
 	var filters []filter.Interface
+	if doWatch && elapsed {
+		filters = append(filters, filter.NewElapsed())
+	}
 	filts, _ := fs.GetStringSlice("filter")
 	for _, filt := range filts {
 		name, value, _ := strings.Cut(filt, ":")
@@ -87,6 +91,9 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 			}
 		} else {
 			cols = slices.Clone(cols)
+		}
+		if doWatch && elapsed {
+			cols = append(cols, config.Column{Title: "Elapsed", Content: "._elapsed"})
 		}
 		dryRun, _ := fs.GetBool("dry-run")
 		switch {

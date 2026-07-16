@@ -26,6 +26,7 @@ octl [flags]
   -c, --columns string             columns to display - [+]<title>:<jq query for content>||<title>:<jq query for content>
       --config string              Path of profile file (by default, ~/.osc/config.json)
       --dry-run                    Display the request payload that would be sent to the API without sending it
+      --elapsed                    add elapsed time column when using --watch (default true)
       --filter strings             comma separated list of filters for results - name:value,name:value, alias for jq filter 'select(.name | tostring | test("value"))'
   -h, --help                       help for octl
       --interval duration          interval between two watch/waitfor iterations (default 5s)
