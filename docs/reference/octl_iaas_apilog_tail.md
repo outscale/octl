@@ -1,11 +1,35 @@
-## octl iaas apilog
+## octl iaas apilog tail
 
-apilog commands
+alias for api ReadApiLogs
+
+### Synopsis
+
+> *alias for api ReadApiLogs*
+
+Lists the logs of the API calls you have performed with this OUTSCALE account.
+
+**[IMPORTANT]**
+
+Past logs are accessible for up to 32 days.
+
+By default, the retrieved interval is 48 hours. If neither of the `QueryDateBefore` nor `QueryDateAfter` parameters are specified, logs from the past 48 hours are retrieved. If you only specify one of two, logs are retrieved from a 2-day interval based on the date you provided. To retrieve logs beyond a 2-day interval, specify both parameters.
+
+For more information, see [About OMS](https://docs.outscale.com/en/userguide/About-OMS.html).
+
+```
+octl iaas apilog tail [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for apilog
+      --access-key strings   The access keys used for the logged calls.
+      --api strings          The names of the APIs of the logged calls (always oapi for the OUTSCALE API).
+      --call strings         The names of the logged calls.
+  -h, --help                 help for tail
+      --ip strings           The IPs used for the logged calls.
+      --status ints          The HTTP status codes of the logged calls.
+      --user-agent strings   The user agents of the HTTP requests of the logged calls.
 ```
 
 ### Options inherited from parent commands
@@ -34,7 +58,5 @@ apilog commands
 
 ### SEE ALSO
 
-* [octl iaas](octl_iaas.md)	 - OUTSCALE IaaS management
-* [octl iaas apilog list](octl_iaas_apilog_list.md)	 - alias for api ReadApiLogs
-* [octl iaas apilog tail](octl_iaas_apilog_tail.md)	 - alias for api ReadApiLogs
+* [octl iaas apilog](octl_iaas_apilog.md)	 - apilog commands
 

@@ -878,14 +878,18 @@ entities:
     columns:
     - title: Date
       content: .QueryDate
-    - title: UserAgent
-      content: .QueryUserAgent
+    - title: IP
+      content: .QueryIpAddress
     - title: Call
       content: .QueryCallName
     - title: Payload
       content: .QueryPayloadRaw
     - title: Status
       content: .ResponseStatusCode
+    - title: Request ID
+      content: .RequestId
+    - title: UserAgent
+      content: .QueryUserAgent
   ca:
     columns:
     - title: ID
@@ -1958,6 +1962,64 @@ aliases:
   - name: to-date
     alias_to: ToDate
     default: today
+- entity: apilog
+  use: list
+  alias_to: ReadApiLogs
+  aliases:
+  - ls
+  short: alias for api ReadApiLogs
+  command:
+  - api
+  - ReadApiLogs
+  - --output
+  - table
+  flags:
+  - name: access-key
+    alias_to: Filters.QueryAccessKeys
+  - name: api
+    alias_to: Filters.QueryApiNames
+  - name: call
+    alias_to: Filters.QueryCallNames
+  - name: after
+    alias_to: Filters.QueryDateAfter
+  - name: before
+    alias_to: Filters.QueryDateBefore
+  - name: ip
+    alias_to: Filters.QueryIpAddresses
+  - name: user-agent
+    alias_to: Filters.QueryUserAgents
+  - name: request-id
+    alias_to: Filters.RequestIds
+  - name: status
+    alias_to: Filters.ResponseStatusCodes
+- entity: apilog
+  use: tail
+  alias_to: ReadApiLogs
+  short: alias for api ReadApiLogs
+  command:
+  - api
+  - ReadApiLogs
+  - --output
+  - table
+  - --max-pages
+  - '1'
+  - --ResultsPerPage
+  - '20'
+  - --reverse
+  - --watch
+  flags:
+  - name: access-key
+    alias_to: Filters.QueryAccessKeys
+  - name: api
+    alias_to: Filters.QueryApiNames
+  - name: call
+    alias_to: Filters.QueryCallNames
+  - name: ip
+    alias_to: Filters.QueryIpAddresses
+  - name: user-agent
+    alias_to: Filters.QueryUserAgents
+  - name: status
+    alias_to: Filters.ResponseStatusCodes
 - entity: accesskey
   use: list
   alias_to: ReadAccessKeys
@@ -2063,68 +2125,6 @@ aliases:
   - --output
   - yaml
   - --single
-- entity: apilog
-  use: list
-  alias_to: ReadApiLogs
-  aliases:
-  - ls
-  short: alias for api ReadApiLogs
-  command:
-  - api
-  - ReadApiLogs
-  - --output
-  - table
-  flags:
-  - name: query-access-key
-    alias_to: Filters.QueryAccessKeys
-  - name: query-api-name
-    alias_to: Filters.QueryApiNames
-  - name: query-call-name
-    alias_to: Filters.QueryCallNames
-  - name: query-date-after
-    alias_to: Filters.QueryDateAfter
-  - name: query-date-before
-    alias_to: Filters.QueryDateBefore
-  - name: query-ip-address
-    alias_to: Filters.QueryIpAddresses
-  - name: query-user-agent
-    alias_to: Filters.QueryUserAgents
-  - name: request-id
-    alias_to: Filters.RequestIds
-  - name: response-status-code
-    alias_to: Filters.ResponseStatusCodes
-  - name: with-account-id
-    alias_to: With.AccountId
-  - name: with-call-duration
-    alias_to: With.CallDuration
-  - name: with-query-access-key
-    alias_to: With.QueryAccessKey
-  - name: with-query-api-name
-    alias_to: With.QueryApiName
-  - name: with-query-api-version
-    alias_to: With.QueryApiVersion
-  - name: with-query-call-name
-    alias_to: With.QueryCallName
-  - name: with-query-date
-    alias_to: With.QueryDate
-  - name: with-query-header-raw
-    alias_to: With.QueryHeaderRaw
-  - name: with-query-header-size
-    alias_to: With.QueryHeaderSize
-  - name: with-query-ip-address
-    alias_to: With.QueryIpAddress
-  - name: with-query-payload-raw
-    alias_to: With.QueryPayloadRaw
-  - name: with-query-payload-size
-    alias_to: With.QueryPayloadSize
-  - name: with-query-user-agent
-    alias_to: With.QueryUserAgent
-  - name: with-request-id
-    alias_to: With.RequestId
-  - name: with-response-size
-    alias_to: With.ResponseSize
-  - name: with-response-status-code
-    alias_to: With.ResponseStatusCode
 - entity: co2emissionaccount
   use: list
   alias_to: ReadCO2EmissionAccount

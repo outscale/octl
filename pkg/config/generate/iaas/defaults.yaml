@@ -29,14 +29,18 @@ entities:
     columns:
       - title: Date
         content: .QueryDate
-      - title: UserAgent
-        content: .QueryUserAgent
+      - title: IP
+        content: .QueryIpAddress
       - title: Call
         content: .QueryCallName
       - title: Payload
         content: .QueryPayloadRaw
       - title: Status
         content: .ResponseStatusCode
+      - title: Request ID
+        content: .RequestId
+      - title: UserAgent
+        content: .QueryUserAgent
   catalog:
     explode: true
     sort: true
@@ -829,3 +833,61 @@ aliases:
     - name: to-date
       alias_to: ToDate
       default: today
+  - entity: apilog
+    use: list
+    alias_to: ReadApiLogs
+    aliases:
+    - ls
+    short: alias for api ReadApiLogs
+    command:
+    - api
+    - ReadApiLogs
+    - --output
+    - table
+    flags:
+    - name: access-key
+      alias_to: Filters.QueryAccessKeys
+    - name: api
+      alias_to: Filters.QueryApiNames
+    - name: call
+      alias_to: Filters.QueryCallNames
+    - name: after
+      alias_to: Filters.QueryDateAfter
+    - name: before
+      alias_to: Filters.QueryDateBefore
+    - name: ip
+      alias_to: Filters.QueryIpAddresses
+    - name: user-agent
+      alias_to: Filters.QueryUserAgents
+    - name: request-id
+      alias_to: Filters.RequestIds
+    - name: status
+      alias_to: Filters.ResponseStatusCodes
+  - entity: apilog
+    use: tail
+    alias_to: ReadApiLogs
+    short: alias for api ReadApiLogs
+    command:
+    - api
+    - ReadApiLogs
+    - --output
+    - table
+    - --max-pages
+    - 1
+    - --ResultsPerPage
+    - 20
+    - --reverse
+    - --watch
+    flags:
+    - name: access-key
+      alias_to: Filters.QueryAccessKeys
+    - name: api
+      alias_to: Filters.QueryApiNames
+    - name: call
+      alias_to: Filters.QueryCallNames
+    - name: ip
+      alias_to: Filters.QueryIpAddresses
+    - name: user-agent
+      alias_to: Filters.QueryUserAgents
+    - name: status
+      alias_to: Filters.ResponseStatusCodes
