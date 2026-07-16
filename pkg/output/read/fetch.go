@@ -19,6 +19,26 @@ type FetchPage struct {
 	Args   []reflect.Value
 }
 
+func (f *FetchPage) Clone() FetchPage {
+	nArgs := make([]reflect.Value, len(f.Args))
+	nArgs[0] = f.Args[0] // ctx
+	for i := 1; i < len(f.Args); i++ {
+		if f.Args[i].Kind() == reflect.Pointer {
+			nval := reflect.New(f.Args[i].Type().Elem())
+			nval.Elem().Set(f.Args[i].Elem())
+			nArgs[i] = nval
+		} else {
+			nval := reflect.New(f.Args[i].Type())
+			nval.Elem().Set(f.Args[i])
+			nArgs[i] = nval.Elem()
+		}
+	}
+	return FetchPage{
+		Method: f.Method,
+		Args:   nArgs,
+	}
+}
+
 func (f *FetchPage) Call(ctx context.Context) []reflect.Value {
 	// display a spinner if API call lasts more than 200ms
 	stopSpinner := func() {}

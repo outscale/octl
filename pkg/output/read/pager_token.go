@@ -31,6 +31,7 @@ func (p TokenPager) HasMore(res reflect.Value) bool {
 }
 
 func (p TokenPager) NextItem(res reflect.Value, fetch FetchPage, _ int) (FetchPage, bool) {
+	fetch = fetch.Clone()
 	nextToken := p.nextToken(res)
 	if nextToken == "" {
 		return fetch, false

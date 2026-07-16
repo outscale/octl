@@ -39,6 +39,7 @@ func (OOSPager) nextToken(res reflect.Value) string {
 }
 
 func (p OOSPager) NextItem(res reflect.Value, fetch FetchPage, _ int) (FetchPage, bool) {
+	fetch = fetch.Clone()
 	nextToken := p.nextToken(res)
 	if nextToken == "" {
 		return fetch, false

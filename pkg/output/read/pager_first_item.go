@@ -22,6 +22,7 @@ func (FirstItemPager) HasMore(res reflect.Value) bool {
 }
 
 func (FirstItemPager) NextItem(res reflect.Value, fetch FetchPage, nextIndex int) (FetchPage, bool) {
+	fetch = fetch.Clone()
 	for _, arg := range fetch.Args {
 		arg = reflect.Indirect(arg)
 		if arg.Kind() != reflect.Struct {
