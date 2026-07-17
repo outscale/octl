@@ -1,5 +1,23 @@
 # 📜 Changelog
 
+## [v0.0.30](https://github.com/outscale/octl/releases/tag/v0.0.30) - 2026-07-17
+
+### ✨ Added
+* ✨ feat: add --watch by @jfbus in https://github.com/outscale/octl/pull/263
+* ✨ feat: add --max-pages by @jfbus in https://github.com/outscale/octl/pull/264
+* ✨ feat: add reverse filter by @jfbus in https://github.com/outscale/octl/pull/266
+* ✨ feat(iaas): improve apilog ls + add apilog tail by @jfbus in https://github.com/outscale/octl/pull/267
+* ✨ feat(watch): add elapsed column by @jfbus in https://github.com/outscale/octl/pull/270
+* 🚸 ux(iaas): allow use of device name instead of volume id by @jfbus in https://github.com/outscale/octl/pull/268
+### 🛠️ Changed / Refactoring
+* ♻️ refacto(jq): isolate json conversion filter by @jfbus in https://github.com/outscale/octl/pull/262
+### 🐛 Fixed
+* 🐛 fix(watch): consecutive calls fetched consecutive pages by @jfbus in https://github.com/outscale/octl/pull/265
+* 🧵 fix(watch): avoid potential race by @jfbus in https://github.com/outscale/octl/pull/272
+### 📦 Dependency updates
+* ⬆️ deps(dockerfile): update gcr.io/distroless/static-debian13:debug docker digest to e741251 by @Open-Source-Bot in https://github.com/outscale/octl/pull/254
+
+
 ## [v0.0.29](https://github.com/outscale/octl/releases/tag/v0.0.29) - 2026-07-13
 
 ### ✨ Added
