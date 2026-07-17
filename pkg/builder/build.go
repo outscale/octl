@@ -99,7 +99,7 @@ func (b *Builder[T]) Build(rootCmd, apiCmd *cobra.Command) {
 				nflag := *flag
 				nflag.Name = f.Name
 				if f.Default != "" {
-					nflag.Annotations = map[string][]string{alias.DefaultValue: {f.Default}}
+					alias.SetDefault(&nflag, f.Default)
 				}
 				switch f.Type {
 				case "base64File":

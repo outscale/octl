@@ -21,6 +21,7 @@ octl kube cluster list [flags]
       --limit int        
       --name string      
       --page int         
+      --project string   project name (default "dev")
       --status string    
       --version string   
 ```
@@ -40,7 +41,6 @@ octl kube cluster list [flags]
   -o, --output string              output format (raw, json, yaml, table, csv, none, base64, text)
       --payload string             JSON content for query body
       --profile string             Profile to use in profile file (by default, "default")
-      --project string             project name
       --single                     convert single entry lists to a single object
       --template string            JSON template file for query body
   -v, --verbose                    Verbose output

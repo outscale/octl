@@ -40,11 +40,11 @@ octl kube api UpdateCluster id [flags]
       --MaintenanceWindow.StartHour int                              Hour of the day when maintenance window starts (0-23)
       --MaintenanceWindow.Tz string                                  Timezone for the maintenance window
       --MaintenanceWindow.WeekDay string                             Day of the week for the maintenance window
+      --ProjectId string                                             project name or id (default "dev")
       --Quirks strings                                               
       --Tags stringToString                                           (default [])
       --Version string                                               
   -h, --help                                                         help for UpdateCluster
-      --project string                                               project name
 ```
 
 ### Options inherited from parent commands

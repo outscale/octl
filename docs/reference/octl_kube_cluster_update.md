@@ -43,6 +43,7 @@ octl kube cluster update id_or_name [id_or_name]... [flags]
       --maintenance-window-start-hour int                              Hour of the day when maintenance window starts (0-23)
       --maintenance-window-tz string                                   Timezone for the maintenance window
       --maintenance-window-week-day string                             Day of the week for the maintenance window
+      --project string                                                 project name (default "dev")
       --quirk strings                                                  
       --tags stringToString                                            Tags (key=value,key=value) (default [])
       --version string                                                 
@@ -63,7 +64,6 @@ octl kube cluster update id_or_name [id_or_name]... [flags]
   -o, --output string              output format (raw, json, yaml, table, csv, none, base64, text)
       --payload string             JSON content for query body
       --profile string             Profile to use in profile file (by default, "default")
-      --project string             project name
       --single                     convert single entry lists to a single object
       --template string            JSON template file for query body
   -v, --verbose                    Verbose output

@@ -22,7 +22,44 @@ import (
 	"github.com/spf13/pflag"
 )
 
-const DefaultValue = "default.octl.outscale.com"
+const (
+	defaultValueAnnotation = "default.octl.outscale.com"
+)
+
+func SetDefault(f *pflag.Flag, value string) {
+	f.DefValue = value
+	if f.Annotations == nil {
+		f.Annotations = map[string][]string{}
+	}
+	f.Annotations[defaultValueAnnotation] = []string{value}
+}
+
+func Reset(f *pflag.Flag) {
+	if f == nil {
+		return
+	}
+	f.Changed = false
+	if !HasDefault(f) {
+		return
+	}
+	f.DefValue = ""
+	delete(f.Annotations, defaultValueAnnotation)
+}
+
+func HasDefault(f *pflag.Flag) bool {
+	return f != nil && f.Annotations != nil && len(f.Annotations[defaultValueAnnotation]) > 0
+}
+
+func Default(f *pflag.Flag) string {
+	if f.Annotations == nil {
+		return ""
+	}
+	values, found := f.Annotations[defaultValueAnnotation]
+	if !found || len(values) == 0 {
+		return ""
+	}
+	return values[0]
+}
 
 var prompts = map[config.Action]string{
 	config.ActionDelete: "Are you sure you want to delete these resource(s) ?",
@@ -70,7 +107,7 @@ func runFuncWithPipe(rootPath string, a config.Alias) func(cmd *cobra.Command, a
 func runFuncWithPrompt(rootPath string, a config.Alias) func(cmd *cobra.Command, args []string) {
 	return func(cmd *cobra.Command, args []string) {
 		withUserArgs := userArgs(cmd, a.Flags, false)
-		withoutUserArgs := userArgs(cmd, nil, true)
+		withoutUserArgs := userArgs(cmd, a.Prompt.Flags, true)
 		if yes, _ := cmd.Flags().GetBool("yes"); !yes {
 			if len(a.Prompt.DisplayCommand) > 0 {
 				_ = execAlias(rootPath, a.Prompt.DisplayCommand, withoutUserArgs, cmd, args)
@@ -154,8 +191,8 @@ func userArgs(cmd *cobra.Command, flags config.FlagSet, skipUserFlags bool) []st
 				return
 			}
 			userArgs = append(userArgs, "--"+newFlag+"="+f.Value.String())
-		case f.Annotations != nil && len(f.Annotations[DefaultValue]) > 0:
-			userArgs = append(userArgs, "--"+newFlag+"="+f.Annotations[DefaultValue][0])
+		case HasDefault(f):
+			userArgs = append(userArgs, "--"+newFlag+"="+Default(f))
 		}
 	})
 	return userArgs

@@ -13,8 +13,8 @@ octl kube api GetCluster id [flags]
 ### Options
 
 ```
-  -h, --help             help for GetCluster
-      --project string   project name
+      --ProjectId string   project name or id (default "dev")
+  -h, --help               help for GetCluster
 ```
 
 ### Options inherited from parent commands

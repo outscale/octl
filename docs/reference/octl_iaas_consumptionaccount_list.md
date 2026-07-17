@@ -15,12 +15,12 @@ octl iaas consumptionaccount list [flags]
 ### Options
 
 ```
-      --from-date osctime       The beginning of the time period, in ISO 8601 date format (for example, 2020-06-14).
+      --from-date osctime       The beginning of the time period, in ISO 8601 date format (for example, 2020-06-14). (default beginning-of-month)
   -h, --help                    help for list
       --overall                 If false, returns only the consumption of the specific account that sends this request.
       --show-price              If true, the response also includes the unit price of the consumed resource (UnitPrice) and the total price of the consumed resource during the specified time period (Price), in the currency of the Region's catalog.
       --show-resource-details   By default or if false, returns the consumption aggregated by resource type.
-      --to-date osctime         The end of the time period, in ISO 8601 date format (for example, 2020-06-30).
+      --to-date osctime         The end of the time period, in ISO 8601 date format (for example, 2020-06-30). (default today)
 ```
 
 ### Options inherited from parent commands

@@ -13,8 +13,7 @@ octl kube api UpgradeCluster id [flags]
 ### Options
 
 ```
-  -h, --help             help for UpgradeCluster
-      --project string   project name
+  -h, --help   help for UpgradeCluster
 ```
 
 ### Options inherited from parent commands

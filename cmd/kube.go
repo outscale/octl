@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/outscale/octl/pkg/alias"
 	"github.com/outscale/octl/pkg/builder"
 	"github.com/outscale/octl/pkg/config"
 	"github.com/outscale/octl/pkg/debug"
@@ -49,7 +50,19 @@ func init() {
 
 	// Add --project flag to kube cluster commands
 	clusterCmd, _ := lo.Find(oksCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "cluster" })
-	clusterCmd.PersistentFlags().String("project", preferences.Preferences.Kube.DefaultProject, "project name")
+	for _, cmd := range clusterCmd.Commands() {
+		f := cmd.Flags().Lookup("project")
+		if f == nil {
+			cmd.Flags().String("project", preferences.Preferences.Kube.DefaultProject, "project name")
+			alias.SetDefault(cmd.Flags().Lookup("project"), preferences.Preferences.Kube.DefaultProject)
+		} else {
+			f.DefValue = preferences.Preferences.Kube.DefaultProject
+			alias.SetDefault(f, preferences.Preferences.Kube.DefaultProject)
+			if _, ok := f.Annotations[cobra.BashCompOneRequiredFlag]; ok && preferences.Preferences.Kube.DefaultProject != "" {
+				delete(f.Annotations, cobra.BashCompOneRequiredFlag)
+			}
+		}
+	}
 
 	// Remap <cluster ls --project name> to <project clusters name>
 	projectCmd, _ := lo.Find(oksCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "project" })
@@ -59,7 +72,7 @@ func init() {
 	clusterListCmd.Run = func(cmd *cobra.Command, args []string) {
 		project, _ := cmd.Flags().GetString("project")
 		if project != "" {
-			cmd.Flag("project").Changed = false
+			alias.Reset(cmd.Flag("project"))
 			projectClustersCmd.Run(cmd, []string{project})
 		} else {
 			runClusterListCmd(cmd, nil)
@@ -69,13 +82,14 @@ func init() {
 	// Project use
 	projectCmd.AddCommand(projectUseCmd)
 
-	// Add --project flag to kube api cluster commands
+	// Add --ProjectId flag to kube api cluster commands
 	apiCmd, _ := lo.Find(oksCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "api" })
-	lo.ForEach(apiCmd.Commands(), func(c *cobra.Command, _ int) {
-		if strings.HasSuffix(c.Name(), "Cluster") || c.Name() == "GetKubeconfig" {
-			c.Flags().String("project", preferences.Preferences.Kube.DefaultProject, "project name")
+	for _, cmd := range apiCmd.Commands() {
+		switch cmd.Name() {
+		case "GetCluster", "UpdateCluster", "DeleteCluster", "GetKubeconfig":
+			cmd.Flags().String("ProjectId", preferences.Preferences.Kube.DefaultProject, "project name or id")
 		}
-	})
+	}
 }
 
 func kube(cmd *cobra.Command, args []string) {
@@ -106,7 +120,7 @@ func argNameToID(cmd *cobra.Command, args []string, cl *oks.Client) []string {
 	case "GetProject", "DeleteProject", "GetProjectNets", "GetProjectQuotas", "GetProjectPublicIps", "GetProjectSnapshots":
 		args[0], err = projectNameToID(cmd.Context(), args[0], cl)
 	case "GetCluster", "UpdateCluster", "DeleteCluster", "GetKubeconfig":
-		project, _ := cmd.Flags().GetString("project")
+		project, _ := cmd.Flags().GetString("ProjectId")
 		args[0], err = clusterNameToID(cmd.Context(), args[0], project, cl)
 	}
 	if err != nil {

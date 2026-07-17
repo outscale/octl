@@ -270,6 +270,109 @@ aliases:
   - name: version
     alias_to: Version
 - entity: cluster
+  use: update id_or_name [id_or_name]...
+  alias_to: UpdateCluster
+  short: alias for api UpdateCluster  id_or_name
+  command:
+  - api
+  - UpdateCluster
+  - '%0'
+  - --output
+  - yaml
+  flags:
+  - name: admin-whitelist
+    alias_to: AdminWhitelist
+  - name: admission-flag-disable-admission-plugin
+    alias_to: AdmissionFlags.DisableAdmissionPlugins
+  - name: admission-flag-enable-admission-plugin
+    alias_to: AdmissionFlags.EnableAdmissionPlugins
+  - name: auth-oidc-client-id
+    alias_to: Auth.Oidc.ClientId
+  - name: auth-oidc-group-claim
+    alias_to: Auth.Oidc.GroupsClaim
+  - name: auth-oidc-group-prefix
+    alias_to: Auth.Oidc.GroupsPrefix
+  - name: auth-oidc-issuer-url
+    alias_to: Auth.Oidc.IssuerUrl
+  - name: auth-oidc-required-claim
+    alias_to: Auth.Oidc.RequiredClaim
+  - name: auth-oidc-username-claim
+    alias_to: Auth.Oidc.UsernameClaim
+  - name: auth-oidc-username-prefix
+    alias_to: Auth.Oidc.UsernamePrefix
+  - name: auto-maintenance-minor-upgrade-maintenance-duration-hour
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.DurationHours
+  - name: auto-maintenance-minor-upgrade-maintenance-enabled
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.Enabled
+  - name: auto-maintenance-minor-upgrade-maintenance-start-hour
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.StartHour
+  - name: auto-maintenance-minor-upgrade-maintenance-tz
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.Tz
+  - name: auto-maintenance-minor-upgrade-maintenance-week-day
+    alias_to: AutoMaintenances.MinorUpgradeMaintenance.WeekDay
+  - name: auto-maintenance-patch-upgrade-maintenance-duration-hour
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.DurationHours
+  - name: auto-maintenance-patch-upgrade-maintenance-enabled
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.Enabled
+  - name: auto-maintenance-patch-upgrade-maintenance-start-hour
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.StartHour
+  - name: auto-maintenance-patch-upgrade-maintenance-tz
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.Tz
+  - name: auto-maintenance-patch-upgrade-maintenance-week-day
+    alias_to: AutoMaintenances.PatchUpgradeMaintenance.WeekDay
+  - name: control-plane
+    alias_to: ControlPlanes
+  - name: description
+    alias_to: Description
+  - name: disable-api-termination
+    alias_to: DisableApiTermination
+  - name: maintenance-window-duration-hour
+    alias_to: MaintenanceWindow.DurationHours
+  - name: maintenance-window-start-hour
+    alias_to: MaintenanceWindow.StartHour
+  - name: maintenance-window-tz
+    alias_to: MaintenanceWindow.Tz
+  - name: maintenance-window-week-day
+    alias_to: MaintenanceWindow.WeekDay
+  - name: quirk
+    alias_to: Quirks
+  - name: tags
+    alias_to: Tags
+    type: stringToString
+    usage: Tags (key=value,key=value)
+  - name: version
+    alias_to: Version
+  - name: project
+    alias_to: ProjectId
+- entity: cluster
+  use: delete id_or_name [id_or_name]...
+  alias_to: DeleteCluster
+  aliases:
+  - del
+  - rm
+  short: alias for api DeleteCluster  id_or_name
+  command:
+  - api
+  - DeleteCluster
+  - '%0'
+  - --output
+  - success
+  flags:
+  - name: project
+    alias_to: ProjectId
+  prompt:
+    action: delete
+    display:
+    - api
+    - GetCluster
+    - '%*'
+    - --output
+    - table
+    - --single
+    flags:
+    - name: project
+      alias_to: ProjectId
+- entity: cluster
   use: kubeconfig id_or_name
   short: alias for api GetKubeconfig id_or_name
   alias_to: GetKubeconfig
@@ -286,6 +389,8 @@ aliases:
     alias_to: User
   - name: ttl
     alias_to: Ttl
+  - name: project
+    alias_to: ProjectId
 - entity: quota
   use: describe
   aliases:

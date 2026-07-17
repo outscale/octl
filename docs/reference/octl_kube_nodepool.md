@@ -6,7 +6,7 @@ nodepool commands
 
 ```
   -h, --help             help for nodepool
-      --project string   project name
+      --project string   project name (default "dev")
 ```
 
 ### Options inherited from parent commands
