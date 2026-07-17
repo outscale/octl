@@ -9,12 +9,14 @@ import (
 	"maps"
 	"reflect"
 	"strings"
+	"sync"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/outscale/octl/pkg/output/format"
 )
 
 type Format struct {
+	mu    sync.Mutex
 	ctx   context.Context
 	v     any
 	fmter format.Interface
@@ -45,6 +47,8 @@ func (m *Format) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 // View implements tea.Model.
 func (m *Format) View() string {
+	m.mu.Lock()
+	defer m.mu.Unlock()
 	if m.v == nil {
 		return ""
 	}
@@ -56,6 +60,8 @@ func (m *Format) View() string {
 // Format implements format.Interface.
 // It does not display anything, as output is managed by Bubbletea through the View() method.
 func (m *Format) Format(ctx context.Context, w io.Writer, v any) error {
+	m.mu.Lock()
+	defer m.mu.Unlock()
 	m.ctx = ctx
 	vv := reflect.ValueOf(v)
 	if m.v == nil {
