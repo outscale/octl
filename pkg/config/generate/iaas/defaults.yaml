@@ -154,6 +154,15 @@ entities:
         content: .ServiceName
       - title: IP Ranges
         content: .IpRanges
+  netpeering:
+    columns:
+    - title: ID
+      content: .NetPeeringId
+    - title: Name
+      content: .Tags[] | select(.Key == "Name").Value
+    - title: State
+      content: .State.Name
+    primary: NetPeeringId
   policy:
     no_aliases: true
     columns:
