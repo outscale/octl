@@ -72,12 +72,11 @@ sudo mv octl /usr/local/bin
 Autocompletion setup is documented here:
 - [docs/installation.md](docs/installation.md)
 
-### MacOS
+### macOS
 
 Using Homebrew:
 ```shell
-brew tap outscale/tap
-brew install outscale/tap/octl
+brew install octl
 ```
 
 ### Docker
