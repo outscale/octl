@@ -1146,7 +1146,7 @@ entities:
     - title: Name
       content: .Tags[] | select(.Key == "Name").Value
     - title: State
-      content: .State
+      content: .State.Name
     primary: NetPeeringId
   nic:
     columns:
