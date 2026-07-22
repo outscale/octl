@@ -870,6 +870,25 @@ aliases:
     alias_to: Bucket
     required: true
 - entity: bucket
+  use: delete bucket [bucket]...
+  alias_to: DeleteBucket
+  aliases:
+  - del
+  - rm
+  short: alias for api DeleteBucket --Bucket bucket
+  command:
+  - api
+  - DeleteBucket
+  - --Bucket
+  - '%0'
+  - --output
+  - success
+  flags:
+  - name: expected-bucket-owner
+    alias_to: ExpectedBucketOwner
+  prompt:
+    action: delete
+- entity: bucket
   use: list
   alias_to: ListBuckets
   aliases:
@@ -1061,32 +1080,6 @@ aliases:
     alias_to: Tagging
   - name: website-redirect-location
     alias_to: WebsiteRedirectLocation
-- entity: bucket
-  use: delete bucket [bucket]...
-  alias_to: DeleteBucket
-  aliases:
-  - del
-  - rm
-  short: alias for api DeleteBucket --Bucket bucket
-  command:
-  - api
-  - DeleteBucket
-  - --Bucket
-  - '%0'
-  - --output
-  - success
-  flags:
-  - name: expected-bucket-owner
-    alias_to: ExpectedBucketOwner
-  prompt:
-    action: delete
-    display:
-    - api
-    - HeadBucket
-    - --Bucket
-    - '%0'
-    - --output
-    - table
 - entity: object
   use: delete key [key]...
   alias_to: DeleteObject

@@ -778,3 +778,22 @@ aliases:
   - name: bucket
     alias_to: Bucket
     required: true
+- entity: bucket
+  use: delete bucket [bucket]...
+  alias_to: DeleteBucket
+  aliases:
+  - del
+  - rm
+  short: alias for api DeleteBucket --Bucket bucket
+  command:
+  - api
+  - DeleteBucket
+  - --Bucket
+  - '%0'
+  - --output
+  - success
+  flags:
+  - name: expected-bucket-owner
+    alias_to: ExpectedBucketOwner
+  prompt:
+    action: delete
