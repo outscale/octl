@@ -37,7 +37,7 @@ octl kube cluster kubeconfig id_or_name [flags]
   -o, --output string              output format (raw, json, yaml, table, csv, none, base64, text)
       --payload string             JSON content for query body
       --profile string             Profile to use in profile file (by default, "default")
-      --project string             project name
+      --project string             Name or ID of project
       --single                     convert single entry lists to a single object
       --template string            JSON template file for query body
   -v, --verbose                    Verbose output

@@ -14,6 +14,7 @@ import (
 
 	"github.com/outscale/octl/pkg/config"
 	"github.com/outscale/octl/pkg/debug"
+	"github.com/outscale/octl/pkg/flags"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/output"
 	"github.com/outscale/octl/pkg/runner"
@@ -21,8 +22,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 )
-
-const DefaultValue = "default.octl.outscale.com"
 
 var prompts = map[config.Action]string{
 	config.ActionDelete: "Are you sure you want to delete these resource(s) ?",
@@ -135,27 +134,26 @@ func iterate(fn func(cmd *cobra.Command, args []string) int, cmd *cobra.Command,
 }
 
 // userArgs returns the list of args for the underlying command, including flags mapped from the alias flags.
-func userArgs(cmd *cobra.Command, flags config.FlagSet, skipUserFlags bool) []string {
+func userArgs(cmd *cobra.Command, fs config.FlagSet, skipUserFlags bool) []string {
 	var userArgs []string
 	cmd.Flags().VisitAll(func(f *pflag.Flag) {
 		newFlag := f.Name
-		nf, found := flags.Get(newFlag)
+		nf, found := fs.Get(newFlag)
 		switch {
 		case newFlag == "verbose" || newFlag == "config" || newFlag == "profile":
+		case flags.IsNoForward(f):
+			return
 		case !found && skipUserFlags:
 			return
 		case found:
 			newFlag = nf.AliasTo
 		}
-		switch {
-		case f.Changed:
+		if f.Changed || flags.HasDefault(f) {
 			if svalue, ok := f.Value.(pflag.SliceValue); ok {
 				userArgs = append(userArgs, "--"+newFlag+"="+strings.Join(svalue.GetSlice(), ","))
 				return
 			}
 			userArgs = append(userArgs, "--"+newFlag+"="+f.Value.String())
-		case f.Annotations != nil && len(f.Annotations[DefaultValue]) > 0:
-			userArgs = append(userArgs, "--"+newFlag+"="+f.Annotations[DefaultValue][0])
 		}
 	})
 	return userArgs

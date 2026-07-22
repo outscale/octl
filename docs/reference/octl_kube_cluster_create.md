@@ -36,7 +36,7 @@ octl kube cluster create [flags]
       --oidc-issuer-url string              The URL of the provider that allows the API server to discover public signing keys.
       --oidc-username-claim string          
       --oidc-username-prefix string         
-      --project string                      [REQUIRED] Unique identifier of the project this cluster belongs to
+      --project string                      Unique identifier of the project this cluster belongs to
       --quirk strings                       
       --subregions strings                  List of subregions where control plane components are deployed
       --tags stringToString                  (default [])

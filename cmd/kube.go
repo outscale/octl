@@ -15,6 +15,7 @@ import (
 	"github.com/outscale/octl/pkg/builder"
 	"github.com/outscale/octl/pkg/config"
 	"github.com/outscale/octl/pkg/debug"
+	"github.com/outscale/octl/pkg/flags"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/preferences"
 	"github.com/outscale/octl/pkg/runner"
@@ -25,14 +26,15 @@ import (
 
 // oksCmd represents the kubecommand
 var oksCmd = &cobra.Command{
-	GroupID: "services",
-	Use:     "kube",
-	Short:   "OUTSCALE Kubernetes as a Service (OKS) management",
-	Aliases: []string{"oks"},
+	GroupID:           "services",
+	Use:               "kube",
+	Short:             "OUTSCALE Kubernetes as a Service (OKS) management",
+	Aliases:           []string{"oks"},
+	PersistentPreRunE: flagNamesToID,
 }
 
 var projectUseCmd = &cobra.Command{
-	Use:   "use [project_id_or_name]",
+	Use:   "use [id_or_name]",
 	Short: "Set a default project for cluster commands, reset it without args",
 	Run:   useProject,
 	Args:  cobra.MaximumNArgs(1),
@@ -49,14 +51,20 @@ func init() {
 
 	// Add --project flag to kube cluster commands
 	clusterCmd, _ := lo.Find(oksCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "cluster" })
-	clusterCmd.PersistentFlags().String("project", preferences.Preferences.Kube.DefaultProject, "project name")
+	clusterCmd.PersistentFlags().String("project", preferences.Preferences.Kube.DefaultProject, "Name or ID of project")
+	_ = flags.MarkAsNoForward(clusterCmd.PersistentFlags(), "project")
+	clusterCmd.PersistentPreRunE = clusterArgToID
+	clusterCreateCmd, _ := lo.Find(clusterCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "create" })
+	_ = flags.SetDefault(clusterCreateCmd.Flags(), "project", preferences.Preferences.Kube.DefaultProject)
 
 	// Remap <cluster ls --project name> to <project clusters name>
 	projectCmd, _ := lo.Find(oksCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "project" })
+	projectCmd.PersistentPreRunE = projectArgToID
 	projectClustersCmd, _ := lo.Find(projectCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "clusters" })
 	clusterListCmd, _ := lo.Find(clusterCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "list" })
 	runClusterListCmd := clusterListCmd.Run
 	clusterListCmd.Run = func(cmd *cobra.Command, args []string) {
+		// remap flag to arg
 		project, _ := cmd.Flags().GetString("project")
 		if project != "" {
 			cmd.Flag("project").Changed = false
@@ -66,16 +74,8 @@ func init() {
 		}
 	}
 
-	// Project use
+	// cluster/project use
 	projectCmd.AddCommand(projectUseCmd)
-
-	// Add --project flag to kube api cluster commands
-	apiCmd, _ := lo.Find(oksCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "api" })
-	lo.ForEach(apiCmd.Commands(), func(c *cobra.Command, _ int) {
-		if strings.HasSuffix(c.Name(), "Cluster") || c.Name() == "GetKubeconfig" {
-			c.Flags().String("project", preferences.Preferences.Kube.DefaultProject, "project name")
-		}
-	})
 }
 
 func kube(cmd *cobra.Command, args []string) {
@@ -83,8 +83,6 @@ func kube(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
 	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
 	if err == nil {
-		args = argNameToID(cmd, args, cl)
-		flagNameToID(cmd, cl)
 		err = runner.Run[*oks.Client, *oks.ErrorResponse](cmd, args, cl, config.For("kube"))
 	}
 	if err != nil {
@@ -92,43 +90,87 @@ func kube(cmd *cobra.Command, args []string) {
 	}
 }
 
-func argNameToID(cmd *cobra.Command, args []string, cl *oks.Client) []string {
+func clusterArgToID(cmd *cobra.Command, args []string) error {
+	debug.Println("clusterArgToID")
+	p := loadProfile(cmd)
+	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	if err != nil {
+		return err
+	}
+
 	if len(args) == 0 {
 		debug.Println("no arg to replace")
-		return args
+		return nil
 	}
 	if _, err := uuid.Parse(args[0]); err == nil {
 		debug.Println("arg is an uuid")
-		return args
+		return nil
 	}
-	var err error
-	switch cmd.Name() {
-	case "GetProject", "DeleteProject", "GetProjectNets", "GetProjectQuotas", "GetProjectPublicIps", "GetProjectSnapshots":
-		args[0], err = projectNameToID(cmd.Context(), args[0], cl)
-	case "GetCluster", "UpdateCluster", "DeleteCluster", "GetKubeconfig":
-		project, _ := cmd.Flags().GetString("project")
-		args[0], err = clusterNameToID(cmd.Context(), args[0], project, cl)
-	}
-	if err != nil {
-		messages.ExitErr(err)
-	}
-	return args
+	project, _ := cmd.Flags().GetString("project")
+	args[0], err = clusterNameToID(cmd.Context(), args[0], project, cl)
+	return err
 }
 
-func flagNameToID(cmd *cobra.Command, cl *oks.Client) {
-	f := cmd.Flags().Lookup("ProjectId")
-	if f == nil {
-		debug.Println("no flag to replace")
-		return
+func projectArgToID(cmd *cobra.Command, args []string) error {
+	// project use should store the name, not the ID
+	if cmd.Name() == "use" {
+		return nil
 	}
-	id, err := projectNameToID(cmd.Context(), f.Value.String(), cl)
+	debug.Println("projectArgToID")
+	p := loadProfile(cmd)
+	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
 	if err != nil {
-		messages.ExitErr(err)
+		return err
 	}
-	_ = f.Value.Set(id)
+
+	if len(args) == 0 {
+		debug.Println("no arg to replace")
+		return nil
+	}
+	if _, err := uuid.Parse(args[0]); err == nil {
+		debug.Println("arg is an uuid")
+		return nil
+	}
+	args[0], err = projectNameToID(cmd.Context(), args[0], cl)
+	return err
+}
+
+func flagNamesToID(cmd *cobra.Command, args []string) error {
+	debug.Println("flagNamesToID")
+	p := loadProfile(cmd)
+	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	if err != nil {
+		return err
+	}
+
+	pf := cmd.Flags().Lookup("project")
+	if pf == nil {
+		debug.Println("no project flag to replace")
+		return nil
+	}
+	pid, err := projectNameToID(cmd.Context(), pf.Value.String(), cl)
+	if err != nil {
+		return err
+	}
+	_ = pf.Value.Set(pid)
+
+	cf := cmd.Flags().Lookup("cluster")
+	if cf == nil {
+		debug.Println("no cluster flag to replace")
+		return nil
+	}
+	cid, err := clusterNameToID(cmd.Context(), cf.Value.String(), pid, cl)
+	if err != nil {
+		return err
+	}
+	_ = cf.Value.Set(cid)
+	return nil
 }
 
 func projectNameToID(ctx context.Context, name string, cl *oks.Client) (string, error) {
+	if name == "" {
+		return "", nil
+	}
 	pjs, err := cl.ListProjects(ctx, &oks.ListProjectsParams{Name: &name})
 	if err != nil {
 		return "", err
@@ -137,12 +179,15 @@ func projectNameToID(ctx context.Context, name string, cl *oks.Client) (string, 
 	case 0:
 		return "", fmt.Errorf("project %q not found", name)
 	default:
-		debug.Println("replacing", name, "by", pjs.Projects[0].Id)
+		messages.Info("Resolving project name %q as ID %q", name, pjs.Projects[0].Id)
 		return pjs.Projects[0].Id, nil
 	}
 }
 
 func clusterNameToID(ctx context.Context, name, project string, cl *oks.Client) (string, error) {
+	if name == "" {
+		return "", nil
+	}
 	var (
 		cs  *oks.ClusterResponseList
 		err error
@@ -170,7 +215,7 @@ func clusterNameToID(ctx context.Context, name, project string, cl *oks.Client) 
 	case 0:
 		return "", fmt.Errorf("cluster %q not found", name)
 	case 1:
-		debug.Println("replacing", name, "by", clusters[0].Id)
+		messages.Info("Resolving cluster name %q as ID %q", name, clusters[0].Id)
 		return clusters[0].Id, nil
 	default:
 		return "", fmt.Errorf("multiple clusters found with the name %q", name)

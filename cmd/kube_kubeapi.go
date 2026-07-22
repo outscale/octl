@@ -20,8 +20,7 @@ func kubeapi(provider string) func(cmd *cobra.Command, args []string) {
 			messages.ExitErr(err)
 		}
 		cluster, _ := cmd.Flags().GetString("cluster")
-		project, _ := cmd.Flags().GetString("project")
-		kubeconfig, err := getKubeconfig(cmd.Context(), cluster, project, cl)
+		kubeconfig, err := getKubeconfig(cmd.Context(), cluster, cl)
 		if err != nil {
 			messages.ExitErr(err)
 		}
