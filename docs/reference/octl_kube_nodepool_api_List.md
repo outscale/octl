@@ -15,7 +15,7 @@ octl kube nodepool api List [flags]
 ### Options inherited from parent commands
 
 ```
-      --cluster string             [REQUIRED] Name or ID of cluster
+      --cluster string             [REQUIRED] ID of cluster
   -c, --columns string             columns to display - [+]<title>:<jq query for content>||<title>:<jq query for content>
       --config string              Path of profile file (by default, ~/.osc/config.json)
       --dry-run                    Display the request payload that would be sent to the API without sending it
@@ -29,7 +29,6 @@ octl kube nodepool api List [flags]
   -o, --output string              output format (raw, json, yaml, table, csv, none, base64, text)
       --payload string             JSON content for query body
       --profile string             Profile to use in profile file (by default, "default")
-      --project string             Name or ID of project
       --single                     convert single entry lists to a single object
       --template string            JSON template file for query body
   -v, --verbose                    Verbose output

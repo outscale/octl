@@ -6,6 +6,7 @@ import (
 
 	oksv1beta2 "github.com/outscale/goutils/oks/clientset/typed/oks.dev/v1beta2"
 	"github.com/outscale/octl/pkg/builder"
+	"github.com/outscale/octl/pkg/flags"
 	"github.com/outscale/octl/pkg/preferences"
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
@@ -26,11 +27,16 @@ func init() {
 		return slices.Contains([]string{"List", "Get", "Create", "Update", "Delete"}, m.Name)
 	}, kubeapi("kubeclient_nodepool"))
 	apiCmd, _ := lo.Find(nodepoolCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "api" })
-	apiCmd.PersistentFlags().String("cluster", "", "[REQUIRED] Name or ID of cluster")
-	_ = apiCmd.MarkPersistentFlagRequired("cluster")
-	apiCmd.PersistentFlags().String("project", preferences.Preferences.Kube.DefaultProject, "Name or ID of project")
-	// nodepool commands need to be added to the upper level, otherwise we will get kube nodepool nodepool
 	b.Build(oksCmd, apiCmd)
-	clusterCmd, _ := lo.Find(oksCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "nodepool" })
-	clusterCmd.PersistentFlags().String("project", preferences.Preferences.Kube.DefaultProject, "project name")
+	for _, cmd := range nodepoolCmd.Commands() {
+		if cmd.Name() == "api" {
+			cmd.PersistentFlags().String("cluster", "", "[REQUIRED] ID of cluster")
+			_ = cmd.MarkPersistentFlagRequired("cluster")
+		} else {
+			cmd.Flags().String("cluster", "", "[REQUIRED] Name or ID of cluster")
+			cmd.Flags().String("project", preferences.Preferences.Kube.DefaultProject, "Name or ID of project")
+			_ = cmd.MarkFlagRequired("cluster")
+			_ = flags.MarkAsNoForward(cmd.Flags(), "project")
+		}
+	}
 }

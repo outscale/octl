@@ -3,7 +3,7 @@
 Set a default project for cluster commands, reset it without args
 
 ```
-octl kube project use [project_id_or_name] [flags]
+octl kube project use [id_or_name] [flags]
 ```
 
 ### Options

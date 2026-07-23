@@ -36,6 +36,7 @@ octl kube nodepool create [flags]
       --placement-attract-server string    
       --placement-repulse-cluster string   
       --placement-repulse-server string    
+      --project string                     Name or ID of project
       --taint                              
       --upgrade-duration-hour int          
       --upgrade-max-surge int              
@@ -66,7 +67,6 @@ octl kube nodepool create [flags]
   -o, --output string              output format (raw, json, yaml, table, csv, none, base64, text)
       --payload string             JSON content for query body
       --profile string             Profile to use in profile file (by default, "default")
-      --project string             project name
       --single                     convert single entry lists to a single object
       --template string            JSON template file for query body
   -v, --verbose                    Verbose output

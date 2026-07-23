@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/outscale/octl/pkg/debug"
+	"github.com/outscale/octl/pkg/flags"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/preferences"
 	"github.com/outscale/osc-sdk-go/v3/pkg/oks"
@@ -34,8 +35,7 @@ func kubectl(cmd *cobra.Command, args []string) {
 		messages.ExitErr(err)
 	}
 	cluster, _ := cmd.Flags().GetString("cluster")
-	project, _ := cmd.Flags().GetString("project")
-	kubeconfig, err := getKubeconfig(cmd.Context(), cluster, project, cl)
+	kubeconfig, err := getKubeconfig(cmd.Context(), cluster, cl)
 	if err != nil {
 		messages.ExitErr(err)
 	}
@@ -52,19 +52,15 @@ func kubectl(cmd *cobra.Command, args []string) {
 	}
 }
 
-func getKubeconfig(ctx context.Context, cluster, project string, cl *oks.Client) (string, error) {
-	id, err := clusterNameToID(ctx, cluster, project, cl)
-	if err != nil {
-		return "", err
-	}
-	filename, err := kubeconfigPath(id)
+func getKubeconfig(ctx context.Context, cluster string, cl *oks.Client) (string, error) {
+	filename, err := kubeconfigPath(cluster)
 	if err != nil {
 		return "", err
 	}
 	debug.Println("kubeconfig path", filename)
 	if _, err := os.Stat(filename); errors.Is(err, fs.ErrNotExist) {
 		debug.Println("no kubeconfig; refreshing")
-		err = refreshKubeconfig(ctx, id, filename, cl)
+		err = refreshKubeconfig(ctx, cluster, filename, cl)
 		if err != nil {
 			return "", err
 		}
@@ -86,7 +82,7 @@ func getKubeconfig(ctx context.Context, cluster, project string, cl *oks.Client)
 		}
 		if err == nil && time.Since(decoded.NotAfter) > 0 {
 			debug.Println("expired kubeconfig certificate; refreshing")
-			err = refreshKubeconfig(ctx, id, filename, cl)
+			err = refreshKubeconfig(ctx, cluster, filename, cl)
 		}
 		if err != nil {
 			return "", err
@@ -125,4 +121,5 @@ func init() {
 	kubectlCmd.Flags().String("cluster", "", "Name or ID of cluster")
 	_ = kubectlCmd.MarkFlagRequired("cluster")
 	kubectlCmd.Flags().String("project", preferences.Preferences.Kube.DefaultProject, "Name or ID of project")
+	_ = flags.MarkAsNoForward(kubectlCmd.Flags(), "project")
 }

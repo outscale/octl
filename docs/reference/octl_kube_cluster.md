@@ -6,7 +6,7 @@ cluster commands
 
 ```
   -h, --help             help for cluster
-      --project string   project name
+      --project string   Name or ID of project
 ```
 
 ### Options inherited from parent commands

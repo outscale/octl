@@ -262,7 +262,6 @@ aliases:
     required: true
   - name: project
     alias_to: ProjectId
-    required: true
   - name: quirk
     alias_to: Quirks
   - name: tags

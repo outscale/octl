@@ -17,6 +17,7 @@ octl kube nodepool describe name [name]... [flags]
 ```
       --cluster string   [REQUIRED] Name or ID of cluster
   -h, --help             help for describe
+      --project string   Name or ID of project
 ```
 
 ### Options inherited from parent commands
@@ -35,7 +36,6 @@ octl kube nodepool describe name [name]... [flags]
   -o, --output string              output format (raw, json, yaml, table, csv, none, base64, text)
       --payload string             JSON content for query body
       --profile string             Profile to use in profile file (by default, "default")
-      --project string             project name
       --single                     convert single entry lists to a single object
       --template string            JSON template file for query body
   -v, --verbose                    Verbose output

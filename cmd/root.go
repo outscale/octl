@@ -60,6 +60,8 @@ func Root() *cobra.Command {
 }
 
 func init() {
+	cobra.EnableTraverseRunHooks = true
+
 	md := markdown.NewRenderer()
 	if long, err := md.Render(rootCmd.Long); err == nil {
 		rootCmd.Long = long
