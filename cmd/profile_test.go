@@ -201,3 +201,7 @@ func TestProfilePriority(t *testing.T) {
 		assert.Equal(t, "priority_region", p.Region)
 	})
 }
+
+func TestProfilePreferences(t *testing.T) {
+	
+}
