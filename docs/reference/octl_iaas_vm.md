@@ -45,5 +45,6 @@ vm commands
 * [octl iaas vm start](octl_iaas_vm_start.md)	 - alias for api StartVms --VmIds vm_id
 * [octl iaas vm states](octl_iaas_vm_states.md)	 - alias for api ReadVmsState
 * [octl iaas vm stop](octl_iaas_vm_stop.md)	 - alias for api StopVms --VmIds vm_id
+* [octl iaas vm stophistory](octl_iaas_vm_stophistory.md)	 - alias for api ReadVmsStopHistory
 * [octl iaas vm update](octl_iaas_vm_update.md)	 - alias for api UpdateVm --VmId vm_id
 

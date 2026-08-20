@@ -24,14 +24,14 @@ octl iaas apilog list [flags]
 
 ```
       --access-key strings   The access keys used for the logged calls.
-      --after osctime        The date and time, or the date, after which you want to retrieve logged calls, in ISO 8601 format (for example, 2020-06-14T00:00:00.000Z or 2020-06-14).
       --api strings          The names of the APIs of the logged calls (always oapi for the OUTSCALE API).
-      --before osctime       The date and time, or the date, before which you want to retrieve logged calls, in ISO 8601 format (for example, 2020-06-30T00:00:00.000Z or 2020-06-14).
       --call strings         The names of the logged calls.
+      --from osctime         The date and time, or the date, after which you want to retrieve logged calls, in ISO 8601 format (for example, 2020-06-14T00:00:00.000Z or 2020-06-14).
   -h, --help                 help for list
       --ip strings           The IPs used for the logged calls.
       --request-id strings   The request IDs provided in the responses of the logged calls.
       --status ints          The HTTP status codes of the logged calls.
+      --to osctime           The date and time, or the date, before which you want to retrieve logged calls, in ISO 8601 format (for example, 2020-06-30T00:00:00.000Z or 2020-06-14).
       --user-agent strings   The user agents of the HTTP requests of the logged calls.
 ```
 
