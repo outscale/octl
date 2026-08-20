@@ -1382,7 +1382,15 @@ entities:
       content: .SubregionName
     - title: State
       content: .VmState
-  vmsstophistory: {}
+  vmsstophistory:
+    no_aliases: true
+    columns:
+    - title: Date
+      content: .StopDate
+    - title: VM
+      content: .VmId
+    - title: Reason
+      content: .StateReason
   vmtemplate:
     columns:
     - title: ID
@@ -1855,7 +1863,7 @@ aliases:
   - api
   - ReadVmsState
   - --output
-  - yaml
+  - table
 - entity: consumptionaccount
   use: list
   alias_to: ReadConsumptionAccount
@@ -1985,9 +1993,9 @@ aliases:
     alias_to: Filters.QueryApiNames
   - name: call
     alias_to: Filters.QueryCallNames
-  - name: after
+  - name: from
     alias_to: Filters.QueryDateAfter
-  - name: before
+  - name: to
     alias_to: Filters.QueryDateBefore
   - name: ip
     alias_to: Filters.QueryIpAddresses
@@ -2026,6 +2034,26 @@ aliases:
     alias_to: Filters.QueryUserAgents
   - name: status
     alias_to: Filters.ResponseStatusCodes
+- entity: vm
+  use: stophistory
+  alias_to: ReadVmsStopHistory
+  aliases:
+  - ls
+  short: alias for api ReadVmsStopHistory
+  command:
+  - api
+  - ReadVmsStopHistory
+  - --output
+  - table
+  flags:
+  - name: reason
+    alias_to: Filters.StateReasons
+  - name: from
+    alias_to: Filters.StopDateAfter
+  - name: to
+    alias_to: Filters.StopDateBefore
+  - name: vm-id
+    alias_to: Filters.VmIds
 - entity: accesskey
   use: list
   alias_to: ReadAccessKeys
@@ -3906,26 +3934,6 @@ aliases:
   - --output
   - yaml
   - --single
-- entity: vmsstophistory
-  use: list
-  alias_to: ReadVmsStopHistory
-  aliases:
-  - ls
-  short: alias for api ReadVmsStopHistory
-  command:
-  - api
-  - ReadVmsStopHistory
-  - --output
-  - table
-  flags:
-  - name: state-reason
-    alias_to: Filters.StateReasons
-  - name: stop-date-after
-    alias_to: Filters.StopDateAfter
-  - name: stop-date-before
-    alias_to: Filters.StopDateBefore
-  - name: vm-id
-    alias_to: Filters.VmIds
 - entity: volumeupdatetask
   use: list
   alias_to: ReadVolumeUpdateTasks
