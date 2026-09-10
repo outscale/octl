@@ -40,6 +40,13 @@ var projectUseCmd = &cobra.Command{
 	Args:  cobra.MaximumNArgs(1),
 }
 
+var clusterUseCmd = &cobra.Command{
+	Use:   "use [id_or_name]",
+	Short: "Set a default cluster for cluster commands, reset it without args",
+	Run:   useCluster,
+	Args:  cobra.MaximumNArgs(1),
+}
+
 func init() {
 	rootCmd.AddCommand(oksCmd)
 	b := commandbuilder.NewBuilder("kube", "https://docs.outscale.com/oks.html")
@@ -72,6 +79,7 @@ func init() {
 
 	// cluster/project use
 	projectCmd.AddCommand(projectUseCmd)
+	clusterCmd.AddCommand(clusterUseCmd)
 
 	// control-plane autocompletion
 	walkCommandTreeWithFlag(oksCmd, "control-plane", func(cmd *cobra.Command) {
@@ -139,6 +147,10 @@ func autoCompleteVersion(cmd *cobra.Command, _ []string, _ string) ([]cobra.Comp
 }
 
 func clusterArgToID(cmd *cobra.Command, args []string) error {
+	// cluster use should store the name, not the ID
+	if cmd.Name() == "use" {
+		return nil
+	}
 	debug.Println("clusterArgToID")
 	p := loadProfile(cmd)
 	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
@@ -201,8 +213,10 @@ func flagNamesToID(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	_ = pf.Value.Set(pid)
-
+	if pid != "" {
+		_ = pf.Value.Set(pid)
+		pf.Changed = true
+	}
 	cf := cmd.Flags().Lookup("cluster")
 	if cf == nil {
 		debug.Println("no cluster flag to replace")
@@ -212,7 +226,10 @@ func flagNamesToID(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
-	_ = cf.Value.Set(cid)
+	if cid != "" {
+		_ = cf.Value.Set(cid)
+		cf.Changed = true
+	}
 	return nil
 }
 
@@ -237,6 +254,9 @@ func projectNameToID(ctx context.Context, name string, cl *oks.Client) (string, 
 }
 
 func clusterNameToID(ctx context.Context, name, project string, cl *oks.Client) (string, error) {
+	if name == "" {
+		name = prerun.PreferencesFrom(ctx).Kube.DefaultCluster
+	}
 	if name == "" {
 		return "", nil
 	}
@@ -293,5 +313,26 @@ func useProject(cmd *cobra.Command, args []string) {
 		messages.Success("The default project has been reset for profile %q", prof)
 	} else {
 		messages.Success("%q is now the default project for profile %q", def, prof)
+	}
+}
+
+func useCluster(cmd *cobra.Command, args []string) {
+	var def string
+	if len(args) > 0 {
+		def = args[0]
+	}
+	prof, _ := cmd.Flags().GetString("profile")
+	if prof == "" {
+		prof = profile.DefaultProfile
+	}
+	// retro compatibility
+	err := preferences.Set(prof, func(prefs *preferences.Preferences) { prefs.Kube.DefaultCluster = def })
+	if err != nil {
+		messages.ExitErr(err)
+	}
+	if def == "" {
+		messages.Success("The default cluster has been reset for profile %q", prof)
+	} else {
+		messages.Success("%q is now the default cluster for profile %q", def, prof)
 	}
 }

@@ -15,6 +15,7 @@ import (
 
 type Kube struct {
 	DefaultProject string `yaml:"default_project,omitempty"`
+	DefaultCluster string `yaml:"default_cluster,omitempty"`
 }
 
 type Preferences struct {
