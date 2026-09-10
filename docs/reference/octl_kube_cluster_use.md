@@ -1,12 +1,15 @@
-## octl kube cluster
+## octl kube cluster use
 
-Manage Cluster resources
+Set a default cluster for cluster commands, reset it without args
+
+```
+octl kube cluster use [id_or_name] [flags]
+```
 
 ### Options
 
 ```
-  -h, --help             help for cluster
-      --project string   Name or ID of project
+  -h, --help   help for use
 ```
 
 ### Options inherited from parent commands
@@ -25,6 +28,7 @@ Manage Cluster resources
   -o, --output string              output format (raw, json, yaml, table, csv, none, text)
       --payload string             JSON content for query body
       --profile string             Profile to use in profile file (by default, "default")
+      --project string             Name or ID of project
   -s, --silent                     Hides all information messages
       --single                     convert single entry lists to a single object
       --template string            JSON template file for query body
@@ -37,12 +41,5 @@ Manage Cluster resources
 
 ### SEE ALSO
 
-* [octl kube](octl_kube.md)	 - OUTSCALE Kubernetes as a Service (OKS) management
-* [octl kube cluster create](octl_kube_cluster_create.md)	 - Creates a new cluster with the provided configuration.
-* [octl kube cluster delete](octl_kube_cluster_delete.md)	 - Deletes a specific cluster by its ID.
-* [octl kube cluster describe](octl_kube_cluster_describe.md)	 - Retrieves detailed information about a specific cluster by its ID.
-* [octl kube cluster kubeconfig](octl_kube_cluster_kubeconfig.md)	 - 
-* [octl kube cluster list](octl_kube_cluster_list.md)	 - 
-* [octl kube cluster update](octl_kube_cluster_update.md)	 - Updates the configuration of an existing cluster by its ID.
-* [octl kube cluster use](octl_kube_cluster_use.md)	 - Set a default cluster for cluster commands, reset it without args
+* [octl kube cluster](octl_kube_cluster.md)	 - Manage Cluster resources
 
