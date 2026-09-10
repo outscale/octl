@@ -57,6 +57,7 @@ func exportProfile(cmd *cobra.Command, args []string) {
 			APIVersion: "v1",
 			Kind:       "Secret",
 		},
+
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      name,
 			Namespace: ns,
