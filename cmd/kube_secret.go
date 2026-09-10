@@ -52,22 +52,25 @@ func exportProfile(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
 	ns, _ := cmd.Flags().GetString("namespace")
 	name, _ := cmd.Flags().GetString("name")
-	s := corev1.Secret{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: "v1",
-			Kind:       "Secret",
-		},
+	{
+		s := corev1.Secret{
+			TypeMeta: metav1.TypeMeta{
+				APIVersion: "v1",
+				Kind:       "Secret",
+			},
 
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      name,
-			Namespace: ns,
-		},
-		Data: map[string][]byte{
-			"access_key": []byte(p.AccessKey),
-			"secret_key": []byte(p.SecretKey),
-			"region":     []byte(p.Region),
-		},
-		Type: corev1.SecretTypeOpaque,
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      name,
+				Namespace: ns,
+			},
+
+			Data: map[string][]byte{
+				"access_key": []byte(p.AccessKey),
+				"secret_key": []byte(p.SecretKey),
+				"region":     []byte(p.Region),
+			},
+			Type: corev1.SecretTypeOpaque,
+		}
+		_ = format.YAML{}.Format(cmd.Context(), os.Stdout, s)
 	}
-	_ = format.YAML{}.Format(cmd.Context(), os.Stdout, s)
 }
