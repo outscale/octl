@@ -48,7 +48,7 @@ func addPreview(v reflect.Value) {
 	}
 	v, found := structs.FindFieldByType[io.ReadCloser](v)
 	if found && v.CanSet() && v.CanInterface() {
-		if r, ok := v.Interface().(io.ReadCloser); ok {
+		if r, ok := reflect.TypeAssert[io.ReadCloser](v); ok {
 			debug.Println("add preview")
 			pv := PreviewReader{r}
 			v.Set(reflect.ValueOf(pv))

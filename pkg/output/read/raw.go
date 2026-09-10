@@ -8,6 +8,7 @@ package read
 import (
 	"context"
 	"iter"
+	"reflect"
 
 	"github.com/outscale/octl/pkg/output/result"
 )
@@ -24,7 +25,7 @@ func (p *Raw) Read(ctx context.Context, fetch FetchPage, iter int) iter.Seq[resu
 		if len(vres) == 0 {
 			return
 		}
-		if err, ok := vres[len(vres)-1].Interface().(error); ok && err != nil {
+		if err, ok := reflect.TypeAssert[error](vres[len(vres)-1]); ok && err != nil {
 			_ = yield(result.Result{Error: err})
 			return
 		}

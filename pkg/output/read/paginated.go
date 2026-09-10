@@ -39,7 +39,7 @@ func (p *Paginated) Read(ctx context.Context, fetch FetchPage, iter int) iter.Se
 				_ = yield(result.Error(errors.New("no result from call")))
 				return
 			}
-			if err, ok := vres[len(vres)-1].Interface().(error); ok && err != nil {
+			if err, ok := reflect.TypeAssert[error](vres[len(vres)-1]); ok && err != nil {
 				_ = yield(result.Error(err))
 				return
 			}
