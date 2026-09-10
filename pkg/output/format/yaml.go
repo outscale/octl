@@ -18,19 +18,24 @@ import (
 
 type YAML struct {
 	style string
+	raw   bool
 }
 
-func NewYAML(style string) YAML {
-	return YAML{style: style}
+func NewYAML(style string, raw bool) YAML {
+	return YAML{style: style, raw: raw}
 }
 
 func (y YAML) Format(ctx context.Context, w io.Writer, v any) error {
 	buf := new(bytes.Buffer)
-	enc := yaml.NewEncoder(buf, yaml.OmitZero(), yaml.UseSingleQuote(true), yaml.Indent(2), yaml.CustomMarshaler(
+	opts := []yaml.EncodeOption{yaml.UseSingleQuote(true), yaml.Indent(2), yaml.CustomMarshaler(
 		func(v []byte) ([]byte, error) {
 			return []byte(base64.StdEncoding.EncodeToString(v)), nil
 		},
-	))
+	)}
+	if !y.raw {
+		opts = append(opts, yaml.OmitZero())
+	}
+	enc := yaml.NewEncoder(buf, opts...)
 	err := enc.EncodeContext(ctx, v)
 	if err == nil {
 		err = enc.Close()

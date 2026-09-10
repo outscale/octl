@@ -106,7 +106,7 @@ func init() {
 	rootCmd.PersistentFlags().Int("max-pages", 20, "maximum number of pages a command can fetch")
 
 	rootCmd.PersistentFlags().StringP("columns", "c", "", "columns to display - [+]<title>:<jq query for content>||<title>:<jq query for content>")
-	rootCmd.PersistentFlags().StringP("output", "o", "", "output format (raw, json, yaml, table, csv, none, text)")
+	rootCmd.PersistentFlags().StringP("output", "o", "", "output format (json, yaml, raw, rawyaml, table, csv, none, text)")
 	rootCmd.PersistentFlags().StringP("out-file", "O", "", "redirect output to file")
 	rootCmd.PersistentFlags().Bool("single", false, "convert single entry lists to a single object")
 	rootCmd.PersistentFlags().String("style", output.DefaultStyle, "style to use for syntax-highlighting ("+strings.Join(output.Styles(), ", ")+")")
@@ -119,7 +119,7 @@ func init() {
 
 	_ = rootCmd.RegisterFlagCompletionFunc(
 		"output",
-		cobra.FixedCompletions([]cobra.Completion{"raw", "json", "yaml", "table", "csv", "none", "text"}, cobra.ShellCompDirectiveDefault),
+		cobra.FixedCompletions([]cobra.Completion{"json", "yaml", "raw", "rawyaml", "table", "csv", "none", "text"}, cobra.ShellCompDirectiveDefault),
 	)
 	_ = rootCmd.RegisterFlagCompletionFunc("style", func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
 		return lo.Map(output.Styles(), func(s string, _ int) cobra.Completion { return cobra.Completion(s) }), cobra.ShellCompDirectiveDefault
