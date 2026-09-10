@@ -51,6 +51,7 @@ octl iaas api CreateSecurityGroup [flags]
       --profile string             Profile to use in profile file (by default, "default")
   -s, --silent                     Hides all information messages
       --single                     convert single entry lists to a single object
+      --style string               style to use for syntax-highlighting (doom-one, github, monokai, nord, paraiso, solarized) (default "github")
       --template string            JSON template file for query body
   -v, --verbose                    Verbose output
       --waitfor string             repeatedly call the API until the specified jq expression returns 1/true or a non empty result
