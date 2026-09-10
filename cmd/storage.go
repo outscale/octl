@@ -131,7 +131,7 @@ func guessContentType(arg reflect.Value) {
 	if !arg.CanInterface() {
 		return
 	}
-	if po, ok := arg.Interface().(*s3.PutObjectInput); ok {
+	if po, ok := reflect.TypeAssert[*s3.PutObjectInput](arg); ok {
 		if po.ContentType != nil && *po.ContentType != "" {
 			return
 		}

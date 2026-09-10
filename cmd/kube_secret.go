@@ -13,7 +13,6 @@ import (
 	"github.com/samber/lo"
 	"github.com/spf13/cobra"
 	corev1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 var secretLongUse = "Create secret for CCM/CSI driver/Cluster-API provider deployments using the selected AK/SK.\n\n" +
@@ -37,7 +36,7 @@ var (
 		Long:  secretLongUseRendered,
 		Short: "Create secret for CCM or CSI driver deployment",
 		Args:  cobra.NoArgs,
-		Run:   exportProfile,
+		Run:   buildSecret,
 	}
 )
 
@@ -48,19 +47,15 @@ func init() {
 	_ = secretCmd.MarkFlagRequired("name")
 }
 
-func exportProfile(cmd *cobra.Command, args []string) {
+func buildSecret(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
 	ns, _ := cmd.Flags().GetString("namespace")
 	name, _ := cmd.Flags().GetString("name")
 	s := corev1.Secret{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: "v1",
-			Kind:       "Secret",
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Name:      name,
-			Namespace: ns,
-		},
+		APIVersion: "v1",
+		Kind:       "Secret",
+		Name:       name,
+		Namespace:  ns,
 		Data: map[string][]byte{
 			"access_key": []byte(p.AccessKey),
 			"secret_key": []byte(p.SecretKey),

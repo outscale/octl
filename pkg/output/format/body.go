@@ -25,7 +25,7 @@ func (Body) Format(ctx context.Context, w io.Writer, v any) (err error) {
 	if !found {
 		return YAML{}.Format(ctx, w, v)
 	}
-	r, ok := vv.Interface().(io.ReadCloser)
+	r, ok := reflect.TypeAssert[io.ReadCloser](vv)
 	if !ok {
 		return YAML{}.Format(ctx, w, v)
 	}
