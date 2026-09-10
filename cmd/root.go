@@ -114,9 +114,10 @@ func init() {
 	rootCmd.PersistentFlags().StringSlice("hooks", nil, "")
 	_ = rootCmd.PersistentFlags().MarkHidden("hooks")
 
-	_ = rootCmd.RegisterFlagCompletionFunc("output", func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
-		return []cobra.Completion{"raw", "json", "yaml", "table", "csv", "none", "text"}, cobra.ShellCompDirectiveDefault
-	})
+	_ = rootCmd.RegisterFlagCompletionFunc(
+		"output",
+		cobra.FixedCompletions([]cobra.Completion{"raw", "json", "yaml", "table", "csv", "none", "text"}, cobra.ShellCompDirectiveDefault),
+	)
 
 	_ = rootCmd.RegisterFlagCompletionFunc("profile", func(cmd *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
 		cf, _ := loadConfig(cmd)

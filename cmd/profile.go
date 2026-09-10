@@ -80,9 +80,10 @@ func init() {
 	profileAddCmd.Flags().String("region", "eu-west-2", "Region")
 	profileAddCmd.Flags().Bool("default", false, "Sets the new profile as the default")
 	_ = cobra.MarkFlagRequired(profileAddCmd.Flags(), "ak")
-	_ = profileAddCmd.RegisterFlagCompletionFunc("region", func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
-		return []cobra.Completion{"eu-west-2", "us-west-1", "us-east-2", "cloudgouv-eu-west-1", "ap-northeast-1"}, cobra.ShellCompDirectiveDefault
-	})
+	_ = profileAddCmd.RegisterFlagCompletionFunc(
+		"region",
+		cobra.FixedCompletions([]cobra.Completion{"eu-west-2", "us-west-1", "us-east-2", "cloudgouv-eu-west-1", "ap-northeast-1"}, cobra.ShellCompDirectiveDefault),
+	)
 }
 
 type profileEntry struct {
