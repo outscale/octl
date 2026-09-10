@@ -53,9 +53,10 @@ func init() {
 	_ = presignCmd.MarkFlagRequired("bucket")
 	presignCmd.Flags().Duration("expires", 0, "URL expiration (e.g. 30s, 1h)")
 	presignCmd.Flags().String("method", http.MethodGet, "Method used to access the presigned URL (GET, PUT, DELETE)")
-	_ = presignCmd.RegisterFlagCompletionFunc("method", func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
-		return []cobra.Completion{http.MethodGet, http.MethodPut, http.MethodDelete}, cobra.ShellCompDirectiveDefault
-	})
+	_ = presignCmd.RegisterFlagCompletionFunc(
+		"method",
+		cobra.FixedCompletions([]cobra.Completion{http.MethodGet, http.MethodPut, http.MethodDelete}, cobra.ShellCompDirectiveDefault),
+	)
 
 	storageCmd.PersistentFlags().Bool("no-auto-content-type", false, "Disable automatic content-type detection")
 }

@@ -72,6 +72,19 @@ func init() {
 
 	// cluster/project use
 	projectCmd.AddCommand(projectUseCmd)
+
+	// control-plane autocompletion
+	walkCommandTreeWithFlag(oksCmd, "control-plane", func(cmd *cobra.Command) {
+		_ = cmd.RegisterFlagCompletionFunc("control-plane", autoCompleteControlPlane)
+	})
+	// subregion autocompletion
+	walkCommandTreeWithFlag(oksCmd, "subregions", func(cmd *cobra.Command) {
+		_ = cmd.RegisterFlagCompletionFunc("subregions", autoCompleteSubregion)
+	})
+	// version autocompletion
+	walkCommandTreeWithFlag(oksCmd, "version", func(cmd *cobra.Command) {
+		_ = cmd.RegisterFlagCompletionFunc("version", autoCompleteVersion)
+	})
 }
 
 func kube(cmd *cobra.Command, args []string) {
@@ -84,6 +97,45 @@ func kube(cmd *cobra.Command, args []string) {
 	if err != nil {
 		messages.ExitErr(err)
 	}
+}
+
+func autoCompleteControlPlane(cmd *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
+	p := loadProfile(cmd)
+	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	if err != nil {
+		return nil, cobra.ShellCompDirectiveDefault
+	}
+	resp, err := cl.GetControlPlanePlans(cmd.Context())
+	if err != nil {
+		return nil, cobra.ShellCompDirectiveDefault
+	}
+	return lo.Map(resp.ControlPlanes, func(plan string, _ int) cobra.Completion { return cobra.Completion(plan) }), cobra.ShellCompDirectiveDefault
+}
+
+func autoCompleteSubregion(cmd *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
+	p := loadProfile(cmd)
+	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	if err != nil {
+		return nil, cobra.ShellCompDirectiveDefault
+	}
+	resp, err := cl.GetCPSubregions(cmd.Context())
+	if err != nil {
+		return nil, cobra.ShellCompDirectiveDefault
+	}
+	return lo.Map(resp.CPSubregions, func(plan string, _ int) cobra.Completion { return cobra.Completion(plan) }), cobra.ShellCompDirectiveDefault
+}
+
+func autoCompleteVersion(cmd *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
+	p := loadProfile(cmd)
+	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	if err != nil {
+		return nil, cobra.ShellCompDirectiveDefault
+	}
+	resp, err := cl.GetKubernetesVersions(cmd.Context())
+	if err != nil {
+		return nil, cobra.ShellCompDirectiveDefault
+	}
+	return lo.Map(resp.Versions, func(v string, _ int) cobra.Completion { return cobra.Completion(v) }), cobra.ShellCompDirectiveDefault
 }
 
 func clusterArgToID(cmd *cobra.Command, args []string) error {
