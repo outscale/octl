@@ -9,14 +9,61 @@ import (
 	"slices"
 	"strings"
 
+	"github.com/charmbracelet/lipgloss"
 	"github.com/outscale/octl/pkg/config"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/output/filter"
 	"github.com/outscale/octl/pkg/output/format"
 	"github.com/outscale/octl/pkg/output/read"
 	"github.com/outscale/octl/pkg/watch"
+	"github.com/samber/lo"
 	"github.com/spf13/pflag"
 )
+
+const (
+	Dark = iota
+	Light
+)
+
+var styles = map[string]map[int]string{
+	"doom-one": {
+		Dark:  "doom-one",
+		Light: "doom-one",
+	}, "github": {
+		Dark:  "github-dark",
+		Light: "github",
+	}, "monokai": {
+		Dark:  "monokai-dark",
+		Light: "monokai",
+	}, "nord": {
+		Dark:  "nord",
+		Light: "nord",
+	}, "paraiso": {
+		Dark:  "paraiso-dark",
+		Light: "paraiso-light",
+	}, "solarized": {
+		Dark:  "solarized-dark",
+		Light: "solarized-light",
+	},
+}
+
+const DefaultStyle = "github"
+
+func getStyle(style string) string {
+	if _, found := styles[style]; !found {
+		style = DefaultStyle
+	}
+	if lipgloss.HasDarkBackground() {
+		return styles[style][Dark]
+	}
+	return styles[style][Light]
+}
+
+func Styles() []string {
+	keys := lo.Keys(styles)
+	slices.Sort(keys)
+	return keys
+}
 
 func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Columns, explode, sort bool) (format.Interface, Outputter, error) {
 	fout, _ := fs.GetString("output")
@@ -78,14 +125,16 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		filters = slices.Insert(filters, 0, filter.Interface(filter.JSON{}))
 	}
 
+	style, _ := fs.GetString("style")
+	style = getStyle(style)
 	var fmter format.Interface
 	switch out {
 	case "none":
 		fmter = format.None{}
 	case "json", "raw":
-		fmter = format.JSON{}
+		fmter = format.NewJSON(style)
 	case "yaml":
-		fmter = format.YAML{}
+		fmter = format.NewYAML(style)
 	case "success":
 		fmter = format.Success{}
 	case "body":

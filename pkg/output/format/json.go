@@ -11,20 +11,27 @@ import (
 	"io"
 	"os"
 
-	"github.com/tidwall/pretty"
+	"github.com/alecthomas/chroma/v2/quick"
 )
 
-type JSON struct{}
+type JSON struct {
+	style string
+}
 
-func (JSON) Format(ctx context.Context, w io.Writer, v any) error {
+func NewJSON(style string) JSON {
+	return JSON{style: style}
+}
+
+func (j JSON) Format(ctx context.Context, w io.Writer, v any) error {
 	buf, err := json.MarshalIndent(v, "", "  ")
 	if err != nil {
 		return fmt.Errorf("marshal json: %w", err)
 	}
-	if IsTerminal(w) {
-		buf = pretty.Color(buf, nil)
+	if IsTerminal(w) && j.style != "" {
+		err = quick.Highlight(w, string(buf), "JSON", "terminal256", j.style)
+	} else {
+		_, err = fmt.Fprintln(w, string(buf))
 	}
-	_, err = fmt.Fprintln(w, string(buf))
 	return err
 }
 

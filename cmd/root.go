@@ -8,11 +8,13 @@ package cmd
 import (
 	"fmt"
 	"runtime/debug"
+	"strings"
 	"time"
 
 	"github.com/charmbracelet/lipgloss"
 	"github.com/outscale/octl/cmd/prerun"
 	"github.com/outscale/octl/pkg/markdown"
+	"github.com/outscale/octl/pkg/output"
 	"github.com/outscale/octl/pkg/version"
 	"github.com/outscale/osc-sdk-go/v3/pkg/oks"
 	"github.com/outscale/osc-sdk-go/v3/pkg/osc"
@@ -107,6 +109,7 @@ func init() {
 	rootCmd.PersistentFlags().StringP("output", "o", "", "output format (raw, json, yaml, table, csv, none, text)")
 	rootCmd.PersistentFlags().StringP("out-file", "O", "", "redirect output to file")
 	rootCmd.PersistentFlags().Bool("single", false, "convert single entry lists to a single object")
+	rootCmd.PersistentFlags().String("style", output.DefaultStyle, "style to use for syntax-highlighting ("+strings.Join(output.Styles(), ", ")+")")
 
 	rootCmd.PersistentFlags().Bool("no-upgrade", false, "do not check for new versions")
 	rootCmd.PersistentFlags().BoolP("yes", "y", false, "answer yes to all prompts")
@@ -118,6 +121,9 @@ func init() {
 		"output",
 		cobra.FixedCompletions([]cobra.Completion{"raw", "json", "yaml", "table", "csv", "none", "text"}, cobra.ShellCompDirectiveDefault),
 	)
+	_ = rootCmd.RegisterFlagCompletionFunc("style", func(_ *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
+		return lo.Map(output.Styles(), func(s string, _ int) cobra.Completion { return cobra.Completion(s) }), cobra.ShellCompDirectiveDefault
+	})
 
 	_ = rootCmd.RegisterFlagCompletionFunc("profile", func(cmd *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
 		cf, _ := loadConfig(cmd)
