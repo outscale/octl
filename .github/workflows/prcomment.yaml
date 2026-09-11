@@ -5,6 +5,12 @@ on:
     branches:
       - main
       - docautogen
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+      - unlabeled
 
 
 permissions:
@@ -20,7 +26,7 @@ jobs:
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       with:
         persist-credentials: false
-        ref: main
+        ref: ${{ github.event.pull_request.base.ref }}
     - name: 📦 Run GoReleaser
       uses: goreleaser/goreleaser-action@f06c13b6b1a9625abc9e6e439d9c05a8f2190e94 # v7.2.3
       with:
@@ -107,11 +113,11 @@ jobs:
       run: |
         set -ex
         git add .
-        git diff --staged -w -U0 refs/remotes/origin/main -- docs/reference | egrep -v '^(@@ |index |--- |\+\+\+ )' | sed -E 's|^diff --git a/(.*) .*$|```\n\1\n```|g' | tail -n +2 | tee diff
+        git diff --staged -w -U0 refs/remotes/origin/$BASE -- docs/reference | egrep -v '^(@@ |index |--- |\+\+\+ )' | sed -E 's|^diff --git a/(.*) .*$|```\n\1\n```|g' | tail -n +2 | tee diff
         if [ -s diff ]; then
           echo "**WARNING : Differences in reference doc** 🤔" > diffmsg.txt
           echo '```' >> diffmsg.txt
-          git diff --staged --stat  refs/remotes/origin/main -- docs/reference >> diffmsg.txt
+          git diff --staged --stat  refs/remotes/origin/$BASE -- docs/reference >> diffmsg.txt
           echo '```' >> diffmsg.txt
           echo "<details><summary>Detailed changes</summary>" >> diffmsg.txt
           echo >> diffmsg.txt
@@ -128,7 +134,8 @@ jobs:
         else
           echo "**No diff in reference doc** 😀" > diffmsg.txt
         fi
-
+      env:
+        BASE: ${{ github.event.pull_request.base.ref }}
     - name: 🔎 Find Comment
       uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
       id: find
@@ -143,3 +150,68 @@ jobs:
         issue-number: ${{ github.event.pull_request.number }}
         body-path: diffmsg.txt
         edit-mode: replace
+
+  flags:
+    runs-on: ubuntu-latest
+    steps:
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+        ref: ${{ github.event.pull_request.base.ref }}
+    - name: 📋 Compute before flag list
+      run: |
+        grep '\-\-' docs/reference/*.md | sed 's+docs/reference/\(.*\).md+\1+g' | sed 's/,//g' | awk '{
+            for (i = 2; i <= NF; i++) {
+                if ($i ~ /^-./) print $1,$i
+            }
+        }' > flags.before
+    - name: ⬇️ Checkout repository
+      uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+        clean: false
+    - name: 📋 Compute after flag list
+      run: |
+        grep '\-\-' docs/reference/*.md | sed 's+docs/reference/\(.*\).md+\1+g' | sed 's/,//g' | awk '{
+            for (i = 2; i <= NF; i++) {
+                if ($i ~ /^-./) print $1,$i
+            }
+        }' > flags.after
+    - name: ⚖️ Compute diff
+      id: diff
+      run: |
+        set -x
+        diff -U 0 flags.before flags.after | tail -n +4 | tee diff
+        DELETES=`egrep '^-' diff || true`
+        if [ -n "$DELETES" ]; then
+          echo "**DANGER : some flags have changed or have been deleted** 😱" > diffmsg.txt
+          echo '```' >> diffmsg.txt
+          cat diff >> diffmsg.txt
+          echo '```' >> diffmsg.txt
+          echo 'Set a "allow-flag-change" label to allow it.' >> diffmsg.txt
+          echo result=failure >> $GITHUB_OUTPUT
+        else
+          echo "**No flags have changed or have been deleted** 😀" > diffmsg.txt
+          echo result=success >> $GITHUB_OUTPUT
+        fi
+    - name: 🔎 Find Comment
+      uses: peter-evans/find-comment@b30e6a3c0ed37e7c023ccd3f1db5c6c0b0c23aad # v4.0.0
+      id: find
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: flags have changed or have been deleted
+    - name: 📝 Create or update comment
+      uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
+      with:
+        comment-id: ${{ steps.find.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        body-path: diffmsg.txt
+        edit-mode: replace
+    - name: 🚫 Fail on flag change
+      if: ${{ steps.diff.outputs.result == 'failure' && !contains(github.event.pull_request.labels.*.name, 'allow-flag-change')  }}
+      uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+      with:
+        script: |
+          core.setFailed('Changed flag ! Set a "allow-flag-change" label to allow it.')
