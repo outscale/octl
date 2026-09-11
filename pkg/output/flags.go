@@ -133,8 +133,10 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		fmter = format.None{}
 	case "json", "raw":
 		fmter = format.NewJSON(style)
+	case "rawyaml":
+		fmter = format.NewYAML(style, true)
 	case "yaml":
-		fmter = format.NewYAML(style)
+		fmter = format.NewYAML(style, false)
 	case "success":
 		fmter = format.Success{}
 	case "body":
@@ -187,7 +189,7 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	}
 
 	writeTo, _ := fs.GetString("out-file")
-	if out == "raw" {
+	if out == "raw" || out == "rawyaml" {
 		return fmter, &Paginated{Read: read.NewRaw(), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
 	}
 	maxPages, _ := fs.GetInt("max-pages")
