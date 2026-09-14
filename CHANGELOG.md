@@ -1,5 +1,32 @@
 # 📜 Changelog
 
+## [v0.0.32](https://github.com/outscale/octl/releases/tag/v0.0.32) - 2026-09-14
+
+### ✨ Added
+* ✨ feat(iaas): --watch support for readconsole by @jfbus in https://github.com/outscale/octl/pull/315
+* ✨ feat(iaas): add --force flag to vm stop by @jfbus in https://github.com/outscale/octl/pull/318
+* 🚸 ux(iaas): add vm stophistory / vm states as table by @jfbus in https://github.com/outscale/octl/pull/307
+* 🚸 ux(kube): add --control-plane/--version/--subregions autocompletion by @jfbus in https://github.com/outscale/octl/pull/326
+* ✨ feat(kube): add cluster use to set a default value for --cluster by @jfbus in https://github.com/outscale/octl/pull/327
+* 🚸 ux: YAML syntax highlighting by @jfbus in https://github.com/outscale/octl/pull/329
+* ✨ feat(output): add rawyaml output by @jfbus in https://github.com/outscale/octl/pull/335
+### 🛠️ Changed / Refactoring
+* ♻️ refacto: --silent refactoring by @jfbus in https://github.com/outscale/octl/pull/310
+* ⚡️ perfs: disable markdown, fix zip loading by @jfbus in https://github.com/outscale/octl/pull/314
+* 🚸 ux: allow base64 encoded files as base64File flag value by @jfbus in https://github.com/outscale/octl/pull/316
+* ♻️ refacto(init): pregenerate command tree at build time by @jfbus in https://github.com/outscale/octl/pull/317
+* 💬 help(iaas): fix typo in usage by @jfbus in https://github.com/outscale/octl/pull/320
+* 🔒️ security: sanitize sensitive data/personal info in profile output & logs by @jfbus in https://github.com/outscale/octl/pull/321
+* ♻️ refacto: Go 1.27 modernizations by @jfbus in https://github.com/outscale/octl/pull/330
+### 🐛 Fixed
+* 🐛 fix(aliases): aliases to iterating flags were broken by @jfbus in https://github.com/outscale/octl/pull/324
+### 📦 Dependency updates
+* ⬆️ deps(gomod): update go toolchain directive to v1.27.1 by @Open-Source-Bot in https://github.com/outscale/octl/pull/323
+* ⬆️ deps(gomod): update module github.com/stretchr/testify to v1.12.1 by @Open-Source-Bot in https://github.com/outscale/octl/pull/305
+* ⬆️ deps(dockerfile): update gcr.io/distroless/static-debian13:debug docker digest to 53cd815 by @Open-Source-Bot in https://github.com/outscale/octl/pull/312
+* ⬆️ deps(terraform): update terraform outscale to v1.8.0 by @Open-Source-Bot in https://github.com/outscale/octl/pull/311
+
+
 ## [v0.0.31](https://github.com/outscale/octl/releases/tag/v0.0.31) - 2026-08-20
 
 ### ✨ Added
