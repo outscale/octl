@@ -8081,6 +8081,17 @@ entities:
     primary: SecurityGroupId
   securitygrouprule:
     title: SecurityGroupRule
+    aliases:
+    - sgr
+    columns:
+    - title: ID
+      content: .SecurityGroupRuleId
+    - title: Protocol
+      content: .IpProtocol
+    - title: PortRange
+      content: .FromPortRange+"-"+.ToPortRange
+    - title: IpRange
+      content: .IpRange
   servercertificate:
     title: ServerCertificate
     columns:
@@ -8929,6 +8940,116 @@ aliases:
     alias_to: Filters.StopDateBefore
   - name: vm-id
     alias_to: Filters.VmIds
+- entity: securitygroup
+  use: rules id
+  help: Lists all rules from a security group.
+  short: Lists all rules from a security group.
+  alias_to: ReadSecurityGroups
+  alias_help: ReadSecurityGroups
+  command:
+  - api
+  - ReadSecurityGroups
+  - --Filters.SecurityGroupIds
+  - '%0'
+  - --jq
+  - ([.InboundRules[]|.+{"Flow":"Inbound"}]+[.OutboundRules[]|.+{"Flow":"Outbound"}])[]
+  - --columns
+  - Flow:.Flow||Protocol:if .IpProtocol == "-1" then "any (-1)" else .IpProtocol end||FromPort:if .FromPortRange == -1 then "any (-1)" else .FromPortRange end||ToPort:if .ToPortRange == -1 then "any (-1)" else .ToPortRange end||IpRanges:.IpRanges
+  - --output
+  - table
+- entity: securitygrouprule
+  use: create
+  alias_to: CreateSecurityGroupRule
+  aliases:
+  - add
+  alias_help: CreateSecurityGroupRule
+  command:
+  - api
+  - CreateSecurityGroupRule
+  - --output
+  - yaml
+  - --single
+  flags:
+  - name: flow
+    alias_to: Flow
+    default: Inbound
+  - name: ports
+    required: true
+    kind: 24
+    container: 23
+    help: A list of either protocol (all ports from a protocol, e.g. icmp), protocol/port (a single port/protocol, e.g. tcp/80) or protocol/from-to (a range, e.g. tcp/8080-8082)
+  - name: remote-ranges
+    alias_to: 'Rules.#.IpRanges'
+  - name: remote-account
+    alias_to: 'Rules.#.SecurityGroupsMembers.#.AccountId'
+  - name: remote-security-group
+    alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupId'
+  - name: remote-security-group-name
+    alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupName'
+  - name: remote-service
+    alias_to: 'Rules.#.ServiceIds'
+  - name: from-port
+    alias_to: 'Rules.#.FromPortRange'
+    container: 23
+    hidden: true
+  - name: protocol
+    alias_to: 'Rules.#.IpProtocol'
+    container: 23
+    hidden: true
+  - name: to-port
+    alias_to: 'Rules.#.ToPortRange'
+    container: 23
+    hidden: true
+  - name: group-id
+    alias_to: SecurityGroupId
+    required: true
+- entity: securitygrouprule
+  use: delete
+  alias_to: DeleteSecurityGroupRule
+  aliases:
+  - del
+  - rm
+  alias_help: DeleteSecurityGroupRule
+  command:
+  - api
+  - DeleteSecurityGroupRule
+  - --output
+  - yaml
+  - --single
+  flags:
+  - name: flow
+    alias_to: Flow
+    default: Inbound
+  - name: ports
+    required: true
+    kind: 24
+    container: 23
+    help: A list of either protocol (all ports from a protocol, e.g. icmp), protocol/port (a single port/protocol, e.g. tcp/80) or protocol/from-to (a range, e.g. tcp/8080-8082)
+  - name: remote-ranges
+    alias_to: 'Rules.#.IpRanges'
+  - name: remote-account
+    alias_to: 'Rules.#.SecurityGroupsMembers.#.AccountId'
+  - name: remote-security-group
+    alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupId'
+  - name: remote-security-group-name
+    alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupName'
+  - name: remote-service
+    alias_to: 'Rules.#.ServiceIds'
+  - name: from-port
+    alias_to: 'Rules.#.FromPortRange'
+    container: 23
+    hidden: true
+  - name: protocol
+    alias_to: 'Rules.#.IpProtocol'
+    container: 23
+    hidden: true
+  - name: to-port
+    alias_to: 'Rules.#.ToPortRange'
+    container: 23
+    hidden: true
+  - name: group-id
+    alias_to: SecurityGroupId
+    required: true
 - entity: accesskey
   use: list
   alias_to: ReadAccessKeys
@@ -11672,55 +11793,6 @@ aliases:
   - name: name
     alias_to: SecurityGroupName
     required: true
-- entity: securitygrouprule
-  use: create
-  alias_to: CreateSecurityGroupRule
-  aliases:
-  - add
-  alias_help: CreateSecurityGroupRule
-  command:
-  - api
-  - CreateSecurityGroupRule
-  - --output
-  - yaml
-  - --single
-  flags:
-  - name: flow
-    alias_to: Flow
-    required: true
-  - name: from-port-range
-    alias_to: FromPortRange
-  - name: ip-protocol
-    alias_to: IpProtocol
-  - name: ip-range
-    alias_to: IpRange
-  - name: rule-from-port-range
-    alias_to: 'Rules.#.FromPortRange'
-  - name: rule-ip-protocol
-    alias_to: 'Rules.#.IpProtocol'
-  - name: rule-ip-range
-    alias_to: 'Rules.#.IpRanges'
-  - name: rule-security-group-rule-id
-    alias_to: 'Rules.#.SecurityGroupRuleId'
-  - name: rule-security-group-member-account-id
-    alias_to: 'Rules.#.SecurityGroupsMembers.#.AccountId'
-  - name: rule-security-group-member-security-group-id
-    alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupId'
-  - name: rule-security-group-member-security-group-name
-    alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupName'
-  - name: rule-service-id
-    alias_to: 'Rules.#.ServiceIds'
-  - name: rule-to-port-range
-    alias_to: 'Rules.#.ToPortRange'
-  - name: group-account-id-to-link
-    alias_to: SecurityGroupAccountIdToLink
-  - name: group-id
-    alias_to: SecurityGroupId
-    required: true
-  - name: group-name-to-link
-    alias_to: SecurityGroupNameToLink
-  - name: to-port-range
-    alias_to: ToPortRange
 - entity: servercertificate
   use: create
   alias_to: CreateServerCertificate

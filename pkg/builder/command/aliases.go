@@ -92,7 +92,7 @@ func (b *Builder) BuildAliases(rootCmd, apiCmd *cobra.Command) {
 				if ptr.From(f.Required) && f.Default != "" {
 					f.Required = new(false)
 				}
-				if err := b.buildFlag(cmd, f); err != nil {
+				if err := b.buildFlag(cmd, f, nil); err != nil {
 					debug.Println(a.Entity, a.Use, "error building flag", f.Name, err)
 				}
 			} else if af := callCmd.InheritedFlags().Lookup(f.AliasTo); af != nil {
@@ -104,7 +104,10 @@ func (b *Builder) BuildAliases(rootCmd, apiCmd *cobra.Command) {
 				}
 				cmd.Flags().AddFlag(&naf)
 			} else {
-				debug.Println("no source flag found for", f.Name, "in", a.Use)
+				debug.Println("no source flag found for", f.Name, "in", a.Entity, a.Use)
+				if err := b.buildFlag(cmd, f, nil); err != nil {
+					debug.Println(a.Entity, a.Use, "error building flag", f.Name, err)
+				}
 			}
 		}
 	}

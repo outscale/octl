@@ -1,46 +1,34 @@
-## octl iaas securitygrouprule create
+## octl iaas securitygrouprule delete
 
-Adds one or more rules to a security group.
+Deletes one or more inbound or outbound rules from a security group.
 
 ### Synopsis
 
-Adds one or more rules to a security group.
+Deletes one or more inbound or outbound rules from a security group.
 
-Use the `SecurityGroupId` parameter to specify the security group for which you want to create a rule.
+For the rule to be deleted, the values specified in the deletion request must exactly match the value of the existing rule.
 
-Use the `Flow` parameter to specify if you want an inbound rule or an outbound rule.
+In case of TCP and UDP protocols, you have to indicate the destination port or range of ports. In case of ICMP protocol, you have to specify the ICMP type and code numbers.
 
+Rules (IP permissions) consist of the protocol, IP range or source security group.
 
-An inbound rule allows the security group to receive traffic:
-* Either from a specific IP range (`IpRange` parameter) on a specific port range (`FromPortRange` and `ToPortRange` parameters) and specific protocol (`IpProtocol` parameter).
-* Or from another specific security group (`SecurityGroupAccountIdToLink` and `SecurityGroupNameToLink` parameters).
-
-
-(Net only) An outbound rule works similarly but allows the security group to send traffic rather than receive traffic.
+To remove outbound access to a destination security group, we recommend to use a set of IP permissions. We also recommend to specify the protocol in a set of IP permissions.
 
 
-Alternatively, you can use the `Rules` parameter to add several rules at the same time. Note that the `SecurityGroupName` subparameter can only be used for security groups in the public Cloud.
+Alternatively, you can use the `Rules` parameter to delete several rules at the same time.
 
-**[NOTE]**
-
-* The modifications are effective as quickly as possible, but a small delay may occur.
-
-* By default, traffic between two security groups is allowed through both public and private IPs. To restrict traffic to private IPs only, contact our Support team at support@outscale.com.
-
-For more information, see [About Security Group Rules](https://docs.outscale.com/en/userguide/About-Security-Group-Rules.html).
-
-> alias for CreateSecurityGroupRule
+> alias for DeleteSecurityGroupRule
 
 ```
-octl iaas securitygrouprule create [flags]
+octl iaas securitygrouprule delete [flags]
 ```
 
 ### Options
 
 ```
       --flow string                         [REQUIRED] The direction of the flow: Inbound or Outbound. (default "Inbound")
-      --group-id string                     [REQUIRED] The ID of the security group for which you want to create a rule.
-  -h, --help                                help for create
+      --group-id string                     [REQUIRED] The ID of the security group you want to delete a rule from.
+  -h, --help                                help for delete
       --ports strings                       A list of either protocol (all ports from a protocol, e.g. icmp), protocol/port (a single port/protocol, e.g. tcp/80) or protocol/from-to (a range, e.g. tcp/8080-8082)
       --remote-account string               The OUTSCALE account ID that owns the source or destination security group.
       --remote-ranges strings               One or more IP ranges for the security group rules, in CIDR notation (for example, ["10.0.0.0/24" , "10.0.1.0/24"]).

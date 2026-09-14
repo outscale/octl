@@ -435,3 +435,22 @@ func TestVolumeByDeviceName(t *testing.T) {
 	require.Len(t, resp.LinkedVolumes, 1)
 	assert.Equal(t, "/dev/sda1", resp.LinkedVolumes[0].DeviceName)
 }
+
+func TestSecurityGroupRules(t *testing.T) {
+	var resp osc.SecurityGroup
+	runJSON(t, []string{"iaas", "sg", "create", "--name", "test-octl", "--description", "test-octl", "-o", "json"}, nil, &resp)
+	defer func() {
+		_ = run(t, []string{"iaas", "sg", "del", resp.SecurityGroupId, "-y"}, nil)
+	}()
+	runJSON(t, []string{"iaas", "sgr", "create", "--group-id", resp.SecurityGroupId, "--ports", "icmp,tcp/22,tcp/8080-8081", "--remote-ranges", "0.0.0.0/0", "-o", "json"}, nil, &resp)
+	assert.Len(t, resp.InboundRules, 3)
+	// drop rule id for comparison
+	for i := range resp.InboundRules {
+		resp.InboundRules[i].SecurityGroupRuleId = ""
+	}
+	assert.Contains(t, resp.InboundRules, osc.SecurityGroupRule{IpProtocol: "icmp", FromPortRange: -1, ToPortRange: -1, IpRanges: []string{"0.0.0.0/0"}})
+	assert.Contains(t, resp.InboundRules, osc.SecurityGroupRule{IpProtocol: "tcp", FromPortRange: 22, ToPortRange: 22, IpRanges: []string{"0.0.0.0/0"}})
+	assert.Contains(t, resp.InboundRules, osc.SecurityGroupRule{IpProtocol: "tcp", FromPortRange: 8080, ToPortRange: 8081, IpRanges: []string{"0.0.0.0/0"}})
+	runJSON(t, []string{"iaas", "sgr", "del", "--group-id", resp.SecurityGroupId, "--ports", "icmp,tcp/22,tcp/8080-8081", "--remote-ranges", "0.0.0.0/0", "-o", "json"}, nil, &resp)
+	assert.Empty(t, resp.InboundRules)
+}
