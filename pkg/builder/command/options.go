@@ -14,35 +14,42 @@ import (
 	"github.com/samber/lo"
 )
 
-var numEntriesInSlices = map[string]int{}
+type numEntriesInSlices map[string]int
 
-// We parse the command line to find index-based flags and set NumEntriesInSlices accordingly.
+var osNumEntriesInSlices = getNumEntriesInSlices(os.Args)
+
+// We parse the command arguments to find index-based flags count the number of flags for each prefix.
 // The cobra commands will be build with all the necessary flags (+1 to allow autompletion of next)
-func init() {
+func getNumEntriesInSlices(args []string) numEntriesInSlices {
 	// count the number of flags
-	cnt := lo.CountBy(os.Args, func(arg string) bool {
+	cnt := lo.CountBy(args, func(arg string) bool {
 		return strings.HasPrefix(arg, "--")
 	})
 	// worst case = 1 index per flag
+	num := make(numEntriesInSlices)
 	for i := range cnt {
 		idxStr := "." + strconv.Itoa(i) + "."
-		for _, arg := range os.Args {
+		for _, arg := range args {
 			parts := strings.Split(strings.TrimPrefix(arg, "--"), idxStr)
 			if len(parts) == 1 {
 				continue
 			}
 			prefix := ""
 			for iarg := range len(parts) - 1 {
-				numEntriesInSlices[prefix+parts[iarg]] = i + 1
+				num[prefix+parts[iarg]] = i + 1
 				prefix += parts[iarg] + idxStr
 			}
 		}
 	}
-	debug.Println("NumEntriesInSlices", numEntriesInSlices)
+	debug.Println("numEntriesInSlices", num)
+	return num
 }
 
-func NumEntriesInSlices(prefix string) int {
-	if n, found := numEntriesInSlices[prefix]; found {
+func (n numEntriesInSlices) forPrefix(prefix string) int {
+	if n == nil {
+		return 1
+	}
+	if n, found := n[prefix]; found {
 		return n + 1
 	}
 	return 1

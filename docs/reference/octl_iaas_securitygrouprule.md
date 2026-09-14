@@ -39,4 +39,5 @@ Manage SecurityGroupRule resources
 
 * [octl iaas](octl_iaas.md)	 - OUTSCALE IaaS management
 * [octl iaas securitygrouprule create](octl_iaas_securitygrouprule_create.md)	 - Adds one or more rules to a security group.
+* [octl iaas securitygrouprule delete](octl_iaas_securitygrouprule_delete.md)	 - Deletes one or more inbound or outbound rules from a security group.
 

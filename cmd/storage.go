@@ -17,7 +17,6 @@ import (
 	"github.com/gabriel-vasile/mimetype"
 	commandbuilder "github.com/outscale/octl/pkg/builder/command"
 	"github.com/outscale/octl/pkg/config"
-	"github.com/outscale/octl/pkg/debug"
 	"github.com/outscale/octl/pkg/flags"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/runner"
@@ -62,7 +61,6 @@ func init() {
 }
 
 func callOOS(cmd *cobra.Command, args []string) {
-	debug.Println(cmd.Name() + " called")
 	p := loadProfile(cmd)
 	cl, err := oos.NewClient(cmd.Context(), p, awsOptions(cmd)...)
 	if err == nil {
@@ -83,7 +81,6 @@ func callOOS(cmd *cobra.Command, args []string) {
 }
 
 func presign(cmd *cobra.Command, args []string) {
-	debug.Println(cmd.Name() + " called")
 	p := loadProfile(cmd)
 	s3cl, err := oos.NewClient(cmd.Context(), p, awsOptions(cmd)...)
 	if err != nil {

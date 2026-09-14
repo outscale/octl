@@ -1,11 +1,21 @@
-## octl iaas securitygroup
+## octl iaas securitygroup rules
 
-Manage SecurityGroup resources
+Lists all rules from a security group.
+
+### Synopsis
+
+Lists all rules from a security group.
+
+> alias for ReadSecurityGroups
+
+```
+octl iaas securitygroup rules id [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for securitygroup
+  -h, --help   help for rules
 ```
 
 ### Options inherited from parent commands
@@ -37,10 +47,5 @@ Manage SecurityGroup resources
 
 ### SEE ALSO
 
-* [octl iaas](octl_iaas.md)	 - OUTSCALE IaaS management
-* [octl iaas securitygroup create](octl_iaas_securitygroup_create.md)	 - Creates a security group.
-* [octl iaas securitygroup delete](octl_iaas_securitygroup_delete.md)	 - Deletes a specified security group.
-* [octl iaas securitygroup describe](octl_iaas_securitygroup_describe.md)	 - Lists one or more security groups.
-* [octl iaas securitygroup list](octl_iaas_securitygroup_list.md)	 - Lists one or more security groups.
-* [octl iaas securitygroup rules](octl_iaas_securitygroup_rules.md)	 - Lists all rules from a security group.
+* [octl iaas securitygroup](octl_iaas_securitygroup.md)	 - Manage SecurityGroup resources
 
