@@ -3,7 +3,7 @@ description: Install & configure octl
 inputs:
   version:
     description: 'octl version to install'
-    default: v0.0.31
+    default: v0.0.32
   OSC_ACCESS_KEY:
     description: 'access key'
   OSC_SECRET_KEY:
