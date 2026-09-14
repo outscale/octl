@@ -96,7 +96,6 @@ func init() {
 }
 
 func kube(cmd *cobra.Command, args []string) {
-	debug.Println(cmd.Name() + " called")
 	p := loadProfile(cmd)
 	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
 	if err == nil {

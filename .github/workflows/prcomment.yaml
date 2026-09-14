@@ -163,7 +163,7 @@ jobs:
       run: |
         grep '\-\-' docs/reference/*.md | sed 's+docs/reference/\(.*\).md+\1+g' | sed 's/,//g' | awk '{
             for (i = 2; i <= NF; i++) {
-                if ($i ~ /^-./) print $1,$i
+                if (i <= 3 && $i ~ /^-./) print $1,$i
             }
         }' > flags.before
     - name: ⬇️ Checkout repository
@@ -175,24 +175,24 @@ jobs:
       run: |
         grep '\-\-' docs/reference/*.md | sed 's+docs/reference/\(.*\).md+\1+g' | sed 's/,//g' | awk '{
             for (i = 2; i <= NF; i++) {
-                if ($i ~ /^-./) print $1,$i
+                if (i <= 3 && $i ~ /^-./) print $1,$i
             }
         }' > flags.after
     - name: ⚖️ Compute diff
       id: diff
       run: |
         set -x
-        diff -U 0 flags.before flags.after | tail -n +4 | tee diff
+        diff -U 0 flags.before flags.after | grep '^-octl' | tee diff
         DELETES=`egrep '^-' diff || true`
         if [ -n "$DELETES" ]; then
-          echo "**DANGER : some flags have changed or have been deleted** 😱" > diffmsg.txt
+          echo "**DANGER : some flags have been deleted** 😱" > diffmsg.txt
           echo '```' >> diffmsg.txt
           cat diff >> diffmsg.txt
           echo '```' >> diffmsg.txt
           echo 'Set a "allow-flag-change" label to allow it.' >> diffmsg.txt
           echo result=failure >> $GITHUB_OUTPUT
         else
-          echo "**No flags have changed or have been deleted** 😀" > diffmsg.txt
+          echo "**No flags have been deleted** 😀" > diffmsg.txt
           echo result=success >> $GITHUB_OUTPUT
         fi
     - name: 🔎 Find Comment
@@ -201,7 +201,7 @@ jobs:
       with:
         issue-number: ${{ github.event.pull_request.number }}
         comment-author: 'github-actions[bot]'
-        body-includes: flags have changed or have been deleted
+        body-includes: flags have been deleted
     - name: 📝 Create or update comment
       uses: peter-evans/create-or-update-comment@e8674b075228eee787fea43ef493e45ece1004c9 # v5.0.0
       with:

@@ -50,6 +50,8 @@ func main() {
 			"ReadPolicyVersions",
 			"ReadUserGroup",
 			"ReadVmsStopHistory",
+			"CreateSecurityGroupRule",
+			"DeleteSecurityGroupRule",
 		},
 		AllowedNumOut: []int{1, 2},
 		TypeName: map[string]string{

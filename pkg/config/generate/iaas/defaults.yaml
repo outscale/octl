@@ -235,6 +235,17 @@ entities:
       - sg
   securitygrouprule:
     title: SecurityGroupRule
+    aliases:
+      - sgr
+    columns:
+      - title: ID
+        content: .SecurityGroupRuleId
+      - title: Protocol
+        content: .IpProtocol
+      - title: PortRange
+        content: .FromPortRange+"-"+.ToPortRange
+      - title: IpRange
+        content: .IpRange
   snapshotexporttask:
     primary: TaskId
   tag:
@@ -257,14 +268,12 @@ entities:
   usergroup:
     primary: UserGroupName
   vmshealth:
-    no_aliases: true
     columns:
       - title: VM
         content: .VmId
       - title: State
         content: .State
   vmsstate:
-    no_aliases: true
     columns:
       - title: VM ID
         content: .VmId
@@ -273,7 +282,6 @@ entities:
       - title: State
         content: .VmState
   vmsstophistory:
-    no_aliases: true
     columns:
       - title: Date
         content: .StopDate
@@ -956,3 +964,112 @@ aliases:
       alias_to: Filters.StopDateBefore
     - name: vm-id
       alias_to: Filters.VmIds
+  - entity: securitygroup
+    use: rules id
+    alias_to: ReadSecurityGroups
+    alias_help: ReadSecurityGroups
+    help: Lists all rules from a security group.
+    command:
+    - api
+    - ReadSecurityGroups
+    - --Filters.SecurityGroupIds
+    - '%0'
+    - --jq
+    - '([.InboundRules[]|.+{"Flow":"Inbound"}]+[.OutboundRules[]|.+{"Flow":"Outbound"}])[]'
+    - --columns
+    - 'Flow:.Flow||Protocol:if .IpProtocol == "-1" then "any (-1)" else .IpProtocol end||FromPort:if .FromPortRange == -1 then "any (-1)" else .FromPortRange end||ToPort:if .ToPortRange == -1 then "any (-1)" else .ToPortRange end||IpRanges:.IpRanges'
+    - --output
+    - table
+  - entity: securitygrouprule
+    use: create
+    alias_to: CreateSecurityGroupRule
+    aliases:
+    - add
+    alias_help: CreateSecurityGroupRule
+    command:
+    - api
+    - CreateSecurityGroupRule
+    - --output
+    - yaml
+    - --single
+    flags:
+    - name: flow
+      alias_to: Flow
+      default: Inbound
+    - name: ports
+      help: A list of either protocol (all ports from a protocol, e.g. icmp), protocol/port (a single port/protocol, e.g. tcp/80) or protocol/from-to (a range, e.g. tcp/8080-8082)
+      required: true
+      kind: 24
+      container: 23
+    - name: remote-ranges
+      alias_to: 'Rules.#.IpRanges'
+    - name: remote-account
+      alias_to: 'Rules.#.SecurityGroupsMembers.#.AccountId'
+    - name: remote-security-group
+      alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupId'
+    - name: remote-security-group-name
+      alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupName'
+    - name: remote-service
+      alias_to: 'Rules.#.ServiceIds'
+    - name: from-port
+      alias_to: 'Rules.#.FromPortRange'
+      hidden: true
+      container: 23
+    - name: protocol
+      alias_to: 'Rules.#.IpProtocol'
+      hidden: true
+      container: 23
+    - name: to-port
+      alias_to: 'Rules.#.ToPortRange'
+      hidden: true
+      container: 23
+    - name: group-id
+      alias_to: SecurityGroupId
+      required: true
+  - entity: securitygrouprule
+    use: delete
+    alias_to: DeleteSecurityGroupRule
+    aliases:
+    - del
+    - rm
+    alias_help: DeleteSecurityGroupRule
+    command:
+    - api
+    - DeleteSecurityGroupRule
+    - --output
+    - yaml
+    - --single
+    flags:
+    - name: flow
+      alias_to: Flow
+      default: Inbound
+    - name: ports
+      help: A list of either protocol (all ports from a protocol, e.g. icmp), protocol/port (a single port/protocol, e.g. tcp/80) or protocol/from-to (a range, e.g. tcp/8080-8082)
+      required: true
+      kind: 24
+      container: 23
+    - name: remote-ranges
+      alias_to: 'Rules.#.IpRanges'
+    - name: remote-account
+      alias_to: 'Rules.#.SecurityGroupsMembers.#.AccountId'
+    - name: remote-security-group
+      alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupId'
+    - name: remote-security-group-name
+      alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupName'
+    - name: remote-service
+      alias_to: 'Rules.#.ServiceIds'
+    - name: from-port
+      alias_to: 'Rules.#.FromPortRange'
+      hidden: true
+      container: 23
+    - name: protocol
+      alias_to: 'Rules.#.IpProtocol'
+      hidden: true
+      container: 23
+    - name: to-port
+      alias_to: 'Rules.#.ToPortRange'
+      hidden: true
+      container: 23
+    - name: group-id
+      alias_to: SecurityGroupId
+      required: true

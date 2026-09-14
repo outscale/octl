@@ -13,18 +13,32 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func (b *Builder) buildFlag(cmd *cobra.Command, f config.Flag) error {
-	if !strings.Contains(f.Name, ".#.") {
-		return b.buildSingleFlag(cmd, f)
+func (b *Builder) buildFlagSet(cmd *cobra.Command, fs config.FlagSet, n numEntriesInSlices) error {
+	for _, f := range fs {
+		// Required flags are not configured as required
+		// Templating (e.g. echo '{}' | octl foo bar) might set some required info without using the flag.
+		if ptr.From(f.Required) {
+			f.Required = new(false)
+		}
+		if err := b.buildFlag(cmd, f, n); err != nil {
+			return fmt.Errorf("error building flag %s: %w", f.Name, err)
+		}
 	}
-	return b.buildMultipleFlag(cmd, f)
+	return nil
 }
 
-func (b *Builder) buildMultipleFlag(cmd *cobra.Command, f config.Flag) error {
+func (b *Builder) buildFlag(cmd *cobra.Command, f config.Flag, n numEntriesInSlices) error {
 	if !strings.Contains(f.Name, ".#.") {
 		return b.buildSingleFlag(cmd, f)
 	}
-	for _, flag := range b.buildFlagSlice(f.Name) {
+	return b.buildMultipleFlag(cmd, f, n)
+}
+
+func (b *Builder) buildMultipleFlag(cmd *cobra.Command, f config.Flag, n numEntriesInSlices) error {
+	if !strings.Contains(f.Name, ".#.") {
+		return b.buildSingleFlag(cmd, f)
+	}
+	for _, flag := range b.buildFlagSlice(f.Name, n) {
 		nf := f
 		nf.Name = flag
 		if err := b.buildSingleFlag(cmd, nf); err != nil {
@@ -34,20 +48,24 @@ func (b *Builder) buildMultipleFlag(cmd *cobra.Command, f config.Flag) error {
 	return nil
 }
 
-func (b *Builder) buildFlagSlice(flagName string) []string {
+func (b *Builder) buildFlagSlice(flagName string, n numEntriesInSlices) []string {
 	before, after, found := strings.Cut(flagName, ".#.")
 	if !found {
 		return []string{flagName}
 	}
 	lst := []string{}
-	for i := range NumEntriesInSlices(before) {
-		lst = append(lst, b.buildFlagSlice(fmt.Sprintf("%s.%d.%s", before, i, after))...)
+	for i := range n.forPrefix(before) {
+		lst = append(lst, b.buildFlagSlice(fmt.Sprintf("%s.%d.%s", before, i, after), n)...)
 	}
 	return lst
 }
 
 func (b *Builder) buildSingleFlag(cmd *cobra.Command, f config.Flag) error {
 	fs := cmd.Flags()
+	// Flags for API commands are built twice, check if flag already exists...
+	if fs.Lookup(f.Name) != nil {
+		return nil
+	}
 	switch f.Kind {
 	case reflect.Bool:
 		if f.ContainerKind == reflect.Slice {
@@ -103,6 +121,9 @@ func (b *Builder) buildSingleFlag(cmd *cobra.Command, f config.Flag) error {
 	}
 	if ptr.From(f.Required) {
 		_ = cmd.MarkFlagRequired(f.Name)
+	}
+	if f.Hidden {
+		_ = cmd.Flags().MarkHidden(f.Name)
 	}
 	if f.Default != "" {
 		_ = flags.SetDefault(cmd.Flags(), f.Name, f.Default)

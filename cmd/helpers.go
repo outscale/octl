@@ -1,6 +1,9 @@
 package cmd
 
-import "github.com/spf13/cobra"
+import (
+	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
+)
 
 func walkCommandTree(root *cobra.Command, fn func(cmd *cobra.Command)) {
 	fn(root)
@@ -16,4 +19,9 @@ func walkCommandTreeWithFlag(root *cobra.Command, flag string, fn func(cmd *cobr
 		}
 		fn(cmd)
 	})
+}
+
+func setFlag(f *pflag.Flag, v string) error {
+	f.Changed = true
+	return f.Value.Set(v)
 }

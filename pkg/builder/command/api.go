@@ -1,7 +1,6 @@
 package commandbuilder
 
 import (
-	"github.com/outscale/goutils/sdk/ptr"
 	"github.com/outscale/octl/pkg/debug"
 	"github.com/spf13/cobra"
 )
@@ -27,23 +26,43 @@ func (b *Builder) BuildAPI(rootCmd *cobra.Command, run func(cmd *cobra.Command, 
 			apiCmd.AddGroup(&cobra.Group{ID: call.Group, Title: call.Group})
 		}
 		cmd := &cobra.Command{
-			GroupID: call.Group,
-			Use:     call.Use,
-			Short:   call.Short,
-			Long:    call.Help,
-			Run:     run,
+			// we need to disable flag parsing, an alias might generate flags
+			// that were unknown during init
+			DisableFlagParsing: true,
+			GroupID:            call.Group,
+			Use:                call.Use,
+			Short:              call.Short,
+			Long:               call.Help,
+			Run:                run,
+			PreRun: func(cmd *cobra.Command, args []string) {
+				if !cmd.DisableFlagParsing {
+					return
+				}
+				// update flag set with args
+				// a resolved alias will generate a new command line with potential new flags.
+				debug.Println("Updating flags for", cmd.Name())
+				err := b.buildFlagSet(cmd, call.Flags, getNumEntriesInSlices(args))
+				if err != nil {
+					debug.Println(call.Entity, call.Use, err)
+				}
+			},
+			RunE: func(cmd *cobra.Command, args []string) error {
+				if cmd.DisableFlagParsing {
+					// loop with enabled flag parsing
+					debug.Println("Looping on", cmd.Use, "with", args)
+					cmd.DisableFlagParsing = false
+					return cmd.Execute()
+				}
+				debug.Println("Running", cmd.Use, "with", args)
+				run(cmd, args)
+				return nil
+			},
 		}
 		apiCmd.AddCommand(cmd)
-
-		for _, f := range call.Flags {
-			// Required flags are not configured as required
-			// Templating (e.g. echo '{}' | octl foo bar) might set some required info without using the flag.
-			if ptr.From(f.Required) {
-				f.Required = new(false)
-			}
-			if err := b.buildFlag(cmd, f); err != nil {
-				debug.Println(call.Entity, call.Use, "error building flag", f.Name, err)
-			}
+		// build default flag set based on CLI args
+		err := b.buildFlagSet(cmd, call.Flags, osNumEntriesInSlices)
+		if err != nil {
+			debug.Println(call.Entity, call.Use, err)
 		}
 	}
 	return apiCmd
