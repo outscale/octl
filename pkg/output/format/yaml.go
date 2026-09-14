@@ -27,7 +27,7 @@ func NewYAML(style string, raw bool) YAML {
 
 func (y YAML) Format(ctx context.Context, w io.Writer, v any) error {
 	buf := new(bytes.Buffer)
-	opts := []yaml.EncodeOption{yaml.UseSingleQuote(true), yaml.Indent(2), yaml.CustomMarshaler(
+	opts := []yaml.EncodeOption{yaml.UseSingleQuote(true), yaml.Indent(2), yaml.AutoInt(), yaml.CustomMarshaler(
 		func(v []byte) ([]byte, error) {
 			return []byte(base64.StdEncoding.EncodeToString(v)), nil
 		},
