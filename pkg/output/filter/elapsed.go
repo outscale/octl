@@ -24,23 +24,35 @@ func NewElapsed() *Elapsed {
 
 func (e Elapsed) Filter(ctx context.Context, seq iter.Seq[result.Result]) iter.Seq[result.Result] {
 	return func(yield func(result.Result) bool) {
+		var dur time.Duration
+		iter := -1
 		for v := range seq {
 			if v.Error != nil {
 				_ = yield(v)
 				return
 			}
-			if json, ok := v.Ok.(map[string]any); ok {
-				dur := time.Since(e.start)
+			if v.Iter != iter {
+				dur = time.Since(e.start)
 				if dur > time.Second {
 					dur = dur.Truncate(time.Second)
 				} else {
 					dur = dur.Truncate(time.Millisecond)
 				}
-				json["_elapsed"] = dur.String()
+			}
+			switch val := v.Ok.(type) {
+			case map[string]any:
+				val["_elapsed"] = dur.String()
+			case string:
+				if v.Iter != iter {
+					if !yield(result.New(v, "--- elapsed since start: "+dur.String()+" ---")) {
+						return
+					}
+				}
 			}
 			if !yield(v) {
 				return
 			}
+			iter = v.Iter
 		}
 	}
 }

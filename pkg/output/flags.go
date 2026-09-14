@@ -91,9 +91,6 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	if skip, _ := fs.GetInt("skip"); skip > 0 {
 		filters = append(filters, filter.NewSkip(skip))
 	}
-	if doWatch && elapsed {
-		filters = append(filters, filter.NewElapsed())
-	}
 	filts, _ := fs.GetStringSlice("filter")
 	for _, filt := range filts {
 		name, value, found := strings.Cut(filt, ":")
@@ -176,9 +173,15 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 
 	switch {
 	case doWatch && out == "table":
+		if elapsed {
+			filters = append(filters, filter.NewElapsed())
+		}
 		fmter = watch.NewFormat(fmter)
 	case doWatch:
 		filters = append(filters, filter.NewDedup(true))
+		if elapsed {
+			filters = append(filters, filter.NewElapsed())
+		}
 	default: // single breaks --watch
 		single, _ := fs.GetBool("single")
 		if single {
