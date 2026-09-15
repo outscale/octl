@@ -140,6 +140,7 @@ type Flag struct {
 	Help          string       `yaml:"help,omitempty"`
 	Default       string       `yaml:"default,omitempty"`
 	AllowedValues []string     `yaml:"values,omitzero"`
+	Hidden        bool         `yaml:"hidden,omitempty"`
 }
 
 type Prompt struct {

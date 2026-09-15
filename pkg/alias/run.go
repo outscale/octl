@@ -8,6 +8,7 @@ package alias
 import (
 	"bytes"
 	"os"
+	"reflect"
 	"slices"
 	"strconv"
 	"strings"
@@ -135,26 +136,84 @@ func iterate(fn func(cmd *cobra.Command, args []string) int, cmd *cobra.Command,
 
 // userArgs returns the list of args for the underlying command, including flags mapped from the alias flags.
 func userArgs(cmd *cobra.Command, fs config.FlagSet, skipUserFlags bool) []string {
+	// compute # of iterated fields to build in target
+	// expectation: the target flags iterate on the same prefix
+	n := 1
+	cmd.Flags().VisitAll(func(f *pflag.Flag) {
+		nf, found := fs.Get(f.Name)
+		if !found || !f.Changed {
+			return
+		}
+		// flag should forced as a container and target must be iterated
+		if nf.ContainerKind != reflect.Slice || !strings.Contains(nf.AliasTo, ".#.") {
+			return
+		}
+		if svalue, ok := f.Value.(pflag.SliceValue); ok {
+			n = max(n, len(svalue.GetSlice()))
+		}
+	})
+	debug.Println("Generating", n, "iterated fields")
+	// set flags
 	var userArgs []string
 	cmd.Flags().VisitAll(func(f *pflag.Flag) {
-		newFlag := f.Name
-		nf, found := fs.Get(newFlag)
+		if !f.Changed && !flags.HasDefault(f) {
+			return
+		}
+		targetFlag := f.Name
+		nf, found := fs.Get(targetFlag)
 		switch {
-		case newFlag == "verbose" || newFlag == "config" || newFlag == "profile":
+		case targetFlag == "verbose" || targetFlag == "config" || targetFlag == "profile":
 		case flags.IsNoForward(f):
 			return
 		case !found && skipUserFlags:
 			return
 		case found:
-			newFlag = nf.AliasTo
+			targetFlag = nf.AliasTo
 		}
-		newFlag = strings.ReplaceAll(newFlag, ".#.", ".0.")
-		if f.Changed || flags.HasDefault(f) {
-			if svalue, ok := f.Value.(pflag.SliceValue); ok {
-				userArgs = append(userArgs, "--"+newFlag+"="+strings.Join(svalue.GetSlice(), ","))
-				return
+		if targetFlag == "" {
+			return
+		}
+		newFlagName := func(oldFlag string, i int) string {
+			newFlag := strings.Replace(oldFlag, ".#.", "."+strconv.Itoa(i)+".", 1)
+			return strings.ReplaceAll(newFlag, ".#.", ".0.")
+		}
+		// This is a natural flag, types will match, repeat the value to all sets
+		if nf.ContainerKind != reflect.Slice {
+			done := map[string]bool{}
+			for i := range n {
+				newFlag := newFlagName(targetFlag, i)
+				if done[newFlag] {
+					continue
+				}
+				debug.Println(i, newFlag, f.Value.String())
+				if svalue, ok := f.Value.(pflag.SliceValue); ok {
+					userArgs = append(userArgs, "--"+newFlag+"="+strings.Join(svalue.GetSlice(), ","))
+				} else {
+					userArgs = append(userArgs, "--"+newFlag+"="+f.Value.String())
+				}
+				done[newFlag] = true
 			}
-			userArgs = append(userArgs, "--"+newFlag+"="+f.Value.String())
+			return
+		}
+		// The field was remapped from single value to list
+		// Expectation: target field is iterated - should be enforced by config, noop here to avoid a potential crash.
+		if !strings.Contains(targetFlag, ".#.") {
+			debug.Println("WARNING - Slice field is not mapped to iterated flag -", f.Name, "ignored")
+			return
+		}
+		svalue, ok := f.Value.(pflag.SliceValue)
+		if !ok {
+			debug.Println("WARNING - Slice field is a slice -", f.Name, "ignored")
+			return
+		}
+		vals := svalue.GetSlice()
+		debug.Println(targetFlag, vals)
+		for i := range n {
+			// if one value is missing, the last value will be repeated
+			val := vals[min(i, len(vals)-1)]
+			newFlag := newFlagName(targetFlag, i)
+			debug.Println(i, newFlag, val)
+			userArgs = append(userArgs, "--"+newFlag+"="+val)
 		}
 	})
 	return userArgs
