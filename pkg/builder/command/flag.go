@@ -95,6 +95,8 @@ func (b *Builder) buildSingleFlag(cmd *cobra.Command, f config.Flag) error {
 		switch {
 		case f.CustomValue != "":
 			switch f.CustomValue {
+			case flags.File:
+				fs.Var(flags.NewFileValue(), f.Name, f.Help)
 			case flags.Base64File:
 				fs.Var(flags.NewBase64FileValue(), f.Name, f.Help)
 			case flags.FileOrJSON:

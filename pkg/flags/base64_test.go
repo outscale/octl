@@ -40,4 +40,21 @@ func TestBase64FileValue(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, "foo", string(decoded))
 	})
+	t.Run("Base64 data can be used", func(t *testing.T) {
+		buf := make([]byte, 4)
+		base64.StdEncoding.Encode(buf, []byte("foo"))
+		v := flags.NewBase64FileValue()
+		err := v.Set(string(buf))
+		require.NoError(t, err)
+		content, ok := v.Value()
+		assert.True(t, ok)
+		decoded, err := base64.StdEncoding.DecodeString(content)
+		require.NoError(t, err)
+		assert.Equal(t, "foo", string(decoded))
+	})
+	t.Run("Non Base64 data cannot be used", func(t *testing.T) {
+		v := flags.NewBase64FileValue()
+		err := v.Set("foo")
+		require.Error(t, err)
+	})
 }

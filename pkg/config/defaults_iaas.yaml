@@ -209,7 +209,8 @@ api:
     - name: CaPem
       required: true
       kind: 24
-      help: '[REQUIRED] The CA in PEM format.'
+      customValue: file
+      help: '[REQUIRED] The file storing the CA in PEM format.'
     - name: Description
       kind: 24
       help: The description of the CA.
@@ -1286,10 +1287,12 @@ api:
     - name: Body
       required: true
       kind: 24
-      help: '[REQUIRED] The PEM-encoded X509 certificate.'
+      customValue: file
+      help: '[REQUIRED] The file storing the PEM-encoded X509 certificate.'
     - name: Chain
       kind: 24
-      help: The PEM-encoded intermediate certification authorities.
+      customValue: file
+      help: The file storing the PEM-encoded intermediate certification authorities.
     - name: DryRun
       kind: 1
       help: If true, checks whether you have the required permissions to perform the action.
@@ -1303,7 +1306,8 @@ api:
     - name: PrivateKey
       required: true
       kind: 24
-      help: '[REQUIRED] The PEM-encoded private key matching the certificate.'
+      customValue: file
+      help: '[REQUIRED] The file storing the PEM-encoded private key matching the certificate.'
     help: |-
       Creates a server certificate and its matching private key.
       
