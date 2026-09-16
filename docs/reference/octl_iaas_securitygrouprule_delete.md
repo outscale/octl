@@ -29,6 +29,7 @@ octl iaas securitygrouprule delete [flags]
       --flow string                         [REQUIRED] The direction of the flow: Inbound or Outbound. (default "Inbound")
       --group-id string                     [REQUIRED] The ID of the security group you want to delete a rule from.
   -h, --help                                help for delete
+      --ids strings                         The ID of the security group rule.
       --ports strings                       A list of either protocol (all ports from a protocol, e.g. icmp), protocol/port (a single port/protocol, e.g. tcp/80) or protocol/from-to (a range, e.g. tcp/8080-8082)
       --remote-account string               The OUTSCALE account ID that owns the source or destination security group.
       --remote-ranges strings               One or more IP ranges for the security group rules, in CIDR notation (for example, ["10.0.0.0/24" , "10.0.1.0/24"]).

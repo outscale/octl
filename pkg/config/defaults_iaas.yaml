@@ -9021,7 +9021,6 @@ aliases:
     alias_to: Flow
     default: Inbound
   - name: ports
-    required: true
     kind: 24
     container: 23
     help: A list of either protocol (all ports from a protocol, e.g. icmp), protocol/port (a single port/protocol, e.g. tcp/80) or protocol/from-to (a range, e.g. tcp/8080-8082)
@@ -9033,6 +9032,9 @@ aliases:
     alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupId'
   - name: remote-security-group-name
     alias_to: 'Rules.#.SecurityGroupsMembers.#.SecurityGroupName'
+  - name: ids
+    alias_to: 'Rules.#.SecurityGroupRuleId'
+    container: 23
   - name: remote-service
     alias_to: 'Rules.#.ServiceIds'
   - name: from-port
