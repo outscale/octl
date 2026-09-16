@@ -92,6 +92,22 @@ func main() {
 				CustomValue: flags.Base64File,
 				Help:        "The file storing the public key to import in your account, if you are importing an existing keypair.",
 			},
+			"Body": {
+				CustomValue: flags.File,
+				Help:        "[REQUIRED] The file storing the PEM-encoded X509 certificate.",
+			},
+			"Chain": {
+				CustomValue: flags.File,
+				Help:        "The file storing the PEM-encoded intermediate certification authorities.",
+			},
+			"PrivateKey": {
+				CustomValue: flags.File,
+				Help:        "[REQUIRED] The file storing the PEM-encoded private key matching the certificate.",
+			},
+			"CaPem": {
+				CustomValue: flags.File,
+				Help:        "[REQUIRED] The file storing the CA in PEM format.",
+			},
 			"UserData": {
 				CustomValue: flags.Base64File,
 				Help:        "The file storing the data or script used to add a specific configuration to the VM (max size 500 KiB).",

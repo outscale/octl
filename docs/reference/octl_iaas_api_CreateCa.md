@@ -16,7 +16,7 @@ octl iaas api CreateCa [flags]
 ### Options
 
 ```
-      --CaPem string         [REQUIRED] The CA in PEM format.
+      --CaPem file           [REQUIRED] The file storing the CA in PEM format.
       --Description string   The description of the CA.
       --DryRun               If true, checks whether you have the required permissions to perform the action.
   -h, --help                 help for CreateCa
