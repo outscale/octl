@@ -5,7 +5,9 @@ import (
 
 	"github.com/outscale/osc-sdk-go/v3/pkg/oks"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	corev1 "k8s.io/api/core/v1"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 func TestKube(t *testing.T) {
@@ -121,5 +123,11 @@ func TestKube(t *testing.T) {
 			_ = run(t, []string{"kube", "cluster", "use"}, nil)
 		}()
 		runWithError(t, []string{"kube", "kubectl", "--", "get", "nodes"}, nil)
+	})
+	t.Run("cluster kubeconfig returns a valid kubeconfig", func(t *testing.T) {
+		buf := run(t, []string{"kube", "cluster", "kubeconfig", cluster, "--print-path"}, nil)
+		config, err := clientcmd.LoadFromFile(string(buf))
+		require.NoError(t, err)
+		assert.Len(t, config.AuthInfos, 1)
 	})
 }

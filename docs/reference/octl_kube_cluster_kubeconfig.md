@@ -17,7 +17,8 @@ octl kube cluster kubeconfig id_or_name [flags]
 ```
       --group string   
   -h, --help           help for kubeconfig
-      --ttl string     
+      --print-path     Print path to saved kubeconfig
+      --ttl string     TTL in human readable format (5h, 1d, 1w)
       --user string    
 ```
 
