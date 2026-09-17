@@ -191,6 +191,11 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		}
 	}
 
+	printPath, _ := fs.GetBool("print-path")
+	if printPath {
+		fmter = format.NewPrintPath(fmter)
+	}
+
 	writeTo, _ := fs.GetString("out-file")
 	if out == "raw" || out == "rawyaml" {
 		return fmter, &Paginated{Read: read.NewRaw(), Format: fmter, Filters: filters, WriteTo: writeTo}, nil

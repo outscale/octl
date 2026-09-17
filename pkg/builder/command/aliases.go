@@ -99,12 +99,13 @@ func (b *Builder) BuildAliases(rootCmd, apiCmd *cobra.Command) {
 				// probably a persistent flag
 				naf := *af
 				naf.Name = f.Name
+				naf.Hidden = f.Hidden
 				if f.Help != "" {
 					naf.Usage = f.Help
 				}
 				cmd.Flags().AddFlag(&naf)
 			} else {
-				debug.Println("no source flag found for", f.Name, "in", a.Entity, a.Use)
+				debug.Println("no source flag", f.AliasTo, "found for", f.Name, "in", a.Entity, a.Use)
 				if err := b.buildFlag(cmd, f, nil); err != nil {
 					debug.Println(a.Entity, a.Use, "error building flag", f.Name, err)
 				}

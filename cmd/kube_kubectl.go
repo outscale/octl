@@ -93,9 +93,9 @@ func getKubeconfig(ctx context.Context, cluster string, cl *oks.Client) (string,
 }
 
 func kubeconfigPath(id string) (string, error) {
-	dir, err := os.UserConfigDir()
+	dir, err := os.UserCacheDir()
 	if err != nil {
-		return "", fmt.Errorf("config dir: %w", err)
+		return "", fmt.Errorf("get cache dir: %w", err)
 	}
 	path := filepath.Join(dir, "octl", "kube", "kubeconfig")
 	if _, err := os.Stat(path); errors.Is(err, fs.ErrNotExist) {

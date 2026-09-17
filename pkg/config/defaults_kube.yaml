@@ -822,6 +822,11 @@ aliases:
     alias_to: User
   - name: ttl
     alias_to: Ttl
+    help: TTL in human readable format (5h, 1d, 1w)
+  - name: print-path
+    alias_to: print-path
+    kind: 1
+    help: Print path to saved kubeconfig
 - entity: quota
   use: describe
   alias_to: GetQuotas
