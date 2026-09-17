@@ -110,6 +110,9 @@ func init() {
 	rootCmd.PersistentFlags().StringP("out-file", "O", "", "redirect output to file")
 	rootCmd.PersistentFlags().Bool("single", false, "convert single entry lists to a single object")
 	rootCmd.PersistentFlags().String("style", output.DefaultStyle, "style to use for syntax-highlighting ("+strings.Join(output.Styles(), ", ")+")")
+	// Currently only exposed in kubeconfig commands, but could be used elsewhere.
+	rootCmd.PersistentFlags().Bool("print-path", false, "")
+	_ = rootCmd.PersistentFlags().MarkHidden("print-path")
 
 	rootCmd.PersistentFlags().Bool("no-upgrade", false, "do not check for new versions")
 	rootCmd.PersistentFlags().BoolP("yes", "y", false, "answer yes to all prompts")
