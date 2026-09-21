@@ -1,5 +1,19 @@
 # 📜 Changelog
 
+## [v0.0.33](https://github.com/outscale/octl/releases/tag/v0.0.33) - 2026-09-21
+
+### ✨ Added
+* ✨ feat(iaas): add elapsed time in readconsole --watch by @jfbus in https://github.com/outscale/octl/pull/338
+* ✨ feat(iaas): add securitygroup rules + simplify flags in securitygrouprule create by @jfbus in https://github.com/outscale/octl/pull/342
+* ✨ feat(kube): add --print-path flag to cluster kubeconfig by @jfbus in https://github.com/outscale/octl/pull/346
+### 🛠️ Changed / Refactoring
+* 🚸 ux(iaas): improve base64 & file flags use + retrocompatibility by @jfbus in https://github.com/outscale/octl/pull/345
+### 🐛 Fixed
+* 🚸 ux(yaml): display round numbers as int by @jfbus in https://github.com/outscale/octl/pull/341
+### 📦 Dependency updates
+* ⬆️ deps(dockerfile): update gcr.io/distroless/static-debian13:debug docker digest to 07148a6 by @Open-Source-Bot in https://github.com/outscale/octl/pull/343
+
+
 ## [v0.0.32](https://github.com/outscale/octl/releases/tag/v0.0.32) - 2026-09-14
 
 ### ✨ Added
