@@ -16,17 +16,24 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func loadProfile(cmd *cobra.Command) *profile.Profile {
+func loadProfile(cmd *cobra.Command) profile.Result {
+	var opt profile.Options
+
 	path, _ := cmd.Flags().GetString("config")
-	prof, _ := cmd.Flags().GetString("profile")
-	var opts []profile.Option
-	if prof != "" || path != "" {
-		opts = []profile.Option{profile.FromFile(prof, path), profile.MergeWith(profile.FromEnv())}
+	if path != "" {
+		opt.FilePath = &path
 	}
-	p, err := profile.New(opts...)
+
+	prof, _ := cmd.Flags().GetString("profile")
+	if prof != "" {
+		opt.ProfileName = &prof
+	}
+
+	p, err := profile.Load(opt)
 	if err != nil {
 		messages.ExitErr(err)
 	}
+
 	return p
 }
 

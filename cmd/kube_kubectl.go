@@ -30,7 +30,7 @@ Example: octl kube kubectl --cluster cluster_name -- get pods -o wide`,
 
 func kubectl(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
-	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	cl, err := oks.NewClient(&p, sdkOptions(cmd)...)
 	if err != nil {
 		messages.ExitErr(err)
 	}

@@ -97,7 +97,7 @@ func init() {
 
 func kube(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
-	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	cl, err := oks.NewClient(&p, sdkOptions(cmd)...)
 	if err == nil {
 		err = runner.Run[*oks.Client, *oks.ErrorResponse](cmd, args, cl, config.For("kube"))
 	}
@@ -108,7 +108,7 @@ func kube(cmd *cobra.Command, args []string) {
 
 func autoCompleteControlPlane(cmd *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
 	p := loadProfile(cmd)
-	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	cl, err := oks.NewClient(&p, sdkOptions(cmd)...)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveDefault
 	}
@@ -121,7 +121,7 @@ func autoCompleteControlPlane(cmd *cobra.Command, _ []string, _ string) ([]cobra
 
 func autoCompleteSubregion(cmd *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
 	p := loadProfile(cmd)
-	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	cl, err := oks.NewClient(&p, sdkOptions(cmd)...)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveDefault
 	}
@@ -134,7 +134,7 @@ func autoCompleteSubregion(cmd *cobra.Command, _ []string, _ string) ([]cobra.Co
 
 func autoCompleteVersion(cmd *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
 	p := loadProfile(cmd)
-	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	cl, err := oks.NewClient(&p, sdkOptions(cmd)...)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveDefault
 	}
@@ -152,7 +152,7 @@ func clusterArgToID(cmd *cobra.Command, args []string) error {
 	}
 	debug.Println("clusterArgToID")
 	p := loadProfile(cmd)
-	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	cl, err := oks.NewClient(&p, sdkOptions(cmd)...)
 	if err != nil {
 		return err
 	}
@@ -178,7 +178,7 @@ func projectArgToID(cmd *cobra.Command, args []string) error {
 
 	debug.Println("projectArgToID")
 	p := loadProfile(cmd)
-	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	cl, err := oks.NewClient(&p, sdkOptions(cmd)...)
 	if err != nil {
 		return err
 	}
@@ -198,7 +198,7 @@ func projectArgToID(cmd *cobra.Command, args []string) error {
 func flagNamesToID(cmd *cobra.Command, args []string) error {
 	debug.Println("flagNamesToID")
 	p := loadProfile(cmd)
-	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+	cl, err := oks.NewClient(&p, sdkOptions(cmd)...)
 	if err != nil {
 		return err
 	}

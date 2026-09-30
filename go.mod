@@ -10,7 +10,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.39.6
 	github.com/aws/aws-sdk-go-v2/config v1.31.20
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.72.3
-	github.com/aws/smithy-go v1.25.1
+	github.com/aws/smithy-go v1.28.1
 	github.com/charmbracelet/bubbletea v1.3.10
 	github.com/charmbracelet/glamour v0.10.0
 	github.com/charmbracelet/huh v0.8.0
@@ -41,8 +41,8 @@ require (
 )
 
 // replace github.com/outscale/goutils/oks => ../goutils/oks
-// replace github.com/outscale/goutils/sdk => ../goutils/sdk
-// replace github.com/outscale/osc-sdk-go/v3 => ../osc-sdk-go
+replace github.com/outscale/goutils/sdk => ../goutils/sdk
+replace github.com/outscale/osc-sdk-go/v3 => ../osc-sdk-go
 
 require (
 	aead.dev/minisign v0.2.0 // indirect

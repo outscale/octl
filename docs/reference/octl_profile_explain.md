@@ -1,15 +1,15 @@
-## octl profile
+## octl profile explain
 
-Profile file management
+Explain current configuration
 
-### Synopsis
-
-Creates, updates profile from a config file
+```
+octl profile explain [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for profile
+  -h, --help   help for explain
 ```
 
 ### Options inherited from parent commands
@@ -41,11 +41,5 @@ Creates, updates profile from a config file
 
 ### SEE ALSO
 
-* [octl](octl.md)	 - A modern CLI for Outscale services
-* [octl profile add](octl_profile_add.md)	 - Add a profile to a config file
-* [octl profile current](octl_profile_current.md)	 - Display the profile used based on flags/env
-* [octl profile delete](octl_profile_delete.md)	 - Delete a profile from a config file
-* [octl profile explain](octl_profile_explain.md)	 - Explain current configuration
-* [octl profile list](octl_profile_list.md)	 - Lists all profiles from a config file
-* [octl profile use](octl_profile_use.md)	 - Mark a profile as the default one
+* [octl profile](octl_profile.md)	 - Profile file management
 

@@ -45,7 +45,7 @@ func init() {
 
 func oapi(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
-	cl, err := osc.NewClient(p, sdkOptions(cmd)...)
+	cl, err := osc.NewClient(&p, sdkOptions(cmd)...)
 	if err == nil {
 		err = deviceToVolumeID(cmd, cl)
 	}

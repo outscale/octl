@@ -32,7 +32,7 @@ func displayNet(cmd *cobra.Command, args []string, failOnVms bool) {
 	netID := args[0]
 
 	p := loadProfile(cmd)
-	cl, err := osc.NewClient(p, sdkOptions(cmd)...)
+	cl, err := osc.NewClient(&p, sdkOptions(cmd)...)
 	if err != nil {
 		messages.ExitErr(err)
 	}

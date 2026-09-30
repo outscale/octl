@@ -62,7 +62,7 @@ func init() {
 
 func callOOS(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
-	cl, err := oos.NewClient(cmd.Context(), p, awsOptions(cmd)...)
+	cl, err := oos.NewClient(cmd.Context(), &p, awsOptions(cmd)...)
 	if err == nil {
 		var hooks []runner.Hook
 		if noAuto, _ := cmd.Flags().GetBool("no-auto-content-type"); !noAuto {
@@ -82,7 +82,7 @@ func callOOS(cmd *cobra.Command, args []string) {
 
 func presign(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
-	s3cl, err := oos.NewClient(cmd.Context(), p, awsOptions(cmd)...)
+	s3cl, err := oos.NewClient(cmd.Context(), &p, awsOptions(cmd)...)
 	if err != nil {
 		messages.ExitErr(err)
 	}

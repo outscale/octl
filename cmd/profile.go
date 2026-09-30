@@ -6,11 +6,10 @@ SPDX-License-Identifier: BSD-3-Clause
 package cmd
 
 import (
-	"cmp"
 	"errors"
-	"io/fs"
+	"fmt"
 	"os"
-	"slices"
+	"reflect"
 
 	"github.com/charmbracelet/huh"
 	"github.com/outscale/goutils/sdk/sanitize"
@@ -63,8 +62,13 @@ var profileDeleteCmd = &cobra.Command{
 	Use:     "delete name",
 	Aliases: []string{"del", "rm"},
 	Short:   "Delete a profile from a config file",
-	Args:    cobra.ExactArgs(1),
 	Run:     deleteProfile,
+}
+
+var profileExplainCmd = &cobra.Command{
+	Use:   "explain",
+	Short: "Explain current configuration",
+	Run:   explainProfile,
 }
 
 func init() {
@@ -74,6 +78,7 @@ func init() {
 	profileCmd.AddCommand(profileUseCmd)
 	profileCmd.AddCommand(profileCurrentCmd)
 	profileCmd.AddCommand(profileDeleteCmd)
+	profileCmd.AddCommand(profileExplainCmd)
 
 	profileAddCmd.Flags().String("ak", "", "Access Key")
 	profileAddCmd.Flags().String("sk", "", "Secret Key - if not specified, you prompted to enter it")
@@ -87,26 +92,26 @@ func init() {
 }
 
 type profileEntry struct {
-	Name            string `json:"name"`
-	Default         bool   `json:"default,omitempty"`
-	profile.Profile `json:",inline"`
+	Name           string `json:"name"`
+	Default        bool   `json:"default,omitempty"`
+	profile.Fields `json:",inline"`
 }
 
 var profileColumns = config.Columns{{Title: "Name", Content: ".name"}, {Title: "Region", Content: ".region"}, {Title: "Default", Content: ".default"}}
 
-func configPath(cmd *cobra.Command) string {
+func optionsFromCommand(cmd *cobra.Command) profile.Options {
+	var opt profile.Options
+
 	path, _ := cmd.Flags().GetString("config")
-	if path == "" {
-		path = os.Getenv("OSC_CONFIG_FILE")
+	if path != "" {
+		opt.FilePath = &path
 	}
-	if path == "" {
-		path, _ = profile.DefaultConfigPath()
-	}
-	return path
+
+	return opt
 }
 
 func loadConfig(cmd *cobra.Command) (*profile.ConfigFile, error) {
-	return profile.LoadConfigFile(configPath(cmd))
+	return profile.LoadConfigFile(optionsFromCommand(cmd))
 }
 
 func listProfiles(cmd *cobra.Command, _ []string) {
@@ -120,90 +125,67 @@ func listProfiles(cmd *cobra.Command, _ []string) {
 	}
 	def, _, err := cf.DefaultProfile()
 	switch {
-	case errors.Is(err, profile.ErrNoDefaultProfile):
+	case errors.Is(err, profile.ErrProfileNotFound):
 	case err != nil:
 		messages.ExitErr(err)
 	}
-	lst := lo.MapToSlice(cf.Profiles, func(k string, v profile.Profile) profileEntry {
-		return profileEntry{Name: k, Profile: v, Default: k == def}
+	lst := lo.Map(cf.ProfileList(), func(k string, index int) profileEntry {
+		f, _ := cf.Profile(k) // TODO: can fail on malformated profile
+		return profileEntry{Name: k, Fields: f, Default: k == def}
 	})
-	slices.SortFunc(lst,
-		func(a, b profileEntry) int {
-			return cmp.Compare(a.Name, b.Name)
-		})
 	_ = out.Format(cmd.Context(), os.Stdout, sanitizer.Sanitize(lst))
 }
 
 func currentProfile(cmd *cobra.Command, _ []string) {
-	cf, err := loadConfig(cmd)
-	if err != nil {
-		messages.ExitErr(err)
-	}
 	out, _, err := output.NewFromFlags(cmd.Flags(), "yaml", "", profileColumns, false, true)
 	if err != nil {
 		messages.ExitErr(err)
 	}
-	prof := *loadProfile(cmd)
-	name, _ := cmd.Flags().GetString("profile")
-	if name == "" {
-		name, _ = lo.FindKeyBy(cf.Profiles, func(name string, p profile.Profile) bool {
-			return prof.AccessKey == p.AccessKey && prof.Region == p.Region
-		})
-	}
+
+	prof := loadProfile(cmd)
+
+	// TODO: export profile status
 	_ = out.Format(cmd.Context(), os.Stdout,
-		sanitizer.Sanitize(profileEntry{Name: name, Profile: prof, Default: prof.Default}))
+		sanitizer.Sanitize(profileEntry{Name: prof.ProfileName, Fields: prof.Values, Default: false}))
 }
 
 func addProfile(cmd *cobra.Command, args []string) {
 	name := args[0]
 
 	cf, err := loadConfig(cmd)
-	switch {
-	case errors.Is(err, fs.ErrNotExist):
-		cf = &profile.ConfigFile{
-			Path:     configPath(cmd),
-			Profiles: map[string]profile.Profile{},
-		}
-	case err != nil:
+	if err != nil {
 		messages.ExitErr(err)
 	}
-	if _, found := cf.Profiles[name]; found {
-		messages.Exit(1, "Profile %q already exists", name)
-	}
 
-	ak, _ := cmd.Flags().GetString("ak")
-	if ak == "" {
+	var fields profile.Fields
+	fields.AccessKey, _ = cmd.Flags().GetString("ak")
+	if fields.AccessKey == "" {
 		messages.Exit(1, "Access key is required")
 	}
-	for name, eprof := range cf.Profiles {
-		if eprof.AccessKey == ak {
-			messages.Exit(1, "Profile %q already exists with the same access key", name)
-		}
-	}
 
-	sk, _ := cmd.Flags().GetString("sk")
-	if sk == "" {
+	fields.SecretKey, _ = cmd.Flags().GetString("sk")
+	if fields.SecretKey == "" {
 		var err error
-		sk, err = Prompt("Enter the secret Key:", huh.EchoModePassword)
+		fields.SecretKey, err = Prompt("Enter the secret Key:", huh.EchoModePassword)
 		if err != nil {
 			messages.ExitErr(err)
 		}
 	}
-	if sk == "" {
+	if fields.SecretKey == "" {
 		messages.Exit(1, "Secret key is required")
 	}
-	region, _ := cmd.Flags().GetString("region")
-	if region == "" {
+
+	fields.Region, _ = cmd.Flags().GetString("region")
+	if fields.Region == "" {
 		messages.Exit(1, "Region is required")
 	}
-	def, _ := cmd.Flags().GetBool("default")
-	newProfile := profile.Profile{
-		AccessKey: ak,
-		SecretKey: sk,
-		Region:    region,
-		Default:   def,
+
+	err = cf.ProfileAdd(name, fields)
+	if err != nil {
+		messages.ExitErr(err)
 	}
-	cf.Profiles[name] = newProfile
+
+	def, _ := cmd.Flags().GetBool("default")
 	if def {
 		_ = cf.SetDefault(name)
 	}
@@ -236,13 +218,55 @@ func deleteProfile(cmd *cobra.Command, args []string) {
 	if err != nil {
 		messages.ExitErr(err)
 	}
-	if _, found := cf.Profiles[name]; !found {
-		messages.Exit(1, "Profile %q does not exist", name)
+
+	err = cf.ProfileRemove(name)
+	if err != nil {
+		err = cf.Save()
 	}
-	delete(cf.Profiles, name)
-	err = cf.Save()
 	if err != nil {
 		messages.ExitErr(err)
 	}
 	messages.Success("Profile %q has been deleted", name)
+}
+
+var explainColumns = config.Columns{{Title: "Entry", Content: ".entry"}, {Title: "Source", Content: ".source"}, {Title: "Value", Content: ".value"}}
+
+type explainEntry struct {
+	Entry  string `json:"entry"`
+	Source string `json:"source,omitempty"`
+	Value  string `json:"value"`
+}
+
+func explainProfile(cmd *cobra.Command, _ []string) {
+	prof := loadProfile(cmd)
+	out, _, err := output.NewFromFlags(cmd.Flags(), "table", "", explainColumns, false, true)
+	if err != nil {
+		messages.ExitErr(err)
+	}
+
+	var entry []explainEntry
+	value := reflect.ValueOf(prof.Values)
+	kind := value.Type()
+	for i := 0; i < value.NumField(); i++ {
+		field := value.Field(i)
+		if !field.IsValid() || !field.CanInterface() {
+			continue
+		}
+
+		fieldType := kind.Field(i)
+		source := prof.Sources[fieldType.Name]
+		if field.Kind() == reflect.Map {
+			iter := field.MapRange()
+			for iter.Next() {
+				entryName := fieldType.Name + "." + iter.Key().String()
+				source := prof.Sources[entryName]
+				entry = append(entry, explainEntry{Entry: entryName, Source: source, Value: fmt.Sprint(iter.Value().Interface())})
+			}
+		} else {
+			entry = append(entry, explainEntry{Entry: fieldType.Name, Source: source, Value: fmt.Sprint(field.Interface())})
+		}
+
+	}
+
+	_ = out.Format(cmd.Context(), os.Stdout, sanitizer.Sanitize(entry))
 }

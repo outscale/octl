@@ -95,8 +95,8 @@ github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.7 h1:gTsnx0xXNQ6SBbymoDvcoRHL
 github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.7/go.mod h1:klO+ejMvYsB4QATfEOIXk8WAEwN4N0aBfJpvC+5SZBo=
 github.com/aws/aws-sdk-go-v2/service/sts v1.40.2 h1:HK5ON3KmQV2HcAunnx4sKLB9aPf3gKGwVAf7xnx0QT0=
 github.com/aws/aws-sdk-go-v2/service/sts v1.40.2/go.mod h1:E19xDjpzPZC7LS2knI9E6BaRFDK43Eul7vd6rSq2HWk=
-github.com/aws/smithy-go v1.25.1 h1:J8ERsGSU7d+aCmdQur5Txg6bVoYelvQJgtZehD12GkI=
-github.com/aws/smithy-go v1.25.1/go.mod h1:YE2RhdIuDbA5E5bTdciG9KrW3+TiEONeUWCqxX9i1Fc=
+github.com/aws/smithy-go v1.28.1 h1:R/nXH00c8qcfCzQVELtRw+eLQWtzv+VAIEFJ1/xxXlQ=
+github.com/aws/smithy-go v1.28.1/go.mod h1:YE2RhdIuDbA5E5bTdciG9KrW3+TiEONeUWCqxX9i1Fc=
 github.com/aws/smithy-go/aws-http-auth v1.2.1 h1:uRP2q0BGnhpE1/8iriH3yHVMCg6nhFNaVCDvKYPQVmQ=
 github.com/aws/smithy-go/aws-http-auth v1.2.1/go.mod h1:KL46VTjVK9De3jurMqDLBkXCP9vrAvD03zQrmyzyrQ0=
 github.com/aymanbagabas/go-osc52/v2 v2.0.1 h1:HwpRHbFMcZLEVr42D4p7XBqjyuxQH5SMiErDT4WkJ2k=
@@ -443,8 +443,6 @@ github.com/outscale/goutils/oks v0.0.2 h1:ZtOMqCMrzujMrz1TdzjLSc8bGhd6s9x2NupP/P
 github.com/outscale/goutils/oks v0.0.2/go.mod h1:9tnmUkYjekJMHHnvGidXDv90Mt8JIFn7d5QRP5J+Rmg=
 github.com/outscale/goutils/sdk v0.0.9 h1:WIkd4ysSNol7EuLWhrimzK1GdKexLjyMCGjGeS4Yk7w=
 github.com/outscale/goutils/sdk v0.0.9/go.mod h1:bvrdXcIR9M+cjNaBLBDd3nUFToHJ2Vsh9ped8u1Ch3s=
-github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.5 h1:XP6smAeoacHJT/mTeNBMc9Y2Dqvw0fSgLOyazQN6gIY=
-github.com/outscale/osc-sdk-go/v3 v3.0.0-rc.5/go.mod h1:wtvvgi27yvHluLy4X575C1wQQORNpi8FTYcxxvCPi7M=
 github.com/peterbourgon/diskv v2.0.1+incompatible h1:UBdAOUP5p4RWqPBg048CAvpKN+vxiaj6gdUUzhl4XmI=
 github.com/peterbourgon/diskv v2.0.1+incompatible/go.mod h1:uqqh8zWWbv1HBMNONnaR/tNboyR3/BZd58JJSHlUSCU=
 github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c h1:+mdjkGKdHQG3305AYmdv1U2eRNDiU2ErMBj1gwrq8eQ=

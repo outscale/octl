@@ -57,9 +57,9 @@ func buildSecret(cmd *cobra.Command, args []string) {
 		Name:       name,
 		Namespace:  ns,
 		Data: map[string][]byte{
-			"access_key": []byte(p.AccessKey),
-			"secret_key": []byte(p.SecretKey),
-			"region":     []byte(p.Region),
+			"access_key": []byte(p.Values.AccessKey),
+			"secret_key": []byte(p.Values.SecretKey),
+			"region":     []byte(p.Values.Region),
 		},
 		Type: corev1.SecretTypeOpaque,
 	}

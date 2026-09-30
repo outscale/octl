@@ -38,7 +38,7 @@ func buildKubeAPI[Client any](provider string, cmd, parent *cobra.Command, getcl
 func runKubeAPI(fn func(cmd *cobra.Command, args []string, client *clientset.Clientset) error) func(cmd *cobra.Command, args []string) {
 	return func(cmd *cobra.Command, args []string) {
 		p := loadProfile(cmd)
-		cl, err := oks.NewClient(p, sdkOptions(cmd)...)
+		cl, err := oks.NewClient(&p, sdkOptions(cmd)...)
 		if err != nil {
 			messages.ExitErr(err)
 		}
