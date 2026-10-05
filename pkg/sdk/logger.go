@@ -45,4 +45,6 @@ func (VerboseLogger) Request(ctx context.Context, req any) {}
 
 func (VerboseLogger) Response(ctx context.Context, resp any) {}
 
-func (VerboseLogger) Error(ctx context.Context, err error) {}
+func (VerboseLogger) Error(ctx context.Context, err error) {
+	fmt.Fprintf(os.Stderr, "- ERROR ------------------\n\n%s\n\n- ERROR ------------------\n\n", err)
+}
