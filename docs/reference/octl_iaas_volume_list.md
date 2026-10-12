@@ -22,16 +22,19 @@ octl iaas volume list [flags]
       --link-volume-delete-on-vm-deletion   Whether the volumes are deleted or not when terminating the VMs.
       --link-volume-device-name strings     The VM device names.
       --link-volume-link-date strings       The dates and times at which the volumes were attached, in ISO 8601 date-time format (for example, 2020-06-30T00:00:00.000Z).
-      --link-volume-link-state strings      The attachment states of the volumes (attaching | detaching | attached | detached).
+      --link-volume-link-state strings      The attachment states of the volumes.
+                                            Possible values: attached, attaching, detached, detaching
       --link-volume-vm-id strings           One or more IDs of VMs.
       --size ints                           The sizes of the volumes, in gibibytes (GiB).
       --snapshot-id strings                 The snapshots from which the volumes were created.
-      --state strings                       The states of the volumes (creating | available | in-use | deleting | error).
+      --state strings                       The states of the volumes.
+                                            Possible values: available, creating, deleting, error, in-use
       --subregion strings                   The names of the Subregions in which the volumes were created.
       --tag strings                         The key/value combination of the tags associated with the volumes, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings                     The keys of the tags associated with the volumes.
       --tag-value strings                   The values of the tags associated with the volumes.
-      --type strings                        The types of the volumes (standard | gp2 | io1).
+      --type strings                        The types of the volumes.
+                                            Possible values: gp2, io1, standard
 ```
 
 ### Options inherited from parent commands

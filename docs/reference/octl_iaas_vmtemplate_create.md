@@ -25,6 +25,7 @@ octl iaas vmtemplate create [flags]
       --cpu-core int             [REQUIRED] The number of vCores to use for each VM.
       --cpu-generation string    [REQUIRED] The processor generation to use for each VM (for example, v4).
       --cpu-performance string   The performance of the VMs.
+                                 Possible values: high, highest, medium
       --description string       A description for the VM template.
   -h, --help                     help for create
       --image-id string          [REQUIRED] The ID of the OMI to use for each VM.

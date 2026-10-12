@@ -33,8 +33,10 @@ octl iaas vm create [flags]
 ### Options
 
 ```
-      --action-on-next-boot-secure-boot string                One action to perform on the next boot of the VM (enable | disable | setup-mode | none).
+      --action-on-next-boot-secure-boot string                One action to perform on the next boot of the VM.
+                                                              Possible values: disable, enable, none, restore-factory-keys, setup-mode
       --boot-mode string                                      Information about the boot mode of the VM.
+                                                              Possible values: legacy, uefi
       --boot-on-creation                                      If true, the VM is started on creation.
       --bsu-optimized                                         This parameter is not available.
       --client-token string                                   A unique identifier which enables you to manage the idempotency.
@@ -56,13 +58,16 @@ octl iaas vm create [flags]
       --nic-security-group-id strings                         One or more IDs of security groups for the NIC, if you create a NIC when creating a VM.
       --nic-subnet-id string                                  The ID of the Subnet for the NIC, if you create a NIC when creating a VM.
       --performance string                                    The performance of the VM.
+                                                              Possible values: high, highest, medium
       --placement-subregion string                            The name of the Subregion.
       --placement-tenancy string                              The tenancy of the VM (default, dedicated, or a dedicated group ID).
       --private-ip strings                                    One or more private IPs of the VM.
       --security-group strings                                One or more names of security groups for the VMs.
       --security-group-id strings                             One or more IDs of security group for the VMs.
       --shutdown-behavior-configuration-guest-action string   The action performed by the orchestrator when the VM is shut down from the guest operating system.
+                                                              Possible values: stop, terminate
       --shutdown-behavior-configuration-host-action string    The action performed by the orchestrator when the VM is shut down due to a host infrastructure failure.
+                                                              Possible values: restart, stop
       --subnet-id string                                      The ID of the Subnet in which you want to create the VM.
       --tpm-enabled                                           If true, a virtual Trusted Platform Module (vTPM) is enabled on the VM.
       --type string                                           The type of VM.
@@ -73,7 +78,8 @@ octl iaas vm create [flags]
       --volume-no-device string                               Removes the device which is included in the block device mapping of the OMI.
       --volume-size int                                       The size of the volume, in gibibytes (GiB).
       --volume-snapshot-id string                             The ID of the snapshot used to create the volume.
-      --volume-type string                                    The type of the volume (standard | io1 | gp2).
+      --volume-type string                                    The type of the volume.
+                                                              Possible values: gp2, io1, standard
       --volume-virtual-device-name string                     The name of the virtual device (ephemeralN).
 ```
 

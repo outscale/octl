@@ -40,6 +40,7 @@ api:
       kind: 1
     - name: Spec.Fgpu.Model
       kind: 24
+      help: 'Possible values: nvidia-a100, nvidia-a100-80, nvidia-h100, nvidia-l40, nvidia-m60, nvidia-p100, nvidia-p6, nvidia-v100'
       values:
       - nvidia-a100
       - nvidia-a100-80
@@ -51,6 +52,7 @@ api:
       - nvidia-v100
     - name: Spec.Flavour
       kind: 24
+      help: 'Possible values: oks.debian12, oks.debian12_nvidia, oks.ubuntu22'
       values:
       - oks.debian12
       - oks.debian12_nvidia
@@ -58,6 +60,7 @@ api:
     - name: Spec.Helms
       kind: 24
       container: 23
+      help: 'Possible values: gpu-operator, ingress-nginx, ollama, prometheus'
       values:
       - gpu-operator
       - ingress-nginx
@@ -97,6 +100,7 @@ api:
       kind: 2
     - name: Spec.UpgradeStrategy.AutoUpgradeMaintenance.WeekDay
       kind: 24
+      help: 'Possible values: Fri, Mon, Sat, Sun, Thu, Tue, Wed'
       values:
       - Fri
       - Mon
@@ -123,6 +127,7 @@ api:
       kind: 24
     - name: 'Spec.Volumes.#.Type'
       kind: 24
+      help: 'Possible values: gp2, io1, standard'
       values:
       - gp2
       - io1
@@ -220,6 +225,7 @@ api:
       kind: 1
     - name: Spec.Fgpu.Model
       kind: 24
+      help: 'Possible values: nvidia-a100, nvidia-a100-80, nvidia-h100, nvidia-l40, nvidia-m60, nvidia-p100, nvidia-p6, nvidia-v100'
       values:
       - nvidia-a100
       - nvidia-a100-80
@@ -231,6 +237,7 @@ api:
       - nvidia-v100
     - name: Spec.Flavour
       kind: 24
+      help: 'Possible values: oks.debian12, oks.debian12_nvidia, oks.ubuntu22'
       values:
       - oks.debian12
       - oks.debian12_nvidia
@@ -238,6 +245,7 @@ api:
     - name: Spec.Helms
       kind: 24
       container: 23
+      help: 'Possible values: gpu-operator, ingress-nginx, ollama, prometheus'
       values:
       - gpu-operator
       - ingress-nginx
@@ -277,6 +285,7 @@ api:
       kind: 2
     - name: Spec.UpgradeStrategy.AutoUpgradeMaintenance.WeekDay
       kind: 24
+      help: 'Possible values: Fri, Mon, Sat, Sun, Thu, Tue, Wed'
       values:
       - Fri
       - Mon
@@ -303,6 +312,7 @@ api:
       kind: 24
     - name: 'Spec.Volumes.#.Type'
       kind: 24
+      help: 'Possible values: gp2, io1, standard'
       values:
       - gp2
       - io1

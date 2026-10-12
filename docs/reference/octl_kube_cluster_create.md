@@ -28,6 +28,7 @@ octl kube cluster create [flags]
       --maintenance-start-hour int          Hour of the day when maintenance window starts (0-23)
       --maintenance-tz string               Timezone for the maintenance window
       --maintenance-week-day string         Day of the week for the maintenance window
+                                            Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --multi-az                            Flag to enable multi-availability zone for the control plane
       --name string                         [REQUIRED] Unique cluster name per project, must start with a letter and contain only lowercase letters, numbers, or hyphens Example: awesome-cluster
       --oidc-client-id string               The client id that all tokens must be issued for.
@@ -45,11 +46,13 @@ octl kube cluster create [flags]
       --upgrade-minor-start-hour int        Hour of the day when maintenance window starts (0-23)
       --upgrade-minor-tz string             Timezone for the maintenance window
       --upgrade-minor-week-day string       Day of the week for the maintenance window
+                                            Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --upgrade-patch-duration-hour int     Duration of the maintenance window in hours
       --upgrade-patch-enabled               Flag to enable or disable the maintenance window
       --upgrade-patch-start-hour int        Hour of the day when maintenance window starts (0-23)
       --upgrade-patch-tz string             Timezone for the maintenance window
       --upgrade-patch-week-day string       Day of the week for the maintenance window
+                                            Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --version string                      [REQUIRED] Version of Kubernetes to be deployed
 ```
 

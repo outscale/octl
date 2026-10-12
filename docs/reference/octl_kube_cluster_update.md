@@ -30,11 +30,13 @@ octl kube cluster update id_or_name [id_or_name]... [flags]
       --auto-maintenance-minor-upgrade-maintenance-start-hour int      Hour of the day when maintenance window starts (0-23)
       --auto-maintenance-minor-upgrade-maintenance-tz string           Timezone for the maintenance window
       --auto-maintenance-minor-upgrade-maintenance-week-day string     Day of the week for the maintenance window
+                                                                       Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --auto-maintenance-patch-upgrade-maintenance-duration-hour int   Duration of the maintenance window in hours
       --auto-maintenance-patch-upgrade-maintenance-enabled             Flag to enable or disable the maintenance window
       --auto-maintenance-patch-upgrade-maintenance-start-hour int      Hour of the day when maintenance window starts (0-23)
       --auto-maintenance-patch-upgrade-maintenance-tz string           Timezone for the maintenance window
       --auto-maintenance-patch-upgrade-maintenance-week-day string     Day of the week for the maintenance window
+                                                                       Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --control-plane string                                           Size of control plane deployment for the cluster
       --description string                                             
       --disable-api-termination                                        
@@ -43,6 +45,7 @@ octl kube cluster update id_or_name [id_or_name]... [flags]
       --maintenance-window-start-hour int                              Hour of the day when maintenance window starts (0-23)
       --maintenance-window-tz string                                   Timezone for the maintenance window
       --maintenance-window-week-day string                             Day of the week for the maintenance window
+                                                                       Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --quirk strings                                                  
       --tags stringToString                                            Tags (key=value,key=value) (default [])
       --version string                                                 

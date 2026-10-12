@@ -18,7 +18,8 @@ octl iaas api ReadClientGateways [flags]
       --Filters.ClientGatewayIds strings   The IDs of the client gateways.
       --Filters.ConnectionTypes strings    The types of communication tunnels used by the client gateways (always ipsec.1).
       --Filters.PublicIps strings          The public IPv4 addresses of the client gateways.
-      --Filters.States strings             The states of the client gateways (pending | available | deleting | deleted).
+      --Filters.States strings             The states of the client gateways.
+                                           Possible values: available, deleted, deleting, pending
       --Filters.TagKeys strings            The keys of the tags associated with the client gateways.
       --Filters.TagValues strings          The values of the tags associated with the client gateways.
       --Filters.Tags strings               The key/value combination of the tags associated with the client gateways, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.

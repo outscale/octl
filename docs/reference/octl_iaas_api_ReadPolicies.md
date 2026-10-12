@@ -17,6 +17,7 @@ octl iaas api ReadPolicies [flags]
       --Filters.OnlyLinked          If set to true, lists only the policies attached to a user.
       --Filters.PathPrefix string   The path prefix you can use to filter the results.
       --Filters.Scope string        The scope of the policies.
+                                    Possible values: LOCAL, OWS
       --FirstItem int               The item starting the list of policies requested.
   -h, --help                        help for ReadPolicies
 ```

@@ -25,7 +25,8 @@ octl iaas netpeering list [flags]
       --source-net-ip-range strings       The IP ranges of the peer Nets.
       --source-net-net-id strings         The IDs of the peer Nets.
       --state-message strings             Additional information about the states of the Net peerings.
-      --state-name strings                The states of the Net peerings (pending-acceptance | active | rejected | failed | expired | deleted).
+      --state-name strings                The states of the Net peerings.
+                                          Possible values: active, deleted, expired, failed, pending-acceptance, rejected
       --tag strings                       The key/value combination of the tags associated with the Net peerings, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings                   The keys of the tags associated with the Net peerings.
       --tag-value strings                 The values of the tags associated with the Net peerings.

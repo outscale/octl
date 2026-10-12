@@ -25,7 +25,8 @@ octl iaas snapshot list [flags]
       --permission-to-create-volume-account-id strings   The OUTSCALE account IDs which have permissions to create volumes.
       --permission-to-create-volume-global-permission    If true, lists all public volumes.
       --progress ints                                    The progresses of the snapshots, as a percentage.
-      --state strings                                    The states of the snapshots (in-queue | pending | completed | error | deleting).
+      --state strings                                    The states of the snapshots.
+                                                         Possible values: completed, deleting, error, in-queue, pending
       --tag strings                                      The key/value combination of the tags associated with the snapshots, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings                                  The keys of the tags associated with the snapshots.
       --tag-value strings                                The values of the tags associated with the snapshots.

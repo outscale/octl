@@ -19,7 +19,7 @@ octl kube api ListProjects [flags]
       --Limit int       
       --Name string     
       --Page int        
-      --Status string   
+      --Status string   Possible values: deleting, deploying, failed, pending, ready, updating
   -h, --help            help for ListProjects
 ```
 

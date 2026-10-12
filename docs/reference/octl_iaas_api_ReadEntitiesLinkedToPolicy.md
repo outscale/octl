@@ -14,6 +14,7 @@ octl iaas api ReadEntitiesLinkedToPolicy [flags]
 
 ```
       --EntitiesType strings   The type of entity linked to the policy you want to get information about.
+                               Possible values: ACCOUNT, GROUP, USER
       --FirstItem int          The item starting the list of entities requested.
       --PolicyOrn string       [REQUIRED] The OUTSCALE Resource Name (ORN) of the policy.
   -h, --help                   help for ReadEntitiesLinkedToPolicy

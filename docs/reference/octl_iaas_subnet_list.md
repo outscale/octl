@@ -22,7 +22,8 @@ octl iaas subnet list [flags]
       --id strings                The IDs of the Subnets.
       --ip-range strings          The IP ranges in the Subnets, in CIDR notation (for example, 10.0.0.0/16).
       --net-id strings            The IDs of the Nets in which the Subnets are.
-      --state strings             The states of the Subnets (pending | available | deleted).
+      --state strings             The states of the Subnets.
+                                  Possible values: available, deleted, pending
       --subregion strings         The names of the Subregions in which the Subnets are located.
       --tag strings               The key/value combination of the tags associated with the Subnets, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings           The keys of the tags associated with the Subnets.

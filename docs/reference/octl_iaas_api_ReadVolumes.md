@@ -19,7 +19,8 @@ octl iaas api ReadVolumes [flags]
       --Filters.LinkVolumeDeleteOnVmDeletion    Whether the volumes are deleted or not when terminating the VMs.
       --Filters.LinkVolumeDeviceNames strings   The VM device names.
       --Filters.LinkVolumeLinkDates osctime     The dates and times at which the volumes were attached, in ISO 8601 date-time format (for example, 2020-06-30T00:00:00.000Z).
-      --Filters.LinkVolumeLinkStates strings    The attachment states of the volumes (attaching | detaching | attached | detached).
+      --Filters.LinkVolumeLinkStates strings    The attachment states of the volumes.
+                                                Possible values: attached, attaching, detached, detaching
       --Filters.LinkVolumeVmIds strings         One or more IDs of VMs.
       --Filters.SnapshotIds strings             The snapshots from which the volumes were created.
       --Filters.SubregionNames strings          The names of the Subregions in which the volumes were created.
@@ -28,8 +29,10 @@ octl iaas api ReadVolumes [flags]
       --Filters.Tags strings                    The key/value combination of the tags associated with the volumes, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --Filters.VolumeIds strings               The IDs of the volumes.
       --Filters.VolumeSizes ints                The sizes of the volumes, in gibibytes (GiB).
-      --Filters.VolumeStates strings            The states of the volumes (creating | available | in-use | deleting | error).
-      --Filters.VolumeTypes strings             The types of the volumes (standard | gp2 | io1).
+      --Filters.VolumeStates strings            The states of the volumes.
+                                                Possible values: available, creating, deleting, error, in-use
+      --Filters.VolumeTypes strings             The types of the volumes.
+                                                Possible values: gp2, io1, standard
   -h, --help                                    help for ReadVolumes
 ```
 

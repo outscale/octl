@@ -19,7 +19,8 @@ octl iaas api ReadSubnets [flags]
       --Filters.AvailableIpsCounts ints   The number of available IPs.
       --Filters.IpRanges strings          The IP ranges in the Subnets, in CIDR notation (for example, 10.0.0.0/16).
       --Filters.NetIds strings            The IDs of the Nets in which the Subnets are.
-      --Filters.States strings            The states of the Subnets (pending | available | deleted).
+      --Filters.States strings            The states of the Subnets.
+                                          Possible values: available, deleted, pending
       --Filters.SubnetIds strings         The IDs of the Subnets.
       --Filters.SubregionNames strings    The names of the Subregions in which the Subnets are located.
       --Filters.TagKeys strings           The keys of the tags associated with the Subnets.

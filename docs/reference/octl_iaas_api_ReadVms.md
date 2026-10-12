@@ -23,6 +23,7 @@ octl iaas api ReadVms [flags]
       --Filters.BlockDeviceMappingStates strings              The states for the BSU volumes (attaching | attached | detaching | detached).
       --Filters.BlockDeviceMappingVolumeIds strings           The volume IDs of the BSU volumes.
       --Filters.BootModes strings                             The boot modes of the VMs.
+                                                              Possible values: legacy, uefi
       --Filters.ClientTokens strings                          The idempotency tokens provided when launching the VMs.
       --Filters.CreationDates osctime                         The dates when the VMs were launched.
       --Filters.ImageIds strings                              The IDs of the OMIs used to launch the VMs.
@@ -80,7 +81,8 @@ octl iaas api ReadVms [flags]
       --Filters.VmSecurityGroupIds strings                    The IDs of the security groups for the VMs.
       --Filters.VmSecurityGroupNames strings                  The names of the security group for the VMs.
       --Filters.VmStateCodes ints                             The state codes of the VMs: -1 (quarantine), 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).
-      --Filters.VmStateNames strings                          The state names of the VMs (pending | running | stopping | stopped | shutting-down | terminated | quarantine).
+      --Filters.VmStateNames strings                          The state names of the VMs.
+                                                              Possible values: pending, quarantine, running, shutting-down, stopped, stopping, terminated
       --Filters.VmTypes strings                               The VM types (for example, t2.micro).
   -h, --help                                                  help for ReadVms
 ```

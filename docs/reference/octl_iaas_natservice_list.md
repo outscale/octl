@@ -19,7 +19,8 @@ octl iaas natservice list [flags]
   -h, --help                   help for list
       --id strings             The IDs of the NAT services.
       --net-id strings         The IDs of the Nets in which the NAT services are.
-      --state strings          The states of the NAT services (pending | available | deleting | deleted).
+      --state strings          The states of the NAT services.
+                               Possible values: available, deleted, deleting, pending
       --subnet-id strings      The IDs of the Subnets in which the NAT services are.
       --tag strings            The key/value combination of the tags associated with the NAT services, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings        The keys of the tags associated with the NAT services.

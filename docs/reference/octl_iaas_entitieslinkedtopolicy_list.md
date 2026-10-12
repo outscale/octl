@@ -16,6 +16,7 @@ octl iaas entitieslinkedtopolicy list [flags]
 
 ```
       --entity-type strings   The type of entity linked to the policy you want to get information about.
+                              Possible values: ACCOUNT, GROUP, USER
       --first-item int        The item starting the list of entities requested.
   -h, --help                  help for list
       --policy-orn string     [REQUIRED] The OUTSCALE Resource Name (ORN) of the policy.

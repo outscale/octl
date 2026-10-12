@@ -28,7 +28,8 @@ octl iaas volume create [flags]
       --size int              The size of the volume, in gibibytes (GiB).
       --snapshot-id string    The ID of the snapshot from which you want to create the volume.
       --subregion string      [REQUIRED] The Subregion in which you want to create the volume.
-      --type string           The type of volume you want to create (io1 | gp2 | standard).
+      --type string           The type of volume you want to create.
+                              Possible values: gp2, io1, standard
 ```
 
 ### Options inherited from parent commands

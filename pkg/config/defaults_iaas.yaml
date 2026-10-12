@@ -435,7 +435,9 @@ api:
       help: The size of the volume, in gibibytes (GiB).
     - name: 'BlockDeviceMappings.#.Bsu.VolumeType'
       kind: 24
-      help: The type of the volume (standard | io1 | gp2).
+      help: |-
+        The type of the volume.
+        Possible values: gp2, io1, standard
       values:
       - gp2
       - io1
@@ -449,7 +451,9 @@ api:
     - name: BootModes
       kind: 24
       container: 23
-      help: The boot modes compatible with the OMI.
+      help: |-
+        The boot modes compatible with the OMI.
+        Possible values: legacy, uefi
       values:
       - legacy
       - uefi
@@ -1604,7 +1608,9 @@ api:
       help: If true, checks whether you have the required permissions to perform the action.
     - name: PositioningStrategy
       kind: 24
-      help: The positioning strategy of VMs on hypervisors.
+      help: |-
+        The positioning strategy of VMs on hypervisors.
+        Possible values: attract, no-strategy, repulse
       values:
       - attract
       - no-strategy
@@ -1661,7 +1667,9 @@ api:
       help: '[REQUIRED] The processor generation to use for each VM (for example, v4).'
     - name: CpuPerformance
       kind: 24
-      help: The performance of the VMs.
+      help: |-
+        The performance of the VMs.
+        Possible values: high, highest, medium
       values:
       - high
       - highest
@@ -1711,7 +1719,9 @@ api:
     flags:
     - name: ActionsOnNextBoot.SecureBoot
       kind: 24
-      help: One action to perform on the next boot of the VM (enable | disable | setup-mode | none).
+      help: |-
+        One action to perform on the next boot of the VM.
+        Possible values: disable, enable, none, restore-factory-keys, setup-mode
       values:
       - disable
       - enable
@@ -1732,7 +1742,9 @@ api:
       help: The size of the volume, in gibibytes (GiB).
     - name: 'BlockDeviceMappings.#.Bsu.VolumeType'
       kind: 24
-      help: The type of the volume (standard | io1 | gp2).
+      help: |-
+        The type of the volume.
+        Possible values: gp2, io1, standard
       values:
       - gp2
       - io1
@@ -1748,7 +1760,9 @@ api:
       help: The name of the virtual device (ephemeralN).
     - name: BootMode
       kind: 24
-      help: Information about the boot mode of the VM.
+      help: |-
+        Information about the boot mode of the VM.
+        Possible values: legacy, uefi
       values:
       - legacy
       - uefi
@@ -1813,7 +1827,9 @@ api:
       help: The ID of the Subnet for the NIC, if you create a NIC when creating a VM.
     - name: Performance
       kind: 24
-      help: The performance of the VM.
+      help: |-
+        The performance of the VM.
+        Possible values: high, highest, medium
       values:
       - high
       - highest
@@ -1838,13 +1854,17 @@ api:
       help: One or more names of security groups for the VMs.
     - name: ShutdownBehaviorConfiguration.GuestAction
       kind: 24
-      help: The action performed by the orchestrator when the VM is shut down from the guest operating system.
+      help: |-
+        The action performed by the orchestrator when the VM is shut down from the guest operating system.
+        Possible values: stop, terminate
       values:
       - stop
       - terminate
     - name: ShutdownBehaviorConfiguration.HostAction
       kind: 24
-      help: The action performed by the orchestrator when the VM is shut down due to a host infrastructure failure.
+      help: |-
+        The action performed by the orchestrator when the VM is shut down due to a host infrastructure failure.
+        Possible values: restart, stop
       values:
       - restart
       - stop
@@ -1912,7 +1932,9 @@ api:
       help: '[REQUIRED] The Subregion in which you want to create the volume.'
     - name: VolumeType
       kind: 24
-      help: The type of volume you want to create (io1 | gp2 | standard).
+      help: |-
+        The type of volume you want to create.
+        Possible values: gp2, io1, standard
       values:
       - gp2
       - io1
@@ -3413,7 +3435,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the access keys (ACTIVE | INACTIVE).
+      help: |-
+        The states of the access keys.
+        Possible values: ACTIVE, INACTIVE
       values:
       - ACTIVE
       - INACTIVE
@@ -3717,7 +3741,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the client gateways (pending | available | deleting | deleted).
+      help: |-
+        The states of the client gateways.
+        Possible values: available, deleted, deleting, pending
       values:
       - available
       - deleted
@@ -3894,7 +3920,9 @@ api:
     - name: EntitiesType
       kind: 24
       container: 23
-      help: The type of entity linked to the policy you want to get information about.
+      help: |-
+        The type of entity linked to the policy you want to get information about.
+        Possible values: ACCOUNT, GROUP, USER
       values:
       - ACCOUNT
       - GROUP
@@ -3946,7 +3974,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the fGPUs (allocated | attaching | attached | detaching).
+      help: |-
+        The states of the fGPUs.
+        Possible values: allocated, attached, attaching, detaching
       values:
       - allocated
       - attached
@@ -3964,7 +3994,9 @@ api:
       help: The ID of the resource.
     - name: 'Filters.Tags.#.ResourceType'
       kind: 24
-      help: The type of the resource.
+      help: |-
+        The type of the resource.
+        Possible values: customer-gateway, dhcpoptions, flexible-gpu, image, keypair, natgateway, vpc, vpc-endpoint, vpc-peering-connection, network-interface, public-ip, route-table, security-group, snapshot, subnet, task, virtual-private-gateway, instance, volume, vpn-connection
       values:
       - customer-gateway
       - dhcpoptions
@@ -4053,7 +4085,9 @@ api:
     - name: Filters.BlockDeviceMappingVolumeTypes
       kind: 24
       container: 23
-      help: The types of volumes (standard | gp2 | io1).
+      help: |-
+        The types of volumes.
+        Possible values: gp2, io1, standard
       values:
       - gp2
       - io1
@@ -4061,7 +4095,9 @@ api:
     - name: Filters.BootModes
       kind: 24
       container: 23
-      help: The boot modes compatible with the OMIs.
+      help: |-
+        The boot modes compatible with the OMIs.
+        Possible values: legacy, uefi
       values:
       - legacy
       - uefi
@@ -4114,7 +4150,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the OMIs (pending | available | failed).
+      help: |-
+        The states of the OMIs.
+        Possible values: available, failed, pending
       values:
       - available
       - failed
@@ -4284,7 +4322,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the load balancer (provisioning | starting | reloading | active | reconfiguring | deleting | deleted).
+      help: |-
+        The states of the load balancer.
+        Possible values: active, deleted, deleting, provisioning, reconfiguring, reloading, starting
       values:
       - active
       - deleted
@@ -4359,7 +4399,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the NAT services (pending | available | deleting | deleted).
+      help: |-
+        The states of the NAT services.
+        Possible values: available, deleted, deleting, pending
       values:
       - available
       - deleted
@@ -4429,7 +4471,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the Net access points (pending | available | deleting | deleted).
+      help: |-
+        The states of the Net access points.
+        Possible values: available, deleted, deleting, pending
       values:
       - available
       - deleted
@@ -4498,7 +4542,9 @@ api:
     - name: Filters.StateNames
       kind: 24
       container: 23
-      help: The states of the Net peerings (pending-acceptance | active | rejected | failed | expired | deleted).
+      help: |-
+        The states of the Net peerings.
+        Possible values: active, deleted, expired, failed, pending-acceptance, rejected
       values:
       - active
       - deleted
@@ -4547,7 +4593,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the Nets (pending | available | deleting).
+      help: |-
+        The states of the Nets.
+        Possible values: available, deleting, pending
       values:
       - available
       - deleting
@@ -4667,7 +4715,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the NICs.
+      help: |-
+        The states of the NICs.
+        Possible values: attaching, available, detaching, in-use
       values:
       - attaching
       - available
@@ -4715,7 +4765,9 @@ api:
       help: The path prefix you can use to filter the results.
     - name: Filters.Scope
       kind: 24
-      help: The scope of the policies.
+      help: |-
+        The scope of the policies.
+        Possible values: LOCAL, OWS
       values:
       - LOCAL
       - OWS
@@ -5167,7 +5219,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the snapshots (in-queue | pending | completed | error | deleting).
+      help: |-
+        The states of the snapshots.
+        Possible values: completed, deleting, error, in-queue, pending
       values:
       - completed
       - deleting
@@ -5224,7 +5278,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the Subnets (pending | available | deleted).
+      help: |-
+        The states of the Subnets.
+        Possible values: available, deleted, pending
       values:
       - available
       - deleted
@@ -5505,7 +5561,9 @@ api:
     - name: Filters.LinkStates
       kind: 24
       container: 23
-      help: The current states of the attachments between the virtual gateways and the Nets (attaching | attached | detaching | detached).
+      help: |-
+        The current states of the attachments between the virtual gateways and the Nets.
+        Possible values: attached, attaching, detached, detaching
       values:
       - attached
       - attaching
@@ -5514,7 +5572,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the virtual gateways (pending | available | deleting | deleted).
+      help: |-
+        The states of the virtual gateways.
+        Possible values: available, deleted, deleting, pending
       values:
       - available
       - deleted
@@ -5739,7 +5799,9 @@ api:
     - name: Filters.BootModes
       kind: 24
       container: 23
-      help: The boot modes of the VMs.
+      help: |-
+        The boot modes of the VMs.
+        Possible values: legacy, uefi
       values:
       - legacy
       - uefi
@@ -5971,7 +6033,9 @@ api:
     - name: Filters.VmStateNames
       kind: 24
       container: 23
-      help: The state names of the VMs (pending | running | stopping | stopped | shutting-down | terminated | quarantine).
+      help: |-
+        The state names of the VMs.
+        Possible values: pending, quarantine, running, shutting-down, stopped, stopping, terminated
       values:
       - pending
       - quarantine
@@ -6049,7 +6113,9 @@ api:
     - name: Filters.VmStates
       kind: 24
       container: 23
-      help: The states of the VMs (pending | running | stopping | stopped | shutting-down | terminated | quarantine).
+      help: |-
+        The states of the VMs.
+        Possible values: pending, quarantine, running, shutting-down, stopped, stopping, terminated
       values:
       - pending
       - quarantine
@@ -6136,7 +6202,9 @@ api:
     - name: Filters.LinkVolumeLinkStates
       kind: 24
       container: 23
-      help: The attachment states of the volumes (attaching | detaching | attached | detached).
+      help: |-
+        The attachment states of the volumes.
+        Possible values: attached, attaching, detached, detaching
       values:
       - attached
       - attaching
@@ -6177,7 +6245,9 @@ api:
     - name: Filters.VolumeStates
       kind: 24
       container: 23
-      help: The states of the volumes (creating | available | in-use | deleting | error).
+      help: |-
+        The states of the volumes.
+        Possible values: available, creating, deleting, error, in-use
       values:
       - available
       - creating
@@ -6187,7 +6257,9 @@ api:
     - name: Filters.VolumeTypes
       kind: 24
       container: 23
-      help: The types of the volumes (standard | gp2 | io1).
+      help: |-
+        The types of the volumes.
+        Possible values: gp2, io1, standard
       values:
       - gp2
       - io1
@@ -6222,7 +6294,9 @@ api:
     - name: Filters.States
       kind: 24
       container: 23
-      help: The states of the VPN connections (pending | available | deleting | deleted).
+      help: |-
+        The states of the VPN connections.
+        Possible values: available, deleted, deleting, pending
       values:
       - available
       - deleted
@@ -7357,7 +7431,9 @@ api:
     flags:
     - name: ActionsOnNextBoot.SecureBoot
       kind: 24
-      help: One action to perform on the next boot of the VM (enable | disable | setup-mode | none).
+      help: |-
+        One action to perform on the next boot of the VM.
+        Possible values: disable, enable, none, restore-factory-keys, setup-mode
       values:
       - disable
       - enable
@@ -7399,7 +7475,9 @@ api:
       help: (dedicated tenancy only) If true, nested virtualization is enabled.
     - name: Performance
       kind: 24
-      help: The performance of the VM.
+      help: |-
+        The performance of the VM.
+        Possible values: high, highest, medium
       values:
       - high
       - highest
@@ -7410,13 +7488,17 @@ api:
       help: One or more IDs of security groups for the VM.
     - name: ShutdownBehaviorConfiguration.GuestAction
       kind: 24
-      help: The action performed by the orchestrator when the VM is shut down from the guest operating system.
+      help: |-
+        The action performed by the orchestrator when the VM is shut down from the guest operating system.
+        Possible values: stop, terminate
       values:
       - stop
       - terminate
     - name: ShutdownBehaviorConfiguration.HostAction
       kind: 24
-      help: The action performed by the orchestrator when the VM is shut down due to a host infrastructure failure.
+      help: |-
+        The action performed by the orchestrator when the VM is shut down due to a host infrastructure failure.
+        Possible values: restart, stop
       values:
       - restart
       - stop
@@ -7539,7 +7621,9 @@ api:
       help: '[REQUIRED] The ID of the volume you want to update.'
     - name: VolumeType
       kind: 24
-      help: The new type of the volume (standard | io1 | gp2).
+      help: |-
+        The new type of the volume.
+        Possible values: gp2, io1, standard
       values:
       - gp2
       - io1

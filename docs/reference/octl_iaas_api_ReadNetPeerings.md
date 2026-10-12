@@ -23,7 +23,8 @@ octl iaas api ReadNetPeerings [flags]
       --Filters.SourceNetIpRanges strings       The IP ranges of the peer Nets.
       --Filters.SourceNetNetIds strings         The IDs of the peer Nets.
       --Filters.StateMessages strings           Additional information about the states of the Net peerings.
-      --Filters.StateNames strings              The states of the Net peerings (pending-acceptance | active | rejected | failed | expired | deleted).
+      --Filters.StateNames strings              The states of the Net peerings.
+                                                Possible values: active, deleted, expired, failed, pending-acceptance, rejected
       --Filters.TagKeys strings                 The keys of the tags associated with the Net peerings.
       --Filters.TagValues strings               The values of the tags associated with the Net peerings.
       --Filters.Tags strings                    The key/value combination of the tags associated with the Net peerings, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.

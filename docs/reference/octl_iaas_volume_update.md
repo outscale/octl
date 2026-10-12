@@ -25,7 +25,8 @@ octl iaas volume update volume_id [volume_id]... [flags]
   -h, --help          help for update
       --iops int      The new number of I/O operations per second (IOPS).
       --size int      The new size of the volume, in gibibytes (GiB).
-      --type string   The new type of the volume (standard | io1 | gp2).
+      --type string   The new type of the volume.
+                      Possible values: gp2, io1, standard
 ```
 
 ### Options inherited from parent commands

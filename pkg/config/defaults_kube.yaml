@@ -52,7 +52,9 @@ api:
       help: Timezone for the maintenance window
     - name: AutoMaintenances.MinorUpgradeMaintenance.WeekDay
       kind: 24
-      help: Day of the week for the maintenance window
+      help: |-
+        Day of the week for the maintenance window
+        Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       values:
       - Fri
       - Mon
@@ -76,7 +78,9 @@ api:
       help: Timezone for the maintenance window
     - name: AutoMaintenances.PatchUpgradeMaintenance.WeekDay
       kind: 24
-      help: Day of the week for the maintenance window
+      help: |-
+        Day of the week for the maintenance window
+        Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       values:
       - Fri
       - Mon
@@ -123,7 +127,9 @@ api:
       help: Timezone for the maintenance window
     - name: MaintenanceWindow.WeekDay
       kind: 24
-      help: Day of the week for the maintenance window
+      help: |-
+        Day of the week for the maintenance window
+        Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       values:
       - Fri
       - Mon
@@ -349,6 +355,7 @@ api:
       kind: 24
     - name: Status
       kind: 24
+      help: 'Possible values: deleting, deploying, failed, pending, ready, updating, upgrading'
       values:
       - deleting
       - deploying
@@ -377,6 +384,7 @@ api:
       kind: 24
     - name: Status
       kind: 24
+      help: 'Possible values: deleting, deploying, failed, pending, ready, updating'
       values:
       - deleting
       - deploying
@@ -445,7 +453,9 @@ api:
       help: Timezone for the maintenance window
     - name: AutoMaintenances.MinorUpgradeMaintenance.WeekDay
       kind: 24
-      help: Day of the week for the maintenance window
+      help: |-
+        Day of the week for the maintenance window
+        Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       values:
       - Fri
       - Mon
@@ -469,7 +479,9 @@ api:
       help: Timezone for the maintenance window
     - name: AutoMaintenances.PatchUpgradeMaintenance.WeekDay
       kind: 24
-      help: Day of the week for the maintenance window
+      help: |-
+        Day of the week for the maintenance window
+        Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       values:
       - Fri
       - Mon
@@ -497,7 +509,9 @@ api:
       help: Timezone for the maintenance window
     - name: MaintenanceWindow.WeekDay
       kind: 24
-      help: Day of the week for the maintenance window
+      help: |-
+        Day of the week for the maintenance window
+        Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       values:
       - Fri
       - Mon

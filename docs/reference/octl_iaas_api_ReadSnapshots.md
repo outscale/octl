@@ -23,7 +23,8 @@ octl iaas api ReadSnapshots [flags]
       --Filters.PermissionsToCreateVolumeGlobalPermission     If true, lists all public volumes.
       --Filters.Progresses ints                               The progresses of the snapshots, as a percentage.
       --Filters.SnapshotIds strings                           The IDs of the snapshots.
-      --Filters.States strings                                The states of the snapshots (in-queue | pending | completed | error | deleting).
+      --Filters.States strings                                The states of the snapshots.
+                                                              Possible values: completed, deleting, error, in-queue, pending
       --Filters.TagKeys strings                               The keys of the tags associated with the snapshots.
       --Filters.TagValues strings                             The values of the tags associated with the snapshots.
       --Filters.Tags strings                                  The key/value combination of the tags associated with the snapshots, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.

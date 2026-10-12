@@ -18,11 +18,13 @@ octl iaas api ReadFlexibleGpus [flags]
       --Filters.FlexibleGpuIds strings       One or more IDs of fGPUs.
       --Filters.Generations strings          The processor generations that the fGPUs are compatible with.
       --Filters.ModelNames strings           One or more models of fGPUs.
-      --Filters.States strings               The states of the fGPUs (allocated | attaching | attached | detaching).
+      --Filters.States strings               The states of the fGPUs.
+                                             Possible values: allocated, attached, attaching, detaching
       --Filters.SubregionNames strings       The Subregions where the fGPUs are located.
       --Filters.Tags.0.Key string            The key of the tag, between 1 and 255 characters.
       --Filters.Tags.0.ResourceId string     The ID of the resource.
       --Filters.Tags.0.ResourceType string   The type of the resource.
+                                             Possible values: customer-gateway, dhcpoptions, flexible-gpu, image, keypair, natgateway, vpc, vpc-endpoint, vpc-peering-connection, network-interface, public-ip, route-table, security-group, snapshot, subnet, task, virtual-private-gateway, instance, volume, vpn-connection
       --Filters.Tags.0.Value string          The value of the tag, between 0 and 255 characters.
       --Filters.VmIds strings                One or more IDs of VMs.
   -h, --help                                 help for ReadFlexibleGpus

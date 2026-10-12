@@ -21,8 +21,10 @@ octl iaas api ReadImages [flags]
       --Filters.BlockDeviceMappingDeviceNames strings   The device names for the volumes.
       --Filters.BlockDeviceMappingSnapshotIds strings   The IDs of the snapshots used to create the volumes.
       --Filters.BlockDeviceMappingVolumeSizes ints      The sizes of the volumes, in gibibytes (GiB).
-      --Filters.BlockDeviceMappingVolumeTypes strings   The types of volumes (standard | gp2 | io1).
+      --Filters.BlockDeviceMappingVolumeTypes strings   The types of volumes.
+                                                        Possible values: gp2, io1, standard
       --Filters.BootModes strings                       The boot modes compatible with the OMIs.
+                                                        Possible values: legacy, uefi
       --Filters.Descriptions strings                    The descriptions of the OMIs, provided when they were created.
       --Filters.FileLocations strings                   The locations of the buckets where the OMI files are stored.
       --Filters.Hypervisors strings                     The hypervisor type of the OMI (always xen).
@@ -35,7 +37,8 @@ octl iaas api ReadImages [flags]
       --Filters.RootDeviceNames strings                 The name of the root device.
       --Filters.RootDeviceTypes strings                 The types of root device used by the OMIs (bsu or ebs).
       --Filters.SecureBoot                              Whether secure boot is activated or not.
-      --Filters.States strings                          The states of the OMIs (pending | available | failed).
+      --Filters.States strings                          The states of the OMIs.
+                                                        Possible values: available, failed, pending
       --Filters.TagKeys strings                         The keys of the tags associated with the OMIs.
       --Filters.TagValues strings                       The values of the tags associated with the OMIs.
       --Filters.Tags strings                            The key/value combination of the tags associated with the OMIs, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.

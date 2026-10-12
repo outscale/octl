@@ -30,10 +30,12 @@ octl iaas api CreateImage [flags]
       --BlockDeviceMappings.0.Bsu.Iops int               The number of I/O operations per second (IOPS).
       --BlockDeviceMappings.0.Bsu.SnapshotId string      The ID of the snapshot used to create the volume.
       --BlockDeviceMappings.0.Bsu.VolumeSize int         The size of the volume, in gibibytes (GiB).
-      --BlockDeviceMappings.0.Bsu.VolumeType string      The type of the volume (standard | io1 | gp2).
+      --BlockDeviceMappings.0.Bsu.VolumeType string      The type of the volume.
+                                                         Possible values: gp2, io1, standard
       --BlockDeviceMappings.0.DeviceName string          The device name for the volume.
       --BlockDeviceMappings.0.VirtualDeviceName string   The name of the virtual device (ephemeralN).
       --BootModes strings                                The boot modes compatible with the OMI.
+                                                         Possible values: legacy, uefi
       --Description string                               A description for the new OMI.
       --DryRun                                           If true, checks whether you have the required permissions to perform the action.
       --FileLocation string                              **(required when registering from a bucket by using a manifest file)** The pre-signed URL of the manifest file for the OMI you want to register.

@@ -17,7 +17,8 @@ octl iaas api ReadNetAccessPoints [flags]
       --Filters.NetAccessPointIds strings   The IDs of the Net access points.
       --Filters.NetIds strings              The IDs of the Nets.
       --Filters.ServiceNames strings        The names of the services.
-      --Filters.States strings              The states of the Net access points (pending | available | deleting | deleted).
+      --Filters.States strings              The states of the Net access points.
+                                            Possible values: available, deleted, deleting, pending
       --Filters.TagKeys strings             The keys of the tags associated with the Net access points.
       --Filters.TagValues strings           The values of the tags associated with the Net access points.
       --Filters.Tags strings                The key/value combination of the tags associated with the Net access points, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.

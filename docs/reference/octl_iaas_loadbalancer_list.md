@@ -17,7 +17,8 @@ octl iaas loadbalancer list [flags]
 ```
   -h, --help            help for list
       --name strings    The names of the load balancers.
-      --state strings   The states of the load balancer (provisioning | starting | reloading | active | reconfiguring | deleting | deleted).
+      --state strings   The states of the load balancer.
+                        Possible values: active, deleted, deleting, provisioning, reconfiguring, reloading, starting
 ```
 
 ### Options inherited from parent commands

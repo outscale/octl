@@ -28,11 +28,13 @@ octl kube api UpdateCluster id [flags]
       --AutoMaintenances.MinorUpgradeMaintenance.StartHour int       Hour of the day when maintenance window starts (0-23)
       --AutoMaintenances.MinorUpgradeMaintenance.Tz string           Timezone for the maintenance window
       --AutoMaintenances.MinorUpgradeMaintenance.WeekDay string      Day of the week for the maintenance window
+                                                                     Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --AutoMaintenances.PatchUpgradeMaintenance.DurationHours int   Duration of the maintenance window in hours
       --AutoMaintenances.PatchUpgradeMaintenance.Enabled             Flag to enable or disable the maintenance window
       --AutoMaintenances.PatchUpgradeMaintenance.StartHour int       Hour of the day when maintenance window starts (0-23)
       --AutoMaintenances.PatchUpgradeMaintenance.Tz string           Timezone for the maintenance window
       --AutoMaintenances.PatchUpgradeMaintenance.WeekDay string      Day of the week for the maintenance window
+                                                                     Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --ControlPlanes string                                         Size of control plane deployment for the cluster
       --Description string                                           
       --DisableApiTermination                                        
@@ -40,6 +42,7 @@ octl kube api UpdateCluster id [flags]
       --MaintenanceWindow.StartHour int                              Hour of the day when maintenance window starts (0-23)
       --MaintenanceWindow.Tz string                                  Timezone for the maintenance window
       --MaintenanceWindow.WeekDay string                             Day of the week for the maintenance window
+                                                                     Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --Quirks strings                                               
       --Tags stringToString                                           (default [])
       --Version string                                               

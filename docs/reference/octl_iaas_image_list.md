@@ -19,6 +19,7 @@ octl iaas image list [flags]
       --account-id strings                        The OUTSCALE account IDs of the owners of the OMIs.
       --architecture strings                      The architectures of the OMIs (i386 | x86_64).
       --boot-mode strings                         The boot modes compatible with the OMIs.
+                                                  Possible values: legacy, uefi
       --description strings                       The descriptions of the OMIs, provided when they were created.
       --file-location strings                     The locations of the buckets where the OMI files are stored.
   -h, --help                                      help for list
@@ -32,7 +33,8 @@ octl iaas image list [flags]
       --root-device-name strings                  The name of the root device.
       --root-device-type strings                  The types of root device used by the OMIs (bsu or ebs).
       --secure-boot                               Whether secure boot is activated or not.
-      --state strings                             The states of the OMIs (pending | available | failed).
+      --state strings                             The states of the OMIs.
+                                                  Possible values: available, failed, pending
       --tag strings                               The key/value combination of the tags associated with the OMIs, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings                           The keys of the tags associated with the OMIs.
       --tag-value strings                         The values of the tags associated with the OMIs.
@@ -42,7 +44,8 @@ octl iaas image list [flags]
       --volume-device-name strings                The device names for the volumes.
       --volume-size ints                          The sizes of the volumes, in gibibytes (GiB).
       --volume-snapshot-id strings                The IDs of the snapshots used to create the volumes.
-      --volume-type strings                       The types of volumes (standard | gp2 | io1).
+      --volume-type strings                       The types of volumes.
+                                                  Possible values: gp2, io1, standard
 ```
 
 ### Options inherited from parent commands

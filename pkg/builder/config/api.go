@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"reflect"
+	"regexp"
 	"slices"
 	"strings"
 	"time"
@@ -228,6 +229,13 @@ func (b *APIBuilder) buildFlagSet(fs *config.FlagSet, arg reflect.Type, prefix s
 			}
 			if t.Implements(reflect.TypeFor[Enum]()) {
 				f.AllowedValues = reflect.New(t).Interface().(Enum).Values()
+				allowed := strings.Join(f.AllowedValues, "|")
+				reAllowed := regexp.MustCompile(" \\(((" + allowed + ")[ |]*)+\\)")
+				f.Help = reAllowed.ReplaceAllString(f.Help, "")
+				if f.Help != "" {
+					f.Help += "\n"
+				}
+				f.Help += "Possible values: " + strings.Join(f.AllowedValues, ", ")
 			}
 		case reflect.Interface:
 			if t == reflect.TypeFor[io.Reader]() {

@@ -27,7 +27,8 @@ octl iaas vm update vm_id [vm_id]... [flags]
 ### Options
 
 ```
-      --action-on-next-boot-secure-boot string                One action to perform on the next boot of the VM (enable | disable | setup-mode | none).
+      --action-on-next-boot-secure-boot string                One action to perform on the next boot of the VM.
+                                                              Possible values: disable, enable, none, restore-factory-keys, setup-mode
       --bsu-optimized                                         This parameter is not available.
       --deletion-protection                                   If true, you cannot delete the VM unless you change this parameter back to false.
   -h, --help                                                  help for update
@@ -36,9 +37,12 @@ octl iaas vm update vm_id [vm_id]... [flags]
       --keypair-name string                                   The name of a keypair you want to associate with the VM.
       --nested-virtualization                                 (dedicated tenancy only) If true, nested virtualization is enabled.
       --performance string                                    The performance of the VM.
+                                                              Possible values: high, highest, medium
       --security-group-id strings                             One or more IDs of security groups for the VM.
       --shutdown-behavior-configuration-guest-action string   The action performed by the orchestrator when the VM is shut down from the guest operating system.
+                                                              Possible values: stop, terminate
       --shutdown-behavior-configuration-host-action string    The action performed by the orchestrator when the VM is shut down due to a host infrastructure failure.
+                                                              Possible values: restart, stop
       --type string                                           The type of VM.
       --user-data string                                      The file storing the data or script used to add a specific configuration to the VM (max size 500 KiB).
       --volume-delete-on-vm-deletion                          If set to true, the volume is deleted when terminating the VM.

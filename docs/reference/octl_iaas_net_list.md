@@ -20,7 +20,8 @@ octl iaas net list [flags]
       --id strings                    The IDs of the Nets.
       --ip-range strings              The IP ranges for the Nets, in CIDR notation (for example, 10.0.0.0/16).
       --is-default                    If true, the Net used is the default one.
-      --state strings                 The states of the Nets (pending | available | deleting).
+      --state strings                 The states of the Nets.
+                                      Possible values: available, deleting, pending
       --tag strings                   The key/value combination of the tags associated with the Nets, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings               The keys of the tags associated with the Nets.
       --tag-value strings             The values of the tags associated with the Nets.

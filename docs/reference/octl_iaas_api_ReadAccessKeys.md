@@ -15,7 +15,8 @@ octl iaas api ReadAccessKeys [flags]
 ```
       --DryRun                         If true, checks whether you have the required permissions to perform the action.
       --Filters.AccessKeyIds strings   The IDs of the access keys.
-      --Filters.States strings         The states of the access keys (ACTIVE | INACTIVE).
+      --Filters.States strings         The states of the access keys.
+                                       Possible values: ACTIVE, INACTIVE
       --Tag string                     The tag added to the access key.
       --UserName string                The name of the EIM user.
   -h, --help                           help for ReadAccessKeys

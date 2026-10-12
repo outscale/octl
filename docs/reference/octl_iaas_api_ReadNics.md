@@ -40,6 +40,7 @@ octl iaas api ReadNics [flags]
       --Filters.SecurityGroupIds strings                   The IDs of the security groups associated with the NICs.
       --Filters.SecurityGroupNames strings                 The names of the security groups associated with the NICs.
       --Filters.States strings                             The states of the NICs.
+                                                           Possible values: attaching, available, detaching, in-use
       --Filters.SubnetIds strings                          The IDs of the Subnets for the NICs.
       --Filters.SubregionNames strings                     The Subregions where the NICs are located.
       --Filters.TagKeys strings                            The keys of the tags associated with the NICs.

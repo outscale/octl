@@ -42,6 +42,7 @@ octl iaas nic list [flags]
       --security-group-id strings                      The IDs of the security groups associated with the NICs.
       --security-group-name strings                    The names of the security groups associated with the NICs.
       --state strings                                  The states of the NICs.
+                                                       Possible values: attaching, available, detaching, in-use
       --subnet-id strings                              The IDs of the Subnets for the NICs.
       --subregion strings                              The Subregions where the NICs are located.
       --tag strings                                    The key/value combination of the tags associated with the NICs, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.

@@ -23,6 +23,7 @@ octl iaas api CreateVmTemplate [flags]
       --CpuCores int            [REQUIRED] The number of vCores to use for each VM.
       --CpuGeneration string    [REQUIRED] The processor generation to use for each VM (for example, v4).
       --CpuPerformance string   The performance of the VMs.
+                                Possible values: high, highest, medium
       --Description string      A description for the VM template.
       --DryRun                  If true, checks whether you have the required permissions to perform the action.
       --ImageId string          [REQUIRED] The ID of the OMI to use for each VM.

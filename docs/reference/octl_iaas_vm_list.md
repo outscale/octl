@@ -19,6 +19,7 @@ octl iaas vm list [flags]
 ```
       --architecture strings                               The architectures of the VMs (i386 | x86_64).
       --boot-mode strings                                  The boot modes of the VMs.
+                                                           Possible values: legacy, uefi
       --client-token strings                               The idempotency tokens provided when launching the VMs.
       --creation-date strings                              The dates when the VMs were launched.
   -h, --help                                               help for list
@@ -65,7 +66,8 @@ octl iaas vm list [flags]
       --security-group-id strings                          The IDs of the security groups for the VMs (only in the public Cloud).
       --security-group-name strings                        The names of the security groups for the VMs (only in the public Cloud).
       --state-code ints                                    The state codes of the VMs: -1 (quarantine), 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping), and 80 (stopped).
-      --state-name strings                                 The state names of the VMs (pending | running | stopping | stopped | shutting-down | terminated | quarantine).
+      --state-name strings                                 The state names of the VMs.
+                                                           Possible values: pending, quarantine, running, shutting-down, stopped, stopping, terminated
       --state-reason strings                               The reasons explaining the current states of the VMs.
       --state-reason-code ints                             The reason codes for the state changes.
       --state-reason-message strings                       The messages describing the state changes.

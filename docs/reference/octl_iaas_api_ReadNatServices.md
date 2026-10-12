@@ -17,7 +17,8 @@ octl iaas api ReadNatServices [flags]
       --Filters.ClientTokens strings    The idempotency tokens provided when creating the NAT services.
       --Filters.NatServiceIds strings   The IDs of the NAT services.
       --Filters.NetIds strings          The IDs of the Nets in which the NAT services are.
-      --Filters.States strings          The states of the NAT services (pending | available | deleting | deleted).
+      --Filters.States strings          The states of the NAT services.
+                                        Possible values: available, deleted, deleting, pending
       --Filters.SubnetIds strings       The IDs of the Subnets in which the NAT services are.
       --Filters.TagKeys strings         The keys of the tags associated with the NAT services.
       --Filters.TagValues strings       The values of the tags associated with the NAT services.

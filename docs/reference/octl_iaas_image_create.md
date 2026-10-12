@@ -29,6 +29,7 @@ octl iaas image create [flags]
 ```
       --architecture string                 **(when registering from a snapshot)** The architecture of the OMI (i386 or x86_64).
       --boot-mode strings                   The boot modes compatible with the OMI.
+                                            Possible values: legacy, uefi
       --description string                  A description for the new OMI.
       --file-location string                **(required when registering from a bucket by using a manifest file)** The pre-signed URL of the manifest file for the OMI you want to register.
   -h, --help                                help for create
@@ -45,7 +46,8 @@ octl iaas image create [flags]
       --volume-iops int                     The number of I/O operations per second (IOPS).
       --volume-size int                     The size of the volume, in gibibytes (GiB).
       --volume-snapshot-id string           The ID of the snapshot used to create the volume.
-      --volume-type string                  The type of the volume (standard | io1 | gp2).
+      --volume-type string                  The type of the volume.
+                                            Possible values: gp2, io1, standard
       --volume-virtual-device-name string   The name of the virtual device (ephemeralN).
 ```
 

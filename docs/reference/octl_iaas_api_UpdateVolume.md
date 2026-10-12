@@ -24,7 +24,8 @@ octl iaas api UpdateVolume [flags]
       --Iops int            The new number of I/O operations per second (IOPS).
       --Size int            The new size of the volume, in gibibytes (GiB).
       --VolumeId string     [REQUIRED] The ID of the volume you want to update.
-      --VolumeType string   The new type of the volume (standard | io1 | gp2).
+      --VolumeType string   The new type of the volume.
+                            Possible values: gp2, io1, standard
   -h, --help                help for UpdateVolume
 ```
 

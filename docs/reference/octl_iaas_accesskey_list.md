@@ -17,7 +17,8 @@ octl iaas accesskey list [flags]
 ```
   -h, --help               help for list
       --id strings         The IDs of the access keys.
-      --state strings      The states of the access keys (ACTIVE | INACTIVE).
+      --state strings      The states of the access keys.
+                           Possible values: ACTIVE, INACTIVE
       --tag string         The tag added to the access key.
       --user-name string   The name of the EIM user.
 ```

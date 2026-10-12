@@ -21,7 +21,8 @@ octl iaas vpnconnection list [flags]
   -h, --help                                 help for list
       --id strings                           The IDs of the VPN connections.
       --route-destination-ip-range strings   The destination IP ranges.
-      --state strings                        The states of the VPN connections (pending | available | deleting | deleted).
+      --state strings                        The states of the VPN connections.
+                                             Possible values: available, deleted, deleting, pending
       --static-route-only                    If false, the VPN connection uses dynamic routing with Border Gateway Protocol (BGP).
       --tag strings                          The key/value combination of the tags associated with the VPN connections, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings                      The keys of the tags associated with the VPN connections.

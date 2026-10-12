@@ -29,11 +29,13 @@ octl kube api CreateCluster [flags]
       --AutoMaintenances.MinorUpgradeMaintenance.StartHour int       Hour of the day when maintenance window starts (0-23)
       --AutoMaintenances.MinorUpgradeMaintenance.Tz string           Timezone for the maintenance window
       --AutoMaintenances.MinorUpgradeMaintenance.WeekDay string      Day of the week for the maintenance window
+                                                                     Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --AutoMaintenances.PatchUpgradeMaintenance.DurationHours int   Duration of the maintenance window in hours
       --AutoMaintenances.PatchUpgradeMaintenance.Enabled             Flag to enable or disable the maintenance window
       --AutoMaintenances.PatchUpgradeMaintenance.StartHour int       Hour of the day when maintenance window starts (0-23)
       --AutoMaintenances.PatchUpgradeMaintenance.Tz string           Timezone for the maintenance window
       --AutoMaintenances.PatchUpgradeMaintenance.WeekDay string      Day of the week for the maintenance window
+                                                                     Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --CidrPods string                                              [REQUIRED] CIDR block for Kubernetes pods network Example: 10.91.0.0/16
       --CidrService string                                           [REQUIRED] CIDR block for Kubernetes services network Example: 10.92.0.0/16
       --ClusterDns string                                            IP address for cluster DNS service Example: 10.92.0.10
@@ -46,6 +48,7 @@ octl kube api CreateCluster [flags]
       --MaintenanceWindow.StartHour int                              Hour of the day when maintenance window starts (0-23)
       --MaintenanceWindow.Tz string                                  Timezone for the maintenance window
       --MaintenanceWindow.WeekDay string                             Day of the week for the maintenance window
+                                                                     Possible values: Fri, Mon, Sat, string, Sun, Thu, Tue, Wed
       --Name string                                                  [REQUIRED] Unique cluster name per project, must start with a letter and contain only lowercase letters, numbers, or hyphens Example: awesome-cluster
       --ProjectId string                                             [REQUIRED] Unique identifier of the project this cluster belongs to
       --Quirks strings                                               

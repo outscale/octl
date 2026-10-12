@@ -26,6 +26,7 @@ octl iaas vmgroup create [flags]
   -h, --help                          help for create
       --name string                   [REQUIRED] The name of the VM group.
       --positioning-strategy string   The positioning strategy of VMs on hypervisors.
+                                      Possible values: attract, no-strategy, repulse
       --security-group-id strings     One or more IDs of security groups for the VM group.
       --subnet-id string              [REQUIRED] The ID of the Subnet in which you want to create the VM group.
       --tag-key string                The key of the tag, between 1 and 255 characters.

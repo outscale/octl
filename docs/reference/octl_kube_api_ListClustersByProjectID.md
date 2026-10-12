@@ -15,7 +15,7 @@ octl kube api ListClustersByProjectID [flags]
       --Name string        
       --Page int           
       --ProjectId string   
-      --Status string      
+      --Status string      Possible values: deleting, deploying, failed, pending, ready, updating, upgrading
       --Version string     
   -h, --help               help for ListClustersByProjectID
 ```

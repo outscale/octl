@@ -23,6 +23,7 @@ octl iaas api CreateVmGroup [flags]
       --Description string           A description for the VM group.
       --DryRun                       If true, checks whether you have the required permissions to perform the action.
       --PositioningStrategy string   The positioning strategy of VMs on hypervisors.
+                                     Possible values: attract, no-strategy, repulse
       --SecurityGroupIds strings     One or more IDs of security groups for the VM group.
       --SubnetId string              [REQUIRED] The ID of the Subnet in which you want to create the VM group.
       --Tags.0.Key string            The key of the tag, between 1 and 255 characters.

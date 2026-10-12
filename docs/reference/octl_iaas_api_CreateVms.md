@@ -31,16 +31,19 @@ octl iaas api CreateVms [flags]
 ### Options
 
 ```
-      --ActionsOnNextBoot.SecureBoot string                One action to perform on the next boot of the VM (enable | disable | setup-mode | none).
+      --ActionsOnNextBoot.SecureBoot string                One action to perform on the next boot of the VM.
+                                                           Possible values: disable, enable, none, restore-factory-keys, setup-mode
       --BlockDeviceMappings.0.Bsu.DeleteOnVmDeletion       If set to true, the volume is deleted when terminating the VM.
       --BlockDeviceMappings.0.Bsu.Iops int                 The number of I/O operations per second (IOPS).
       --BlockDeviceMappings.0.Bsu.SnapshotId string        The ID of the snapshot used to create the volume.
       --BlockDeviceMappings.0.Bsu.VolumeSize int           The size of the volume, in gibibytes (GiB).
-      --BlockDeviceMappings.0.Bsu.VolumeType string        The type of the volume (standard | io1 | gp2).
+      --BlockDeviceMappings.0.Bsu.VolumeType string        The type of the volume.
+                                                           Possible values: gp2, io1, standard
       --BlockDeviceMappings.0.DeviceName string            The device name for the volume.
       --BlockDeviceMappings.0.NoDevice string              Removes the device which is included in the block device mapping of the OMI.
       --BlockDeviceMappings.0.VirtualDeviceName string     The name of the virtual device (ephemeralN).
       --BootMode string                                    Information about the boot mode of the VM.
+                                                           Possible values: legacy, uefi
       --BootOnCreation                                     If true, the VM is started on creation.
       --BsuOptimized                                       This parameter is not available.
       --ClientToken string                                 A unique identifier which enables you to manage the idempotency.
@@ -61,13 +64,16 @@ octl iaas api CreateVms [flags]
       --Nics.0.SecurityGroupIds strings                    One or more IDs of security groups for the NIC, if you create a NIC when creating a VM.
       --Nics.0.SubnetId string                             The ID of the Subnet for the NIC, if you create a NIC when creating a VM.
       --Performance string                                 The performance of the VM.
+                                                           Possible values: high, highest, medium
       --Placement.SubregionName string                     The name of the Subregion.
       --Placement.Tenancy string                           The tenancy of the VM (default, dedicated, or a dedicated group ID).
       --PrivateIps strings                                 One or more private IPs of the VM.
       --SecurityGroupIds strings                           One or more IDs of security group for the VMs.
       --SecurityGroups strings                             One or more names of security groups for the VMs.
       --ShutdownBehaviorConfiguration.GuestAction string   The action performed by the orchestrator when the VM is shut down from the guest operating system.
+                                                           Possible values: stop, terminate
       --ShutdownBehaviorConfiguration.HostAction string    The action performed by the orchestrator when the VM is shut down due to a host infrastructure failure.
+                                                           Possible values: restart, stop
       --SubnetId string                                    The ID of the Subnet in which you want to create the VM.
       --TpmEnabled                                         If true, a virtual Trusted Platform Module (vTPM) is enabled on the VM.
       --UserData base64File                                The file storing the data or script used to add a specific configuration to the VM (max size 500 KiB).

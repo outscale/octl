@@ -19,7 +19,8 @@ octl iaas netaccesspoint list [flags]
       --id strings             The IDs of the Net access points.
       --net-id strings         The IDs of the Nets.
       --service-name strings   The names of the services.
-      --state strings          The states of the Net access points (pending | available | deleting | deleted).
+      --state strings          The states of the Net access points.
+                               Possible values: available, deleted, deleting, pending
       --tag strings            The key/value combination of the tags associated with the Net access points, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings        The keys of the tags associated with the Net access points.
       --tag-value strings      The values of the tags associated with the Net access points.

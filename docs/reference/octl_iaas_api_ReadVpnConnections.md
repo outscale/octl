@@ -18,7 +18,8 @@ octl iaas api ReadVpnConnections [flags]
       --Filters.ClientGatewayIds strings           The IDs of the client gateways.
       --Filters.ConnectionTypes strings            The types of the VPN connections (always ipsec.1).
       --Filters.RouteDestinationIpRanges strings   The destination IP ranges.
-      --Filters.States strings                     The states of the VPN connections (pending | available | deleting | deleted).
+      --Filters.States strings                     The states of the VPN connections.
+                                                   Possible values: available, deleted, deleting, pending
       --Filters.StaticRoutesOnly                   If false, the VPN connection uses dynamic routing with Border Gateway Protocol (BGP).
       --Filters.TagKeys strings                    The keys of the tags associated with the VPN connections.
       --Filters.TagValues strings                  The values of the tags associated with the VPN connections.

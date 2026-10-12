@@ -20,6 +20,7 @@ octl iaas policy list [flags]
       --only-linked          If set to true, lists only the policies attached to a user.
       --path-prefix string   The path prefix you can use to filter the results.
       --scope string         The scope of the policies.
+                             Possible values: LOCAL, OWS
 ```
 
 ### Options inherited from parent commands

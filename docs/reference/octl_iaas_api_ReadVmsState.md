@@ -21,7 +21,8 @@ octl iaas api ReadVmsState [flags]
       --Filters.MaintenanceEventsNotBefore osctime     The earliest date and time (UTC) the event can start.
       --Filters.SubregionNames strings                 The names of the Subregions of the VMs.
       --Filters.VmIds strings                          One or more IDs of VMs.
-      --Filters.VmStates strings                       The states of the VMs (pending | running | stopping | stopped | shutting-down | terminated | quarantine).
+      --Filters.VmStates strings                       The states of the VMs.
+                                                       Possible values: pending, quarantine, running, shutting-down, stopped, stopping, terminated
   -h, --help                                           help for ReadVmsState
 ```
 

@@ -25,7 +25,8 @@ octl iaas api UpdateVm [flags]
 ### Options
 
 ```
-      --ActionsOnNextBoot.SecureBoot string                One action to perform on the next boot of the VM (enable | disable | setup-mode | none).
+      --ActionsOnNextBoot.SecureBoot string                One action to perform on the next boot of the VM.
+                                                           Possible values: disable, enable, none, restore-factory-keys, setup-mode
       --BlockDeviceMappings.0.Bsu.DeleteOnVmDeletion       If set to true, the volume is deleted when terminating the VM.
       --BlockDeviceMappings.0.Bsu.VolumeId string          The ID of the volume.
       --BlockDeviceMappings.0.DeviceName string            The device name for the volume.
@@ -38,9 +39,12 @@ octl iaas api UpdateVm [flags]
       --KeypairName string                                 The name of a keypair you want to associate with the VM.
       --NestedVirtualization                               (dedicated tenancy only) If true, nested virtualization is enabled.
       --Performance string                                 The performance of the VM.
+                                                           Possible values: high, highest, medium
       --SecurityGroupIds strings                           One or more IDs of security groups for the VM.
       --ShutdownBehaviorConfiguration.GuestAction string   The action performed by the orchestrator when the VM is shut down from the guest operating system.
+                                                           Possible values: stop, terminate
       --ShutdownBehaviorConfiguration.HostAction string    The action performed by the orchestrator when the VM is shut down due to a host infrastructure failure.
+                                                           Possible values: restart, stop
       --UserData base64File                                The file storing the data or script used to add a specific configuration to the VM (max size 500 KiB).
       --VmId string                                        [REQUIRED] The ID of the VM.
       --VmInitiatedShutdownBehavior string                 The VM behavior when you stop it.

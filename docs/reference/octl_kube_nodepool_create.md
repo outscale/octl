@@ -20,10 +20,10 @@ octl kube nodepool create [flags]
       --autoscaling                        
       --cluster string                     [REQUIRED] Name or ID of cluster
       --desired-nodes int                  
-      --fgpu-model string                  
+      --fgpu-model string                  Possible values: nvidia-a100, nvidia-a100-80, nvidia-h100, nvidia-l40, nvidia-m60, nvidia-p100, nvidia-p6, nvidia-v100
       --fgpu-operator                      
-      --flavour string                     
-      --helms strings                      
+      --flavour string                     Possible values: oks.debian12, oks.debian12_nvidia, oks.ubuntu22
+      --helms strings                      Possible values: gpu-operator, ingress-nginx, ollama, prometheus
   -h, --help                               help for create
       --ip-pool string                     
       --max-nodes int                      
@@ -43,7 +43,7 @@ octl kube nodepool create [flags]
       --upgrade-max-unavailable int        
       --upgrade-rrule string               
       --upgrade-start-hour int             
-      --upgrade-week-day string            
+      --upgrade-week-day string            Possible values: Fri, Mon, Sat, Sun, Thu, Tue, Wed
       --zones strings                      
 ```
 

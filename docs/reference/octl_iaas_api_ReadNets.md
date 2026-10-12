@@ -18,7 +18,8 @@ octl iaas api ReadNets [flags]
       --Filters.IpRanges strings            The IP ranges for the Nets, in CIDR notation (for example, 10.0.0.0/16).
       --Filters.IsDefault                   If true, the Net used is the default one.
       --Filters.NetIds strings              The IDs of the Nets.
-      --Filters.States strings              The states of the Nets (pending | available | deleting).
+      --Filters.States strings              The states of the Nets.
+                                            Possible values: available, deleting, pending
       --Filters.TagKeys strings             The keys of the tags associated with the Nets.
       --Filters.TagValues strings           The values of the tags associated with the Nets.
       --Filters.Tags strings                The key/value combination of the tags associated with the Nets, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.

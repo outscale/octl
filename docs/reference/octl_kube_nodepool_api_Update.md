@@ -27,9 +27,9 @@ octl kube nodepool api Update [flags]
       --Spec.Autoscaling                                                
       --Spec.DesiredNodes int                                           
       --Spec.Fgpu.K8sOperator                                           
-      --Spec.Fgpu.Model string                                          
-      --Spec.Flavour string                                             
-      --Spec.Helms strings                                              
+      --Spec.Fgpu.Model string                                          Possible values: nvidia-a100, nvidia-a100-80, nvidia-h100, nvidia-l40, nvidia-m60, nvidia-p100, nvidia-p6, nvidia-v100
+      --Spec.Flavour string                                             Possible values: oks.debian12, oks.debian12_nvidia, oks.ubuntu22
+      --Spec.Helms strings                                              Possible values: gpu-operator, ingress-nginx, ollama, prometheus
       --Spec.IpPoolName string                                          
       --Spec.MaxNodes int                                               
       --Spec.MinNodes int                                               
@@ -45,7 +45,7 @@ octl kube nodepool api Update [flags]
       --Spec.UpgradeStrategy.AutoUpgradeMaintenance.DurationHours int   
       --Spec.UpgradeStrategy.AutoUpgradeMaintenance.Rrule string        
       --Spec.UpgradeStrategy.AutoUpgradeMaintenance.StartHour int       
-      --Spec.UpgradeStrategy.AutoUpgradeMaintenance.WeekDay string      
+      --Spec.UpgradeStrategy.AutoUpgradeMaintenance.WeekDay string      Possible values: Fri, Mon, Sat, Sun, Thu, Tue, Wed
       --Spec.UpgradeStrategy.MaxSurge int                               
       --Spec.UpgradeStrategy.MaxUnavailable int                         
       --Spec.Volumes.0.Device string                                    
@@ -54,7 +54,7 @@ octl kube nodepool api Update [flags]
       --Spec.Volumes.0.Name string                                      
       --Spec.Volumes.0.Size int                                         
       --Spec.Volumes.0.Snapshot string                                  
-      --Spec.Volumes.0.Type string                                      
+      --Spec.Volumes.0.Type string                                      Possible values: gp2, io1, standard
       --Spec.Zones strings                                              
   -h, --help                                                            help for Update
 ```

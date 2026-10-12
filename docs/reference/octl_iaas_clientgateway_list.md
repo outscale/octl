@@ -20,7 +20,8 @@ octl iaas clientgateway list [flags]
   -h, --help                      help for list
       --id strings                The IDs of the client gateways.
       --public-ip strings         The public IPv4 addresses of the client gateways.
-      --state strings             The states of the client gateways (pending | available | deleting | deleted).
+      --state strings             The states of the client gateways.
+                                  Possible values: available, deleted, deleting, pending
       --tag strings               The key/value combination of the tags associated with the client gateways, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings           The keys of the tags associated with the client gateways.
       --tag-value strings         The values of the tags associated with the client gateways.

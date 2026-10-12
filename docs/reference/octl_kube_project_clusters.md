@@ -21,7 +21,7 @@ octl kube project clusters id_or_name [flags]
       --limit int        
       --name string      
       --page int         
-      --status string    
+      --status string    Possible values: deleting, deploying, failed, pending, ready, updating, upgrading
       --version string   
 ```
 

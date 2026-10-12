@@ -19,8 +19,10 @@ octl iaas virtualgateway list [flags]
   -h, --help                      help for list
       --id strings                The IDs of the virtual gateways.
       --link-net-id strings       The IDs of the Nets the virtual gateways are attached to.
-      --link-state strings        The current states of the attachments between the virtual gateways and the Nets (attaching | attached | detaching | detached).
-      --state strings             The states of the virtual gateways (pending | available | deleting | deleted).
+      --link-state strings        The current states of the attachments between the virtual gateways and the Nets.
+                                  Possible values: attached, attaching, detached, detaching
+      --state strings             The states of the virtual gateways.
+                                  Possible values: available, deleted, deleting, pending
       --tag strings               The key/value combination of the tags associated with the virtual gateways, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
       --tag-key strings           The keys of the tags associated with the virtual gateways.
       --tag-value strings         The values of the tags associated with the virtual gateways.

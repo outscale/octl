@@ -22,7 +22,7 @@ octl kube project list [flags]
       --limit int       
       --name string     
       --page int        
-      --status string   
+      --status string   Possible values: deleting, deploying, failed, pending, ready, updating
 ```
 
 ### Options inherited from parent commands

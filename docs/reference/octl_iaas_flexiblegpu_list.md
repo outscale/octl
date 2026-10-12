@@ -20,11 +20,13 @@ octl iaas flexiblegpu list [flags]
   -h, --help                       help for list
       --id strings                 One or more IDs of fGPUs.
       --model-name strings         One or more models of fGPUs.
-      --state strings              The states of the fGPUs (allocated | attaching | attached | detaching).
+      --state strings              The states of the fGPUs.
+                                   Possible values: allocated, attached, attaching, detaching
       --subregion strings          The Subregions where the fGPUs are located.
       --tag-key string             The key of the tag, between 1 and 255 characters.
       --tag-resource-id string     The ID of the resource.
       --tag-resource-type string   The type of the resource.
+                                   Possible values: customer-gateway, dhcpoptions, flexible-gpu, image, keypair, natgateway, vpc, vpc-endpoint, vpc-peering-connection, network-interface, public-ip, route-table, security-group, snapshot, subnet, task, virtual-private-gateway, instance, volume, vpn-connection
       --tag-value string           The value of the tag, between 0 and 255 characters.
       --vm-id strings              One or more IDs of VMs.
 ```

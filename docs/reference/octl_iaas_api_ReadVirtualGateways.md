@@ -16,8 +16,10 @@ octl iaas api ReadVirtualGateways [flags]
       --DryRun                              If true, checks whether you have the required permissions to perform the action.
       --Filters.ConnectionTypes strings     The types of the virtual gateways (always ipsec.1).
       --Filters.LinkNetIds strings          The IDs of the Nets the virtual gateways are attached to.
-      --Filters.LinkStates strings          The current states of the attachments between the virtual gateways and the Nets (attaching | attached | detaching | detached).
-      --Filters.States strings              The states of the virtual gateways (pending | available | deleting | deleted).
+      --Filters.LinkStates strings          The current states of the attachments between the virtual gateways and the Nets.
+                                            Possible values: attached, attaching, detached, detaching
+      --Filters.States strings              The states of the virtual gateways.
+                                            Possible values: available, deleted, deleting, pending
       --Filters.TagKeys strings             The keys of the tags associated with the virtual gateways.
       --Filters.TagValues strings           The values of the tags associated with the virtual gateways.
       --Filters.Tags strings                The key/value combination of the tags associated with the virtual gateways, in the following format: "Filters":{"Tags":["TAGKEY=TAGVALUE"]}.
