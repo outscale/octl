@@ -8677,7 +8677,7 @@ aliases:
   - --output
   - table
 - entity: policyversion
-  use: describe policy_orn version
+  use: describe policy_orn
   alias_to: ReadPolicyVersion
   aliases:
   - desc

@@ -598,7 +598,7 @@ aliases:
       - table
   - entity: policyversion
     group: policyversion
-    use: describe policy_orn version
+    use: describe policy_orn
     aliases:
       - desc
     alias_to: ReadPolicyVersion

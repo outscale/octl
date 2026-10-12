@@ -9,7 +9,7 @@ Lists information about a specified version of a managed policy.
 > alias for ReadPolicyVersion --PolicyOrn policy_orn
 
 ```
-octl iaas policyversion describe policy_orn version [flags]
+octl iaas policyversion describe policy_orn [flags]
 ```
 
 ### Options
