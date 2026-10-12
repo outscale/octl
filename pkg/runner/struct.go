@@ -123,6 +123,8 @@ func setValue(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
 			return setValueBoolSlice(arg, fs, flag)
 		case reflect.Int:
 			return setValueIntSlice(arg, fs, flag)
+		case reflect.Float32:
+			return setValueFloat32Slice(arg, fs, flag)
 		case reflect.String:
 			return setValueStringSlice(arg, fs, flag)
 		case reflect.Struct:
@@ -142,6 +144,10 @@ func setValue(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
 		return setValueInt32(arg, fs, flag)
 	case reflect.Int64:
 		return setValueInt64(arg, fs, flag)
+	case reflect.Float32:
+		return setValueFloat32(arg, fs, flag)
+	case reflect.Float64:
+		return setValueFloat64(arg, fs, flag)
 	case reflect.String:
 		return setValueString(arg, fs, flag)
 	case reflect.Map:
@@ -210,6 +216,40 @@ func setValueInt32(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
 
 func setValueInt64(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
 	ss, err := fs.GetInt64(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueInt64", flag, ss)
+	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
+	return nil
+}
+
+func setValueFloat32(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetFloat32(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueInt32", flag, ss)
+	arg.Set(reflect.ValueOf(ss).Convert(arg.Type()))
+	return nil
+}
+
+func setValueFloat32Slice(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetFloat32Slice(flag)
+	if err != nil {
+		return fmt.Errorf("invalid %s value: %w", flag, err)
+	}
+	debug.Println("setValueStringSlice", flag, ss)
+	narg := reflect.MakeSlice(arg.Type(), len(ss), len(ss))
+	for i, s := range ss {
+		narg.Index(i).Set(reflect.ValueOf(s).Convert(arg.Type().Elem()))
+	}
+	arg.Set(narg)
+	return nil
+}
+
+func setValueFloat64(arg reflect.Value, fs *pflag.FlagSet, flag string) error {
+	ss, err := fs.GetFloat64(flag)
 	if err != nil {
 		return fmt.Errorf("invalid %s value: %w", flag, err)
 	}

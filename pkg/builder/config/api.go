@@ -220,7 +220,7 @@ func (b *APIBuilder) buildFlagSet(fs *config.FlagSet, arg reflect.Type, prefix s
 		}
 		var f config.Flag
 		switch t.Kind() {
-		case reflect.Bool, reflect.String, reflect.Int, reflect.Int32, reflect.Int64:
+		case reflect.Bool, reflect.String, reflect.Int, reflect.Int32, reflect.Int64, reflect.Float32, reflect.Float64:
 			f = config.Flag{
 				Name:          flagName,
 				Kind:          t.Kind(),

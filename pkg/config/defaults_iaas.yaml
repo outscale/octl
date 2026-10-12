@@ -5744,7 +5744,10 @@ api:
       kind: 2
       container: 23
       help: The number of GPUs available.
-    - name: ''
+    - name: Filters.MemorySizes
+      kind: 13
+      container: 23
+      help: The amounts of memory, in gibibytes (GiB).
     - name: Filters.VcoreCounts
       kind: 2
       container: 23
@@ -10857,7 +10860,8 @@ aliases:
     alias_to: Filters.Eths
   - name: gpus
     alias_to: Filters.Gpus
-  - name: ''
+  - name: memory-size
+    alias_to: Filters.MemorySizes
   - name: vcore-count
     alias_to: Filters.VcoreCounts
   - name: name

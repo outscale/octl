@@ -91,6 +91,18 @@ func (b *Builder) buildSingleFlag(cmd *cobra.Command, f config.Flag) error {
 		} else {
 			fs.Int64(f.Name, 0, f.Help)
 		}
+	case reflect.Float32:
+		if f.ContainerKind == reflect.Slice {
+			fs.Float32Slice(f.Name, nil, f.Help)
+		} else {
+			fs.Float32(f.Name, 0, f.Help)
+		}
+	case reflect.Float64:
+		if f.ContainerKind == reflect.Slice {
+			fs.Float64Slice(f.Name, nil, f.Help)
+		} else {
+			fs.Float64(f.Name, 0, f.Help)
+		}
 	case reflect.String:
 		switch {
 		case f.CustomValue != "":

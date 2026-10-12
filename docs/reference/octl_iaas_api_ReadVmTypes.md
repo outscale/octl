@@ -13,16 +13,17 @@ octl iaas api ReadVmTypes [flags]
 ### Options
 
 ```
-      --DryRun                            If true, checks whether you have the required permissions to perform the action.
-      --Filters.BsuOptimized              This parameter is not available.
-      --Filters.EphemeralsTypes strings   The types of ephemeral storage disk.
-      --Filters.Eths ints                 The number of Ethernet interfaces available.
-      --Filters.Gpus ints                 The number of GPUs available.
-      --Filters.VcoreCounts ints          The numbers of vCores.
-      --Filters.VmTypeNames strings       The names of the VM types.
-      --Filters.VolumeCounts ints         The maximum number of ephemeral storage disks.
-      --Filters.VolumeSizes ints          The size of one ephemeral storage disk, in gibibytes (GiB).
-  -h, --help                              help for ReadVmTypes
+      --DryRun                             If true, checks whether you have the required permissions to perform the action.
+      --Filters.BsuOptimized               This parameter is not available.
+      --Filters.EphemeralsTypes strings    The types of ephemeral storage disk.
+      --Filters.Eths ints                  The number of Ethernet interfaces available.
+      --Filters.Gpus ints                  The number of GPUs available.
+      --Filters.MemorySizes float32Slice   The amounts of memory, in gibibytes (GiB). (default [])
+      --Filters.VcoreCounts ints           The numbers of vCores.
+      --Filters.VmTypeNames strings        The names of the VM types.
+      --Filters.VolumeCounts ints          The maximum number of ephemeral storage disks.
+      --Filters.VolumeSizes ints           The size of one ephemeral storage disk, in gibibytes (GiB).
+  -h, --help                               help for ReadVmTypes
 ```
 
 ### Options inherited from parent commands

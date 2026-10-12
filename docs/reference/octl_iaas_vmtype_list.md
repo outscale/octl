@@ -15,15 +15,16 @@ octl iaas vmtype list [flags]
 ### Options
 
 ```
-      --bsu-optimized            This parameter is not available.
-      --ephemeral-type strings   The types of ephemeral storage disk.
-      --eth ints                 The number of Ethernet interfaces available.
-      --gpus ints                The number of GPUs available.
-  -h, --help                     help for list
-      --name strings             The names of the VM types.
-      --vcore-count ints         The numbers of vCores.
-      --volume-count ints        The maximum number of ephemeral storage disks.
-      --volume-size ints         The size of one ephemeral storage disk, in gibibytes (GiB).
+      --bsu-optimized              This parameter is not available.
+      --ephemeral-type strings     The types of ephemeral storage disk.
+      --eth ints                   The number of Ethernet interfaces available.
+      --gpus ints                  The number of GPUs available.
+  -h, --help                       help for list
+      --memory-size float32Slice   The amounts of memory, in gibibytes (GiB). (default [])
+      --name strings               The names of the VM types.
+      --vcore-count ints           The numbers of vCores.
+      --volume-count ints          The maximum number of ephemeral storage disks.
+      --volume-size ints           The size of one ephemeral storage disk, in gibibytes (GiB).
 ```
 
 ### Options inherited from parent commands
