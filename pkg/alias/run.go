@@ -69,18 +69,20 @@ func runFuncWithPipe(rootPath string, a config.Alias) func(cmd *cobra.Command, a
 // runFuncWithPrompt returns the fun to run a non piped alias, potentially having a prompt.
 func runFuncWithPrompt(rootPath string, a config.Alias) func(cmd *cobra.Command, args []string) {
 	return func(cmd *cobra.Command, args []string) {
-		withUserArgs := userArgs(cmd, a.Flags, false)
-		withoutUserArgs := userArgs(cmd, nil, true)
+		// we need to build args before the prompt execution, as
+		// executing the prompt alias will mess flags values.
+		cmdArgs := userArgs(cmd, a.Flags, false)
 		if yes, _ := cmd.Flags().GetBool("yes"); !yes {
 			if len(a.Prompt.DisplayCommand) > 0 {
-				_ = execAlias(rootPath, a.Prompt.DisplayCommand, withoutUserArgs, cmd, args)
+				promptArgs := userArgs(cmd, a.Prompt.Flags, true)
+				_ = execAlias(rootPath, a.Prompt.DisplayCommand, promptArgs, cmd, args)
 			}
 			if !messages.Prompt(prompts[a.Prompt.Action]) {
 				return
 			}
 		}
 		exec := func(cmd *cobra.Command, args []string) int {
-			return execAlias(rootPath, a.Command, withUserArgs, cmd, args)
+			return execAlias(rootPath, a.Command, cmdArgs, cmd, args)
 		}
 		if lo.CountBy(a.Command, func(arg string) bool { return strings.HasPrefix(arg, "%") }) == 1 {
 			iterate(exec, cmd, args)
