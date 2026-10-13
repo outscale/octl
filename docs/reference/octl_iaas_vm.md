@@ -43,6 +43,7 @@ Manage Vm resources
 * [octl iaas vm describe](octl_iaas_vm_describe.md)	 - Lists one or more of your virtual machines (VMs).
 * [octl iaas vm list](octl_iaas_vm_list.md)	 - Lists one or more of your virtual machines (VMs).
 * [octl iaas vm readconsole](octl_iaas_vm_readconsole.md)	 - 
+* [octl iaas vm restart](octl_iaas_vm_restart.md)	 - Restart a single running VM
 * [octl iaas vm start](octl_iaas_vm_start.md)	 - Start one or more virtual machines (VMs).
 * [octl iaas vm states](octl_iaas_vm_states.md)	 - Lists the status of one or more virtual machines (VMs).
 * [octl iaas vm stop](octl_iaas_vm_stop.md)	 - Stops one or more running virtual machines (VMs).

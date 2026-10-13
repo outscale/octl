@@ -32,7 +32,9 @@ var prompts = map[config.Action]string{
 func RunFunc(rootPath string, a config.Alias) func(cmd *cobra.Command, args []string) {
 	switch {
 	case slices.Contains(a.Command, "|"):
-		return runFuncWithPipe(rootPath, a)
+		return runMultiple(rootPath, a, true)
+	case slices.Contains(a.Command, ","):
+		return runMultiple(rootPath, a, false)
 	case a.Prompt != nil:
 		return runFuncWithPrompt(rootPath, a)
 	default:
@@ -40,28 +42,42 @@ func RunFunc(rootPath string, a config.Alias) func(cmd *cobra.Command, args []st
 	}
 }
 
-func runFuncWithPipe(rootPath string, a config.Alias) func(cmd *cobra.Command, args []string) {
-	first, last, _ := lo.Cut(a.Command, []string{"|"})
+func runMultiple(rootPath string, a config.Alias, piped bool) func(cmd *cobra.Command, args []string) {
 	return func(cmd *cobra.Command, args []string) {
 		// build args based on flags
 		withUserArgs := userArgs(cmd, a.Flags, false)
 		withoutUserArgs := userArgs(cmd, nil, true)
-		// only one of the commands will inherit flags.
-		firstHasUserArgs := slices.Contains(first, a.AliasTo)
-		buf := &bytes.Buffer{}
-		output.InjectOutput(buf)
-		if firstHasUserArgs {
-			_ = execAlias(rootPath, first, withUserArgs, cmd, args)
-		} else {
-			_ = execAlias(rootPath, first, withoutUserArgs, cmd, args)
+		command := a.Command
+		sep := ","
+		if piped {
+			sep = "|"
 		}
-		messages.Info("Piping output")
-		runner.InjectStdin(buf.Bytes())
-		output.InjectOutput(os.Stdout)
-		if firstHasUserArgs {
-			_ = execAlias(rootPath, last, withoutUserArgs, cmd, args)
-		} else {
-			_ = execAlias(rootPath, last, withUserArgs, cmd, args)
+		for {
+			first, remaining, _ := lo.Cut(command, []string{sep})
+
+			hasUserArgs := slices.Contains(first, a.AliasTo)
+			buf := &bytes.Buffer{}
+
+			if piped {
+				if len(remaining) == 0 {
+					output.InjectOutput(os.Stdout)
+				} else {
+					output.InjectOutput(buf)
+				}
+			}
+			if hasUserArgs {
+				_ = execAlias(rootPath, first, withUserArgs, cmd, args)
+			} else {
+				_ = execAlias(rootPath, first, withoutUserArgs, cmd, args)
+			}
+			if len(remaining) == 0 {
+				break
+			}
+			if piped {
+				messages.Info("Piping output")
+				runner.InjectStdin(buf.Bytes())
+			}
+			command = remaining
 		}
 	}
 }

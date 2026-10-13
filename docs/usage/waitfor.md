@@ -12,7 +12,10 @@ octl will loop if the query returns:
 waitfor works on calls returning a single entry:
 ```shell
 octl iaas vm describe i-foo --waitfor '.State=="running"'
+
+octl iaas api ReadVms --Filters.VmIds i-foo --single --waitfor '.State=="running"'
 ```
+
 or returning a list:
 ```shell
 octl iaas vm list --waitfor 'length==6'

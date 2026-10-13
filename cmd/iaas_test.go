@@ -344,23 +344,7 @@ func TestIAASPipe(t *testing.T) {
 	}()
 
 	t.Log("waiting for vm")
-	ctx, cancel := context.WithTimeout(t.Context(), 5*time.Minute)
-	defer cancel()
-LOOPWAIT:
-	for {
-		select {
-		case <-ctx.Done():
-			t.Error("timeout")
-			t.FailNow()
-		default:
-			var resp osc.Vm
-			runJSON(t, []string{"iaas", "vm", "desc", vm.VmId, "-o", "json"}, nil, &resp)
-			if resp.State != osc.VmStatePending {
-				break LOOPWAIT
-			}
-			time.Sleep(wait)
-		}
-	}
+	_ = run(t, []string{"iaas", "vm", "desc", vm.VmId, "--waitfor", `.State=="running"`}, nil)
 
 	t.Log("creating nic")
 	nic := osc.Nic{}
@@ -375,6 +359,11 @@ LOOPWAIT:
 
 	t.Log("unlinking nic")
 	_ = run(t, []string{"iaas", "nic", "unlink", nic.NicId}, nil)
+
+	t.Log("restarting vm")
+	_ = run(t, []string{"iaas", "vm", "restart", vm.VmId}, nil)
+
+	_ = run(t, []string{"iaas", "vm", "desc", vm.VmId, "--waitfor", `.State=="running"`}, nil)
 }
 
 func TestWaitFor(t *testing.T) {

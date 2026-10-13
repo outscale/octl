@@ -12,6 +12,7 @@ import (
 	"github.com/outscale/octl/pkg/config"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/output"
+	"github.com/outscale/octl/pkg/spinner"
 	"github.com/spf13/cobra"
 )
 
@@ -31,6 +32,10 @@ func waitfor[Client any, Error error](cmd *cobra.Command, args []string, cl Clie
 	ctx, cancel := context.WithTimeout(cmd.Context(), tmout)
 	defer cancel()
 	interval, _ := cmd.Flags().GetDuration("interval")
+
+	spinCancel := spinner.Run(cmd.Context(), "Waiting for condition to succeed", false)
+	defer spinCancel()
+
 	for {
 		select {
 		case <-ctx.Done():
@@ -61,8 +66,8 @@ func waitfor[Client any, Error error](cmd *cobra.Command, args []string, cl Clie
 		}
 		switch v {
 		case false, "false", 0, "0", "", nil:
-			messages.Info("⏱️ Waiting for condition to succeed")
 		default:
+			spinCancel()
 			messages.Success("Condition reached successfully")
 			return nil
 		}

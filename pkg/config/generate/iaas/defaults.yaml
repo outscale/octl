@@ -745,6 +745,37 @@ aliases:
         alias_to: ForceStop
   - entity: vm
     group: vm
+    use: restart vm_id
+    alias_to: StopVms
+    alias_help: StopVms --VmIds vm_id [--ForceStop] && StartVms --VmIds vm_id
+    command:
+      - api
+      - StopVms
+      - --VmIds
+      - "%0"
+      - --output
+      - success
+      - ','
+      - api
+      - ReadVms
+      - --Filters.VmIds
+      - "%0"
+      - --single
+      - --waitfor
+      - '.State=="stopped"'
+      - ','
+      - api
+      - StartVms
+      - --VmIds
+      - "%0"
+      - --output
+      - success
+    flags:
+      - name: force
+        alias_to: ForceStop
+    help: Restart a single running VM
+  - entity: vm
+    group: vm
     use: readconsole vm_id
     alias_to: ReadConsoleOutput
     alias_help: ReadConsoleOutput --VmId vm_id
