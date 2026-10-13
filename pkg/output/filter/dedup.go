@@ -1,3 +1,8 @@
+/*
+SPDX-FileCopyrightText: 2026 Outscale SAS <opensource@outscale.com>
+
+SPDX-License-Identifier: BSD-3-Clause
+*/
 package filter
 
 import (
@@ -10,11 +15,18 @@ import (
 	"github.com/outscale/octl/pkg/output/result"
 )
 
+const (
+	shaSize     = sha1.Size
+	dedupBuffer = 100
+)
+
 type Dedup struct {
+	resetOnNew bool
+
 	iter    int
-	isNew   bool
-	last    [][sha1.Size]byte
-	current [][sha1.Size]byte
+	force   bool
+	last    [][shaSize]byte
+	current [][shaSize]byte
 }
 
 func (j *Dedup) Filter(ctx context.Context, seq iter.Seq[result.Result]) iter.Seq[result.Result] {
@@ -26,7 +38,7 @@ func (j *Dedup) Filter(ctx context.Context, seq iter.Seq[result.Result]) iter.Se
 			}
 			if v.Iter != j.iter {
 				j.iter = v.Iter
-				j.isNew = false
+				j.force = false
 				j.current, j.last = j.last, j.current
 				j.current = j.current[:0]
 			}
@@ -34,12 +46,12 @@ func (j *Dedup) Filter(ctx context.Context, seq iter.Seq[result.Result]) iter.Se
 			if err == nil {
 				hash := sha1.Sum(js) //nolint: gosec
 				j.current = append(j.current, hash)
-				if !j.isNew && slices.ContainsFunc(j.last, func(e [sha1.Size]byte) bool {
+				if !j.force && slices.ContainsFunc(j.last, func(e [shaSize]byte) bool {
 					return hash == e
 				}) {
 					continue
 				}
-				j.isNew = true
+				j.force = j.resetOnNew
 			}
 			if !yield(v) {
 				return
@@ -48,10 +60,12 @@ func (j *Dedup) Filter(ctx context.Context, seq iter.Seq[result.Result]) iter.Se
 	}
 }
 
-const dedupBuffer = 100
-
 func NewDedup(resetOnNew bool) *Dedup {
-	return &Dedup{last: make([][20]byte, dedupBuffer), current: make([][20]byte, dedupBuffer)}
+	return &Dedup{
+		resetOnNew: resetOnNew,
+		last:       make([][shaSize]byte, dedupBuffer),
+		current:    make([][shaSize]byte, dedupBuffer),
+	}
 }
 
 var _ Interface = (*Dedup)(nil)

@@ -44,6 +44,10 @@ func (e Elapsed) Filter(ctx context.Context, seq iter.Seq[result.Result]) iter.S
 			switch val := v.Ok.(type) {
 			case map[string]any:
 				val["_elapsed"] = dur.String()
+			case []string:
+				v.Ok = append(val, dur.String()) //nolint
+			case []any:
+				v.Ok = append(val, dur.String()) //nolint
 			case string:
 				if v.Iter != iter {
 					if !yield(result.New(v, "--- elapsed since start: "+dur.String()+" ---")) {

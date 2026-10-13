@@ -1,14 +1,15 @@
+/*
+SPDX-FileCopyrightText: 2026 Outscale SAS <opensource@outscale.com>
+
+SPDX-License-Identifier: BSD-3-Clause
+*/
 package watch
 
 import (
 	"bytes"
 	"context"
-	"crypto/sha1" //nolint
-	"encoding/json"
 	"io"
-	"maps"
 	"reflect"
-	"strings"
 	"sync"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -20,13 +21,11 @@ type Format struct {
 	ctx   context.Context
 	v     any
 	fmter format.Interface
-	dedup map[[sha1.Size]byte]struct{}
 }
 
 func NewFormat(fmter format.Interface) *Format {
 	return &Format{
 		fmter: fmter,
-		dedup: make(map[[sha1.Size]byte]struct{}),
 	}
 }
 
@@ -74,33 +73,10 @@ func (m *Format) Format(ctx context.Context, w io.Writer, v any) error {
 		vv = sv
 	}
 	mv := reflect.ValueOf(m.v)
-	ndedup := make(map[[sha1.Size]byte]struct{})
 	for i := range vv.Len() {
-		// skip if present in last call
-		e := vv.Index(i).Interface()
-		// filter out fields unused for dedup
-		if me, ok := e.(map[string]any); ok {
-			me := maps.Clone(me)
-			for k := range me {
-				if strings.HasPrefix(k, "_") {
-					delete(me, k)
-				}
-			}
-			e = me
-		}
-		buf, err := json.Marshal(e)
-		if err == nil {
-			hash := sha1.Sum(buf) //nolint
-			ndedup[hash] = struct{}{}
-			if _, found := m.dedup[hash]; found {
-				continue
-			}
-		}
-		// add to result
 		mv = reflect.Append(mv, vv.Index(i))
 	}
 	m.v = mv.Interface()
-	m.dedup = ndedup
 	return nil
 }
 

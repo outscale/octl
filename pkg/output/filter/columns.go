@@ -3,10 +3,12 @@ SPDX-FileCopyrightText: 2026 Outscale SAS <opensource@outscale.com>
 
 SPDX-License-Identifier: BSD-3-Clause
 */
-package format
+package filter
 
 import (
+	"context"
 	"fmt"
+	"iter"
 	"math"
 	"reflect"
 	"strings"
@@ -14,19 +16,56 @@ import (
 
 	"github.com/outscale/octl/pkg/config"
 	"github.com/outscale/octl/pkg/debug"
+	"github.com/outscale/octl/pkg/output/result"
 	"github.com/outscale/osc-sdk-go/v3/pkg/iso8601"
 )
 
+type Columns struct {
+	explode bool
+	cols    config.Columns
+}
+
+func (c Columns) Filter(ctx context.Context, seq iter.Seq[result.Result]) iter.Seq[result.Result] {
+	return func(yield func(result.Result) bool) {
+		for v := range seq {
+			if v.Error != nil {
+				_ = yield(v)
+				return
+			}
+
+			rows, err := GetRows(v.Ok, c.cols, c.explode, true)
+			if err != nil {
+				_ = yield(result.Error(err))
+				return
+			}
+			for _, nv := range rows {
+				if !yield(result.New(v, nv)) {
+					return
+				}
+			}
+		}
+	}
+}
+
+func NewColumns(explode bool, cols config.Columns) Columns {
+	return Columns{
+		explode: explode,
+		cols:    cols,
+	}
+}
+
+var _ Interface = Columns{}
+
 // GetRows return one or multiple rows based on a single entry.
-func GetRows(v any, cols config.Columns, explode bool) ([][]string, error) {
+func GetRows(v any, cols config.Columns, explode bool, isJSON bool) ([][]string, error) {
 	// compute result in a single line table
 	raw := make([][]any, 1)
 	raw[0] = make([]any, len(cols))
 	lines := 1
 	for i, c := range cols {
-		val, err := c.Get(v)
+		val, err := c.Get(v, isJSON)
 		if err != nil {
-			debug.Println("Get error: %v", err)
+			debug.Println("Get error:", err)
 			// we continue with a nil value
 		}
 		val = deref(val)

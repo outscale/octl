@@ -150,6 +150,7 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		} else {
 			cols = slices.Clone(cols)
 		}
+		filters = append(filters, filter.NewColumns(explode, cols))
 		if doWatch && elapsed {
 			cols = append(cols, config.Column{Title: "Elapsed", Content: "._elapsed"})
 		}
@@ -162,9 +163,9 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 			messages.Info("No columns for table, switching to YAML...")
 			fmter = format.YAML{}
 		case out == "csv":
-			fmter = format.Tabular{Columns: cols, Explode: explode, Sort: sort, Formatter: format.CSVFormatter{}}
+			fmter = format.Tabular{Columns: cols, Sort: sort, Formatter: format.CSVFormatter{}}
 		default:
-			fmter = format.Tabular{Columns: cols, Explode: explode, Sort: sort, Formatter: format.TableFormatter{}}
+			fmter = format.Tabular{Columns: cols, Sort: sort, Formatter: format.TableFormatter{}}
 		}
 	default:
 		return nil, nil, fmt.Errorf("unknown format %q", out)
@@ -172,6 +173,7 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 
 	switch {
 	case doWatch && out == "table":
+		filters = append(filters, filter.NewDedup(false))
 		if elapsed {
 			filters = append(filters, filter.NewElapsed())
 		}

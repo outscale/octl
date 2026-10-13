@@ -8,10 +8,10 @@ import (
 	"cmp"
 	"context"
 	"encoding/csv"
+	"errors"
 	"fmt"
 	"io"
 	"os"
-	"reflect"
 	"slices"
 
 	"github.com/charmbracelet/lipgloss"
@@ -24,106 +24,103 @@ import (
 	"github.com/samber/lo"
 )
 
-var colors = map[string]map[string]lipgloss.Style{
-	"State": {
-		"running":   style.Green,
-		"available": style.Green,
-		"ACTIVE":    style.Green,
-		"InService": style.Green,
-		"attached":  style.Green,
-		"in-use":    style.Green,
-		"allocated": style.Green,
-		"active":    style.Green,
+var (
+	colors = map[string]map[string]lipgloss.Style{
+		"State": {
+			"running":   style.Green,
+			"available": style.Green,
+			"ACTIVE":    style.Green,
+			"InService": style.Green,
+			"attached":  style.Green,
+			"in-use":    style.Green,
+			"allocated": style.Green,
+			"active":    style.Green,
 
-		"creating":           style.Yellow,
-		"pending":            style.Yellow,
-		"stopping":           style.Yellow,
-		"stopped":            style.Yellow,
-		"INACTIVE":           style.Yellow,
-		"disabled":           style.Yellow,
-		"confirming":         style.Yellow,
-		"attaching":          style.Yellow,
-		"detaching":          style.Yellow,
-		"shutting-down":      style.Yellow,
-		"pending-acceptance": style.Yellow,
+			"creating":           style.Yellow,
+			"pending":            style.Yellow,
+			"stopping":           style.Yellow,
+			"stopped":            style.Yellow,
+			"INACTIVE":           style.Yellow,
+			"disabled":           style.Yellow,
+			"confirming":         style.Yellow,
+			"attaching":          style.Yellow,
+			"detaching":          style.Yellow,
+			"shutting-down":      style.Yellow,
+			"pending-acceptance": style.Yellow,
 
-		"deleting":     style.Red,
-		"deleted":      style.Red,
-		"OutOfService": style.Red,
-		"rejected":     style.Red,
-		"expired":      style.Red,
-		"failed":       style.Red,
-		"terminated":   style.Red,
-	},
-	"Status": {
-		"ready": style.Green,
+			"deleting":     style.Red,
+			"deleted":      style.Red,
+			"OutOfService": style.Red,
+			"rejected":     style.Red,
+			"expired":      style.Red,
+			"failed":       style.Red,
+			"terminated":   style.Red,
+		},
+		"Status": {
+			"ready": style.Green,
 
-		"pending":   style.Yellow,
-		"deleting":  style.Yellow,
-		"deploying": style.Yellow,
+			"pending":   style.Yellow,
+			"deleting":  style.Yellow,
+			"deploying": style.Yellow,
 
-		"failed": style.Red,
-	},
-}
+			"failed": style.Red,
+		},
+	}
+
+	errCantFormat = errors.New("cant format")
+)
 
 type TabularFormatter interface {
 	Format(ctx context.Context, w io.Writer, header []string, data [][]string) error
 }
 
 type Tabular struct {
-	Explode, Sort bool
-	Columns       config.Columns
+	Sort    bool
+	Columns config.Columns
 
 	Formatter TabularFormatter
 }
 
-func validForTable(v any) bool {
-	vv := reflect.ValueOf(v)
-	for vv.Kind() == reflect.Interface || vv.Kind() == reflect.Pointer {
-		vv = vv.Elem()
-	}
-	switch vv.Kind() {
-	case reflect.Struct:
-		return true
-	case reflect.Slice:
+func row(v any) ([]string, error) {
+	switch v := v.(type) {
+	case []string:
+		return v, nil
 	default:
-		return false
+		return nil, errCantFormat
 	}
-	if vv.Len() == 0 {
-		return true
+}
+
+func rows(v any) ([][]string, error) {
+	rows := [][]string{}
+	switch v := v.(type) {
+	case [][]string:
+		rows = v
+	case []string:
+		rows = append(rows, v)
+	case []any:
+		for _, rv := range v {
+			rr, err := row(rv)
+			if err != nil {
+				return nil, err
+			}
+			rows = append(rows, rr)
+		}
+	default:
+		return nil, errCantFormat
 	}
-	vv = vv.Index(0)
-	for vv.Kind() == reflect.Interface || vv.Kind() == reflect.Pointer {
-		vv = vv.Elem()
-	}
-	return vv.Kind() == reflect.Struct || vv.Kind() == reflect.Map
+	return rows, nil
 }
 
 func (t Tabular) Format(ctx context.Context, w io.Writer, v any) error {
-	if !validForTable(v) {
-		messages.Info("Unable to format as a table, switching to YAML...")
-		return YAML{}.Format(ctx, w, v)
-	}
 	headers := lo.Map(t.Columns, func(c config.Column, _ int) string {
 		return c.Title
 	})
 	// build table
-	rows := [][]string{}
-	vv := reflect.ValueOf(v)
-	if vv.Kind() == reflect.Slice {
-		for i := range vv.Len() {
-			add, err := GetRows(vv.Index(i).Interface(), t.Columns, t.Explode)
-			if err != nil {
-				return err
-			}
-			rows = append(rows, add...)
-		}
-	} else {
-		add, err := GetRows(v, t.Columns, t.Explode)
-		if err != nil {
-			return err
-		}
-		rows = append(rows, add...)
+	rows, err := rows(v)
+	if err != nil {
+		fmt.Printf("%T\n", v)
+		messages.Info("Unable to format as a table, switching to YAML...")
+		return YAML{}.Format(ctx, w, v)
 	}
 	// styling
 	for r := range rows {
@@ -194,7 +191,8 @@ func (f TableFormatter) Format(ctx context.Context, w io.Writer, headers []strin
 			}
 			debug.Println("col", i, "max", max[i], "len", len(max[i])+3)
 			return len(max[i]) + 3
-		}))
+		}),
+	)
 	if fd, ok := w.(*os.File); ok && IsTerminal(w) {
 		// resize if width greater than term width
 		termWidth, _, _ := term.GetSize(fd.Fd())
