@@ -2,11 +2,14 @@ package spinner
 
 import (
 	"context"
+	"io"
 	"os"
 
 	"github.com/charmbracelet/huh/spinner"
 	"github.com/outscale/octl/pkg/style"
 )
+
+var Out io.Writer = os.Stderr
 
 func Run(ctx context.Context, text string, foreground bool) (cancel func()) {
 	spinWait := make(chan struct{})
@@ -14,7 +17,7 @@ func Run(ctx context.Context, text string, foreground bool) (cancel func()) {
 	spin := spinner.New().
 		Title(text).
 		Context(spinCtx).
-		Output(os.Stderr).
+		Output(Out).
 		Style(style.Yellow).
 		TitleStyle(style.Faint)
 	if foreground {
