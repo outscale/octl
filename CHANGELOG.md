@@ -1,5 +1,23 @@
 # 📜 Changelog
 
+## [v0.0.34](https://github.com/outscale/octl/releases/tag/v0.0.34) - 2026-10-14
+
+### ✨ Added
+* ✨ feat(silence): --silent silences spinners by @jfbus in https://github.com/outscale/octl/pull/364
+* ✨ feat(iaas): add vm restart by @jfbus in https://github.com/outscale/octl/pull/365
+### 🛠️ Changed / Refactoring
+* 🔊 logs: log errors in verbose mode by @jfbus in https://github.com/outscale/octl/pull/352
+### 📝 Documentation
+* 📝 compliance files and workflow by @outscale-rce in https://github.com/outscale/octl/pull/349
+* 🚸 ux: add enum values in usage by @jfbus in https://github.com/outscale/octl/pull/358
+* 📝 doc: fix iaas policyversion args by @jfbus in https://github.com/outscale/octl/pull/360
+### 🐛 Fixed
+* 🐛 fix(flags): support float flags by @jfbus in https://github.com/outscale/octl/pull/359
+* 🐛 fix(output): elapsed was missing in table format by @jfbus in https://github.com/outscale/octl/pull/361
+* 🐛 fix: prompt flags were ignored by @jfbus in https://github.com/outscale/octl/pull/366
+* 🐛 fix(watch): dedup only on visible fields by @jfbus in https://github.com/outscale/octl/pull/363
+
+
 ## [v0.0.33](https://github.com/outscale/octl/releases/tag/v0.0.33) - 2026-09-21
 
 ### ✨ Added
