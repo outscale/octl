@@ -1,5 +1,16 @@
 # 📜 Changelog
 
+## [v0.0.35](https://github.com/outscale/octl/releases/tag/v0.0.35) - 2026-10-21
+
+### 📦 Dependency updates
+* ⬆️ deps(gomod): update module golang.org/x/tools to v0.52.0 by @Open-Source-Bot in https://github.com/outscale/octl/pull/374
+* ⬆️ deps(dockerfile): update gcr.io/distroless/static-debian13:debug docker digest to fdd11b2 by @Open-Source-Bot in https://github.com/outscale/octl/pull/369
+* ⬆️ deps(gomod): update module github.com/outscale/goutils/sdk to v0.0.10 by @Open-Source-Bot in https://github.com/outscale/octl/pull/371
+* ⬆️ deps(gomod): update module github.com/gabriel-vasile/mimetype to v1.4.15 by @Open-Source-Bot in https://github.com/outscale/octl/pull/293
+* ⬆️ deps(gomod): update go toolchain directive to v1.27.2 by @Open-Source-Bot in https://github.com/outscale/octl/pull/370
+* ⬆️ deps(gomod): update go toolchain directive to v1.27.3 by @Open-Source-Bot in https://github.com/outscale/octl/pull/376
+
+
 ## [v0.0.34](https://github.com/outscale/octl/releases/tag/v0.0.34) - 2026-10-14
 
 ### ✨ Added
