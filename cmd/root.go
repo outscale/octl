@@ -130,7 +130,8 @@ func init() {
 
 	_ = rootCmd.RegisterFlagCompletionFunc("profile", func(cmd *cobra.Command, _ []string, _ string) ([]cobra.Completion, cobra.ShellCompDirective) {
 		cf, _ := loadConfig(cmd)
-		return lo.Map(lo.Keys(cf.Profiles), func(k string, _ int) cobra.Completion { return cobra.Completion(k) }), cobra.ShellCompDirectiveDefault
+		comps := lo.Map(lo.Keys(cf.Profiles), func(k string, _ int) cobra.Completion { return cobra.Completion(k) })
+		return append(comps, "all"), cobra.ShellCompDirectiveDefault
 	})
 }
 

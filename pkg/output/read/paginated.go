@@ -13,6 +13,7 @@ import (
 	"strings"
 
 	"github.com/outscale/octl/pkg/debug"
+	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/output/result"
 )
 
@@ -28,7 +29,28 @@ func NewPaginated(contentField string, maxPages int) *Paginated {
 	}
 }
 
-func (p *Paginated) Read(ctx context.Context, fetch FetchPage, iter int) iter.Seq[result.Result] {
+// Read reads the results of one or more calls. Calls are made sequentially,
+// in the order of fetches. When a call fails and several fetches are given,
+// the error is turned into a warning and the next calls are still read.
+func (p *Paginated) Read(ctx context.Context, iter int, fetches ...FetchPage) iter.Seq[result.Result] {
+	return func(yield func(result.Result) bool) {
+	read:
+		for _, fetch := range fetches {
+			for res := range p.readOne(ctx, fetch, iter) {
+				if res.Error != nil && len(fetches) > 1 {
+					messages.Warn("profile %q: %s", fetch.Profile, res.Error)
+					continue
+				}
+				if !yield(res) {
+					break read
+				}
+			}
+		}
+	}
+}
+
+// readOne reads all pages of a single call.
+func (p *Paginated) readOne(ctx context.Context, fetch FetchPage, iter int) iter.Seq[result.Result] {
 	pager := PagerFor(fetch)
 	return func(yield func(result.Result) bool) {
 		fetch := fetch
@@ -45,7 +67,7 @@ func (p *Paginated) Read(ctx context.Context, fetch FetchPage, iter int) iter.Se
 			}
 			if len(vres) < 2 {
 				debug.Println("not enough result")
-				_ = yield(result.Result{SingleEntry: true, Iter: iter})
+				_ = yield(result.Result{SingleEntry: true, Iter: iter, Profile: fetch.Profile})
 				return
 			}
 			res := reflect.Indirect(vres[0])
@@ -56,16 +78,16 @@ func (p *Paginated) Read(ctx context.Context, fetch FetchPage, iter int) iter.Se
 			addPreview(content)
 			if !content.IsValid() || !content.CanInterface() {
 				debug.Println("no content ?")
-				_ = yield(result.Result{SingleEntry: true, Iter: iter})
+				_ = yield(result.Result{SingleEntry: true, Iter: iter, Profile: fetch.Profile})
 				return
 			}
 			if content.Kind() != reflect.Slice {
 				debug.Println("not a slice", content.Kind())
-				_ = yield(result.Result{Ok: content.Interface(), SingleEntry: true, Iter: iter})
+				_ = yield(result.Result{Ok: content.Interface(), SingleEntry: true, Iter: iter, Profile: fetch.Profile})
 				return
 			}
 			for i := range content.Len() {
-				if !yield(result.Result{Ok: content.Index(i).Interface(), Iter: iter}) {
+				if !yield(result.Result{Ok: content.Index(i).Interface(), Iter: iter, Profile: fetch.Profile}) {
 					debug.Println("end")
 					return
 				}

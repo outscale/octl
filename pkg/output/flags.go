@@ -65,6 +65,12 @@ func Styles() []string {
 	return keys
 }
 
+// multiProfile returns true when the --profile flag selects several profiles.
+func multiProfile(fs *pflag.FlagSet) bool {
+	p, _ := fs.GetString("profile")
+	return p == "all" || strings.Contains(p, ",")
+}
+
 func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Columns, explode, sort bool) (format.Interface, Outputter, error) {
 	fout, _ := fs.GetString("output")
 	if fout != "" {
@@ -73,6 +79,7 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	out = strings.ToLower(out)
 	doWatch, _ := fs.GetBool("watch")
 	elapsed, _ := fs.GetBool("elapsed")
+	multi := multiProfile(fs)
 	switch {
 	case doWatch && out != "table" && out != "csv" && out != "text":
 		messages.Info("Switching to table...")
@@ -150,6 +157,9 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		} else {
 			cols = slices.Clone(cols)
 		}
+		if multi {
+			cols = slices.Concat(config.Columns{{Title: "Profile", Content: "._profile"}}, cols)
+		}
 		filters = append(filters, filter.NewColumns(explode, cols))
 		if doWatch && elapsed {
 			cols = append(cols, config.Column{Title: "Elapsed", Content: "._elapsed"})
@@ -197,6 +207,13 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 
 	if len(filters) > 0 {
 		filters = slices.Insert(filters, 0, filter.Interface(filter.JSON{}))
+	}
+	if multi {
+		if len(filters) == 0 {
+			filters = append(filters, filter.JSON{})
+		}
+		// inject _profile right after the JSON conversion of results
+		filters = slices.Insert(filters, 1, filter.Interface(filter.Profile{}))
 	}
 	writeTo, _ := fs.GetString("out-file")
 	if out == "raw" || out == "rawyaml" {

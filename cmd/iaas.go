@@ -44,14 +44,25 @@ func init() {
 }
 
 func oapi(cmd *cobra.Command, args []string) {
-	p := loadProfile(cmd)
-	cl, err := osc.NewClient(p, sdkOptions(cmd)...)
-	if err == nil {
-		err = deviceToVolumeID(cmd, cl)
+	profs, err := loadProfiles(cmd)
+	if err != nil {
+		messages.ExitErr(err)
 	}
-	if err == nil {
-		err = runner.Run[*osc.Client, *osc.ErrorResponse](cmd, args, cl, config.For("iaas"))
+	if len(profs) > 1 && !strings.HasPrefix(cmd.Name(), "Read") {
+		messages.Exit(1, "--profile accepts several values only for read operations")
 	}
+	clients := make([]runner.ClientFor[*osc.Client], 0, len(profs))
+	for _, p := range profs {
+		cl, cerr := osc.NewClient(p.p, sdkOptions(cmd)...)
+		if cerr == nil && len(clients) == 0 {
+			cerr = deviceToVolumeID(cmd, cl)
+		}
+		if cerr != nil {
+			messages.ExitErr(cerr)
+		}
+		clients = append(clients, runner.ClientFor[*osc.Client]{Profile: p.name, Client: cl})
+	}
+	err = runner.Run[*osc.Client, *osc.ErrorResponse](cmd, args, clients, config.For("iaas"))
 	if err != nil {
 		messages.ExitErr(err)
 	}

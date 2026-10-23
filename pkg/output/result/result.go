@@ -8,9 +8,11 @@ type Result struct {
 	// Iter defines the iteration counter in a --watch/--wait call
 	Iter        int
 	SingleEntry bool
-	Ok          any
-	Error       error
-	Style       lipgloss.Style
+	// Profile defines the name of the profile the result comes from
+	Profile string
+	Ok      any
+	Error   error
+	Style   lipgloss.Style
 }
 
 func Error(err error) Result {
@@ -18,7 +20,7 @@ func Error(err error) Result {
 }
 
 func New(old Result, newOk any) Result {
-	return Result{Ok: newOk, Iter: old.Iter, SingleEntry: old.SingleEntry}
+	return Result{Ok: newOk, Iter: old.Iter, SingleEntry: old.SingleEntry, Profile: old.Profile}
 }
 
 func (r Result) WithStyle(s lipgloss.Style) Result {

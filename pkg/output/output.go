@@ -35,7 +35,7 @@ type Paginated struct {
 	WriteTo string
 }
 
-func (p *Paginated) Output(ctx context.Context, fetch read.FetchPage) (err error) {
+func (p *Paginated) Output(ctx context.Context, fetches ...read.FetchPage) (err error) {
 	p.iter++
 	debug.Println("starting iter", p.iter)
 	writeTo := writeTo
@@ -55,7 +55,7 @@ func (p *Paginated) Output(ctx context.Context, fetch read.FetchPage) (err error
 			}
 		}()
 	}
-	seq := p.Read.Read(ctx, fetch, p.iter)
+	seq := p.Read.Read(ctx, p.iter, fetches...)
 	for _, f := range p.Filters {
 		seq = f.Filter(ctx, seq)
 	}
