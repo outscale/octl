@@ -38,6 +38,7 @@ var (
 
 			"creating":           style.Yellow,
 			"pending":            style.Yellow,
+			"starting":           style.Yellow,
 			"stopping":           style.Yellow,
 			"stopped":            style.Yellow,
 			"INACTIVE":           style.Yellow,
