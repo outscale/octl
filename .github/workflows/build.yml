@@ -30,7 +30,9 @@ jobs:
     - name: 📦 Build
       run: go build -o octl main.go
   unit:
-    runs-on: [self-hosted, linux, eu-west-2]
+    runs-on: [self-hosted, linux, kube, birch]
+    permissions:
+      id-token: write
     steps:
     - name: ⬇️ Checkout repository
       uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -40,18 +42,17 @@ jobs:
       uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
       with:
         go-version-file: 'go.mod'
-    - name: 🧹 Frieza
-      uses: outscale/frieza-github-actions/frieza-clean@d361dd8cc864cfb9575429ee54fde4a0e8e7b124 # v0.17.2
+    - name: 🔒🧹 Setup Vault & Frieza
+      id: secrets
+      uses: outscale/.github/vault-frieza-clean@3473e386226175ad703740601d34849b9b61364f # v1.4.0
       with:
-        access_key: ${{ secrets.OSC_ACCESS_KEY }}
-        secret_key: ${{ secrets.OSC_SECRET_KEY }}
-        region: "eu-west-2"
+        vault_role: outscale-octl
         providers: "outscale_oapi,outscale_oos,outscale_oks"
     - name: 🧪 Test
       run: go test -v ./... -timeout 60m
       env:
-        OSC_ACCESS_KEY: ${{ secrets.OSC_ACCESS_KEY }}
-        OSC_SECRET_KEY: ${{ secrets.OSC_SECRET_KEY }}
-        OSC_REGION: "eu-west-2"
+        OSC_ACCESS_KEY: ${{ steps.secrets.outputs.access_key }}
+        OSC_SECRET_KEY: ${{ steps.secrets.outputs.secret_key }}
+        OSC_REGION: ${{ steps.secrets.outputs.region }}
         IMAGE_ID: ${{ vars.IMAGE_ID }}
         VM_TYPE: ${{ vars.VM_TYPE }}
