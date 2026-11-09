@@ -15,7 +15,7 @@ octl kube cluster create [flags]
 ### Options
 
 ```
-      --allow-from strings                  List of CIDR blocks or IP addresses allowed to access the Kubernetes API
+      --admin-whitelist strings             List of CIDR blocks or IP addresses allowed to access the Kubernetes API
       --cidr-pods string                    [REQUIRED] CIDR block for Kubernetes pods network Example: 10.91.0.0/16
       --cidr-services string                [REQUIRED] CIDR block for Kubernetes services network Example: 10.92.0.0/16
       --control-plane string                Size of control plane deployment for the cluster

@@ -176,7 +176,7 @@ aliases:
   - yaml
   - --single
   flags:
-  - name: allow-from
+  - name: admin-whitelist
     alias_to: AdminWhitelist
   - name: disable-admission-plugins
     alias_to: AdmissionFlags.DisableAdmissionPlugins
