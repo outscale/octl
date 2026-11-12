@@ -1,5 +1,16 @@
 # 📜 Changelog
 
+## [v0.0.36](https://github.com/outscale/octl/releases/tag/v0.0.36) - 2026-11-12
+
+### 💥 Breaking
+* 💥 change(kube): rename --allow-from to --admin-whitelist in cluster create by @jfbus in https://github.com/outscale/octl/pull/391
+### 🛠️ Changed / Refactoring
+* 🚸 ux: add color to starting state by @jfbus in https://github.com/outscale/octl/pull/386
+### 📦 Dependency updates
+* ⬆️ deps(dockerfile): update gcr.io/distroless/static-debian13:debug docker digest to 63b4c00 by @Open-Source-Bot in https://github.com/outscale/octl/pull/378
+* ⬆️ deps: SDK v3.0.0-rc.6 by @jfbus in https://github.com/outscale/octl/pull/392
+
+
 ## [v0.0.35](https://github.com/outscale/octl/releases/tag/v0.0.35) - 2026-10-21
 
 ### 📦 Dependency updates
