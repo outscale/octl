@@ -1,10 +1,10 @@
 ## octl iaas api ReadDedicatedGroups
 
-List one or more dedicated groups of virtual machines (VMs).
+Lists one or more dedicated groups of virtual machines (VMs).
 
 ### Synopsis
 
-List one or more dedicated groups of virtual machines (VMs).
+Lists one or more dedicated groups of virtual machines (VMs).
 
 ```
 octl iaas api ReadDedicatedGroups [flags]

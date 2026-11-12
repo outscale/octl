@@ -9,6 +9,8 @@ Creates a Client Certificate Authority (CA).
 
 For more information, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
 
+> Deprecated: This call is deprecated and will be removed.
+
 > alias for CreateCa
 
 ```

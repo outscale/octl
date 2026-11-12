@@ -6,6 +6,8 @@ Modifies the specified attribute of a Client Certificate Authority (CA).
 
 Modifies the specified attribute of a Client Certificate Authority (CA).
 
+> Deprecated: This call is deprecated and will be removed.
+
 > alias for UpdateCa --CaId ca_id
 
 ```

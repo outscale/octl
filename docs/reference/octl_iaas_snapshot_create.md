@@ -15,7 +15,8 @@ You can use this method in three different ways:
 
 **[NOTE]**
 
-In case of excessive use of the snapshot creation feature on the same volume over a short period of time, 3DS OUTSCALE reserves the right to temporarily block the feature.
+* By default, all new snapshots are created in `application-consistent` mode.
+* In case of excessive use of the snapshot creation feature on the same volume over a short period of time, 3DS OUTSCALE reserves the right to temporarily block the feature.
 
 For more information, see [About Snapshots](https://docs.outscale.com/en/userguide/About-Snapshots.html).
 

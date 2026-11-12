@@ -22,7 +22,8 @@ octl iaas accesskey update access_key_id [access_key_id]... [flags]
       --clear-tag                If true, the current tag of the access key is deleted.
       --expiration-date string   The date and time, or the date, at which you want the access key to expire, in ISO 8601 format (for example, 2020-06-14T00:00:00.000Z or 2020-06-14).
   -h, --help                     help for update
-      --state string             The new state for the access key (ACTIVE | INACTIVE).
+      --state string             The new state for the access key.
+                                 Possible values: ACTIVE, INACTIVE
       --tag string               A new tag to add to the access key.
       --user-name string         The name of the EIM user that the access key you want to modify is associated with.
 ```

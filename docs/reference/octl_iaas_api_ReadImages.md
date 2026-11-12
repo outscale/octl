@@ -27,7 +27,7 @@ octl iaas api ReadImages [flags]
                                                         Possible values: legacy, uefi
       --Filters.Descriptions strings                    The descriptions of the OMIs, provided when they were created.
       --Filters.FileLocations strings                   The locations of the buckets where the OMI files are stored.
-      --Filters.Hypervisors strings                     The hypervisor type of the OMI (always xen).
+      --Filters.Hypervisors strings                     The hypervisor type of the OMI (always kvm).
       --Filters.ImageIds strings                        The IDs of the OMIs.
       --Filters.ImageNames strings                      The names of the OMIs, provided when they were created.
       --Filters.PermissionsToLaunchAccountIds strings   The OUTSCALE account IDs which have launch permissions for the OMIs.

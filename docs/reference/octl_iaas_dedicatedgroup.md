@@ -40,7 +40,7 @@ Manage DedicatedGroup resources
 * [octl iaas](octl_iaas.md)	 - OUTSCALE IaaS management
 * [octl iaas dedicatedgroup create](octl_iaas_dedicatedgroup_create.md)	 - Creates a dedicated group for virtual machines (VMs).
 * [octl iaas dedicatedgroup delete](octl_iaas_dedicatedgroup_delete.md)	 - Deletes a specified dedicated group of virtual machines (VMs).
-* [octl iaas dedicatedgroup describe](octl_iaas_dedicatedgroup_describe.md)	 - List one or more dedicated groups of virtual machines (VMs).
-* [octl iaas dedicatedgroup list](octl_iaas_dedicatedgroup_list.md)	 - List one or more dedicated groups of virtual machines (VMs).
+* [octl iaas dedicatedgroup describe](octl_iaas_dedicatedgroup_describe.md)	 - Lists one or more dedicated groups of virtual machines (VMs).
+* [octl iaas dedicatedgroup list](octl_iaas_dedicatedgroup_list.md)	 - Lists one or more dedicated groups of virtual machines (VMs).
 * [octl iaas dedicatedgroup update](octl_iaas_dedicatedgroup_update.md)	 - Modifies the name of a specified dedicated group.
 

@@ -6,6 +6,8 @@ Gets information about one or more of your Client Certificate Authorities (CAs).
 
 Gets information about one or more of your Client Certificate Authorities (CAs).
 
+> Deprecated: This call is deprecated and will be removed.
+
 > alias for ReadCas
 
 ```

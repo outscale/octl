@@ -10,7 +10,7 @@ Creates an OUTSCALE account.
 
 **[IMPORTANT]**
 
-* You need OUTSCALE credentials and the appropriate quotas to create an account via API. To get quotas, you can send an email to sales@outscale.com.
+* You need OUTSCALE credentials and the appropriate quotas to create an account via API. To get quotas, you can send an email to sales-eu@outscale.com.
 
 
 For more information, see [About Your Account](https://docs.outscale.com/en/userguide/About-Your-OUTSCALE-Account.html).

@@ -166,7 +166,7 @@ Call iaas API
 * [octl iaas api ReadClientGateways](octl_iaas_api_ReadClientGateways.md)	 - Lists one or more of your client gateways.
 * [octl iaas api ReadConsoleOutput](octl_iaas_api_ReadConsoleOutput.md)	 - 
 * [octl iaas api ReadConsumptionAccount](octl_iaas_api_ReadConsumptionAccount.md)	 - Gets information about the consumption of your OUTSCALE account for each billable resource within the specified time period.
-* [octl iaas api ReadDedicatedGroups](octl_iaas_api_ReadDedicatedGroups.md)	 - List one or more dedicated groups of virtual machines (VMs).
+* [octl iaas api ReadDedicatedGroups](octl_iaas_api_ReadDedicatedGroups.md)	 - Lists one or more dedicated groups of virtual machines (VMs).
 * [octl iaas api ReadDhcpOptions](octl_iaas_api_ReadDhcpOptions.md)	 - Gets information about the content of one or more DHCP options sets.
 * [octl iaas api ReadDirectLinkInterfaces](octl_iaas_api_ReadDirectLinkInterfaces.md)	 - Lists one or more of your DirectLink interfaces.
 * [octl iaas api ReadDirectLinks](octl_iaas_api_ReadDirectLinks.md)	 - Lists all DirectLinks in the Region.

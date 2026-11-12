@@ -6,6 +6,8 @@ Deletes a specified Client Certificate Authority (CA).
 
 Deletes a specified Client Certificate Authority (CA).
 
+> Deprecated: This call is deprecated and will be removed.
+
 ```
 octl iaas api DeleteCa [flags]
 ```
