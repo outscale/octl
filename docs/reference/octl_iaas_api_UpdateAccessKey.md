@@ -21,7 +21,8 @@ octl iaas api UpdateAccessKey [flags]
       --ClearTag                 If true, the current tag of the access key is deleted.
       --DryRun                   If true, checks whether you have the required permissions to perform the action.
       --ExpirationDate osctime   The date and time, or the date, at which you want the access key to expire, in ISO 8601 format (for example, 2020-06-14T00:00:00.000Z or 2020-06-14).
-      --State string             The new state for the access key (ACTIVE | INACTIVE).
+      --State string             The new state for the access key.
+                                 Possible values: ACTIVE, INACTIVE
       --Tag string               A new tag to add to the access key.
       --UserName string          The name of the EIM user that the access key you want to modify is associated with.
   -h, --help                     help for UpdateAccessKey

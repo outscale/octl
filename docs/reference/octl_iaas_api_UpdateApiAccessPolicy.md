@@ -12,6 +12,10 @@ Updates the API access policy of your OUTSCALE account.
 
 Only one API access policy can be associated with your account.
 
+
+
+For more information, see [About Your API Access Policy](https://docs.outscale.com/en/userguide/About-Your-API-Access-Policy.html).
+
 ```
 octl iaas api UpdateApiAccessPolicy [flags]
 ```
@@ -22,6 +26,7 @@ octl iaas api UpdateApiAccessPolicy [flags]
       --DryRun                              If true, checks whether you have the required permissions to perform the action.
       --MaxAccessKeyExpirationSeconds int   [REQUIRED] The maximum possible lifetime for your access keys, in seconds (between 0 and 3153600000, both included).
       --RequireTrustedEnv                   [REQUIRED] If true, a trusted session is activated, provided that you specify the MaxAccessKeyExpirationSeconds parameter with a value greater than 0.
+      --RequireTrustedEnvSecureMode         [REQUIRED] If true, a trusted session is activated, provided that you specify the MaxAccessKeyExpirationSeconds parameter with a value greater than 0 and that the parameter RequireTrustedEnv is set to true.
   -h, --help                                help for UpdateApiAccessPolicy
 ```
 

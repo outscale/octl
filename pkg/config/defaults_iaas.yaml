@@ -157,7 +157,7 @@ api:
       
       **[IMPORTANT]**
       
-      * You need OUTSCALE credentials and the appropriate quotas to create an account via API. To get quotas, you can send an email to sales@outscale.com.
+      * You need OUTSCALE credentials and the appropriate quotas to create an account via API. To get quotas, you can send an email to sales-eu@outscale.com.
       
       
       For more information, see [About Your Account](https://docs.outscale.com/en/userguide/About-Your-OUTSCALE-Account.html).
@@ -222,6 +222,8 @@ api:
       
       
       For more information, see [About API Access Rules](https://docs.outscale.com/en/userguide/About-API-Access-Rules.html).
+      
+      > Deprecated: This call is deprecated and will be removed.
     short: Creates a Client Certificate Authority (CA).
   CreateClientGateway:
     use: CreateClientGateway
@@ -378,6 +380,9 @@ api:
       
       DirectLink interfaces enable you to reach one of your Nets through a virtual gateway.
       
+      **[NOTE]**
+      
+      To choose the interconnection IPs for your DirectLink interface, you must specify both the `ClientPrivateIp` and `OutscalePrivateIp` parameters. If these parameters are not specified, TINA selects two IPs within a `/30` CIDR block.
       
       For more information, see [About DirectLink](https://docs.outscale.com/en/userguide/About-DirectLink.html).
     short: Creates a DirectLink interface.
@@ -1375,7 +1380,8 @@ api:
       
       **[NOTE]**
       
-      In case of excessive use of the snapshot creation feature on the same volume over a short period of time, 3DS OUTSCALE reserves the right to temporarily block the feature.
+      * By default, all new snapshots are created in `application-consistent` mode.
+      * In case of excessive use of the snapshot creation feature on the same volume over a short period of time, 3DS OUTSCALE reserves the right to temporarily block the feature.
       
       For more information, see [About Snapshots](https://docs.outscale.com/en/userguide/About-Snapshots.html).
     short: Creates a snapshot.
@@ -2065,7 +2071,10 @@ api:
     - name: DryRun
       kind: 1
       help: If true, checks whether you have the required permissions to perform the action.
-    help: Deletes a specified Client Certificate Authority (CA).
+    help: |-
+      Deletes a specified Client Certificate Authority (CA).
+      
+      > Deprecated: This call is deprecated and will be removed.
     short: Deletes a specified Client Certificate Authority (CA).
   DeleteClientGateway:
     use: DeleteClientGateway
@@ -3678,7 +3687,10 @@ api:
       kind: 24
       container: 23
       help: The descriptions of the CAs.
-    help: Gets information about one or more of your Client Certificate Authorities (CAs).
+    help: |-
+      Gets information about one or more of your Client Certificate Authorities (CAs).
+      
+      > Deprecated: This call is deprecated and will be removed.
     short: Gets information about one or more of your Client Certificate Authorities (CAs).
   ReadCatalog:
     use: ReadCatalog
@@ -3831,8 +3843,8 @@ api:
       kind: 24
       container: 23
       help: The names of the Subregions in which the dedicated groups are located.
-    help: List one or more dedicated groups of virtual machines (VMs).
-    short: List one or more dedicated groups of virtual machines (VMs).
+    help: Lists one or more dedicated groups of virtual machines (VMs).
+    short: Lists one or more dedicated groups of virtual machines (VMs).
   ReadDhcpOptions:
     use: ReadDhcpOptions
     content: DhcpOptionsSets
@@ -4112,7 +4124,7 @@ api:
     - name: Filters.Hypervisors
       kind: 24
       container: 23
-      help: The hypervisor type of the OMI (always xen).
+      help: The hypervisor type of the OMI (always kvm).
     - name: Filters.ImageIds
       kind: 24
       container: 23
@@ -5197,6 +5209,10 @@ api:
       kind: 24
       container: 23
       help: The descriptions of the snapshots.
+    - name: Filters.EffectiveSnapshotModes
+      kind: 24
+      container: 23
+      help: The snapshot mode in effect (crash-consistent | application-consistent | Not Applicable).
     - name: Filters.FromCreationDate
       kind: 24
       customValue: osctime
@@ -6566,7 +6582,7 @@ api:
     help: |-
       Detaches an internet service from a Net.
       
-      This action disables and detaches an internet service from a Net. The Net must not contain virtual machines (VMs) using public IPs nor internet-facing load balancers.
+      This action disables and detaches an internet service from a Net. The Net must not contain virtual machines (VMs) using public IPs nor internet-facing load balancers, and its Subnets must not contain NAT Services.
     short: Detaches an internet service from a Net.
   UnlinkLoadBalancerBackendMachines:
     use: UnlinkLoadBalancerBackendMachines
@@ -6783,7 +6799,12 @@ api:
       help: The date and time, or the date, at which you want the access key to expire, in ISO 8601 format (for example, 2020-06-14T00:00:00.000Z or 2020-06-14).
     - name: State
       kind: 24
-      help: The new state for the access key (ACTIVE | INACTIVE).
+      help: |-
+        The new state for the access key.
+        Possible values: ACTIVE, INACTIVE
+      values:
+      - ACTIVE
+      - INACTIVE
     - name: Tag
       kind: 24
       help: A new tag to add to the access key.
@@ -6864,6 +6885,10 @@ api:
       required: true
       kind: 1
       help: '[REQUIRED] If true, a trusted session is activated, provided that you specify the MaxAccessKeyExpirationSeconds parameter with a value greater than 0.'
+    - name: RequireTrustedEnvSecureMode
+      required: true
+      kind: 1
+      help: '[REQUIRED] If true, a trusted session is activated, provided that you specify the MaxAccessKeyExpirationSeconds parameter with a value greater than 0 and that the parameter RequireTrustedEnv is set to true.'
     help: |-
       Updates the API access policy of your OUTSCALE account.
       
@@ -6872,6 +6897,10 @@ api:
       **[IMPORTANT]**
       
       Only one API access policy can be associated with your account.
+      
+      
+      
+      For more information, see [About Your API Access Policy](https://docs.outscale.com/en/userguide/About-Your-API-Access-Policy.html).
     short: Updates the API access policy of your OUTSCALE account.
   UpdateApiAccessRule:
     use: UpdateApiAccessRule
@@ -6928,7 +6957,10 @@ api:
     - name: DryRun
       kind: 1
       help: If true, checks whether you have the required permissions to perform the action.
-    help: Modifies the specified attribute of a Client Certificate Authority (CA).
+    help: |-
+      Modifies the specified attribute of a Client Certificate Authority (CA).
+      
+      > Deprecated: This call is deprecated and will be removed.
     short: Modifies the specified attribute of a Client Certificate Authority (CA).
   UpdateDedicatedGroup:
     use: UpdateDedicatedGroup
@@ -10493,6 +10525,8 @@ aliases:
     alias_to: Filters.ClientTokens
   - name: description
     alias_to: Filters.Descriptions
+  - name: effective-snapshot-mode
+    alias_to: Filters.EffectiveSnapshotModes
   - name: from-creation-date
     alias_to: Filters.FromCreationDate
   - name: permission-to-create-volume-account-id

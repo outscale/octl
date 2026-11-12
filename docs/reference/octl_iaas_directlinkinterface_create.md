@@ -8,6 +8,9 @@ Creates a DirectLink interface.
 
 DirectLink interfaces enable you to reach one of your Nets through a virtual gateway.
 
+**[NOTE]**
+
+To choose the interconnection IPs for your DirectLink interface, you must specify both the `ClientPrivateIp` and `OutscalePrivateIp` parameters. If these parameters are not specified, TINA selects two IPs within a `/30` CIDR block.
 
 For more information, see [About DirectLink](https://docs.outscale.com/en/userguide/About-DirectLink.html).
 

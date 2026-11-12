@@ -19,6 +19,7 @@ octl iaas snapshot list [flags]
       --account-id strings                               The OUTSCALE account IDs of the owners of the snapshots.
       --client-token strings                             The idempotency tokens provided when creating the snapshots.
       --description strings                              The descriptions of the snapshots.
+      --effective-snapshot-mode strings                  The snapshot mode in effect (crash-consistent | application-consistent | Not Applicable).
       --from-creation-date string                        The beginning of the time period, in ISO 8601 date-time format (for example, 2020-06-14T00:00:00.000Z).
   -h, --help                                             help for list
       --id strings                                       The IDs of the snapshots.

@@ -6,7 +6,7 @@ Detaches an internet service from a Net.
 
 Detaches an internet service from a Net.
 
-This action disables and detaches an internet service from a Net. The Net must not contain virtual machines (VMs) using public IPs nor internet-facing load balancers.
+This action disables and detaches an internet service from a Net. The Net must not contain virtual machines (VMs) using public IPs nor internet-facing load balancers, and its Subnets must not contain NAT Services.
 
 > alias for UnlinkInternetService --InternetServiceId service_id
 

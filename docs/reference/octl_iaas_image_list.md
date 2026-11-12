@@ -23,7 +23,7 @@ octl iaas image list [flags]
       --description strings                       The descriptions of the OMIs, provided when they were created.
       --file-location strings                     The locations of the buckets where the OMI files are stored.
   -h, --help                                      help for list
-      --hypervisor strings                        The hypervisor type of the OMI (always xen).
+      --hypervisor strings                        The hypervisor type of the OMI (always kvm).
       --id strings                                The IDs of the OMIs.
       --name strings                              The names of the OMIs, provided when they were created.
       --permission-to-launch-account-id strings   The OUTSCALE account IDs which have launch permissions for the OMIs.

@@ -1,10 +1,10 @@
 ## octl iaas dedicatedgroup list
 
-List one or more dedicated groups of virtual machines (VMs).
+Lists one or more dedicated groups of virtual machines (VMs).
 
 ### Synopsis
 
-List one or more dedicated groups of virtual machines (VMs).
+Lists one or more dedicated groups of virtual machines (VMs).
 
 > alias for ReadDedicatedGroups
 
