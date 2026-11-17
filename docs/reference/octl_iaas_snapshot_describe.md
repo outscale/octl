@@ -31,9 +31,10 @@ octl iaas snapshot describe snapshot_id [snapshot_id]... [flags]
       --max-pages int              maximum number of pages a command can fetch (default 20)
       --no-upgrade                 do not check for new versions
   -O, --out-file string            redirect output to file
-  -o, --output string              output format (json, yaml, raw, rawyaml, table, csv, none, text)
+  -o, --output string              output format (json, yaml, table, csv, text, none)
       --payload string             JSON content for query body
       --profile string             Profile to use in profile file (by default, "default")
+      --raw                        raw output (disables max-pages), default for api commands
   -s, --silent                     Hides all information messages
       --single                     convert single entry lists to a single object
       --style string               style to use for syntax-highlighting (doom-one, github, monokai, nord, paraiso, solarized) (default "github")

@@ -53,7 +53,7 @@ func TestStorageCRUD(t *testing.T) {
 		assert.NotNil(t, res.ETag)
 
 		var lres s3.ListObjectsV2Output
-		runJSON(t, []string{"storage", "object", "list", "--bucket", bucket, "-o", "raw"}, nil, &lres)
+		runJSON(t, []string{"storage", "object", "list", "--bucket", bucket, "-o", "json", "--raw"}, nil, &lres)
 		require.Len(t, lres.Contents, 1)
 		require.NotNil(t, object, lres.Contents[0].Key)
 		assert.Equal(t, object, *lres.Contents[0].Key)

@@ -18,11 +18,10 @@ import (
 
 type YAML struct {
 	style string
-	raw   bool
 }
 
-func NewYAML(style string, raw bool) YAML {
-	return YAML{style: style, raw: raw}
+func NewYAML(style string) YAML {
+	return YAML{style: style}
 }
 
 func (y YAML) Format(ctx context.Context, w io.Writer, v any) error {
@@ -32,9 +31,6 @@ func (y YAML) Format(ctx context.Context, w io.Writer, v any) error {
 			return []byte(base64.StdEncoding.EncodeToString(v)), nil
 		},
 	)}
-	if !y.raw {
-		opts = append(opts, yaml.OmitZero())
-	}
 	enc := yaml.NewEncoder(buf, opts...)
 	err := enc.EncodeContext(ctx, v)
 	if err == nil {

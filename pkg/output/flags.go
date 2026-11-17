@@ -71,14 +71,25 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		out = fout
 	}
 	out = strings.ToLower(out)
+	raw, _ := fs.GetBool("raw")
 	doWatch, _ := fs.GetBool("watch")
 	elapsed, _ := fs.GetBool("elapsed")
 	switch {
 	case doWatch && out != "table" && out != "csv" && out != "text":
 		messages.Info("Switching to table...")
 		out = "table"
+	case out == "raw":
+		out = "json"
+		raw = true
+	case out == "rawyaml":
+		out = "yaml"
+		raw = true
 	case out == "":
-		out = "raw"
+		out = "json"
+		raw = true
+	case raw && out != "json" && out != "yaml":
+		messages.Info("Disabling raw output...")
+		raw = false
 	}
 
 	var filters []filter.Interface
@@ -125,12 +136,10 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 	switch out {
 	case "none":
 		fmter = format.None{}
-	case "json", "raw":
+	case "json":
 		fmter = format.NewJSON(style)
-	case "rawyaml":
-		fmter = format.NewYAML(style, true)
 	case "yaml":
-		fmter = format.NewYAML(style, false)
+		fmter = format.NewYAML(style)
 	case "success":
 		fmter = format.Success{}
 	case "body":
@@ -199,7 +208,7 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 		filters = slices.Insert(filters, 0, filter.Interface(filter.JSON{}))
 	}
 	writeTo, _ := fs.GetString("out-file")
-	if out == "raw" || out == "rawyaml" {
+	if raw {
 		return fmter, &Paginated{Read: read.NewRaw(), Format: fmter, Filters: filters, WriteTo: writeTo}, nil
 	}
 	maxPages, _ := fs.GetInt("max-pages")
