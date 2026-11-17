@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/outscale/goutils/sdk/ptr"
 	"github.com/outscale/octl/pkg/config"
 	"github.com/outscale/octl/pkg/output/filter"
 	"github.com/outscale/osc-sdk-go/v3/pkg/osc"
@@ -116,7 +115,7 @@ func TestGetRow(t *testing.T) {
 	})
 	t.Run("Displaying rounded float64s", func(t *testing.T) {
 		types := &osc.VmType{
-			Eth: new(1), MemorySize: ptr.To[float32](1.),
+			Eth: new(1), MemorySize: new(float32(1.)),
 		}
 		rows, err := filter.GetRows(types, config.Columns{
 			{Content: ".Eth"},
@@ -128,7 +127,7 @@ func TestGetRow(t *testing.T) {
 	})
 	t.Run("Displaying rounded float32", func(t *testing.T) {
 		types := &osc.VmType{
-			Eth: new(1), MemorySize: ptr.To[float32](1.2345),
+			Eth: new(1), MemorySize: new(float32(1.2345)),
 		}
 		rows, err := filter.GetRows(types, config.Columns{
 			{Content: ".Eth"},
