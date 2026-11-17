@@ -511,6 +511,49 @@ func TestObjectTagging(t *testing.T) {
 	})
 }
 
+func TestObjectVersioning(t *testing.T) {
+	sum := sha1.Sum([]byte(t.TempDir()))
+	bucket := hex.EncodeToString(sum[:])
+
+	_ = run(t, []string{"storage", "bucket", "create", "--bucket", bucket}, nil)
+	defer func() {
+		_ = run(t, []string{"storage", "bucket", "del", bucket, "-y"}, nil)
+	}()
+
+	_ = run(t, []string{"storage", "bucket", "versioning", "enable", bucket}, nil)
+
+	object := "object-versioned.txt"
+	path := file(t, object, hello)
+
+	t.Run("Objects are versioned in a versioned bucket", func(t *testing.T) {
+		var resp1, resp2 s3.PutObjectOutput
+		runJSON(t, []string{"storage", "object", "put", object, "--body", path, "--bucket", bucket, "-o", "json"}, nil, &resp1)
+		require.NotNil(t, resp1.VersionId)
+		require.NotEmpty(t, *resp1.VersionId)
+		defer func() {
+			_ = run(t, []string{"storage", "object", "del", object, "--bucket", bucket, "--version-id", *resp1.VersionId, "-y"}, nil)
+		}()
+
+		runJSON(t, []string{"storage", "object", "put", object, "--body", path, "--bucket", bucket, "-o", "json"}, nil, &resp2)
+		require.NotNil(t, resp2.VersionId)
+		require.NotEmpty(t, *resp2.VersionId)
+		defer func() {
+			_ = run(t, []string{"storage", "object", "del", object, "--bucket", bucket, "--version-id", *resp2.VersionId, "-y"}, nil)
+		}()
+		assert.NotEqual(t, *resp1.VersionId, *resp2.VersionId)
+
+		var respHead s3.HeadObjectOutput
+		runJSON(t, []string{"storage", "object", "desc", object, "--bucket", bucket, "--version", *resp1.VersionId, "-o", "json"}, nil, &respHead)
+		require.NotNil(t, respHead.VersionId)
+		assert.Equal(t, *resp1.VersionId, *respHead.VersionId)
+
+		var respLatest s3.HeadObjectOutput
+		runJSON(t, []string{"storage", "object", "desc", object, "--bucket", bucket, "-o", "json"}, nil, &respLatest)
+		require.NotNil(t, respLatest.VersionId)
+		assert.Equal(t, *resp2.VersionId, *respLatest.VersionId)
+	})
+}
+
 func TestPresign(t *testing.T) {
 	sum := sha1.Sum([]byte(t.TempDir()))
 	bucket := hex.EncodeToString(sum[:])

@@ -15,8 +15,9 @@ octl storage object describe key [flags]
 ### Options
 
 ```
-      --bucket string   [REQUIRED] The name of the bucket that contains the object.
-  -h, --help            help for describe
+      --bucket string    [REQUIRED] The name of the bucket that contains the object.
+  -h, --help             help for describe
+      --version string   Version ID used to reference a specific version of the object.
 ```
 
 ### Options inherited from parent commands
