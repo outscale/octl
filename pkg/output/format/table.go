@@ -24,6 +24,8 @@ import (
 	"github.com/samber/lo"
 )
 
+const StateDisappeared = "<disappeared>"
+
 var (
 	colors = map[string]map[string]lipgloss.Style{
 		"State": {
@@ -56,6 +58,8 @@ var (
 			"expired":      style.Red,
 			"failed":       style.Red,
 			"terminated":   style.Red,
+
+			StateDisappeared: style.Faint,
 		},
 		"Status": {
 			"ready": style.Green,
@@ -65,6 +69,8 @@ var (
 			"deploying": style.Yellow,
 
 			"failed": style.Red,
+
+			StateDisappeared: style.Faint,
 		},
 	}
 

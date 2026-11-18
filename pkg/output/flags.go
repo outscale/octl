@@ -160,8 +160,11 @@ func NewFromFlags(fs *pflag.FlagSet, out, contentField string, cols config.Colum
 			cols = slices.Clone(cols)
 		}
 		filters = append(filters, filter.NewColumns(explode, cols))
-		if doWatch && elapsed {
-			cols = append(cols, config.Column{Title: "Elapsed", Content: "._elapsed"})
+		if doWatch {
+			filters = append(filters, filter.NewDisappear(cols))
+			if elapsed {
+				cols = append(cols, config.Column{Title: "Elapsed", Content: "._elapsed"})
+			}
 		}
 		dryRun, _ := fs.GetBool("dry-run")
 		switch {
