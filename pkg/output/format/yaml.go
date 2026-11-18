@@ -14,6 +14,7 @@ import (
 
 	"github.com/alecthomas/chroma/v2/quick"
 	"github.com/goccy/go-yaml"
+	"github.com/outscale/octl/pkg/structs"
 )
 
 type YAML struct {
@@ -25,6 +26,10 @@ func NewYAML(style string) YAML {
 }
 
 func (y YAML) Format(ctx context.Context, w io.Writer, v any) error {
+	vv, err := structs.ToUnstructured(v)
+	if err == nil {
+		v = vv
+	}
 	buf := new(bytes.Buffer)
 	opts := []yaml.EncodeOption{yaml.UseSingleQuote(true), yaml.Indent(2), yaml.AutoInt(), yaml.CustomMarshaler(
 		func(v []byte) ([]byte, error) {
@@ -32,7 +37,7 @@ func (y YAML) Format(ctx context.Context, w io.Writer, v any) error {
 		},
 	)}
 	enc := yaml.NewEncoder(buf, opts...)
-	err := enc.EncodeContext(ctx, v)
+	err = enc.EncodeContext(ctx, v)
 	if err == nil {
 		err = enc.Close()
 	}

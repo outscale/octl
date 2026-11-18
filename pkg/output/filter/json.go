@@ -6,11 +6,11 @@ package filter
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"iter"
 
 	"github.com/outscale/octl/pkg/output/result"
+	"github.com/outscale/octl/pkg/structs"
 )
 
 type JSON struct{}
@@ -22,18 +22,12 @@ func (j JSON) Filter(ctx context.Context, seq iter.Seq[result.Result]) iter.Seq[
 				_ = yield(v)
 				return
 			}
-			buf, err := json.Marshal(v.Ok)
+			u, err := structs.ToUnstructured(v.Ok)
 			if err != nil {
-				_ = yield(result.Result{Error: fmt.Errorf("to JSON: %w", err)})
+				_ = yield(result.Result{Error: fmt.Errorf("to unstructured: %w", err)})
 				return
 			}
-			var raw any
-			err = json.Unmarshal(buf, &raw)
-			if err != nil {
-				_ = yield(result.Result{Error: fmt.Errorf("from JSON: %w", err)})
-				return
-			}
-			if !yield(result.New(v, raw)) {
+			if !yield(result.New(v, u)) {
 				return
 			}
 		}
