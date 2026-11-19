@@ -22,14 +22,25 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func Run[Client any, Error error](cmd *cobra.Command, args []string, cl Client, cfg config.Config, hooks ...Hook) error {
-	if cmd.Flags().Lookup("waitfor").Changed {
-		return waitfor[Client, Error](cmd, args, cl, cfg, hooks...)
-	}
-	return doRun[Client, Error](cmd, args, cl, cfg, hooks...)
+// ClientFor associates a client with the name of the profile it was built from.
+type ClientFor[Client any] struct {
+	Profile string
+	Client  Client
 }
 
-func doRun[Client any, Error error](cmd *cobra.Command, args []string, cl Client, cfg config.Config, hooks ...Hook) error {
+// Single wraps a client built from a single profile.
+func Single[Client any](cl Client) []ClientFor[Client] {
+	return []ClientFor[Client]{{Client: cl}}
+}
+
+func Run[Client any, Error error](cmd *cobra.Command, args []string, clients []ClientFor[Client], cfg config.Config, hooks ...Hook) error {
+	if cmd.Flags().Lookup("waitfor").Changed {
+		return waitfor[Client, Error](cmd, args, clients, cfg, hooks...)
+	}
+	return doRun[Client, Error](cmd, args, clients, cfg, hooks...)
+}
+
+func doRun[Client any, Error error](cmd *cobra.Command, args []string, clients []ClientFor[Client], cfg config.Config, hooks ...Hook) error {
 	clt := reflect.TypeFor[Client]()
 	m, _ := clt.MethodByName(cmd.Name())
 
@@ -104,10 +115,10 @@ func doRun[Client any, Error error](cmd *cobra.Command, args []string, cl Client
 	if doWatch {
 		interval, _ := cmd.Flags().GetDuration("interval")
 		err = watch.Run[Error](cmd.Context(), fmter, func(ctx context.Context) error {
-			return runSingle[Client, Error](ctx, cl, cmd.Name(), callArgs, out)
+			return runSingle[Client, Error](ctx, clients, cmd.Name(), callArgs, out)
 		}, interval)
 	} else {
-		err = runSingle[Client, Error](cmd.Context(), cl, cmd.Name(), callArgs, out)
+		err = runSingle[Client, Error](cmd.Context(), clients, cmd.Name(), callArgs, out)
 	}
 
 	if appErr, ok := errors.AsType[Error](err); ok {
@@ -118,10 +129,14 @@ func doRun[Client any, Error error](cmd *cobra.Command, args []string, cl Client
 	return err
 }
 
-func runSingle[Client any, Error error](ctx context.Context, cl Client, callName string, callArgs []reflect.Value, out output.Outputter) error {
-	call := read.FetchPage{
-		Method: reflect.ValueOf(cl).MethodByName(callName),
-		Args:   callArgs,
+func runSingle[Client any, Error error](ctx context.Context, clients []ClientFor[Client], callName string, callArgs []reflect.Value, out output.Outputter) error {
+	fetches := make([]read.FetchPage, 0, len(clients))
+	for _, c := range clients {
+		fetches = append(fetches, read.FetchPage{
+			Method:  reflect.ValueOf(c.Client).MethodByName(callName),
+			Args:    callArgs,
+			Profile: c.Profile,
+		})
 	}
-	return out.Output(ctx, call)
+	return out.Output(ctx, fetches...)
 }

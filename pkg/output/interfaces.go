@@ -11,6 +11,6 @@ import (
 )
 
 type Outputter interface {
-	Output(ctx context.Context, fetch read.FetchPage) error
+	Output(ctx context.Context, fetches ...read.FetchPage) error
 	Error(ctx context.Context, v any) error
 }

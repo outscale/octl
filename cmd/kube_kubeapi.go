@@ -18,7 +18,7 @@ func buildKubeAPI[Client any](provider string, cmd, parent *cobra.Command, getcl
 	parent.AddCommand(cmd)
 	b := commandbuilder.NewBuilder(provider, "https://docs.outscale.com/api.html")
 	b.Build(cmd, runKubeAPI(func(cmd *cobra.Command, args []string, client *clientset.Clientset) error {
-		return runner.Run[Client, *osc.ErrorResponse](cmd, args, getclient(client), config.For(provider))
+		return runner.Run[Client, *osc.ErrorResponse](cmd, args, runner.Single(getclient(client)), config.For(provider))
 	}))
 	// Add --cluster flag to api commands (no --project as there is no name to id conversion here)
 	apiCmd, _ := lo.Find(cmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "api" })

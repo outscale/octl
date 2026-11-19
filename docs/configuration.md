@@ -41,3 +41,18 @@ If `--config` or `--profile` is set, `octl` will load the profile file without c
 - octl profile use
 
 > Note: Environment variables take precedence. A profile marked as the default may not be used if relevant environment variables are set.
+
+## Multiple profiles
+
+Read-only commands (`iaas <entity> list`/`describe`, `iaas api Read*`) can query several profiles at once:
+
+- `--profile all` uses every profile of the profile file
+- `--profile name1,name2` uses the listed profiles
+
+Each result is annotated with its source profile: tables get a `Profile` column, and JSON/YAML results get a `_profile` field, usable with `--filter` and `--jq`:
+
+```sh
+octl iaas vm list --profile all --filter _profile:prod
+```
+
+A profile returning an error is skipped with a warning; the other profiles are still listed.

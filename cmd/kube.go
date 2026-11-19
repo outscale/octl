@@ -99,7 +99,7 @@ func kube(cmd *cobra.Command, args []string) {
 	p := loadProfile(cmd)
 	cl, err := oks.NewClient(p, sdkOptions(cmd)...)
 	if err == nil {
-		err = runner.Run[*oks.Client, *oks.ErrorResponse](cmd, args, cl, config.For("kube"))
+		err = runner.Run[*oks.Client, *oks.ErrorResponse](cmd, args, runner.Single(cl), config.For("kube"))
 	}
 	if err != nil {
 		messages.ExitErr(err)

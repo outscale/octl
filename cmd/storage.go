@@ -68,7 +68,7 @@ func callOOS(cmd *cobra.Command, args []string) {
 		if noAuto, _ := cmd.Flags().GetBool("no-auto-content-type"); !noAuto {
 			hooks = []runner.Hook{guessContentType}
 		}
-		err = runner.Run[*oos.Client, oos.Error](cmd, args, cl, config.For("storage"), hooks...)
+		err = runner.Run[*oos.Client, oos.Error](cmd, args, runner.Single(cl), config.For("storage"), hooks...)
 	}
 	if err != nil {
 		_ = flags.CloseAll(cmd.Flags())

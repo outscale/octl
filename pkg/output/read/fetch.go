@@ -17,6 +17,8 @@ import (
 type FetchPage struct {
 	Method reflect.Value
 	Args   []reflect.Value
+	// Profile is the name of the profile the call is made with
+	Profile string
 }
 
 func (f *FetchPage) Clone() FetchPage {
