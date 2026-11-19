@@ -295,8 +295,6 @@ func execAlias(rootPath string, command []string, userArgs []string, cmd *cobra.
 		messages.ExitErr(err)
 	}
 	messages.Info("Resolving alias to %v", nargs)
-	// no need to check for an update a second time
-	nargs = append(nargs, "--no-upgrade")
 
 	resetFlags(cmd.Flags())
 	os.Args = nargs
