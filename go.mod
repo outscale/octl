@@ -21,8 +21,8 @@ require (
 	github.com/gobuffalo/flect v1.0.3
 	github.com/goccy/go-yaml v1.19.3-0.20260226144344-f167b933f7d0
 	github.com/google/uuid v1.6.0
-	github.com/itchyny/gojq v0.12.19
-	github.com/mattn/go-isatty v0.0.21
+	github.com/itchyny/gojq v0.12.20
+	github.com/mattn/go-isatty v0.0.24
 	github.com/minio/selfupdate v0.6.0
 	github.com/oapi-codegen/runtime v1.7.0
 	github.com/outscale/goutils/oks v0.0.2
@@ -137,14 +137,14 @@ require (
 	github.com/in-toto/attestation v1.1.2 // indirect
 	github.com/in-toto/in-toto-golang v0.9.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/itchyny/timefmt-go v0.1.8 // indirect
+	github.com/itchyny/timefmt-go v0.1.9 // indirect
 	github.com/jonboulle/clockwork v0.5.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/liggitt/tabwriter v0.0.0-20181228230101-89fcab3d43de // indirect
 	github.com/lithammer/dedent v1.1.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.3.0 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
-	github.com/mattn/go-runewidth v0.0.20 // indirect
+	github.com/mattn/go-runewidth v0.0.31 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.27 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	github.com/mitchellh/hashstructure/v2 v2.0.2 // indirect
