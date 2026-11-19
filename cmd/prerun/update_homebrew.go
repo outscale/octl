@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"sync"
 	"time"
 
 	"github.com/mattn/go-isatty"
@@ -18,19 +19,23 @@ import (
 	"golang.org/x/mod/semver"
 )
 
+var once sync.Once
+
 func CheckUpdate(cmd *cobra.Command, args []string) {
-	if !isatty.IsTerminal(os.Stdout.Fd()) {
-		return
-	}
-	if no, _ := cmd.Flags().GetBool("no-upgrade"); no {
-		return
-	}
-	ghCtx, cancel := context.WithTimeout(cmd.Context(), time.Second)
-	defer cancel()
-	latest := update.LatestRelease(ghCtx)
-	debug.Println("check update", version.Version, latest, semver.Compare(version.Version, latest) < 0)
-	if latest == "" || semver.Compare(version.Version, latest) >= 0 {
-		return
-	}
-	_, _ = fmt.Fprintln(messages.MsgOut, style.Renderf(style.Yellow, `⬆️ New version %s detected - call "brew install octl" to update`, latest))
+	once.Do(func() {
+		if !isatty.IsTerminal(os.Stdout.Fd()) {
+			return
+		}
+		if no, _ := cmd.Flags().GetBool("no-upgrade"); no {
+			return
+		}
+		ghCtx, cancel := context.WithTimeout(cmd.Context(), time.Second)
+		defer cancel()
+		latest := update.LatestRelease(ghCtx)
+		debug.Println("check update", version.Version, latest, semver.Compare(version.Version, latest) < 0)
+		if latest == "" || semver.Compare(version.Version, latest) >= 0 {
+			return
+		}
+		_, _ = fmt.Fprintln(messages.MsgOut, style.Renderf(style.Yellow, `⬆️ New version %s detected - call "brew install octl" to update`, latest))
+	})
 }
