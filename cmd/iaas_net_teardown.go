@@ -27,9 +27,11 @@ var teardownCmd = &cobra.Command{
 func teardownNet(cmd *cobra.Command, args []string) {
 	debug.Println(cmd.Name() + " called")
 
-	displayNet(cmd, args, true)
-	if !messages.Prompt("Are you sure you want to teardown this net ?") {
-		return
+	if yes, _ := cmd.Flags().GetBool("yes"); !yes {
+		displayNet(cmd, args, true)
+		if !messages.Prompt("Are you sure you want to teardown this net ?") {
+			return
+		}
 	}
 
 	netID := args[0]
@@ -38,7 +40,7 @@ func teardownNet(cmd *cobra.Command, args []string) {
 	if err != nil {
 		messages.ExitErr(err)
 	}
-	r, _, err := listResources(cmd.Context(), cl, netID)
+	r, _, err := listNetResources(cmd.Context(), cl, netID)
 	if err != nil {
 		messages.ExitErr(err)
 	}

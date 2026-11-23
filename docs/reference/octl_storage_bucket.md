@@ -50,6 +50,7 @@ Manage Bucket resources
 * [octl storage bucket list](octl_storage_bucket_list.md)	 - 
 * [octl storage bucket objectlock](octl_storage_bucket_objectlock.md)	 - objectlock commands
 * [octl storage bucket policy](octl_storage_bucket_policy.md)	 - policy commands
+* [octl storage bucket teardown](octl_storage_bucket_teardown.md)	 - Tears down a bucket and its objects
 * [octl storage bucket versioning](octl_storage_bucket_versioning.md)	 - versioning commands
 * [octl storage bucket website](octl_storage_bucket_website.md)	 - website commands
 

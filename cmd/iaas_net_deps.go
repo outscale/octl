@@ -6,10 +6,8 @@ import (
 	"fmt"
 	"os"
 	"slices"
-	"strings"
 
 	"github.com/outscale/goutils/sdk/tags"
-	"github.com/outscale/octl/pkg/debug"
 	"github.com/outscale/octl/pkg/messages"
 	"github.com/outscale/octl/pkg/spinner"
 	"github.com/outscale/octl/pkg/tree"
@@ -36,7 +34,7 @@ func displayNet(cmd *cobra.Command, args []string, failOnVms bool) {
 	if err != nil {
 		messages.ExitErr(err)
 	}
-	r, hasVM, err := listResources(cmd.Context(), cl, netID)
+	r, hasVM, err := listNetResources(cmd.Context(), cl, netID)
 	if err == nil {
 		err = tree.WriteTo(r, os.Stdout)
 	}
@@ -49,8 +47,6 @@ func displayNet(cmd *cobra.Command, args []string, failOnVms bool) {
 		messages.ExitErr(errors.New("cannot teardown a net having VMs unless --teardown-vms is set"))
 	}
 }
-
-type ResourceType string
 
 const (
 	Net             ResourceType = "net"
@@ -69,55 +65,7 @@ const (
 	NIC             ResourceType = "nic"
 )
 
-type (
-	deleteFunc func(ctx context.Context) error
-
-	Resource struct {
-		Type ResourceType
-		ID   string
-		Name string
-
-		children []*Resource
-
-		delete deleteFunc
-	}
-)
-
-func (r *Resource) String() string {
-	b := strings.Builder{}
-	_, _ = b.WriteString(string(r.Type))
-	_, _ = b.WriteString("/")
-	_, _ = b.WriteString(r.ID)
-	if r.Name != "" {
-		_, _ = b.WriteString(" (")
-		_, _ = b.WriteString(r.Name)
-		_, _ = b.WriteString(")")
-	}
-	return b.String()
-}
-
-func (r *Resource) Children() []tree.Tree {
-	return lo.Map(r.children, func(c *Resource, _ int) tree.Tree {
-		return tree.Tree(c)
-	})
-}
-
-func (r *Resource) addToChild(childID string, childType ResourceType, subr *Resource) bool {
-	child, found := lo.Find(r.children, func(r *Resource) bool { return r.ID == childID && r.Type == childType })
-	if found {
-		child.children = append(child.children, subr)
-		return true
-	}
-	for _, c := range r.children {
-		if c.addToChild(childID, childType, subr) {
-			return true
-		}
-	}
-	debug.Println("parent", childType, childID, "not found for", subr.Type, subr.ID)
-	return false
-}
-
-func listResources(ctx context.Context, cl *osc.Client, netID string) (*Resource, bool, error) {
+func listNetResources(ctx context.Context, cl *osc.Client, netID string) (*Resource, bool, error) {
 	cancel := spinner.Run(ctx, "Building dependency tree...", false)
 	defer cancel()
 	var securityGroups []string
