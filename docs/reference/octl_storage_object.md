@@ -50,5 +50,6 @@ Manage Object resources
 * [octl storage object put](octl_storage_object_put.md)	 - 
 * [octl storage object retention](octl_storage_object_retention.md)	 - retention commands
 * [octl storage object tagging](octl_storage_object_tagging.md)	 - tagging commands
+* [octl storage object teardown](octl_storage_object_teardown.md)	 - Tears down an object
 * [octl storage object versions](octl_storage_object_versions.md)	 - Display an object metadata.
 
