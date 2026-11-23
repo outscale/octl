@@ -35,9 +35,8 @@ var bucketTeardownCmd = &cobra.Command{
 }
 
 const (
-	Bucket        ResourceType = "bucket"
-	Object        ResourceType = "object"
-	ObjectVersion ResourceType = "object version"
+	Bucket ResourceType = "bucket"
+	Object ResourceType = "object"
 
 	objectDeleteBatchSize int32 = 1000
 )
@@ -89,13 +88,18 @@ func doBucketTeardown(cmd *cobra.Command, args []string) {
 	messages.Success("Bucket teardown complete")
 }
 
-func getObjects(ctx context.Context, cl *oos.Client, batches chan<- []s3types.ObjectIdentifier, bucket string) error {
+func getObjects(ctx context.Context, cl *oos.Client, batches chan<- []s3types.ObjectIdentifier, bucket string, key ...string) error {
 	defer close(batches)
 
 	input := &s3.ListObjectVersionsInput{
 		Bucket:  &bucket,
 		MaxKeys: new(objectDeleteBatchSize),
 	}
+	hasKey := len(key) > 0
+	if hasKey {
+		input.Prefix = new(key[0])
+	}
+
 	paginator := s3.NewListObjectVersionsPaginator(cl, input)
 	for paginator.HasMorePages() {
 		page, err := paginator.NextPage(ctx)
@@ -105,12 +109,20 @@ func getObjects(ctx context.Context, cl *oos.Client, batches chan<- []s3types.Ob
 
 		objects := make([]s3types.ObjectIdentifier, 0, len(page.Versions)+len(page.DeleteMarkers))
 		for _, object := range page.Versions {
+			if hasKey && *object.Key != key[0] {
+				continue
+			}
+
 			objects = append(objects, s3types.ObjectIdentifier{
 				Key:       object.Key,
 				VersionId: object.VersionId,
 			})
 		}
 		for _, marker := range page.DeleteMarkers {
+			if hasKey && *marker.Key != key[0] {
+				continue
+			}
+
 			objects = append(objects, s3types.ObjectIdentifier{
 				Key:       marker.Key,
 				VersionId: marker.VersionId,

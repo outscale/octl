@@ -60,6 +60,10 @@ func init() {
 	bucketCmd, _ := lo.Find(storageCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "bucket" })
 	bucketCmd.AddCommand(bucketTeardownCmd)
 
+	objectTeardownCmd.Flags().String("bucket", "", "bucket")
+	_ = objectTeardownCmd.MarkFlagRequired("bucket")
+	objectCmd.AddCommand(objectTeardownCmd)
+
 	storageCmd.PersistentFlags().Bool("no-auto-content-type", false, "Disable automatic content-type detection")
 }
 
