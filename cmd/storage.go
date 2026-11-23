@@ -57,6 +57,9 @@ func init() {
 		cobra.FixedCompletions([]cobra.Completion{http.MethodGet, http.MethodPut, http.MethodDelete}, cobra.ShellCompDirectiveDefault),
 	)
 
+	bucketCmd, _ := lo.Find(storageCmd.Commands(), func(c *cobra.Command) bool { return c.Name() == "bucket" })
+	bucketCmd.AddCommand(bucketTeardownCmd)
+
 	storageCmd.PersistentFlags().Bool("no-auto-content-type", false, "Disable automatic content-type detection")
 }
 
