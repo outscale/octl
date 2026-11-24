@@ -9204,6 +9204,17 @@ aliases:
   - name: group-id
     alias_to: SecurityGroupId
     required: true
+- entity: apiaccesspolicy
+  use: list
+  alias_to: ReadApiAccessPolicy
+  aliases:
+  - ls
+  alias_help: ReadApiAccessPolicy
+  command:
+  - api
+  - ReadApiAccessPolicy
+  - --output
+  - yaml
 - entity: accesskey
   use: list
   alias_to: ReadAccessKeys
@@ -9264,17 +9275,6 @@ aliases:
   - name: vm-id
     alias_to: VmId
     required: true
-- entity: apiaccesspolicy
-  use: list
-  alias_to: ReadApiAccessPolicy
-  aliases:
-  - ls
-  alias_help: ReadApiAccessPolicy
-  command:
-  - api
-  - ReadApiAccessPolicy
-  - --output
-  - table
 - entity: apiaccessrule
   use: list
   alias_to: ReadApiAccessRules
