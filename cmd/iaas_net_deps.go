@@ -251,20 +251,37 @@ func listResources(ctx context.Context, cl *osc.Client, netID string) (*Resource
 		}
 	}
 
-	rtbls, err := cl.ReadRouteTables(ctx, osc.ReadRouteTablesRequest{Filters: &osc.FiltersRouteTable{NetIds: &[]string{netID}}})
+	rtbls, err := cl.ReadRouteTables(ctx, osc.ReadRouteTablesRequest{Filters: &osc.FiltersRouteTable{
+		NetIds: &[]string{netID},
+		// Main RT cannot be unlinked/deleted and will be gone with net deletion
+		LinkRouteTableMain: new(false),
+	}})
 	if err != nil {
 		return nil, false, fmt.Errorf("list route tables: %w", err)
 	}
 	for _, rtbl := range *rtbls.RouteTables {
-		links := lo.Map(rtbl.LinkRouteTables, func(l osc.LinkRouteTable, _ int) string { return l.LinkRouteTableId })
+		links := lo.Map(rtbl.LinkRouteTables, func(l osc.LinkRouteTable, _ int) string {
+			return l.LinkRouteTableId
+		})
+
 		sr := &Resource{
 			Type:   RouteTable,
 			ID:     rtbl.RouteTableId,
 			Name:   tags.Must(tags.GetName(rtbl.Tags)),
 			delete: deleteRouteTable(cl, rtbl.RouteTableId, links),
 		}
-		for _, link := range rtbl.LinkRouteTables {
-			root.addToChild(link.SubnetId, Subnet, sr)
+
+		if len(rtbl.LinkRouteTables) > 0 {
+			for _, link := range rtbl.LinkRouteTables {
+				switch {
+				case link.SubnetId != "":
+					root.addToChild(link.SubnetId, Subnet, sr)
+				default:
+					root.children = append(root.children, sr)
+				}
+			}
+		} else {
+			root.children = append(root.children, sr)
 		}
 	}
 
